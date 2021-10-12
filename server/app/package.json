@@ -1,0 +1,31 @@
+{
+  "name": "ocean-bar-server",
+  "version": "1.0.0",
+  "description": "node server application api",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "start-dev": "nodemon ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zalart/oceanbar-server"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "rest",
+    "api"
+  ],
+  "author": "Artur Zaleuski",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
