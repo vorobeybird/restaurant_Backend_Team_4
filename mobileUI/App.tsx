@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-import { BotMenu } from './src/navigation/Botmenu'
 import {ProfileComponent} from './src/profileComponents/ProfileComponent'
 import { Menu } from './src/menu/Menu';
 import { MarketMain } from './src/marketComponents/MarketMain';
