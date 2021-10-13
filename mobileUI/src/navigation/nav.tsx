@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import { View, StyleSheet,Text, Image, TouchableOpacity } from "react-native";
 import { MarketMain } from "../marketComponents/MarketMain";
 import { Menu } from "../menu/Menu";
