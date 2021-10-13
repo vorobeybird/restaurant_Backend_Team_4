@@ -12,7 +12,7 @@ export type RootStackParamList = {
   };
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
-export const Navigate = () => {
+export const BottomTabNavigation = () => {
     return  <NavigationContainer>
                 <Tab.Navigator
                     screenOptions={{
@@ -22,7 +22,7 @@ export const Navigate = () => {
                             position:'absolute',
                             height:90,
                             backgroundColor:'white',
-                        },
+                        }
                 }}>
                     <Tab.Screen
                         name="Menu"
