@@ -15,7 +15,7 @@ app.use("/", (req, res, next) => {
   next();
 });
 
-app.use("/api/menu", dishRouter);
+app.use("/menu", dishRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port: ${PORT}.`);

@@ -1,7 +1,7 @@
 FROM node:16.3.0
 
 WORKDIR /app
-COPY package.json .
+COPY package*.json /app
 RUN npm install
-COPY . .
-CMD ["npm", "run", "start-dev"]
+COPY . /app
+CMD ["npm", "run", "start"]
