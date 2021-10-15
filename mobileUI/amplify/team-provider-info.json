@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mobileui-dev-200829-authRole",
+      "UnauthRoleArn": "arn:aws:iam::255674984703:role/amplify-mobileui-dev-200829-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::255674984703:role/amplify-mobileui-dev-200829-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-mobileui-dev-200829-deployment",
+      "UnauthRoleName": "amplify-mobileui-dev-200829-unauthRole",
+      "StackName": "amplify-mobileui-dev-200829",
+      "StackId": "arn:aws:cloudformation:us-east-2:255674984703:stack/amplify-mobileui-dev-200829/5d38a4d0-2d11-11ec-ad04-0aea3ecf8b06",
+      "AmplifyAppId": "d3o5hbxts7wveg"
+    },
+    "categories": {
+      "auth": {
+        "mobileuibac237e1": {}
+      }
+    }
+  }
+}
