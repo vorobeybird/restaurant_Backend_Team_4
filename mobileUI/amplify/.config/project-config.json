@@ -1,14 +1,14 @@
 {
-  "projectName": "mobileUI",
+  "projectName": "OceanBar",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
-    "framework": "react-native",
+    "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": "/",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "DistributionDir": "build",
+      "BuildCommand": "npm.cmd run-script build",
+      "StartCommand": "npm.cmd run-script start"
     }
   },
   "providers": [

@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-mobileui-dev-200829-authRole",
-      "UnauthRoleArn": "arn:aws:iam::255674984703:role/amplify-mobileui-dev-200829-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::255674984703:role/amplify-mobileui-dev-200829-authRole",
-      "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-mobileui-dev-200829-deployment",
-      "UnauthRoleName": "amplify-mobileui-dev-200829-unauthRole",
-      "StackName": "amplify-mobileui-dev-200829",
-      "StackId": "arn:aws:cloudformation:us-east-2:255674984703:stack/amplify-mobileui-dev-200829/5d38a4d0-2d11-11ec-ad04-0aea3ecf8b06",
-      "AmplifyAppId": "d3o5hbxts7wveg"
+      "AuthRoleName": "amplify-oceanbar-dev-232002-authRole",
+      "UnauthRoleArn": "arn:aws:iam::255674984703:role/amplify-oceanbar-dev-232002-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::255674984703:role/amplify-oceanbar-dev-232002-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-oceanbar-dev-232002-deployment",
+      "UnauthRoleName": "amplify-oceanbar-dev-232002-unauthRole",
+      "StackName": "amplify-oceanbar-dev-232002",
+      "StackId": "arn:aws:cloudformation:eu-central-1:255674984703:stack/amplify-oceanbar-dev-232002/21525ea0-2d2c-11ec-b79e-0ac2d9fd9ade",
+      "AmplifyAppId": "d3bef9t75e867x"
     },
     "categories": {
       "auth": {
-        "mobileuibac237e1": {}
+        "oceanbar263fe797": {}
       }
     }
   }

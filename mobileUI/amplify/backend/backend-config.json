@@ -1,6 +1,6 @@
 {
   "auth": {
-    "mobileuibac237e1": {
+    "oceanbar263fe797": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
