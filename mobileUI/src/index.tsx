@@ -1,9 +1,10 @@
 import React from 'react'
-import {StatusBar} from 'react-native'
+import { StatusBar } from 'react-native'
 import Amplify from '@aws-amplify/core'
-import {Authenticator} from 'aws-amplify-react-native'
+import { Authenticator } from 'aws-amplify-react-native'
 import awsconfig from './aws-exports'
-
+import { withAuthenticator } from 'aws-amplify-react-native'
+import { BottomTabNavigation } from './navigation/nav'
 Amplify.configure({
   ...awsconfig,
   Analytics: {
@@ -12,6 +13,7 @@ Amplify.configure({
 })
 
 const App = () => {
+
   const signUpConfig = {
     hideAllDefaults: true,
     signUpFields: [
@@ -33,11 +35,10 @@ const App = () => {
   }
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <Authenticator usernameAttributes="email" 
-       signUpConfig={signUpConfig}/>
+      <BottomTabNavigation/>
+      
     </>
   )
 }
 
-export default App
+export default withAuthenticator(App)
