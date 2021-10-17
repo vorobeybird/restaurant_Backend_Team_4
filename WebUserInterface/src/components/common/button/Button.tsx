@@ -1,7 +1,7 @@
 import "./button.scss";
 
 interface ButtonProps {
-  children: string;
+  children: any;
   onClick: () => void;
 }
 
