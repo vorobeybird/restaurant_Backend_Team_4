@@ -6,7 +6,7 @@ import AdminNavBar from "../navbar/AdminNavBar";
 import AdminSideBar from "../sidebar/AdminSideBar";
 import Orders from "../orders/Orders";
 import Users from "../users/Users";
-import Customers from "../сustomers/Customers";
+import Customers from "../customers/Customers";
 
 const AdminLayoutRoot = styled('div')(
     ({ theme }) => ({
