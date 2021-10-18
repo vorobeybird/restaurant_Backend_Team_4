@@ -1,17 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import theme from './theme/index';
+import GlobalStyles from './theme/GlobalStyles';
+import { Route, Switch } from 'react-router-dom';
+import LoginLayout from './components/layouts/LoginLayout';
+import AdminLayout from './components/layouts/AdminLayout';
 function App() {
-  return (
+  return (<StyledEngineProvider injectFirst>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles/>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          This is an EMPTY admin page which is waiting for your modification.
-        </p>
-      </header>
+    <Switch>
+        <Route path="/login"><LoginLayout /></Route>
+        <Route path="/"><AdminLayout/></Route>
+      </Switch>
     </div>
+    </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
