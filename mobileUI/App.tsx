@@ -6,12 +6,14 @@ import {
 import {ProfileComponent} from './src/profileComponents/ProfileComponent'
 import { Menu } from './src/menu/Menu';
 import { MarketMain } from './src/marketComponents/MarketMain';
-import { Navigate } from './src/navigation/nav';
+import {BottomTabNavigation} from './src/navigation/nav'
+import { Breakfast } from './src/menu/pageComponents/Breakfast';
+
 
 export const App = () => {
   return (
     <View style={styles.Wrapper}>
-      <Navigate/>
+      <BottomTabNavigation/>
     </View>
     
   );
