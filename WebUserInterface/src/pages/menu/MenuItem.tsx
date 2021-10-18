@@ -79,7 +79,7 @@ const MenuItemComponent = ({
                 : pickedIngredients.map((item) => renderIngredient(item))}
             </div>
           </div>
-          <div className="button_reduct_ingredients">
+          <div className="button_redact_ingredients">
             <button onClick={onGear}>
               <img src={Gear} />
               <span>Изменить состав</span>
