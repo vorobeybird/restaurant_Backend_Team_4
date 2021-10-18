@@ -11,7 +11,7 @@ const Header = () => {
     <div className="header">
       <img src={Logo} alt="logo" />
       <h2>Вкусно. Быстро. Качественно</h2>
-      <Button onClick={goToMenu}>Меню</Button>
+      <Button type="button" onClick={goToMenu}>Меню</Button>
     </div>
   );
 };

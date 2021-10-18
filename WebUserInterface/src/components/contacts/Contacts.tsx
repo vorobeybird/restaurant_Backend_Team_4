@@ -3,9 +3,10 @@ import Map from "../../assets/map.png";
 import PhoneLogo from "../../assets/phone.png";
 import ClockLogo from "../../assets/clock.png";
 import { Button } from "../common/button/Button";
+import {MouseEvent} from "react";
 
 const Contacts = () => {
-  const onClickReserveTable = () => {
+  const onClickReserveTable = (e: MouseEvent<HTMLDivElement>) => {
     console.log("Table is reserved!");
   };
 
@@ -28,7 +29,7 @@ const Contacts = () => {
             <p>Пн-Вс 08:00 - 23:00</p>
           </div>
         </div>
-        <Button onClick={onClickReserveTable}>Забронируйтете стол</Button>
+        <Button type="submit" onClick={onClickReserveTable}>Забронируйтете стол</Button>
       </div>
       <div>
         <img src={Map} alt="map"></img>
