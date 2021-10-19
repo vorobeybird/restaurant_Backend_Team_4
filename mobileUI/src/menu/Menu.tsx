@@ -1,34 +1,39 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
-  StyleSheet,
-  Text,
-  View,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native'
 
+export type RootStackParamList = {
+    MainMenu: undefined;
+    Breakfast: undefined;
+    MenuTabNavigation: undefined;
+    BarMenu: undefined;
+    WeekCatch: undefined;
+    navigate: any;
+};
 
 export const Menu = () => {
 
-  return (
-   <View>
-       <Text style={styles.Header}>Меню</Text>
-       <View style={styles.FoodContainer}>
-           <Text style={styles.FoodLinks}>Breakfast</Text>
-           <Text style={styles.FoodLinks}>Lunch</Text>
-           <Text style={styles.FoodLinks}>Snacks</Text>
-           <Text style={styles.FoodLinks}>Soup</Text>
-           <Text style={styles.FoodLinks}>Pasta</Text>
-           <Text style={styles.FoodLinks}>Salads</Text>
-           <Text style={styles.FoodLinks}>Pizza</Text>
-           <Text style={styles.FoodLinks}>Sushi</Text>
-           <Text style={styles.FoodLinks}>Deserts</Text>
-       </View>
-   </View>
-  );
+    const navigation = useNavigation<RootStackParamList>();
+    return (
+        <View>
+            <Text style={styles.Header}>Меню</Text>
+            <View style={styles.FoodContainer}>
+                <Text style={styles.FoodLinks} onPress={() => navigation.navigate('Breakfast')} >Завтраки</Text>
+                <Text style={styles.FoodLinks} onPress={() => navigation.navigate('MainMenu')} >Основное меню</Text>
+                <Text style={styles.FoodLinks} onPress={() => navigation.navigate('BarMenu')} >Меню бара</Text>
+                <Text style={styles.FoodLinks} onPress={() => navigation.navigate('WeekCatch')} >Улов недели</Text>
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-    Header:{
-        top:'10%',
+    Header: {
+        top: '10%',
         alignSelf: 'center',
         fontFamily: 'Open Sans',
         fontStyle: 'normal',
@@ -39,9 +44,9 @@ const styles = StyleSheet.create({
         color: '#000000',
 
     },
-    FoodLinks:{
-        paddingBottom:10,
-        top:10,
+    FoodLinks: {
+        paddingBottom: 10,
+        top: 10,
         fontFamily: 'Open Sans',
         fontStyle: 'normal',
         fontWeight: 'normal',
@@ -50,9 +55,9 @@ const styles = StyleSheet.create({
         color: '#000000',
 
     },
-    FoodContainer:{
-        top:'20%',
-        left:'10%',
+    FoodContainer: {
+        top: '20%',
+        left: '10%',
     }
 });
 
