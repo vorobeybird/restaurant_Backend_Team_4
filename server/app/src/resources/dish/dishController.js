@@ -4,12 +4,10 @@ module.exports = class DishController {
     await Dish.getAll((err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res
-            .status(404)
-            .send({
-              status: 404,
-              message: `Not found dishes in dishes table.`,
-            });
+          res.status(404).send({
+            status: 404,
+            message: `Not found dishes in dishes table.`,
+          });
         } else {
           res.status(500).json({
             status: 500,
@@ -32,10 +30,11 @@ module.exports = class DishController {
     }
     const dish = new Dish({
       title: req.body.title,
+      default_ingredients: req.body.default_ingredients,
+      categories: req.body.categories,
       ingredients: req.body.ingredients,
-      category: req.body.category,
       price: req.body.price,
-      photo: req.body.photo,
+      photos: req.body.photos,
       weight: req.body.weight,
       calories: req.body.calories,
     });

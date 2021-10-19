@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: test
       MYSQL_ROOT_PASSWORD: example
     ports:
-     - 3307:3306
+      - 3307:3306
 
   server:
     container_name: api
@@ -36,7 +36,7 @@ services:
     tty: true
     # volumes:
     #   - ./server/app:/app/src
-  
+
   userinterface:
     container_name: WebUserInterface
     build:
@@ -47,7 +47,7 @@ services:
      ports:
        - 3000:3000
     volumes:
-    - ./WebUserInterface/src:/app/src
+      - ./WebUserInterface/src:/app/src
 
   admin:
     container_name: admin
