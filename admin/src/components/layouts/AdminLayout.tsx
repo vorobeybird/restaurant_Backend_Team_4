@@ -1,16 +1,16 @@
-import { styled } from "@mui/styles";
+import { styled} from "@mui/styles";
 import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Dishes from "../dishes/Dishes";
-import AdminNavBar from "../navbar/AdminNavBar";
-import AdminSideBar from "../sidebar/AdminSideBar";
+import AdminNavBar from "./navbar/AdminNavBar";
+import AdminSideBar from "./sidebar/AdminSideBar";
 import Orders from "../orders/Orders";
 import Users from "../users/Users";
 import Customers from "../customers/Customers";
 
 const AdminLayoutRoot = styled('div')(
     ({ theme }) => ({
-      backgroundColor: '#f4f6f8',
+      backgroundColor: theme.palette.background.default,
       display: 'flex',
       height: '100%',
       overflow: 'hidden',
@@ -24,9 +24,9 @@ const AdminLayoutRoot = styled('div')(
       flex: '1 1 auto',
       overflow: 'hidden',
       paddingTop: 64,
-/*       [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('lg')]: {
         paddingLeft: 256
-      } */
+      },
     })
   );
   

@@ -11,6 +11,7 @@ interface INavItem {
     title: string;
 
   }
+
   const NavItem = ({
     href,
     icon: Icon,
@@ -18,11 +19,13 @@ interface INavItem {
     ...rest
   }: INavItem) => {
     const location = useLocation();
-  
-/*     const active = href ? !!matchPath:({
+    const checkPath = matchPath<{pathname: string}>(location.pathname,
+      {
       path: href,
-      end: false
-    }, location.pathname): false; */
+      exact: true
+    });
+
+    const active = href ? !!checkPath: false;
   
     return (
       <ListItem
@@ -43,9 +46,9 @@ interface INavItem {
             py: 1.25,
             textTransform: 'none',
             width: '100%',
-/*             ...(active && {
+            ...(active && {
               color: 'primary.main'
-            }),  */
+            }), 
             '& svg': {
               mr: 1
             }

@@ -1,5 +1,5 @@
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import theme from './theme/index';
+import theme from './theme';
 import GlobalStyles from './theme/GlobalStyles';
 import { Route, Switch } from 'react-router-dom';
 import LoginLayout from './components/layouts/LoginLayout';
