@@ -3,18 +3,18 @@ import { RootStackParamList } from '../Menu';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import { Dish } from './dishes/Dish';
+import {Dish} from './dishes/Dish';
 
-export const Breakfast = () => {
+export const WeekCatch = () => {
   const navigation = useNavigation<RootStackParamList>();
   const [dishesList, setDishesList] = useState([
-    { id: 1, name: 'Название блюда' },
-    { id: 2, name: 'Название блюда' },
-    { id: 3, name: 'Название блюда' },
-    { id: 4, name: 'Название блюда' },
-    { id: 5, name: 'Название блюда' },
-    { id: 6, name: 'Название блюда' },
-    { id: 7, name: 'Название блюда' },
+    {id: 1, name: 'Название блюда'},
+    {id: 2, name: 'Название блюда'},
+    {id: 3, name: 'Название блюда'},
+    {id: 4, name: 'Название блюда'},
+    {id: 5, name: 'Название блюда'},
+    {id: 6, name: 'Название блюда'},
+    {id: 7, name: 'Название блюда'},
   ]);
 
   return (
@@ -27,7 +27,7 @@ export const Breakfast = () => {
               style={styles.HeaderBtn__img}
             ></Image>
           </View>
-          <Text style={styles.Title} >Завтраки</Text>
+          <Text style={styles.Title} >Улов недели</Text>
         </View>
       </View>
       <FlatList style={styles.ContentContainer} data={dishesList} renderItem={({ item }) => (
