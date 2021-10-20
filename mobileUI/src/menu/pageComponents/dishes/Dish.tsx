@@ -6,7 +6,11 @@ export const Dish = ({ el } : {el: any}) => {
         <TouchableOpacity style={styles.DishWrapper}>
             <View style={styles.Dish}>
                 <Text>{el.name}</Text>
+<<<<<<< HEAD
+                <Image source={require('../../../../img/food.png')}></Image>
+=======
                 <Image source={require('../../../../img/dishImg.png')}></Image>
+>>>>>>> dev
             </View>
         </TouchableOpacity>
     )

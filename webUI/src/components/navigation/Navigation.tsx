@@ -11,7 +11,7 @@ interface LinkType {
 }
 
 const links: LinkType[] = [
-  { title: "Меню", link: "/#" },
+  { title: "Меню", link: "/menu" },
   { title: "Забронировать стол", link: "/#" },
   { title: "Оформить заказ", link: "/#" },
 ];
@@ -27,9 +27,9 @@ const Navigation = () => {
       <div className="links">
         {links.map(({ title, link }) => {
           return (
-            <a className="link" href={link}>
+            <Link key={title} className="link" to={link}>
               {title}
-            </a>
+            </Link>
           );
         })}
       </div>

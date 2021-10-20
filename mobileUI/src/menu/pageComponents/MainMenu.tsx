@@ -23,7 +23,7 @@ export const MainMenu = () => {
         <View style={styles.SearchContainer}></View>
         <View style={styles.HeaderContainer}>
           <View style={styles.HeaderBtn} onTouchStart={() => { navigation.navigate('Menu') }}>
-            <Image source={require('../../../img/arrow-left.png')}
+            <Image source={require('../../../img/arrowLeft.png')}
               style={styles.HeaderBtn__img}
             ></Image>
           </View>

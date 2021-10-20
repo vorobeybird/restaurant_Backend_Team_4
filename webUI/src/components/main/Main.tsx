@@ -73,20 +73,20 @@ const Main = () => {
         <p>Забронируйте стол</p>
         <div className="inputs_container">
           <div>
-            <Input placeholder="Имя Фамилия" onChange={onChange} />
-            <Input placeholder="Номер телефона" onChange={onChange} />
+            {/*<Input placeholder="Имя Фамилия" onChange={onChange} />*/}
+            {/*<Input placeholder="Номер телефона" onChange={onChange} />*/}
           </div>
           <div className="time_and_date_input_container">
-            <InputCTA
-              placeholder="Дата"
-              onClick={onClickDate}
-              Icon={CalendarLogo}
-            />
-            <InputCTA
-              placeholder="Время"
-              onClick={onClickTime}
-              Icon={ClockLogo}
-            />
+            {/*<InputCTA*/}
+            {/*  placeholder="Дата"*/}
+            {/*  onClick={onClickDate}*/}
+            {/*  Icon={CalendarLogo}*/}
+            {/*/>*/}
+            {/*<InputCTA*/}
+            {/*  placeholder="Время"*/}
+            {/*  onClick={onClickTime}*/}
+            {/*  Icon={ClockLogo}*/}
+            {/*/>*/}
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@ const Main = () => {
                     <p>Цена: ${price}</p>
                   </div>
                   <div>
-                    <Button onClick={onclick}>Заказать</Button>
+                    {/*<Button onClick={onclick}>Заказать</Button>*/}
                   </div>
                 </div>
               </div>

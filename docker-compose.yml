@@ -22,8 +22,13 @@ services:
       context: ./server/app
       dockerfile: Dockerfile
     restart: always
+<<<<<<< HEAD
+     ports:
+       - 5000:5000
+=======
     ports:
       - 5000:5000
+>>>>>>> dev
     environment:
       DB_HOST: db
       DB_USER: ${DB_USER}
@@ -42,8 +47,13 @@ services:
       dockerfile: Dockerfile
     environment:
       CHOKIDAR_USEPOLLING: "true"
+<<<<<<< HEAD
+     ports:
+       - 3000:3000
+=======
     ports:
       - 3000:3000
+>>>>>>> dev
     volumes:
     - ./webUI/src:/app/src
 
@@ -58,4 +68,20 @@ services:
     ports:
       - 3001:3001
     volumes:
+<<<<<<< HEAD
+    - ./admin/src:/app/src
+    
+#  nginx:
+#    build:
+#      context: ./docker/nginx
+#      dockerfile: Dockerfile
+#    container_name: nginx
+#    ports:
+#      - 80:80
+#    depends_on:
+#      - userinterface
+#      - server
+#      - admin
+=======
       - ./admin/src:/app/src
+>>>>>>> dev

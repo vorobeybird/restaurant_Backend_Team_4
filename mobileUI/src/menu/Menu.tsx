@@ -3,12 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native'
 
 export type RootStackParamList = {
-    ProfileComponent: undefined;
-    MarketMain: undefined;
-    Menu: undefined;
-    MenuTabNavigation: undefined;
-    Breakfast: undefined;
     MainMenu: undefined;
+    Breakfast: undefined;
+    MenuTabNavigation: undefined;
     BarMenu: undefined;
     WeekCatch: undefined;
     navigate: any;
