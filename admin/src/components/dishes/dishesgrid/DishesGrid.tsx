@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { DataGrid, GridColDef, GridValueGetterParams, GridApi, GridCellValue } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import DishDialog from '../dialog/DishDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { Box, Container } from '@mui/material';
+import { useTheme } from '@mui/styles';
 
 interface IDish {
   id: number;
@@ -14,6 +15,7 @@ interface IDish {
   photos: Array<Object>
   categories: Array<Number>;
   ingredients: Array<Number>;
+  calories: number;
 }
 
 interface IResponse {
@@ -23,19 +25,21 @@ interface IResponse {
 }
 
 const DishesGrid = () => {
+  const theme = useTheme();
   const allDishes:IDish[] = [];
-  const [open, setOpen] = React.useState(false);
-  const [currentDish, setCurrentDish] = React.useState();
-  const [dishes, setDishes]: [IDish[], (dishes: IDish[])=> void] = React.useState(allDishes);
-  const [loading, setLoading]: [boolean, (loading: boolean) => void] = React.useState<boolean>(true);
-  const [error, setError]: [string, (error: string) => void] = React.useState("");
+  const initialDish: any = {};
+  const [open, setOpen] = useState(false);
+  const [currentDish, setCurrentDish] = useState(initialDish);
+  const [dishes, setDishes]: [IDish[], (dishes: IDish[])=> void] = useState(allDishes);
 
   const handleClickOpen = () => {
     setOpen(true);
+
   };
 
   const handleClose = () => {
     setOpen(false);
+    setCurrentDish(initialDish);
   };
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -47,8 +51,8 @@ const DishesGrid = () => {
       width: 160,
     },
     { field: 'categories', headerName: 'Category', width: 300 },
-    { field: 'price', headerName: 'Price', width: 150 },
-    { field: 'dishes_photos', headerName: 'Photos', width: 120,   
+    { field: 'price', headerName: 'Price', width: 150, align: 'center' },
+    { field: 'dishes_photos', headerName: 'Photos', width: 120, align: 'center',
       valueGetter: (params: GridValueGetterParams) =>{
         const photos: any = params.getValue(params.id, 'photos')
       return photos.length;
@@ -58,30 +62,20 @@ const DishesGrid = () => {
       setCurrentDish(params.api.getRow(params.id));
       handleClickOpen();
       }
-      return <Button onClick={onClick}>Edit</Button>
+      return <Button color="warning" variant="contained" onClick={onClick}>Edit</Button>
     },},
     { field:'Delete', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
-        e.stopPropagation(); // don't select this row after clicking
-  
-/*         const api: GridApi = params.api;
-        const thisRow: Record<string, GridCellValue> = {};
-        api
-          .getAllColumns()
-          .filter((c) => c.field !== "__check__" && !!c)
-          .forEach(
-            (c) => (thisRow[c.field] = params.getValue(params.id, c.field))
-          ); */
-
+        e.stopPropagation(); 
             deleteDish(params.id);
       };
   
-      return <Button onClick={onClick}>Delete</Button>;
+      return <Button color="error" variant="contained" onClick={onClick}>Delete</Button>;
     },}
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `http://localhost:5000/api/dish/${id}`;
+    const urlToDelete = `${process.env.REACT_APP_API!}/${id}`;
     axios.delete<IResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -93,27 +87,25 @@ const DishesGrid = () => {
     })
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
-        setError(error);
-        setLoading(false);
+        console.error(error);
     })
  }
 
   const fetchDishes = () => {
-    const apiUrl = "http://localhost:5000/api/dish";
+    const apiUrl = process.env.REACT_APP_API!;
     axios.get<IResponse>(apiUrl, {
         headers: {
             "Content-type": "application/json"
         }
     })
     .then(response=> {
-        console.log(response.data.data)
+        console.log(response.data.data);
         setDishes(response.data.data);
-        setLoading(false);
     })
     .catch(err=>{
+  
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
-        setError(error);
-        setLoading(false);
+        console.error(error);
     })
 }
 
@@ -122,16 +114,22 @@ useEffect(() => {
 }, []);
 
   return (<>
-    <div style={{ height: 400, width: '100%' }}>
+          <div style={{height: '85vh'}}>
+    <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
+      
+      <Container sx={{my: theme.spacing(5), textAlign: 'center'}}><Button variant="contained" onClick={handleClickOpen}>Add a new Dish</Button></Container>
+
       <DataGrid
         rows={dishes}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection = {false}
       />
-    </div>
-    <DishDialog dish={currentDish} handleClose={handleClose} type={'Edit'} open={open} handleClickOpen={handleClickOpen} />
+     
+      </Container>
+      </div>
+    <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} handleClickOpen={handleClickOpen} fetchDishes={fetchDishes} />
     </>
   );
 }
