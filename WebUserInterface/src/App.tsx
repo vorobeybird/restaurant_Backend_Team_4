@@ -6,8 +6,8 @@ import "./app.scss";
 //imorts for users authentication with amplify
 import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
 import Menu from "./pages/menu/Menu";
+Amplify.configure(awsconfig);
 
 
 const App = () => {

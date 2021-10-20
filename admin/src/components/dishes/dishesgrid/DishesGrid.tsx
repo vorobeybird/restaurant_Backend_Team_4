@@ -81,7 +81,7 @@ const DishesGrid = () => {
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `http://localhost:5000/api/dish/${id}`;
+    const urlToDelete = `http://ec2-18-185-80-4.eu-central-1.compute.amazonaws.com:5000/api/dish/${id}`;
     axios.delete<IResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -99,7 +99,7 @@ const DishesGrid = () => {
  }
 
   const fetchDishes = () => {
-    const apiUrl = "http://localhost:5000/api/dish";
+    const apiUrl = "http://ec2-18-185-80-4.eu-central-1.compute.amazonaws.com:5000/api/dish";
     axios.get<IResponse>(apiUrl, {
         headers: {
             "Content-type": "application/json"

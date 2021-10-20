@@ -33,7 +33,7 @@ const menuItems: ReducerState = {
       categories: [1],
       calories: 150,
       photo:
-        'https://fasol.tv/upload/iblock/71d/71db4fee4773a9754602b0165189159e.png',
+        'https://tekhnolog.com/wp-content/uploads/2021/03/borshh-ukrainskij-s-salom-i-pampushkami-pod-chesnochnym-sousom.jpg',
     },{
       title: 'Борщ',
       price: 11,
