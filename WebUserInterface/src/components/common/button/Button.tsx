@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import "./button.scss";
 
 interface ButtonProps {
-  children: any;
+  children: ReactNode;
   onClick: () => void;
 }
 

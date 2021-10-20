@@ -1,9 +1,8 @@
 import { Button } from "../../components/common/button/Button";
-import { MenuItem } from "../../store/menu/menu.types";
+import { MenuItem } from "../../features/menu/menu.types";
 import Gear from "../../assets/gear.png";
 import "./menu.scss";
 import { useState } from "react";
-import Close from "../../assets/close.png";
 
 const MenuItemComponent = ({
   title,
@@ -51,17 +50,8 @@ const MenuItemComponent = ({
     </div>
   );
 
-  const onClose = () => {
-    console.log("closed");
-  };
-
   return (
     <div className="item_container">
-      <div className="item_close">
-        <button onClick={onClose}>
-          <img src={Close} />
-        </button>
-      </div>
       <div className="item_photo">
         <img src={photo} />
       </div>

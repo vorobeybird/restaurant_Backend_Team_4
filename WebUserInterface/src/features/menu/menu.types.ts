@@ -17,7 +17,15 @@ export enum MenuConstants {
 }
 
 export interface ReducerState {
-  items: MenuItem[];
+  items: MenuItem[]
 }
 
-export type MenuActions = ActionType<typeof actions>;
+export interface Response {
+  data: MenuItem[]
+  status: number
+}
+
+export interface MenuActions {
+  type: MenuConstants
+  payload: MenuItem[]
+} 
