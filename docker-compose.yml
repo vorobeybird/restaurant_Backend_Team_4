@@ -14,7 +14,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-     - 3307:3306
+      - 3307:3306
 
   server:
     container_name: api
@@ -34,7 +34,7 @@ services:
       - db
     stdin_open: true
     tty: true
-  
+
   webUI:
     container_name: webUI
     build:
@@ -47,6 +47,7 @@ services:
     volumes:
     - ./webUI/src:/app/src
 
+
   admin:
     container_name: admin
     build:
@@ -57,4 +58,4 @@ services:
     ports:
       - 3001:3001
     volumes:
-    - ./admin/src:/app/src
+      - ./admin/src:/app/src
