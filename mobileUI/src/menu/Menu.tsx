@@ -1,22 +1,26 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 export type RootStackParamList = {
+<<<<<<< HEAD
     MainMenu: undefined;
     Breakfast: undefined;
     MenuTabNavigation: undefined;
+=======
+    ProfileComponent: undefined;
+    MarketMain: undefined;
+    Menu: undefined;
+    MenuTabNavigation: undefined;
+    Breakfast: undefined;
+    MainMenu: undefined;
+>>>>>>> dev
     BarMenu: undefined;
     WeekCatch: undefined;
     navigate: any;
 };
 
 export const Menu = () => {
-
     const navigation = useNavigation<RootStackParamList>();
     return (
         <View>
@@ -37,12 +41,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontFamily: 'Open Sans',
         fontStyle: 'normal',
-        fontWeight: 'normal',
+        fontWeight: 'bold',
         fontSize: 24,
         lineHeight: 33,
         textAlign: 'center',
         color: '#000000',
-
     },
     FoodLinks: {
         paddingBottom: 10,
@@ -53,7 +56,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         lineHeight: 33,
         color: '#000000',
-
     },
     FoodContainer: {
         top: '20%',

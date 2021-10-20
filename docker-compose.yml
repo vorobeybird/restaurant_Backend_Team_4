@@ -9,12 +9,12 @@ services:
     volumes:
       - ./mysqldb:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: test
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-     - 3307:3306
+      - 3307:3306
 
   server:
     container_name: api
@@ -22,32 +22,41 @@ services:
       context: ./server/app
       dockerfile: Dockerfile
     restart: always
+<<<<<<< HEAD
      ports:
        - 5000:5000
+=======
+    ports:
+      - 5000:5000
+>>>>>>> dev
     environment:
       DB_HOST: db
-      DB_USER: root
-      DB_PASSWORD: example
-      DB_NAME: test
-      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
     depends_on:
       - db
     stdin_open: true
     tty: true
-    # volumes:
-    #   - ./server/app:/app/src
-  
-  userinterface:
-    container_name: WebUserInterface
+
+  webUI:
+    container_name: webUI
     build:
-      context: ./WebUserInterface
+      context: ./webUI
       dockerfile: Dockerfile
     environment:
       CHOKIDAR_USEPOLLING: "true"
+<<<<<<< HEAD
      ports:
        - 3000:3000
+=======
+    ports:
+      - 3000:3000
+>>>>>>> dev
     volumes:
-    - ./WebUserInterface/src:/app/src
+    - ./webUI/src:/app/src
+
 
   admin:
     container_name: admin
@@ -59,6 +68,7 @@ services:
     ports:
       - 3001:3001
     volumes:
+<<<<<<< HEAD
     - ./admin/src:/app/src
     
 #  nginx:
@@ -72,3 +82,6 @@ services:
 #      - userinterface
 #      - server
 #      - admin
+=======
+      - ./admin/src:/app/src
+>>>>>>> dev
