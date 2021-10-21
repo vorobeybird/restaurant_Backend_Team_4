@@ -3,6 +3,8 @@ import { MenuItem } from "../../features/menu/menu.types";
 import Gear from "../../assets/gear.png";
 import "./menu.scss";
 import { useState } from "react";
+import Carousel from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 
 const MenuItemComponent = ({
   title,
@@ -10,7 +12,7 @@ const MenuItemComponent = ({
   ingredients,
   weight,
   calories,
-  photo,
+  photos,
   price,
 }: MenuItem) => {
   const [gearState, setGearState] = useState(false);
@@ -52,8 +54,12 @@ const MenuItemComponent = ({
 
   return (
     <div className="item_container">
-      <div className="item_photo">
-        <img src={photo} />
+      <div className="item_photos">
+        <Carousel plugins={["arrows"]}>
+          {photos.map((photo) => {
+            return <img src={photo.photo_url} alt="dish" />;
+          })}
+        </Carousel>
       </div>
       <div className="item_info">
         <div>

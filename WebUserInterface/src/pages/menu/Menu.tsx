@@ -19,16 +19,20 @@ const PATH_NAMES = ["Завтраки", "Основное меню", "Меню �
 
 const Menu = ({ location }: MenuProps) => {
   const dispatch = useAppDispatch();
+
+  console.log(fetchMenuItems());
   useEffect(() => {
     dispatch(fetchMenuItems());
   }, []);
 
   const items = useAppSelector((state) => state.menu.items);
 
-  console.log(items);
-
   const currentPath = location.pathname as MenuPathType;
   const activeLink = PATH.indexOf(currentPath);
+
+  const filteredItems = items.filter((item) =>
+    item.categories.includes(activeLink + 1)
+  );
 
   return (
     <>
@@ -51,8 +55,8 @@ const Menu = ({ location }: MenuProps) => {
         </div>
       </div>
       <div className="item_container_wrapper">
-        {items.map((item, index) => (
-          <MenuItemComponent key={index} {...item} />
+        {filteredItems.map((item) => (
+          <MenuItemComponent {...item} />
         ))}
       </div>
     </>
