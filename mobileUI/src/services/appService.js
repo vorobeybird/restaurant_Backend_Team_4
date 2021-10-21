@@ -1,41 +1,21 @@
- class appService {
-    constructor() {
-        this._apiBase = '../../api.json';
-    }
-    
-    getResource = async () => {
-        const res = await fetch(`${this._apiBase}`);
-    
-        if (!res.ok) {
-          throw new Error(`Could not fetch ` +
-            `, received ${res.status}`);
-        }
-        return await res.json();
-    }
+import React from "react";
 
-    getAllBooks = async () => {
-        const res = await this.getResource();
-        return console.log(res.map(this._transformBook));
-    }
+const  AppService = () => {
+   
+    const _apiBase = './db.json';
     
-    
-
-    isSet(data) {
-        if (data) {
-            return data
-        } else {
-            return 'no data :('
-        }
-    }
-
-
-    _transformBook = (book) => {
+    const res = await fetch(_apiBase);
+    res.then(data => {return res.json()})
+    _transformDish = (dish) => {
         return {
-            id: this._extractId(data[0]),
-            title: this.isSet(data[1]),
-            price: this.isSet(data[3]),
-            sense: this.isSet(data[4]),
+            id: menu[0],
+            img: menu[1],
+            title: menu[3],
+            descr: menu[4],
+            price: menu[5],
         };
     }
+    const res = await getResource();
+    return console.log(res.map(this._transformDish));
+    
 }
-appService.getAllBooks()

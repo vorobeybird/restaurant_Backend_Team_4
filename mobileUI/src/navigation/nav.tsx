@@ -65,7 +65,7 @@ export const BottomTabNavigation = () => {
                         tabBarIcon: ({ focused }) => {
                             return <View>
                                 <Image style={styles.PictStyle} source={require('../../img/profPhoto.png')} resizeMode='contain' />
-                                <Text style={styles.SimpText}>Блюда</Text>
+                                <Text style={styles.SimpText}>Профиль</Text>
                             </View>
                         }
                     }}
