@@ -59,7 +59,7 @@ connection.connect((error) => {
               FOREIGN KEY (dish_id) REFERENCES dishes(id)
               ON DELETE CASCADE
             ) ENGINE=INNODB;
-        
+
     `;
   connection.query(sql, (err, result) => {
     if (err) throw err;
