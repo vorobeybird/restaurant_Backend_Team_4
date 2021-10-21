@@ -19,11 +19,8 @@ const links: LinkType[] = [
 const Navigation = () => {
   return (
     <div className="navigation">
-      <img className="logo" src={Logo} alt="logo" />
-      <div className="input_container">
-        <input className="input" type="text" placeholder="Искать блюдо..." />
-        <img className="search_icon" src={SearchIcon} alt="search icon"></img>
-      </div>
+      <div className="logo">Ocean bar</div>
+      
       <div className="links">
         {links.map(({ title, link }) => {
           return (
@@ -32,6 +29,10 @@ const Navigation = () => {
             </Link>
           );
         })}
+      </div>
+      <div className="input_container">
+        <input className="input" type="text" placeholder="Искать блюдо..." />
+        <img className="search_icon" src={SearchIcon} alt="search icon"></img>
       </div>
       <div className="navigation_icons_container">
         <Link to="/#">

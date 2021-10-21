@@ -1,9 +1,10 @@
 import { Button } from "../../components/common/button/Button";
-import { MenuItem } from "../../store/menu/menu.types";
+import { MenuItem } from "../../features/menu/menu.types";
 import Gear from "../../assets/gear.png";
 import "./menu.scss";
 import { useState } from "react";
-import Close from "../../assets/close.png";
+import Carousel from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 
 const MenuItemComponent = ({
   title,
@@ -11,7 +12,7 @@ const MenuItemComponent = ({
   ingredients,
   weight,
   calories,
-  photo,
+  photos,
   price,
 }: MenuItem) => {
   const [gearState, setGearState] = useState(false);
@@ -51,19 +52,14 @@ const MenuItemComponent = ({
     </div>
   );
 
-  const onClose = () => {
-    console.log("closed");
-  };
-
   return (
     <div className="item_container">
-      <div className="item_close">
-        <button onClick={onClose}>
-          <img src={Close} />
-        </button>
-      </div>
-      <div className="item_photo">
-        <img src={photo} />
+      <div className="item_photos">
+        <Carousel plugins={["arrows"]}>
+          {photos.map((photo) => {
+            return <img src={photo.photo_url} alt="dish" />;
+          })}
+        </Carousel>
       </div>
       <div className="item_info">
         <div>
@@ -90,7 +86,7 @@ const MenuItemComponent = ({
         <div>Калории: {calories}</div>
         <div>Стоимость: {price} BYN</div>
         <div className="button_item_order">
-          <Button type='button' onClick={onOrder}>Заказать</Button>
+          <Button onClick={onOrder}>Заказать</Button>
         </div>
       </div>
     </div>

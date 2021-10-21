@@ -2,13 +2,7 @@ import MainPage from "./pages/mainPage/MainPage";
 import Login from "./pages/login/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./app.scss";
-
-//imorts for users authentication with amplify
-import Amplify, { Auth } from 'aws-amplify';
-import awsconfig from './aws-exports';
 import Menu from "./pages/menu/Menu";
-Amplify.configure(awsconfig);
-
 
 const App = () => {
   return (

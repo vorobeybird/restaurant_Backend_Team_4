@@ -1,23 +1,39 @@
 .navigation {
   position: fixed;
   width: 100%;
+  max-width: 1600px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
-  background-color: rgb(231, 221, 221);
-  border-bottom: solid 1px black;
+  background: #212529;
+  z-index: 9;
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 25px;
+  color: #FFFFFF;
 }
 
 .logo {
-  width: 150px;
-  height: 50px;
+  width: 162px;
+  height: 38px;
+  margin-left: 50px;
+  margin-right: 35px;
+  font-family: "Regattia Stencil";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 38px;
+  color: #FFFFFF;
 }
 
 .input_container {
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: 300px;
 }
 
 .input {
@@ -35,12 +51,17 @@
 .links {
   display: flex;
   justify-content: space-between;
+  margin-left: 0;
 }
 
 .link {
   margin-right: 25px;
   text-decoration: none;
-  color: black;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 25px;
+  color: #FFFFFF;
 }
 
 .navigation_icons_container {
