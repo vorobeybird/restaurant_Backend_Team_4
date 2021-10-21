@@ -8,7 +8,6 @@ import { BarMenu } from '../menu/pageComponents/BarMenu';
 import { WeekCatch } from '../menu/pageComponents/WeekCatch';
 
 export type RootStackParamList = {
-    Breakfast: undefined;
     MenuTabNavigation: undefined;
     MainMenu: undefined;
     BarMenu: undefined;
@@ -44,5 +43,4 @@ export const MenuTabNavigation = () => {
         />
         
     </Stack.Navigator>
-
 }

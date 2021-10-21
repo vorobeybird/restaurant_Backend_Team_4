@@ -90,7 +90,7 @@ const MenuItemComponent = ({
         <div>Калории: {calories}</div>
         <div>Стоимость: {price} BYN</div>
         <div className="button_item_order">
-          <Button onClick={onOrder}>Заказать</Button>
+          <Button type='button' onClick={onOrder}>Заказать</Button>
         </div>
       </div>
     </div>

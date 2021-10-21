@@ -81,4 +81,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '90%',
   },
+<<<<<<< HEAD
 });
+=======
+});
+
+>>>>>>> dev

@@ -9,6 +9,7 @@ const connection = mysql.createConnection({
   port: process.env.DB_PORT,
   multipleStatements: true,
 });
+
 connection.connect((error) => {
   if (error) throw error;
   // temporary - to create table dishes
@@ -58,7 +59,6 @@ connection.connect((error) => {
               FOREIGN KEY (dish_id) REFERENCES dishes(id)
               ON DELETE CASCADE
             ) ENGINE=INNODB;
-
         
     `;
   connection.query(sql, (err, result) => {
