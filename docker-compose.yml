@@ -47,7 +47,6 @@ services:
     volumes:
     - ./webUI/src:/app/src
 
-
   admin:
     container_name: admin
     build:
