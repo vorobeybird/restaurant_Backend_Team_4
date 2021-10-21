@@ -35,7 +35,7 @@ services:
     stdin_open: true
     tty: true
 
-  webUI:
+  webui:
     container_name: webUI
     build:
       context: ./webUI
