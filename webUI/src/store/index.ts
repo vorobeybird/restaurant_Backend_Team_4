@@ -8,11 +8,14 @@ export interface RootState {
   menu: ReducerState;
 }
 
+
 const store = createStore<RootState, any, any, any>(
   combineReducers({
     menu: menuReducer,
   }),
   composeWithDevTools(applyMiddleware(thunk))
-);
-
-export default store;
+  );
+  
+  export default store;
+  
+  export type AppDispatch = typeof store.dispatch
