@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList } from '../Menu';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ScrollView, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
 import { Dishes } from './dishes/Dish';
 import axios, { AxiosResponse } from "axios"
 
@@ -15,44 +15,44 @@ interface MenuItem {
   categories: number[];
   calories: number;
   photo: string;
+  data:any;
 }
-interface Response {
-
+export  const  Breakfast = () => {
+  const [date, setDate] = useState({} as any);
   
-  data: MenuItem[]
-  status: number
-}
-export  const  Breakfast = async () => {
-  const [data, setData] = useState({} as any);
 
   const getItems = async () => {
-    const response = await axios.get('http://ec2-18-185-80-4.eu-central-1.compute.amazonaws.com:5000/api/dish') as AxiosResponse<Response>
-    return JSON.parse(JSON.stringify(response)).data[0]
+    const response = await axios.get<MenuItem[]>('http://ec2-18-192-170-78.eu-central-1.compute.amazonaws.com:5000/api/dish')
+    const res = response.data
+    return res.data
   }
-  const fetchMenuItems =  () => async () => {
-
+  const fetchMenuItems = async () => {
     const items = await getItems()
-  
-    
-    setData(items.data)
+    setDate(items)
   }
-  fetchMenuItems()
-
+  useEffect(() => {
+    fetchMenuItems()
     
-
+  },[])   
+ 
   return (
-      <View>
-        <ScrollView style={styles.Scroll}>
+        <View style={styles.Scroll}>
           <Text style={styles.Title}>Завтраки</Text>
-          <Dishes   img={undefined} title={data.title} descr={data.descr} price={data.price} />
-        </ScrollView>
-     </View>
+          <FlatList 
+            style={styles.Flat}
+            data={date}
+            renderItem={({ item }) => (
+              <Dishes id={item.id} title={item.title} photos={item.photos[0].photo_url} descr={item.default_ingredients} price={item.price}/>
+            )}
+          />
+        </View>
 
   );
 };
 
 const styles = StyleSheet.create({
   Title: {
+    height:'7%',
     alignSelf:'center',
     fontFamily: 'Open Sans',
     fontSize: 30,
@@ -61,5 +61,8 @@ const styles = StyleSheet.create({
   },
   Scroll:{
     paddingBottom:'30%'
+  },
+  Flat:{
+    top:'2%',
   }
 });

@@ -1,26 +1,24 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text, Image} from 'react-native';
 
-
-
-export const Dishes = ({ img, title, descr, price} : {img:any, title:any, descr:any, price: any}) => {
+export const Dishes = ({id, title, photos, descr, price} : {id:any,  title:any, photos:any, descr:any, price: any}) => {
   
   return (
-    <View style={styles.Wrapper}>
+    <View key={id} style={styles.Wrapper}>
         <Text style={styles.Header}>{title}</Text>
-        <Image style={styles.Pict} source={img}/>
+        <Image style={styles.Pict} source={{uri:photos}}/>
         <View style={styles.BotText}>
-            <Text style={styles.Descr}>{descr} </Text>
+            <Text style={styles.Descr}> {descr} </Text>
             <Text style={styles.Cost}>{price}</Text>
         </View>
     </View>
-)
+  )
 };
 
 const styles = StyleSheet.create({
-
     Header:{
-      bottom:15,
+    
+      bottom:'2%',
       fontFamily: 'Open Sans',
       fontSize: 20,
       fontWeight: 'bold',

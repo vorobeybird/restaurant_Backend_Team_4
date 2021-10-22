@@ -4,7 +4,7 @@ import {
   Text,
   View,Image,
 } from 'react-native'
-import {Authenticator} from 'aws-amplify-react-native'
+import {Authenticator, SignOut} from 'aws-amplify-react-native'
 
 export const Links = () => {
 
@@ -33,7 +33,7 @@ export const Links = () => {
       </View>
       <Text style={styles.TextStyle}>        конфиденциальности</Text>
       <View style={styles.BoxWrapper}>
-        <Authenticator usernameAttributes={false} />
+        <Authenticator />
       </View>
     </View>
   );
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
       width:30,
       height:30,
       marginRight:'5%',
-    }
+    },
+    
 
   
 });

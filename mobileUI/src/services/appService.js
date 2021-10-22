@@ -9,10 +9,10 @@ const  AppService = () => {
     _transformDish = (dish) => {
         return {
             id: menu[0],
-            img: menu[1],
-            title: menu[3],
-            descr: menu[4],
-            price: menu[5],
+            img: menu[0],
+            title: menu[0],
+            descr: menu[0],
+            price: menu[0],
         };
     }
     const res = await getResource();
