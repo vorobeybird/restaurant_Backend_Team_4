@@ -2,13 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 300px;
 
-  & h3 {
-    font-size: 1.6rem;
+  & .label {
+    width: 385px;
+    height: 55px;
+    font-size: 48px;
+    line-height: 55px;
+    color: #000000;
+    margin-top: 40px;
   }
 
   & p {
-    margin-bottom: 50px;
+    width: 536px;
+    height: 28px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #606060;
+    margin-top: 28px;
   }
 }
 
@@ -16,23 +28,35 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  height: 80px;
 
-  & img {
-    width: 80px;
-    height: 80px;
+  & .step {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .step_number {
+      width: 47px;
+      height: 120px;
+      font-family: "Regattia Stencil";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 100px;
+      line-height: 120px;
+      color: rgba(96, 96, 96, 0.5);
+    }
+  
+    p {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 28px;
+      color: #000000;
+      margin-left: 12px;
+    }
   }
-
-  & p {
-    font-size: 1.4;
-    font-weight: 600;
-  }
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  
 }
 
 .table_resevation_container {

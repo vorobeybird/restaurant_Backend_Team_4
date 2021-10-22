@@ -12,15 +12,14 @@ interface LinkType {
 
 const links: LinkType[] = [
   { title: "Меню", link: "/menu" },
-  { title: "Забронировать стол", link: "/#" },
   { title: "Оформить заказ", link: "/#" },
+  { title: "Забронировать стол", link: "/#" },
 ];
 
 const Navigation = () => {
   return (
     <div className="navigation">
-      <div className="logo">Ocean bar</div>
-      
+      <div className="logo">Ocean bar</div>     
       <div className="links">
         {links.map(({ title, link }) => {
           return (
@@ -31,7 +30,9 @@ const Navigation = () => {
         })}
       </div>
       <div className="input_container">
-        <input className="input" type="text" placeholder="Искать блюдо..." />
+        <div className="input">
+          <div className="input_label">Search</div>
+        </div>
         <img className="search_icon" src={SearchIcon} alt="search icon"></img>
       </div>
       <div className="navigation_icons_container">

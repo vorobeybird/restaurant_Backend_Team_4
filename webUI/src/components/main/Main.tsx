@@ -58,13 +58,13 @@ const Main = () => {
   return (
     <>
       <div className="how_it_works">
-        <h3>Как это работает</h3>
+        <div className="label">Как это работает</div>
         <p>4 простых шага для экономии вашего времени</p>
       </div>
       <div className="steps_container">
-        {STEPS.map((step) => (
+        {STEPS.map((step: any, index: number) => (
           <div className="step">
-            <img src={Figure} alt="figure" />
+            <div className="step_number">{index+ 1}</div>
             <p>{step}</p>
           </div>
         ))}

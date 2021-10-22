@@ -9,9 +9,15 @@ const Header = () => {
 
   return (
     <div className="header">
-      <img src={Logo} alt="logo" />
-      <h2>Вкусно. Быстро. Качественно</h2>
-      <Button onClick={goToMenu}>Меню</Button>
+      <div className="header_inner"> 
+        <div className="header_content">
+          <div className="header_logo">Ocean bar</div>
+          <div className="header_text">Вкусно. Быстро. Качественно</div>
+          <div className="header_btn">
+            <Button onClick={goToMenu}>Меню</Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
