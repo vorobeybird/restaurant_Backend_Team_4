@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Auth} from 'aws-amplify';
 import {AppStateType} from "../../store";
 import {AuthStateType} from "../../store/auth/auth.reducer";
+import {Redirect} from "react-router-dom";
 
 export function Authentication() {
     console.log("Auth rendering")
@@ -50,14 +51,6 @@ export function Authentication() {
             const {username, password} = authState;
             const user = await Auth.signIn(username, password);
             dispatch({type: "SIGN_IN", payload: user})
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function sighOutHandler() {
-        try {
-            await Auth.signOut();
         } catch (err) {
             console.log(err);
         }
@@ -120,11 +113,7 @@ export function Authentication() {
                         <Button onClick={toggleSignInHandler} type="button">Sign Up</Button>
                     </div>
                 </form>}
-                {formType === "signedIn" &&
-                <div>
-                    <h1>Welcome to the OceanBar</h1>
-                    <Button type="button" onClick={sighOutHandler}>Выйти</Button>
-                </div>}
+                {formType === "signedIn" && <Redirect to="/"/>}
             </section>
         </>
 
