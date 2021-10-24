@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 
-import { RootState } from "../../store";
+import { AppStateType } from "../../store";
 import { MenuItem } from "../../store/menu/menu.types";
 import Navigation from "../../components/navigation/Navigation";
 import MenuItemComponent from "./MenuItem";
@@ -54,6 +54,6 @@ const Menu = ({ items, location }: MenuProps) => {
   );
 };
 
-const mapStateToProps = (store: RootState) => ({ items: store.menu.items });
+const mapStateToProps = (store: AppStateType) => ({ items: store.menu.items });
 
 export default connect(mapStateToProps)(Menu);
