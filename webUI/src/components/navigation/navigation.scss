@@ -8,6 +8,7 @@
   align-items: center;
   background: linear-gradient(180deg, #212529 100%, rgba(33, 37, 41, 0) 100%);
   z-index: 9;
+  overflow: hidden;
 }
 
 .logo {
@@ -94,6 +95,7 @@
   flex-direction: row;
   margin-left: 25px;
   justify-content: space-around;
+  margin-right: 25px;
   
   & a {
     width: 24px;

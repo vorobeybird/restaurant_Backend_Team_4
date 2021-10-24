@@ -23,6 +23,7 @@ footer {
     flex-direction: row;
     align-items: center;
     width: 70%;
+    margin-left: 5%;
 
     & li {
       list-style-type: none;
@@ -43,7 +44,7 @@ footer {
 
 .all_rights_reserved {
   position: absolute;
-  top: 60%;
+  top: 70%;
   left: 5%;
   font-style: normal;
   font-weight: 300;
