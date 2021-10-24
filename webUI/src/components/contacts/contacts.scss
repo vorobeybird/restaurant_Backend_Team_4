@@ -15,6 +15,16 @@
       display: flex;
       flex: 1;
       flex-direction: column;
+      justify-content: space-evenly;
+
+      & .our-contacts_title {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 37px;
+        color: #000000;
+        margin-left: 5%;
+      }
 
       & .our-contacts_list {
         display: flex;
@@ -26,6 +36,8 @@
           flex-direction: row;
           flex: 1;
           align-items: center;
+          list-style-type: none;
+          margin-right: 2%;
 
           & img {
             width: 30px;
@@ -46,14 +58,70 @@
             white-space: nowrap;
           }
         }
-
       }
 
+      & .our-contacts_social {
+        display: flex;
+        flex-direction: row;
+        float: left;
+
+        & li {
+          list-style-type: none;
+          margin-right: 12px;
+
+          & a {
+
+            & img {
+              width: 36px;
+              height: 36px;
+            }
+          }
+        }
+      }
     }
 
     & .our-app {
       display: flex;
       flex: 1;
+      flex-direction: column;
+      justify-content: space-evenly;
+      padding-left: 5%;
+
+      & .our-app_title {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 37px;
+        color: #000000;
+      }
+
+      & .our-app_sub-title {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+        color: #000000;
+      }
+
+      & .our-app_markets {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0;
+
+        & li {
+          list-style-type: none;
+          margin-right: 12px;
+
+          & a {
+
+            & img {
+              width: 146px;
+              height: 56px;           
+            }
+          }
+        }
+      }
     }
   }
 
