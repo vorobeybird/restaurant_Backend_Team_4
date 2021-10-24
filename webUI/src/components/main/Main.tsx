@@ -64,42 +64,39 @@ const Main = () => {
       <div className="steps_container">
         {STEPS.map((step: any, index: number) => (
           <div className="step">
-            <div className="step_number">{index+ 1}</div>
+            <div className="step_number">{index + 1}</div>
             <p>{step}</p>
           </div>
         ))}
       </div>
-      <div className="table_resevation_container">
-        <p>Забронируйте стол</p>
-        <div className="inputs_container">
-          <div>
-            <Input placeholder="Имя Фамилия" onChange={onChange} />
-            <Input placeholder="Номер телефона" onChange={onChange} />
+
+      <div className="table_reserve_container">
+        <div className="table_reserve">
+          <p>Забронируйте стол</p>
+          <div className="inputs_container">
+            <Input placeholder="&nbsp;&nbsp;Имя" onChange={onChange} />
+            <Input placeholder="&nbsp;&nbsp;Номер телефона" onChange={onChange} />
+            <div className="time_and_date_input_container">
+              <InputCTA
+                placeholder="&nbsp;&nbsp;Дата"
+                onClick={onClickDate}
+                Icon={CalendarLogo}
+              />
+              <InputCTA
+                placeholder="&nbsp;&nbsp;Время"
+                onClick={onClickTime}
+                Icon={ClockLogo}
+              />
+            </div>
           </div>
-          <div className="time_and_date_input_container">
-            <InputCTA
-              placeholder="Дата"
-              onClick={onClickDate}
-              Icon={CalendarLogo}
-            />
-            <InputCTA
-              placeholder="Время"
-              onClick={onClickTime}
-              Icon={ClockLogo}
-            />
-          </div>
+          <button className="reserve-btn">Забронировать</button>
         </div>
       </div>
-      <div className="main_menu">
-        <h2>Меню</h2>
-        <div className="tabs">
-          <p>Завтраки</p>
-          <p className="active_tab">Основное меню</p>
-          <p>Меню бара</p>
-          <p>Улов недели</p>
-        </div>
 
+      <div className="main_menu">
+        <div className="main_menu__title">Предложение недели</div>
         <div className="main_meals_container">
+          <button className="main_meals_container__btn .left_btn"></button>
           {MEAL_BLOCKS.map(({ image, name, price, onclick }) => {
             return (
               <div className="meals_container">
@@ -118,40 +115,11 @@ const Main = () => {
               </div>
             );
           })}
-        </div>
-
-        <div className="more_details">
-          <a href="#">Подробнее</a>
+          <button className="main_meals_container__btn .right_btn"></button>
         </div>
       </div>
 
-      <div className="main_install_app_container">
-        <div>
-          <h2>Установите наше приложение</h2>
-        </div>
-        <div className="main_install_app">
-          <div className="main_logo">
-            <img src={Logo} alt="logo" />
-          </div>
-          <div className="app_link_container">
-            <div>
-              <p>
-                Приложение Ocean Bar
-                <br />
-                Позволяет забронировать
-                <br /> стол, выбрать еду и <br />
-                оформить заказ в несколько
-                <br /> касаний.
-              </p>
-            </div>
-            <div className="google_logo">
-              <a href="#">
-                <img src={GooglePlay} alt="google play" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </>
   );
 };
