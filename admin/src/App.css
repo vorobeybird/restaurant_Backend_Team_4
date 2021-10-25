@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+amplify-sign-out {
+  position: fixed;
+  bottom:0px;
+  right: 45px;
+  z-index: 100;
+  width: 100px;
+  background-color: #282c34;
+}

@@ -3,7 +3,7 @@ import {MouseEvent} from "react";
 
 interface ButtonProps {
   children: string;
-  onClick: (e: MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
   type: "button" | "submit" | "reset" ;
 }
 

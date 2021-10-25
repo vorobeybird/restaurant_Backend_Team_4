@@ -1,11 +1,12 @@
-import { connect } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-
-import { RootState } from "../../store";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { AppStateType } from "../../store";
 import { MenuItem } from "../../store/menu/menu.types";
 import Navigation from "../../components/navigation/Navigation";
 import MenuItemComponent from "./MenuItem";
 import "./menu.scss";
+import { useEffect } from "react";
+import { fetchMenuItems } from "../../store/menu/menu.actions";
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -17,7 +18,15 @@ const PATH = ["/menu/breakfast", "/menu", "/menu/bar", "/menu/catch"];
 
 const PATH_NAMES = ["Завтраки", "Основное меню", "Меню бара", "Улов недели"];
 
-const Menu = ({ items, location }: MenuProps) => {
+const Menu = ({ location }: MenuProps) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMenuItems());
+  }, []);
+
+  const items = useAppSelector((state) => state.menu.items);
+
   const currentPath = location.pathname as MenuPathType;
   const activeLink = PATH.indexOf(currentPath);
 
@@ -46,14 +55,13 @@ const Menu = ({ items, location }: MenuProps) => {
         </div>
       </div>
       <div className="item_container_wrapper">
-        {filteredItems.map((item, index) => (
-          <MenuItemComponent key={index} {...item} />
+        {filteredItems.map((item) => (
+          <MenuItemComponent {...item} />
         ))}
       </div>
     </>
   );
 };
 
-const mapStateToProps = (store: RootState) => ({ items: store.menu.items });
+export default Menu;
 
-export default connect(mapStateToProps)(Menu);
