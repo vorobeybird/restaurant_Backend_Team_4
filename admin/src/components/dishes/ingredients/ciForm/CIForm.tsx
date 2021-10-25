@@ -24,7 +24,7 @@ export default function CIForm({type}: ICIFormProps) {
     setCurrentValue(e.target.value);
   }
 
-  return (<>
+  return (<div>
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
@@ -88,7 +88,7 @@ export default function CIForm({type}: ICIFormProps) {
      <form><TextField /* label={`Add/Edit ${type}`} */ defaultValue={currentValue} value={currentValue} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
      <Button>Add</Button><Button>Delete</Button></form>
     }
-    </>
+    </div>
   );
 }
 
