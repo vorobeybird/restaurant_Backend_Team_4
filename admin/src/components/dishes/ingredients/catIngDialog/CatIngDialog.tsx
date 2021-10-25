@@ -9,6 +9,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import axios, {AxiosResponse, Method}  from 'axios';
+import TextField from '@mui/material/TextField';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import CIForm from '../ciForm/CIForm';
+import { Container } from '@mui/material';
 
 interface ICatIng{
     id: number;
@@ -49,28 +53,23 @@ export default function CatIngDialog({type, handleClose}: any ) {
   return (
     <div>
       <Dialog
-        fullScreen={fullScreen}
+        fullWidth
         open={type && true}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
         <DialogTitle id="responsive-dialog-title">
         <Typography sx={{ ml: 2, flex: 1 }} variant="h2" component="h2">
-         Add/edit {type}s
+         Add/edit {type}
         </Typography>
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
+        <DialogContent sx={{p: theme.spacing(3), height: 500, textAlign: "center"}}>
+          
+<CIForm type={type} />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-            Disagree
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+            Close
           </Button>
         </DialogActions>
       </Dialog>
