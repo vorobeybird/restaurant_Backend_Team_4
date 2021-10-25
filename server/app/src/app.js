@@ -19,7 +19,7 @@ app.use("/", (req, res, next) => {
 
 app.use("/api/dish", dishRouter);
 app.use("/api/ingredient", ingredientRouter);
-app.use("/api/category", ingredientRouter);
+app.use("/api/category", categoryRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running at port: ${PORT}.`);
