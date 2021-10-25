@@ -12,7 +12,6 @@ module.exports = class IngredientController {
             });
         } else {
           res.status(500).json({
-            status: 500,
             message:
               err.message ||
               "Some error occurred while retrieving ingredient from DB.",
@@ -36,7 +35,6 @@ module.exports = class IngredientController {
     await Ingredient.create(ingredient, (err, data) => {
       if (err) {
         res.status(500).json({
-          status: 500,
           message:
             err.message || "Some error occurred while creating ingredient in DB.",
         });
@@ -56,7 +54,6 @@ module.exports = class IngredientController {
           });
         } else {
           res.status(500).json({
-            status: 500,
             message:
               err.message ||
               `Some error occurred while retrieving ingredient id: ${req.params.ingredientId} from DB.`,
@@ -81,12 +78,10 @@ module.exports = class IngredientController {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              status: 404,
               message: `Not found ingredient in ingredient table with the id:  ${req.params.ingredientId}.`,
             });
           } else {
             res.status(500).json({
-              status: 500,
               message:
                 err.message ||
                 `Some error occurred while updating ingredient id: ${req.params.ingredientId} in DB.`,
@@ -115,7 +110,6 @@ module.exports = class IngredientController {
         }
       } else {
         res.status(200).json({
-          status: 200,
           message: `Ingredient ${req.params.ingredientId} was successfully deleted from the DB.`,
         });
       }
@@ -127,7 +121,6 @@ module.exports = class IngredientController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            status: 404,
             message: `Table ingredient is empty.`,
           });
         } else {
@@ -139,7 +132,6 @@ module.exports = class IngredientController {
         }
       } else {
         res.status(200).json({
-          status: 200,
           message: `Ingredientes were successfully deleted from the DB.`,
         });
       }
