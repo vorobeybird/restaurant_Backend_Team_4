@@ -4,7 +4,7 @@ import {
   Text,
   View,Image,
 } from 'react-native'
-
+import {Authenticator} from 'aws-amplify-react-native'
 
 export const Links = () => {
 
@@ -33,8 +33,7 @@ export const Links = () => {
       </View>
       <Text style={styles.TextStyle}>        конфиденциальности</Text>
       <View style={styles.BoxWrapper}>
-        <Image style={styles.PictStyle}  source={require('../../img/logOut.png')}/>
-        <Text style={styles.TextStyle}>Выйти</Text>
+        <Authenticator usernameAttributes={false} />
       </View>
     </View>
   );

@@ -1,8 +1,11 @@
-const Dishes = ()=>(
-    <div>
-        Dishes component
-    </div>
-);
+import DishesGrid from "./dishesgrid/DishesGrid";
+
+const Dishes = ()=>{
+
+return (
+    <DishesGrid />
+)
+}
 
 export default Dishes;
 

@@ -3,3 +3,4 @@ node_modules
 mysqldb/
 db/
 .idea/
+.vscode/
