@@ -2,12 +2,21 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,Image,
+  View,Image, TouchableOpacity,
 } from 'react-native'
+import { Auth } from 'aws-amplify'
 import {Authenticator, SignOut} from 'aws-amplify-react-native'
 
-export const Links = () => {
 
+export const Links = () => {
+ 
+async function signOut() {
+  try {
+      await Auth.signOut({ global: true });
+  } catch (error) {
+      console.log('error signing out: ', error);
+  }
+}
   return (
     <View style={styles.LinkWrapper}>
       <View style={styles.BoxWrapper}>
@@ -29,12 +38,14 @@ export const Links = () => {
       <View style={styles.BoxWrapper}>
         <Image style={styles.PictStyle}  source={require('../../img/confPoly.png')}/>
         <Text style={styles.TextStylePol}>Политика</Text>
-        
       </View>
       <Text style={styles.TextStyle}>        конфиденциальности</Text>
-      <View style={styles.BoxWrapper}>
-        <Authenticator />
-      </View>
+      <TouchableOpacity onPress={()=>signOut()}>
+        <View style={styles.BoxWrapper}>
+          <Image style={styles.PictStyle}  source={require('../../img/logOut.png')}/>
+          <Text style={styles.TextStylePol}>Выйти</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

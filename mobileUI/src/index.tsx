@@ -12,33 +12,29 @@ Amplify.configure({
   },
 })
 
+const signUpConfig = {
+  hideAllDefaults: true,
+  signUpFields: [
+    {
+      label: 'Username',
+      key: 'username',
+      required: true,
+      displayOrder: 1,
+      type: 'string',
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      displayOrder: 2,
+      type: 'password',
+    },
+  ],
+}
 const App = () => {
-
-  const signUpConfig = {
-    hideAllDefaults: true,
-    signUpFields: [
-      {
-        label: 'Email',
-        key: 'email',
-        required: true,
-        displayOrder: 1,
-        type: 'string',
-      },
-      {
-        label: 'Password',
-        key: 'password',
-        required: true,
-        displayOrder: 2,
-        type: 'password',
-      },
-    ],
-  }
   return (
-    <>
       <BottomTabNavigation/>
-      
-    </>
   )
 }
 
-export default withAuthenticator(App)
+export default withAuthenticator(App, {signUpConfig})
