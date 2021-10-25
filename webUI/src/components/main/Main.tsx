@@ -7,6 +7,10 @@ import ClockLogo from "../../assets/clock.png";
 import { Button } from "../common/button/Button";
 import Logo from "../../assets/main_logo.png";
 import GooglePlay from "../../assets/google_play.png";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../store";
+import {AuthStateType} from "../../store/auth/auth.reducer";
+import {Redirect} from "react-router-dom";
 
 const STEPS = [
   "Забронируйте стол",
@@ -43,6 +47,8 @@ const MEAL_BLOCKS = [
 ];
 
 const Main = () => {
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+
   const onChange = () => {
     console.log("changed");
   };
@@ -54,6 +60,8 @@ const Main = () => {
   const onClickTime = () => {
     console.log("Tclick!");
   };
+
+  if (user === null) return <Redirect to="/login/"/>
 
   return (
     <>
