@@ -1,6 +1,3 @@
-import { ActionType } from 'typesafe-actions';
-import * as actions from './menu.actions';
-
 export interface MenuItem {
   title: string;
   default_ingredients: string;
@@ -9,7 +6,12 @@ export interface MenuItem {
   weight: number;
   categories: number[];
   calories: number;
-  photo: string;
+  photos: {
+    photo_url: string,
+    ordinal_num: number
+    width: number, 
+    height: number
+  }[];
 }
 
 export enum MenuConstants {
@@ -17,7 +19,15 @@ export enum MenuConstants {
 }
 
 export interface ReducerState {
-  items: MenuItem[];
+  items: MenuItem[]
 }
 
-export type MenuActions = ActionType<typeof actions>;
+export interface Response {
+  data: MenuItem[]
+  status: number
+}
+
+export interface MenuActions {
+  type: MenuConstants
+  payload: MenuItem[]
+} 
