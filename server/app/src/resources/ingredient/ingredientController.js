@@ -28,6 +28,7 @@ module.exports = class IngredientController {
     await Ingredient.create(ingredient, (err, data) => {
       if (err) {
         res.status(500).json({
+
           message: err.message || "Error occured during creating ingredient.",
         });
       } else {
@@ -110,6 +111,7 @@ module.exports = class IngredientController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
+
             message: `Table ingredient is empty.`,
           });
         } else {

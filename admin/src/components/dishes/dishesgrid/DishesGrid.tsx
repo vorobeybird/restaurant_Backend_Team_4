@@ -1,15 +1,16 @@
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import DishDialog from '../dialog/DishDialog';
+import DishDialog from '../dishDialog/DishDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
 import axios from 'axios';
-import { Box, Container } from '@mui/material';
+import {Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/styles';
+import IngDialog from '../ingredients/catIngDialog/CatIngDialog';
 
 interface IDish {
   id: number;
   title: string;
-  default_ingredients: string;
+  default_ingredients: Array<Number>;
   price: number;
   weight: number;
   photos: Array<Object>
@@ -31,16 +32,22 @@ const DishesGrid = () => {
   const [open, setOpen] = useState(false);
   const [currentDish, setCurrentDish] = useState(initialDish);
   const [dishes, setDishes]: [IDish[], (dishes: IDish[])=> void] = useState(allDishes);
+  const [entityToAdd, setEntityToAdd] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
 
   };
+  const openInCa = (e: React.SyntheticEvent, type: string) => {
+    setEntityToAdd(type);
+  }
 
   const handleClose = () => {
     setOpen(false);
-    setCurrentDish(initialDish);
+    setEntityToAdd('');
+    currentDish.id && setCurrentDish(initialDish);
   };
+
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'title', headerName: 'Title', width: 250 },
@@ -75,7 +82,7 @@ const DishesGrid = () => {
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `${process.env.REACT_APP_API!}/${id}`;
+    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
     axios.delete<IResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -93,7 +100,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<IResponse>(apiUrl, {
+    axios.get<IResponse>(`${apiUrl}/dish`, {
         headers: {
             "Content-type": "application/json"
         }
@@ -117,7 +124,14 @@ useEffect(() => {
           <div style={{height: '85vh'}}>
     <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
       
-      <Container sx={{my: theme.spacing(5), textAlign: 'center'}}><Button variant="contained" onClick={handleClickOpen}>Add a new Dish</Button></Container>
+      <Container sx={{textAlign: 'center'}}>
+        <Grid container spacing={0} >
+        <Grid item md={6} xs={12} sx={{my: theme.spacing(3) }}><Button variant="contained" onClick={handleClickOpen}>Add a new Dish</Button></Grid>
+      <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', my: theme.spacing(3)}}>
+      <Button id="ingredient" onClick={(e)=>{openInCa(e, 'ingredient')}} sx={{mr: theme.spacing(1)}} key={"ingredient"} variant="contained" color="warning" size="small">Add an ingredient</Button>
+      <Button id="category" onClick={(e)=>{openInCa(e, 'category')}} sx={{ml: theme.spacing(1)}} variant="contained" color="warning" size="small">Add a category</Button></Grid>
+      </Grid>
+      </Container>
 
       <DataGrid
         rows={dishes}
@@ -129,7 +143,8 @@ useEffect(() => {
      
       </Container>
       </div>
-    <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} handleClickOpen={handleClickOpen} fetchDishes={fetchDishes} />
+    <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
+    <IngDialog handleClose={handleClose} type={entityToAdd} />
     </>
   );
 }
