@@ -1,5 +1,6 @@
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { AppStateType } from "../../store";
 import { MenuItem } from "../../store/menu/menu.types";
 import Navigation from "../../components/navigation/Navigation";
 import MenuItemComponent from "./MenuItem";
@@ -63,3 +64,4 @@ const Menu = ({ location }: MenuProps) => {
 };
 
 export default Menu;
+
