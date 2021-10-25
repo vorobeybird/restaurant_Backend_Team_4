@@ -3,6 +3,7 @@ const sql = require("../../utils/db");
 class Category {
   constructor(category) {
     this.title = category.title;
+    this.showInMain = category.showInMain
   }
   static getAll = async (result) => {
     sql.query("SELECT * FROM category", (err, res) => {
@@ -98,7 +99,6 @@ class Category {
         result({ kind: "not_found" }, null);
         return;
       }
-
       console.log(`deleted ${res.affectedRows} category`);
       result(null, res);
     });

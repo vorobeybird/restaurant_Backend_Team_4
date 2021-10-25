@@ -7,12 +7,10 @@ module.exports = class CategoryController {
           res
             .status(404)
             .send({
-              status: 404,
               message: `Not found categorys in category table.`,
             });
         } else {
           res.status(500).json({
-            status: 500,
             message:
               err.message ||
               "Some error occurred while retrieving category from DB.",
@@ -27,16 +25,15 @@ module.exports = class CategoryController {
   static create = async (req, res) => {
     if (!req.body) {
       res
-        .status(400)
         .json({ status: 400, message: "Created category cannot be empty" });
     }
     const category = new Category({
       title: req.body.title,
+      showInMain: req.body.showInMain,
     });
     await Category.create(category, (err, data) => {
       if (err) {
         res.status(500).json({
-          status: 500,
           message:
             err.message || "Some error occurred while creating category in DB.",
         });
@@ -51,12 +48,10 @@ module.exports = class CategoryController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            status: 404,
             message: `Not found category in category table with the id: ${req.params.categoryId}.`,
           });
         } else {
           res.status(500).json({
-            status: 500,
             message:
               err.message ||
               `Some error occurred while retrieving category id: ${req.params.categoryId} from DB.`,
@@ -71,7 +66,6 @@ module.exports = class CategoryController {
   static updateById = async (req, res) => {
     if (!req.body) {
       res
-        .status(400)
         .json({ status: 400, message: "Updated category cannot be empty" });
     }
     await Category.updateById(
@@ -81,12 +75,10 @@ module.exports = class CategoryController {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              status: 404,
               message: `Not found category in category table with the id:  ${req.params.categoryId}.`,
             });
           } else {
             res.status(500).json({
-              status: 500,
               message:
                 err.message ||
                 `Some error occurred while updating category id: ${req.params.categoryId} in DB.`,
@@ -115,7 +107,6 @@ module.exports = class CategoryController {
         }
       } else {
         res.status(200).json({
-          status: 200,
           message: `Category ${req.params.categoryId} was successfully deleted from the DB.`,
         });
       }
@@ -127,7 +118,6 @@ module.exports = class CategoryController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            status: 404,
             message: `Table category is empty.`,
           });
         } else {
@@ -139,7 +129,6 @@ module.exports = class CategoryController {
         }
       } else {
         res.status(200).json({
-          status: 200,
           message: `Categoryes were successfully deleted from the DB.`,
         });
       }
