@@ -7,6 +7,11 @@ import ClockLogo from "../../assets/clock.png";
 import { Button } from "../common/button/Button";
 import Logo from "../../assets/main_logo.png";
 import GooglePlay from "../../assets/google_play.png";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store";
+import { AuthStateType } from "../../store/auth/auth.reducer";
+import { Redirect } from "react-router-dom";
+import { ChangeEvent } from "react";
 
 const STEPS = [
   "Забронируйте стол",
@@ -43,7 +48,9 @@ const MEAL_BLOCKS = [
 ];
 
 const Main = () => {
-  const onChange = () => {
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("changed");
   };
 
@@ -54,6 +61,8 @@ const Main = () => {
   const onClickTime = () => {
     console.log("Tclick!");
   };
+
+  if (user === null) return <Redirect to="/login/" />
 
   return (
     <>
@@ -74,7 +83,7 @@ const Main = () => {
         <div className="table_reserve">
           <p>Забронируйте стол</p>
           <div className="inputs_container">
-            <Input placeholder="&nbsp;&nbsp;Имя" onChange={onChange} />
+            <Input placeholder="&nbsp;&nbsp;Имя" onChange={(onChange)} />
             <Input placeholder="&nbsp;&nbsp;Номер телефона" onChange={onChange} />
             <div className="time_and_date_input_container">
               <InputCTA
@@ -109,7 +118,7 @@ const Main = () => {
                     <p>Цена: ${price}</p>
                   </div>
                   <div>
-                    <Button onClick={onclick}>Заказать</Button>
+                    <Button type="button" onClick={onclick}>Заказать</Button>
                   </div>
                 </div>
               </div>
@@ -119,7 +128,7 @@ const Main = () => {
         </div>
       </div>
 
-      
+
     </>
   );
 };

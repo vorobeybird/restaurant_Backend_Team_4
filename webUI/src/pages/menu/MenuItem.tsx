@@ -100,7 +100,7 @@ const MenuItemComponent = ({
           </div>
         </div>
         <div className="btn-wrapper">
-          <Button onClick={onOrder}>Заказать</Button>
+          <Button type='button' onClick={onOrder}>Заказать</Button>
         </div>
       </div>
     </div>

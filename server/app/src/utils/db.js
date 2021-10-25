@@ -33,7 +33,7 @@ connection.connect((error) => {
               FOREIGN KEY (dish_id) REFERENCES dishes(id)
               ON DELETE CASCADE
             ) ENGINE=INNODB;
-            CREATE TABLE IF NOT EXISTS ingredients (
+            CREATE TABLE IF NOT EXISTS ingredient (
               id INT NOT NULL AUTO_INCREMENT,
               title VARCHAR(30) NOT NULL,
               PRIMARY KEY (id)
@@ -46,7 +46,7 @@ connection.connect((error) => {
               FOREIGN KEY (dish_id) REFERENCES dishes(id)
               ON DELETE CASCADE            
             ) ENGINE=INNODB;
-            CREATE TABLE IF NOT EXISTS categories (
+            CREATE TABLE IF NOT EXISTS category (
               id INT NOT NULL AUTO_INCREMENT,
               title VARCHAR(30) NOT NULL,
               PRIMARY KEY (id)

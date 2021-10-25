@@ -4,6 +4,10 @@ import Cart from "../../assets/cart.png";
 import Profile from "../../assets/profile.png";
 import "./navigation.scss";
 import { Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store";
+import { AuthStateType } from "../../store/auth/auth.reducer";
 
 interface LinkType {
   title: string;
@@ -17,9 +21,21 @@ const links: LinkType[] = [
 ];
 
 const Navigation = () => {
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+
+  async function sighOutHandler() {
+    try {
+      if (user) {
+        await Auth.signOut();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="navigation">
-      <div className="logo">Ocean bar</div>     
+      <div className="logo">Ocean bar</div>
       <div className="links">
         {links.map(({ title, link }) => {
           return (
@@ -40,7 +56,7 @@ const Navigation = () => {
           <img className="cart_icon" src={Cart} alt="cart icon"></img>
         </Link>
         <Link to="/login">
-          <img className="profile_icon" src={Profile} alt="profile icon"></img>
+          <img className="profile_icon" src={Profile} onClick={sighOutHandler} alt="profile icon"></img>
         </Link>
       </div>
     </div>
