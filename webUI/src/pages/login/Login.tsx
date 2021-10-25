@@ -39,16 +39,22 @@ export function Authentication() {
     }
   }
 
-  async function confirmSignUpHandler(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    try {
-      const { username, confirmCode } = authState;
-      await Auth.confirmSignUp(username, confirmCode);
-      dispatch({ type: "CONFIRM_SIGN_UP" });
-    } catch (err) {
-      console.log(err);
+    async function confirmSignUpHandler(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        try {
+            const {username, confirmCode, password} = authState;
+            const data = await Auth.confirmSignUp(username, confirmCode);
+            if (data === "SUCCESS") {
+                const user = await Auth.signIn(username, password);
+                dispatch({type: "SIGN_IN", payload: user})
+            }
+            // dispatch({type: "CONFIRM_SIGN_UP"});
+        } catch (err) {
+            console.log(err);
+        }
     }
   }
+
 
   async function signInHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,72 +77,56 @@ export function Authentication() {
       <div className="login_logo">
         <img src={Logo} alt="logo" />
       </div>
-      <section className="auth">
-        {formType === "signUp" && (
-          <div>
-            <form onSubmit={signUpHandler}>
-              <Input
-                name="username"
-                type="email"
-                placeholder="Введите адрес электронной почты"
-                onChange={onChangeHandler}
-              />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Введите пароль"
-                onChange={onChangeHandler}
-              />
-              <Button type="submit">Зарегистрироваться</Button>
-            </form>
-            <div>
-              <p>У вас уже есть аккаунт OceanBar?</p>
-              <Button onClick={toggleSignInHandler} type="submit">
-                Sign In
-              </Button>
-            </div>
-          </div>
-        )}
-        {formType === "confirmSignUp" && (
-          <form onSubmit={confirmSignUpHandler}>
-            <div>
-              <Input
-                name="confirmCode"
-                type="number"
-                placeholder="Введите код подтверждения"
-                onChange={onChangeHandler}
-              />
-              <Button type="submit">Отправить код</Button>
-            </div>
-          </form>
-        )}
-        {formType === "signIn" && (
-          <form onSubmit={signInHandler}>
-            <div>
-              <Input
-                name="username"
-                type="email"
-                placeholder="Введите адрес электронной почты"
-                onChange={onChangeHandler}
-              />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Введите пароль"
-                onChange={onChangeHandler}
-              />
-              <Button type="submit">Войти</Button>
-            </div>
-            <div>
-              <p>Хотите зарегистрировать аккаунт OceanBar?</p>
-              <Button onClick={toggleSignInHandler} type="button">
-                Sign Up
-              </Button>
-            </div>
-          </form>
-        )}
-        {formType === "signedIn" && <Redirect to="/" />}
-      </section>
-    </>
-  );
+            <section className="auth">
+                {formType === "signUp" &&
+                <div>
+                    <form onSubmit={signUpHandler}>
+                        <Input name="username"
+                               type="email"
+                               placeholder="Введите адрес электронной почты"
+                               onChange={onChangeHandler}/>
+                        <Input name="password"
+                               type="password"
+                               placeholder="Введите пароль"
+                               onChange={onChangeHandler}/>
+                        <Button type="submit">Зарегистрироваться</Button>
+                    </form>
+                    <div>
+                        <p>У вас уже есть аккаунт OceanBar?</p>
+                        <Button onClick={toggleSignInHandler} type="submit">Sign In</Button>
+                    </div>
+                </div>}
+                {formType === "confirmSignUp" &&
+                <form onSubmit={confirmSignUpHandler}>
+                    <div>
+                        <Input name="confirmCode"
+                               type="number"
+                               placeholder="Введите код подтверждения"
+                               onChange={onChangeHandler}/>
+                        <Button type="submit">Отправить код</Button>
+                    </div>
+                </form>}
+                {formType === "signIn" &&
+                <form onSubmit={signInHandler}>
+                    <div>
+                        <Input name="username"
+                               type="email"
+                               placeholder="Введите адрес электронной почты"
+                               onChange={onChangeHandler}/>
+                        <Input name="password"
+                               type="password"
+                               placeholder="Введите пароль"
+                               onChange={onChangeHandler}/>
+                        <Button type="submit">Войти</Button>
+                    </div>
+                    <div>
+                        <p>Хотите зарегистрировать аккаунт OceanBar?</p>
+                        <Button onClick={toggleSignInHandler} type="button">Sign Up</Button>
+                    </div>
+                </form>}
+                {formType === "signedIn" && <Redirect to="/"/>}
+            </section>
+        </>
+
+    )
 }
