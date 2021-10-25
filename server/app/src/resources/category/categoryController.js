@@ -7,13 +7,13 @@ module.exports = class CategoryController {
           res
             .status(404)
             .send({
-              message: `Not found categorys in category table.`,
+              message: `Category not found.`,
             });
         } else {
           res.status(500).json({
             message:
               err.message ||
-              "Some error occurred while retrieving category from DB.",
+              "Error during getting category.",
           });
         }
       } else {
@@ -25,7 +25,7 @@ module.exports = class CategoryController {
   static create = async (req, res) => {
     if (!req.body) {
       res
-        .json({ status: 400, message: "Created category cannot be empty" });
+        .json({message: "Category cannot be empty" });
     }
     const category = new Category({
       title: req.body.title,
@@ -35,7 +35,7 @@ module.exports = class CategoryController {
       if (err) {
         res.status(500).json({
           message:
-            err.message || "Some error occurred while creating category in DB.",
+            err.message || "Error occured during getting category.",
         });
       } else {
         res.status(201).json({data });
@@ -48,13 +48,13 @@ module.exports = class CategoryController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found category in category table with the id: ${req.params.categoryId}.`,
+            message: `No such category id: ${req.params.categoryId}.`,
           });
         } else {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while retrieving category id: ${req.params.categoryId} from DB.`,
+              `Error occured during getting category id: ${req.params.categoryId}`,
           });
         }
       } else {
@@ -66,7 +66,7 @@ module.exports = class CategoryController {
   static updateById = async (req, res) => {
     if (!req.body) {
       res
-        .json({message: "Updated category cannot be empty" });
+        .json({message: "Category cannot be empty" });
     }
     await Category.updateById(
       req.params.categoryId,
@@ -75,13 +75,13 @@ module.exports = class CategoryController {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found category in category table with the id:  ${req.params.categoryId}.`,
+              message: `Not found category id:  ${req.params.categoryId}.`,
             });
           } else {
             res.status(500).json({
               message:
                 err.message ||
-                `Some error occurred while updating category id: ${req.params.categoryId} in DB.`,
+                `Error occurred during updating category id: ${req.params.categoryId}`,
             });
           }
         } else {
@@ -96,18 +96,18 @@ module.exports = class CategoryController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found category in category table with the id: ${req.params.categoryId}.`,
+            message: `Category not found.`,
           });
         } else {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while deleting category id: ${req.params.categoryId} from the DB.`,
+              `Error occurred while deleting category id: ${req.params.categoryId}`,
           });
         }
       } else {
         res.status(200).json({
-          message: `Category ${req.params.categoryId} was successfully deleted from the DB.`,
+          message: `Category ${req.params.categoryId} was deleted `,
         });
       }
     });
@@ -124,12 +124,12 @@ module.exports = class CategoryController {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while pruning DB table category.`,
+              `Error occurred during pruning category.`,
           });
         }
       } else {
         res.status(200).json({
-          message: `Categoryes were deleted from the DB.`,
+          message: `Category wes deleted from the DB.`,
         });
       }
     });
