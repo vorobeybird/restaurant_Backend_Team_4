@@ -4,28 +4,23 @@ module.exports = class CategoryController {
     await Category.getAll((err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res
-            .status(404)
-            .send({
-              message: `Category not found.`,
-            });
+          res.status(404).send({
+            message: `Category not found.`,
+          });
         } else {
           res.status(500).json({
-            message:
-              err.message ||
-              "Error during getting category.",
+            message: err.message || "Error during getting category.",
           });
         }
       } else {
-        res.status(200).json({data });
+        res.status(200).json({ data });
       }
     });
   };
 
   static create = async (req, res) => {
     if (!req.body) {
-      res
-        .json({message: "Category cannot be empty" });
+      res.json({ message: "Category cannot be empty" });
     }
     const category = new Category({
       title: req.body.title,
@@ -34,11 +29,10 @@ module.exports = class CategoryController {
     await Category.create(category, (err, data) => {
       if (err) {
         res.status(500).json({
-          message:
-            err.message || "Error occured during getting category.",
+          message: err.message || "Error occured during getting category.",
         });
       } else {
-        res.status(201).json({data });
+        res.status(201).json({ data });
       }
     });
   };
@@ -65,8 +59,7 @@ module.exports = class CategoryController {
 
   static updateById = async (req, res) => {
     if (!req.body) {
-      res
-        .json({message: "Category cannot be empty" });
+      res.json({ message: "Category cannot be empty" });
     }
     await Category.updateById(
       req.params.categoryId,
@@ -85,7 +78,7 @@ module.exports = class CategoryController {
             });
           }
         } else {
-          res.status(200).json({data });
+          res.status(200).json({ data });
         }
       }
     );
@@ -122,9 +115,7 @@ module.exports = class CategoryController {
           });
         } else {
           res.status(500).json({
-            message:
-              err.message ||
-              `Error occurred during pruning category.`,
+            message: err.message || `Error occurred during pruning category.`,
           });
         }
       } else {

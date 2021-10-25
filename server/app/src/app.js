@@ -1,7 +1,7 @@
 const express = require("express");
 const dishRouter = require("./resources/dish/dishRouter");
 
-const categoryRouter = require("./resources/category/categoryRouter")
+const categoryRouter = require("./resources/category/categoryRouter");
 const app = express();
 require("dotenv").config();
 

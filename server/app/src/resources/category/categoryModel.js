@@ -3,7 +3,7 @@ const sql = require("../../utils/db");
 class Category {
   constructor(category) {
     this.title = category.title;
-    this.showInMain = category.showInMain
+    this.showInMain = category.showInMain;
   }
   static getAll = async (result) => {
     sql.query("SELECT * FROM category", (err, res) => {
@@ -52,21 +52,25 @@ class Category {
   };
 
   static updateById = async (id, category, result) => {
-    sql.query("UPDATE category SET ? WHERE id = ?", [category, id], (err, res) => {
-      if (err) {
-        console.error("error", err);
-        result(err, null);
-        return;
-      }
-      if (res.affectedRows == 0) {
-        // not found category with the given id
-        result({ kind: "not_found" }, null);
-        return;
-      }
+    sql.query(
+      "UPDATE category SET ? WHERE id = ?",
+      [category, id],
+      (err, res) => {
+        if (err) {
+          console.error("error", err);
+          result(err, null);
+          return;
+        }
+        if (res.affectedRows == 0) {
+          // not found category with the given id
+          result({ kind: "not_found" }, null);
+          return;
+        }
 
-      console.log("updated category: ", { id: id, ...category });
-      result(null, { id: id, ...category });
-    });
+        console.log("updated category: ", { id: id, ...category });
+        result(null, { id: id, ...category });
+      }
+    );
   };
 
   static removeById = async (id, result) => {
