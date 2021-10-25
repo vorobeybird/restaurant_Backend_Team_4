@@ -2,13 +2,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 250px;
 
-  & h3 {
-    font-size: 1.6rem;
+  & .label {
+    width: 385px;
+    height: 55px;
+    font-size: 48px;
+    line-height: 55px;
+    color: #000000;
+    margin-top: 40px;
   }
 
   & p {
-    margin-bottom: 50px;
+    width: 536px;
+    height: 28px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #606060;
+    margin-top: 28px;
   }
 }
 
@@ -16,38 +28,106 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  height: 80px;
 
-  & img {
-    width: 80px;
-    height: 80px;
-  }
+  & .step {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 
-  & p {
-    font-size: 1.4;
-    font-weight: 600;
+    .step_number {
+      width: 47px;
+      height: 120px;
+      font-family: "Regattia";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 100px;
+      line-height: 120px;
+      color: rgba(96, 96, 96, 0.5);
+    }
+  
+    p {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 28px;
+      color: #000000;
+      margin-left: 12px;
+    }
   }
 }
 
-.step {
+.table_reserve_container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 800px;
+
+  & .table_reserve {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 86%;
+    height: 85%;
+    background: #FFFFFF;
+    box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
+  
+    & p {
+      font-size: 48px;
+      line-height: 55px;
+      color: #000000;
+      height: 48px;
+    }
+
+    & .inputs_container {
+      width: 50%;
+      height: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: stretch;
+    }
+
+    & .main_input_container {
+      height: 60px;
+    }
+
+    & .time_and_date_input_container {
+      height: 60px;
+      width: 100%;
+
+      & .main_inputCTA_container {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    & .reserve-btn {
+      width: 482px;
+      height: 76px;
+      background: #EF742F;
+      border-radius: 2px;
+      font-size: 28px;
+      line-height: 32px;
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }
 
-.table_resevation_container {
+.time_and_date_input_container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  margin: 50px auto;
-  width: 30%;
-  height: 250px;
-  border: solid 3px rgb(211, 70, 15);
+  flex-direction: row;
+  width: 100%;
 
-  & p {
-    font-size: 2rem;
-    font-weight: 700;
+  & div:first-child {
+    margin-right: 10px;
   }
 }
 
@@ -62,34 +142,23 @@
   text-decoration: underline;
 }
 
-.inputs_container {
-  width: 100%;
-  max-width: 205px;
-
-  & div div {
-    margin-bottom: 10px;
-  }
-}
-
-.time_and_date_input_container {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-
-  & div:first-child {
-    margin-right: 10px;
-  }
-}
-
 .main_menu {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
+  height: 954px;
 
-  & h2 {
-    margin-top: 50px;
-    margin-bottom: 50px;
+  & .main_menu__title {
+    display: flex;
+    width: 500px;
+    height: 55px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 55px;
+    color: #000000;
   }
 }
 
@@ -98,6 +167,25 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+}
+
+.main_meals_container__btn {
+  width: 50px;
+  height: 50px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.left_btn {
+  background: url('../../assets/background/btn-left-background.png') no-repeat center;
+}
+
+.right_btn {
+  background: url('../../assets/background/btn-right-background.png') no-repeat center;
 }
 
 .meals_container {

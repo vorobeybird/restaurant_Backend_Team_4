@@ -1,9 +1,10 @@
 import { Button } from "../../components/common/button/Button";
-import { MenuItem } from "../../store/menu/menu.types";
+import { MenuItem } from "../../features/menu/menu.types";
 import Gear from "../../assets/gear.png";
 import "./menu.scss";
 import { useState } from "react";
-import Close from "../../assets/close.png";
+import Carousel from "@brainhubeu/react-carousel";
+import "@brainhubeu/react-carousel/lib/style.css";
 
 const MenuItemComponent = ({
   title,
@@ -11,7 +12,7 @@ const MenuItemComponent = ({
   ingredients,
   weight,
   calories,
-  photo,
+  photos,
   price,
 }: MenuItem) => {
   const [gearState, setGearState] = useState(false);
@@ -51,22 +52,18 @@ const MenuItemComponent = ({
     </div>
   );
 
-  const onClose = () => {
-    console.log("closed");
-  };
-
   return (
     <div className="item_container">
-      <div className="item_close">
-        <button onClick={onClose}>
-          <img src={Close} />
-        </button>
-      </div>
-      <div className="item_photo">
-        <img src={photo} />
+      <div className="item_photos">
+        <img src={photos[0].photo_url} alt="dish-main-photo" />
+        {/* <Carousel plugins={["arrows"]}>
+          {photos.map((photo) => {
+            return <img src={photo.photo_url} alt="dish" />;
+          })}
+        </Carousel> */}
       </div>
       <div className="item_info">
-        <div>
+        {/* <div>
           <h3>{title}</h3>
         </div>
         <div className="item_ingredients_container">
@@ -88,9 +85,22 @@ const MenuItemComponent = ({
         </div>
         <div>Вес: {weight} г.</div>
         <div>Калории: {calories}</div>
-        <div>Стоимость: {price} BYN</div>
-        <div className="button_item_order">
-          <Button type='button' onClick={onOrder}>Заказать</Button>
+        <div>Стоимость: {price} BYN</div> */}
+        <div className="dish-info">
+          <div className="dish-title">{title}</div>
+          <div className="dish-price-weight">
+            <div className="dish-price">
+              <span className="price">{price}</span>
+              <span className="currency"> BYN</span>
+            </div>
+            <div className="dish-weight">
+              <span className="weight">{weight}</span>
+              <span className="measure"> г.</span>
+            </div>
+          </div>
+        </div>
+        <div className="btn-wrapper">
+          <Button onClick={onOrder}>Заказать</Button>
         </div>
       </div>
     </div>

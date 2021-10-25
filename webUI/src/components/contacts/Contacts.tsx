@@ -1,39 +1,60 @@
 import "./contacts.scss";
-import Map from "../../assets/map.png";
-import PhoneLogo from "../../assets/phone.png";
-import ClockLogo from "../../assets/clock.png";
-import { Button } from "../common/button/Button";
-import {MouseEvent} from "react";
+import MapPointer from '../../assets/map-pointer.png';
+import Phone from '../../assets/phone.png';
+import Clock from '../../assets/clock.png';
+import Instagram from '../../assets/instagram.png';
+import Facebook from '../../assets/facebook.png';
+import GooglePlay from '../../assets/googlePlay.png';
+import AppStore from '../../assets/appStore.png';
 
 const Contacts = () => {
-  const onClickReserveTable = (e: MouseEvent<HTMLDivElement>) => {
-    console.log("Table is reserved!");
-  };
 
   return (
     <div className="contacts_container">
-      <div>
-        <h2>Контакты</h2>
-        <div>
-          <p>Ул. Революционная д. 17, Минск, Беларусь</p>
-          <div className="phone_container">
-            <div className="phone_logo">
-              <img src={PhoneLogo} alt="phone"></img>
-            </div>
-            <p>+375 29 123 45 67</p>
-          </div>
-          <div className="clock_container">
-            <div className="clock_logo">
-              <img src={ClockLogo} alt="clock" />
-            </div>
-            <p>Пн-Вс 08:00 - 23:00</p>
-          </div>
+      <div className="contacts" >
+        <div className="our-contacts">
+          <div className="our-contacts_title">Контакты</div>
+          <ul className="our-contacts_list">
+            <li>
+              <img src={MapPointer} alt="mapPointer" />
+              <div>Минск, Революционная д. 17</div>
+            </li>
+            <li><img src={Phone} alt="mapPointer" />
+              <div>+375 29 123-23-34</div></li>
+            <li><img src={Clock} alt="mapPointer" />
+              <div>Пн- Вс с 8:00 до 23:00</div></li>
+          </ul>
+          <ul className="our-contacts_social">
+            <li>
+              <a href="https://www.instagram.com/">
+                <img src={Instagram} alt="instagram-logo" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/">
+                <img src={Facebook} alt="facebook-logo" />
+              </a>
+            </li>
+          </ul>
         </div>
-        <Button type="submit" onClick={onClickReserveTable}>Забронируйтете стол</Button>
+        <div className="our-app">
+          <div className="our-app_title">Наше приложение Ocean bar</div>
+          <div className="our-app_sub-title">позволяет забронировать стол,  выбрать еду и оформить заказ в несколько касаний</div>
+          <ul className="our-app_markets">
+            <li>
+              <a href="https://play.google.com/">
+                <img src={GooglePlay} alt="google-play-logo" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.apple.com/ru/app-store/">
+                <img src={AppStore} alt="app-store-logo" />
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <img src={Map} alt="map"></img>
-      </div>
+      <div className="map"></div>
     </div>
   );
 };

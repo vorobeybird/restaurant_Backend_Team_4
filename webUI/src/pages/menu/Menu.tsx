@@ -1,11 +1,13 @@
-import { connect } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-
-import { RootState } from "../../store";
-import { MenuItem } from "../../store/menu/menu.types";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { MenuItem } from "../../features/menu/menu.types";
 import Navigation from "../../components/navigation/Navigation";
 import MenuItemComponent from "./MenuItem";
 import "./menu.scss";
+import { useEffect } from "react";
+import { fetchMenuItems } from "../../features/menu/menu.actions";
+import Contacts from '../../components/contacts/Contacts';
+import Footer from '../../components/footer/Footer';
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -17,7 +19,16 @@ const PATH = ["/menu/breakfast", "/menu", "/menu/bar", "/menu/catch"];
 
 const PATH_NAMES = ["Завтраки", "Основное меню", "Меню бара", "Улов недели"];
 
-const Menu = ({ items, location }: MenuProps) => {
+const Menu = ({ location }: MenuProps) => {
+  const dispatch = useAppDispatch();
+
+  console.log(fetchMenuItems());
+  useEffect(() => {
+    dispatch(fetchMenuItems());
+  }, []);
+
+  const items = useAppSelector((state) => state.menu.items);
+
   const currentPath = location.pathname as MenuPathType;
   const activeLink = PATH.indexOf(currentPath);
 
@@ -28,32 +39,34 @@ const Menu = ({ items, location }: MenuProps) => {
   return (
     <>
       <Navigation />
-      <div className="menu_wrapper">
-        <h2 className="menu_title">Меню</h2>
-        <div className="tabs">
-          {PATH_NAMES.map((path, index) => {
-            const isActive = index === activeLink;
-            return (
-              <Link
-                className={isActive ? "menu_active_link" : undefined}
-                key={path}
-                to={PATH[index]}
-              >
-                {path}
-              </Link>
-            );
-          })}
+      <div className="menu">
+        <div className="menu_wrapper">
+          <h2 className="menu_title">Меню</h2>
+          <div className="tabs">
+            {PATH_NAMES.map((path, index) => {
+              const isActive = index === activeLink;
+              return (
+                <Link
+                  className={isActive ? "menu_active_link" : undefined}
+                  key={path}
+                  to={PATH[index]}
+                >
+                  {path}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div className="item_container_wrapper">
+          {filteredItems.map((item) => (
+            <MenuItemComponent {...item} />
+          ))}
         </div>
       </div>
-      <div className="item_container_wrapper">
-        {filteredItems.map((item, index) => (
-          <MenuItemComponent key={index} {...item} />
-        ))}
-      </div>
+      <Contacts />
+      <Footer />
     </>
   );
 };
 
-const mapStateToProps = (store: RootState) => ({ items: store.menu.items });
-
-export default connect(mapStateToProps)(Menu);
+export default Menu;

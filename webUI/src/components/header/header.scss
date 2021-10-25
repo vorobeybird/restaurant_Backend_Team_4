@@ -1,12 +1,85 @@
+@font-face {
+  font-family: "Regattia";
+  src: url('../../assets/fonts/RegattiaStencil-Bold.otf');
+  font-weight: 700;
+}
+
 .header {
-  height: 500px;
+  height: 675px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-content: center;
   justify-content: center;
-  align-items: center;
-  border-bottom: solid 1px rgb(20, 11, 11);
+  background: url(../../assets/background/header_bg.png) center no-repeat;
+  
+  & .header_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    background: linear-gradient(180deg, #212529 0%, rgba(33, 37, 41, 0) 100%);
 
-  & h2 {
-    font-size: 2rem;
+    & .header_content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 613px;
+      height: 322px;
+      align-content: stretch;
+      position: relative;
+
+      & .header_logo{
+        width: 100%;
+        height: 50%;
+        font-family: "Regattia";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 120px;
+        line-height: 144px;
+        color: #FFFFFF;
+        text-align: center;
+      }
+
+      & .header_text {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 28px;
+        line-height: 32px;
+        color: #FFFFFF;
+        width: 386px;
+        height: 32px;
+        white-space: nowrap;
+      }
+
+      & .header_btn {
+        width: 305px;
+        height: 76px;
+        position: absolute;
+        bottom: 0;
+
+        & Button {
+          width: 100%;
+          height: 76px;
+          background: rgba(255, 255, 255, 0.3);
+          border: 3px solid #FFFFFF;
+          box-sizing: border-box;
+          border-radius: 2px;
+          font-family: Ubuntu;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 28px;
+          line-height: 32px;
+          color: #FFFFFF;
+          margin-bottom: 0;
+          cursor: pointer;
+
+        }
+      }
+    }
   }
 }
+
+

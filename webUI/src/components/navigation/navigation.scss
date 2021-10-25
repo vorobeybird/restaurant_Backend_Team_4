@@ -1,69 +1,134 @@
+@font-face {
+  font-family: "Regattia";
+  src: url('../../assets/fonts/RegattiaStencil-Bold.otf');
+  font-weight: bold;
+}
+
 .navigation {
-  position: fixed;
   width: 100%;
+  max-width: 1600px;
+  height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  background-color: rgb(231, 221, 221);
-  border-bottom: solid 1px black;
+  background: linear-gradient(180deg, #212529 100%, rgba(33, 37, 41, 0) 100%);
+  z-index: 9;
+  overflow: hidden;
 }
 
 .logo {
-  width: 150px;
-  height: 50px;
+  display: inline-block;
+  width: 162px;
+  height: 38px;
+  font-family: "Regattia";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 38px;
+  color: #FFFFFF; 
+  white-space: nowrap;
+  margin-left: 2.5%;
+  margin-right: 0px;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  height: 25px;
+  width: 65%;
+}
+
+.link {
+  margin-left: 30px;
+  display: inline;
+  height: 100%;
+  text-decoration: none;
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 25px;
+  color: #FFFFFF;
+  white-space: nowrap;
 }
 
 .input_container {
   position: relative;
   display: flex;
   align-items: center;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #9D9D9D; 
+  height: 30px;
 }
 
 .input {
-  width: 300px;
+  width: 280px;
+  background: none;
+  border-bottom: 1px solid #939393;
+  height: 100%;
+  display: flex;
+}
+
+.input_label {
+  font-family: "Ubuntu";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
+  color: #9D9D9D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search_icon {
   position: absolute;
   right: 2px;
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 24px;
   cursor: pointer;
 }
 
-.links {
-  display: flex;
-  justify-content: space-between;
-}
-
-.link {
-  margin-right: 25px;
-  text-decoration: none;
-  color: black;
-}
-
 .navigation_icons_container {
-  width: 150px;
+  width: 100px;
   display: flex;
   align-items: center;
+  flex-direction: row;
+  margin-left: 25px;
   justify-content: space-around;
-
+  margin-right: 25px;
+  
   & a {
-    width: 50px;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
   }
 }
 
 .cart_icon {
-  width: 50px;
-  height: 50px;
+  width: 24px;
+  height: 24px;
   margin-right: 50px;
 }
 
 .profile_icon {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   margin-right: 60px;
+}
+
+@media screen and (max-width: 1600px) {
+  .navigation {
+
+    & .input_container {
+
+      & .input {
+        width: 130px;
+      }
+    }
+  }
 }
