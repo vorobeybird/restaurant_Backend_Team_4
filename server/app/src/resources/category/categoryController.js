@@ -129,7 +129,7 @@ module.exports = class CategoryController {
         }
       } else {
         res.status(200).json({
-          message: `Categoryes were successfully deleted from the DB.`,
+          message: `Categoryes were deleted from the DB.`,
         });
       }
     });
