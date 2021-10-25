@@ -17,7 +17,7 @@ module.exports = class CategoryController {
           });
         }
       } else {
-        res.status(200).json({ status: 200, data });
+        res.status(200).json({data });
       }
     });
   };
@@ -38,7 +38,7 @@ module.exports = class CategoryController {
             err.message || "Some error occurred while creating category in DB.",
         });
       } else {
-        res.status(201).json({ status: 201, data });
+        res.status(201).json({data });
       }
     });
   };
@@ -58,7 +58,7 @@ module.exports = class CategoryController {
           });
         }
       } else {
-        res.status(200).json({ status: 200, data });
+        res.status(200).json({ data });
       }
     });
   };
@@ -66,7 +66,7 @@ module.exports = class CategoryController {
   static updateById = async (req, res) => {
     if (!req.body) {
       res
-        .json({ status: 400, message: "Updated category cannot be empty" });
+        .json({message: "Updated category cannot be empty" });
     }
     await Category.updateById(
       req.params.categoryId,
@@ -85,7 +85,7 @@ module.exports = class CategoryController {
             });
           }
         } else {
-          res.status(200).json({ status: 200, data });
+          res.status(200).json({data });
         }
       }
     );
