@@ -23,8 +23,8 @@ export function authReducer(state: AuthStateType = initialState, action: actionT
     switch (action.type) {
         case "SIGN_UP":
             return {...state, formType: "confirmSignUp"};
-        case "CONFIRM_SIGN_UP":
-            return {...state, formType: "signIn"};
+        // case "CONFIRM_SIGN_UP":
+        //      return {...state, formType: "signIn"};
         case "SIGN_IN":
             return {...state, user: action.payload, formType: "signedIn"};
         case "SIGN_OUT":

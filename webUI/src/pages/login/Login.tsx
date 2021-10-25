@@ -37,9 +37,13 @@ export function Authentication() {
     async function confirmSignUpHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            const {username, confirmCode} = authState;
-            await Auth.confirmSignUp(username, confirmCode);
-            dispatch({type: "CONFIRM_SIGN_UP"});
+            const {username, confirmCode, password} = authState;
+            const data = await Auth.confirmSignUp(username, confirmCode);
+            if (data === "SUCCESS") {
+                const user = await Auth.signIn(username, password);
+                dispatch({type: "SIGN_IN", payload: user})
+            }
+            // dispatch({type: "CONFIRM_SIGN_UP"});
         } catch (err) {
             console.log(err);
         }
@@ -50,6 +54,7 @@ export function Authentication() {
         try {
             const {username, password} = authState;
             const user = await Auth.signIn(username, password);
+
             dispatch({type: "SIGN_IN", payload: user})
         } catch (err) {
             console.log(err);
@@ -92,7 +97,7 @@ export function Authentication() {
                                type="number"
                                placeholder="Введите код подтверждения"
                                onChange={onChangeHandler}/>
-                        <Button type="button">Отправить код</Button>
+                        <Button type="submit">Отправить код</Button>
                     </div>
                 </form>}
                 {formType === "signIn" &&
