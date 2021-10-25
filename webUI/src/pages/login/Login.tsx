@@ -3,119 +3,141 @@ import Logo from "../../assets/header_logo.png";
 import Input from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import Navigation from "../../components/navigation/Navigation";
-import {ChangeEvent, FormEvent} from "react";
-import {useDispatch, useSelector} from "react-redux";
-
 // imports for aws authentication
 import {Auth} from 'aws-amplify';
-import {AppStateType} from "../../store";
-import {AuthStateType} from "../../store/auth/auth.reducer";
-import {Redirect} from "react-router-dom";
 
-export function Authentication() {
-    console.log("Auth rendering")
-    const dispatch = useDispatch();
-    const authState = useSelector<AppStateType, AuthStateType>(state => state.auth)
-    const {formType} = authState;
+import {ChangeEvent, MouseEvent, useState} from "react";
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch({type: "UPDATE_STATE", payload: {name: e.target.name, value: e.target.value}})
+const Login = () => {
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [confirmCode, setConfirmCode] = useState("");
+  const [userSignInEmail, setUserSignInEmail] = useState("");
+  const [userSignInPassword, setUserSignInPassword] = useState("");
+
+  const emailChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUserEmail(e.currentTarget.value);
+  }
+
+  const passwordChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUserPassword(e.currentTarget.value);
+  }
+
+  const confirmCodeChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setConfirmCode(e.currentTarget.value);
+  }
+
+  const emailSignInChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUserSignInEmail(e.currentTarget.value);
+  }
+
+  const passwordSignInChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setUserSignInPassword(e.currentTarget.value);
+  }
+
+  const signInHandler = async (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    try {
+      const user = await Auth.signIn(userSignInEmail, userSignInPassword);
+      console.log(user)
+    } catch (error) {
+      console.log('error signing in', error);
     }
+  };
 
-    async function signUpHandler(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        try {
-            const {username, password} = authState;
-            await Auth.signUp({username, password});
-            // можем добавить объект со свойством attributes
-            dispatch({type: "SIGN_UP"});
-        } catch (err) {
-            console.log(err);
+  const signUpHandler = async (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    try {
+      const {user} = await Auth.signUp({
+        username: userEmail,
+        password: userPassword,
+        attributes: {
+          email: userEmail,          // optional
+          // phone_number,   // optional - E.164 number convention
+          // other custom attributes
         }
+      });
+      console.log(user);
+    } catch (error) {
+      console.log('error signing up:', error);
     }
+    setUserPassword("");
+  }
 
-    async function confirmSignUpHandler(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        try {
-            const {username, confirmCode} = authState;
-            await Auth.confirmSignUp(username, confirmCode);
-            dispatch({type: "CONFIRM_SIGN_UP"});
-        } catch (err) {
-            console.log(err);
-        }
+  const confirmCodeHandler = async (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    try {
+      const confirm = await Auth.confirmSignUp(userEmail, confirmCode);
+      console.log(confirm);
+    } catch (error) {
+      console.log('error confirming sign up', error);
     }
+  }
 
-    async function signInHandler(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        try {
-            const {username, password} = authState;
-            const user = await Auth.signIn(username, password);
-            dispatch({type: "SIGN_IN", payload: user})
-        } catch (err) {
-            console.log(err);
-        }
-    }
+  //function for signOut
+  //
+  // async function signOut() {
+  //   try {
+  //     await Auth.signOut();
+  //   } catch (error) {
+  //     console.log('error signing out: ', error);
+  //   }
+  // }
 
-    function toggleSignInHandler() {
-        dispatch({type: "TOGGLE"})
-    }
+  //function for global signOut
+  // async function signOut() {
+  //   try {
+  //     await Auth.signOut({ global: true });
+  //   } catch (error) {
+  //     console.log('error signing out: ', error);
+  //   }
+  // }
 
-    return (
-        <>
-            <Navigation/>
-            <div className="login_logo">
-                <img src={Logo} alt="logo"/>
+  return (
+    <>
+      <Navigation/>
+      <div className="login_logo">
+        <img src={Logo} alt="logo"/>
+      </div>
+      <div className="common_container">
+        <div className="sign_in_container">
+          <form>
+            <h3>Вход</h3>
+            <Input value={userSignInEmail} type="email" placeholder="Электронная почта"
+                   onChange={emailSignInChangeHandler}/>
+            <div>
+              <Input value={userSignInPassword} type="password" placeholder="Пароль"
+                     onChange={passwordSignInChangeHandler}/>
+              <div className="forgot_password">
+                <a href="#">Forgot password?</a>
+              </div>
             </div>
-            <section className="auth">
-                {formType === "signUp" &&
-                <div>
-                    <form onSubmit={signUpHandler}>
-                        <Input name="username"
-                               type="email"
-                               placeholder="Введите адрес электронной почты"
-                               onChange={onChangeHandler}/>
-                        <Input name="password"
-                               type="password"
-                               placeholder="Введите пароль"
-                               onChange={onChangeHandler}/>
-                        <Button type="submit">Зарегистрироваться</Button>
-                    </form>
-                    <div>
-                        <p>У вас уже есть аккаунт OceanBar?</p>
-                        <Button onClick={toggleSignInHandler} type="submit">Sign In</Button>
-                    </div>
-                </div>}
-                {formType === "confirmSignUp" &&
-                <form onSubmit={confirmSignUpHandler}>
-                    <div>
-                        <Input name="confirmCode"
-                               type="number"
-                               placeholder="Введите код подтверждения"
-                               onChange={onChangeHandler}/>
-                        <Button type="button">Отправить код</Button>
-                    </div>
-                </form>}
-                {formType === "signIn" &&
-                <form onSubmit={signInHandler}>
-                    <div>
-                        <Input name="username"
-                               type="email"
-                               placeholder="Введите адрес электронной почты"
-                               onChange={onChangeHandler}/>
-                        <Input name="password"
-                               type="password"
-                               placeholder="Введите пароль"
-                               onChange={onChangeHandler}/>
-                        <Button type="submit">Войти</Button>
-                    </div>
-                    <div>
-                        <p>Хотите зарегистрировать аккаунт OceanBar?</p>
-                        <Button onClick={toggleSignInHandler} type="button">Sign Up</Button>
-                    </div>
-                </form>}
-                {formType === "signedIn" && <Redirect to="/"/>}
-            </section>
-        </>
+            <Button type="submit" onClick={signInHandler}>Войти</Button>
+          </form>
+        </div>
+        <div className="line"></div>
+        <div className="register_container">
+          <form action="">
+            <h3>Регистрация</h3>
+            {/*<Input placeholder="Имя" onChange={onChange}/>*/}
+            {/*<Input placeholder="Фамилия" onChange={onChange}/>*/}
+            <Input value={userEmail} type='text' placeholder="Электронная почта" onChange={emailChangeHandler}/>
+            {/*<Input placeholder="Телефон" onChange={onChange}/>*/}
+            <Input value={userPassword} type="password" placeholder="Пароль" onChange={passwordChangeHandler}/>
+            <Button type="submit" onClick={signUpHandler}>Зарегистрироваться</Button>
+          </form>
+          <div className="confirmCode">
+            <form>
+              <h3>Введите код подтверждения</h3>
+              <Input value={confirmCode} type="number" placeholder="Код подтверждения"
+                     onChange={confirmCodeChangeHandler}/>
+              <Button type="submit" onClick={confirmCodeHandler}>Отправить код подтверждения</Button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-    )
-}
+export default Login;

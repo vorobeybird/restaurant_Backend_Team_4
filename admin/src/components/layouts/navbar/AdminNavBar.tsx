@@ -29,7 +29,7 @@ const AdminNavBar = ({ onMobileNavOpen, ...rest }: IAdminProps ) => {
 <div>LOGO</div>
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
-        <Hidden lgDown>
+        <Hidden xlDown>
           <IconButton color="inherit" size="large">
             <Badge
               badgeContent={notifications.length}

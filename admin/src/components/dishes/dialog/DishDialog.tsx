@@ -1,5 +1,10 @@
 import * as React from 'react';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import DishForm from './dishForm/DishForm';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,17 +30,16 @@ interface IDish {
   photos: Array<Object>
   categories: Array<Number>;
   ingredients: Array<Number>;
-  calories: number;
 }
 interface IDishDIalogProps {
-dish: IDish;
+dish: any;
 type: string;
 handleClose: any;
 handleClickOpen: any;
 open: boolean;
-fetchDishes: Function;
+
 }
-const DishDialog = ({type, dish, handleClose, open, fetchDishes}: IDishDIalogProps) => {
+const DishDialog = ({type, dish, handleClose, open}: IDishDIalogProps) => {
 
   return (
     <div>
@@ -56,12 +59,26 @@ const DishDialog = ({type, dish, handleClose, open, fetchDishes}: IDishDIalogPro
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h3" component="div">
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               {type} dish
             </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              SAVE
+            </Button>
           </Toolbar>
         </AppBar>
-       <DishForm dish={dish} handleClose={handleClose} fetchDishes={fetchDishes} />
+        <List>
+          <ListItem button>
+            <ListItemText primary="Phone ringtone" secondary="Titania" />
+          </ListItem>
+          <Divider />
+          <ListItem button>
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
+          </ListItem>
+        </List>
       </Dialog>
     </div>
   );

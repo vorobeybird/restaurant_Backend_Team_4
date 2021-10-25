@@ -4,10 +4,7 @@ import GlobalStyles from './theme/GlobalStyles';
 import { Route, Switch } from 'react-router-dom';
 import LoginLayout from './components/layouts/LoginLayout';
 import AdminLayout from './components/layouts/AdminLayout';
-
 function App() {
-
-  console.log(process.env.REACT_APP_API)
   return (<StyledEngineProvider injectFirst>
     <ThemeProvider theme={theme}>
       <GlobalStyles/>

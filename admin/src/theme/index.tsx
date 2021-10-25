@@ -12,21 +12,7 @@ const theme = createTheme(
       },
       primary: {
         contrastText: "#ffffff",
-        main: "#1976d2",
-        light: "#0288d1",
-        dark: "#1565C0",
-      },
-      error: {
-        contrastText: "#ffffff",
-        main: "#ef5350",
-        light: "#ef5350",
-        dark: "#c62828",
-      },
-      warning: {
-        contrastText: "#ffffff",
-        main: "#ed6c02",
-        light: "#ff9800",
-        dark: "#e65100",
+        main: "#5664d2",
       },
       text: {
         primary: "#172b4d",

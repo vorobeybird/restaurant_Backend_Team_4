@@ -5,13 +5,13 @@ export interface InputProps {
   placeholder: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   type: string;
-  name: string;
+  value: string;
 }
 
-const Input = ({ placeholder, onChange, type, name }: InputProps) => {
+const Input = ({ placeholder, onChange, type, value }: InputProps) => {
   return (
     <div className="main_input_container">
-      <input name={name} type={type} placeholder={placeholder} onChange={onChange} />
+      <input value={value} type={type} placeholder={placeholder} onChange={onChange} />
     </div>
   );
 };
