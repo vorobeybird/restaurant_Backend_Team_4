@@ -6,6 +6,8 @@ import MenuItemComponent from "./MenuItem";
 import "./menu.scss";
 import { useEffect } from "react";
 import { fetchMenuItems } from "../../features/menu/menu.actions";
+import Contacts from '../../components/contacts/Contacts';
+import Footer from '../../components/footer/Footer';
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -37,28 +39,32 @@ const Menu = ({ location }: MenuProps) => {
   return (
     <>
       <Navigation />
-      <div className="menu_wrapper">
-        <h2 className="menu_title">Меню</h2>
-        <div className="tabs">
-          {PATH_NAMES.map((path, index) => {
-            const isActive = index === activeLink;
-            return (
-              <Link
-                className={isActive ? "menu_active_link" : undefined}
-                key={path}
-                to={PATH[index]}
-              >
-                {path}
-              </Link>
-            );
-          })}
+      <div className="menu">
+        <div className="menu_wrapper">
+          <h2 className="menu_title">Меню</h2>
+          <div className="tabs">
+            {PATH_NAMES.map((path, index) => {
+              const isActive = index === activeLink;
+              return (
+                <Link
+                  className={isActive ? "menu_active_link" : undefined}
+                  key={path}
+                  to={PATH[index]}
+                >
+                  {path}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div className="item_container_wrapper">
+          {filteredItems.map((item) => (
+            <MenuItemComponent {...item} />
+          ))}
         </div>
       </div>
-      <div className="item_container_wrapper">
-        {filteredItems.map((item) => (
-          <MenuItemComponent {...item} />
-        ))}
-      </div>
+      <Contacts />
+      <Footer />
     </>
   );
 };

@@ -52,3 +52,13 @@ footer {
   line-height: 18px;
   color: #FFFFFF;
 }
+
+@media screen and (max-width: 1600px) {
+
+  footer {
+
+    & .nav_links {
+      flex-direction: column;
+    }
+  }
+}

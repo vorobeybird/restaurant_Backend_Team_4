@@ -55,14 +55,15 @@ const MenuItemComponent = ({
   return (
     <div className="item_container">
       <div className="item_photos">
-        <Carousel plugins={["arrows"]}>
+        <img src={photos[0].photo_url} alt="dish-main-photo" />
+        {/* <Carousel plugins={["arrows"]}>
           {photos.map((photo) => {
             return <img src={photo.photo_url} alt="dish" />;
           })}
-        </Carousel>
+        </Carousel> */}
       </div>
       <div className="item_info">
-        <div>
+        {/* <div>
           <h3>{title}</h3>
         </div>
         <div className="item_ingredients_container">
@@ -84,8 +85,21 @@ const MenuItemComponent = ({
         </div>
         <div>Вес: {weight} г.</div>
         <div>Калории: {calories}</div>
-        <div>Стоимость: {price} BYN</div>
-        <div className="button_item_order">
+        <div>Стоимость: {price} BYN</div> */}
+        <div className="dish-info">
+          <div className="dish-title">{title}</div>
+          <div className="dish-price-weight">
+            <div className="dish-price">
+              <span className="price">{price}</span>
+              <span className="currency"> BYN</span>
+            </div>
+            <div className="dish-weight">
+              <span className="weight">{weight}</span>
+              <span className="measure"> г.</span>
+            </div>
+          </div>
+        </div>
+        <div className="btn-wrapper">
           <Button onClick={onOrder}>Заказать</Button>
         </div>
       </div>

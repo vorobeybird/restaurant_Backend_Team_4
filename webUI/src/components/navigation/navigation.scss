@@ -1,5 +1,10 @@
+@font-face {
+  font-family: "Regattia";
+  src: url('../../assets/fonts/RegattiaStencil-Bold.otf');
+  font-weight: bold;
+}
+
 .navigation {
-  // position: fixed;
   width: 100%;
   max-width: 1600px;
   height: 80px;
@@ -12,18 +17,17 @@
 }
 
 .logo {
-  margin: 0 auto;
   display: inline-block;
   width: 162px;
   height: 38px;
-  font-family: "Regattia Stencil";
+  font-family: "Regattia";
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
   line-height: 38px;
   color: #FFFFFF; 
   white-space: nowrap;
-  margin-left: 50px;
+  margin-left: 2.5%;
   margin-right: 0px;
 }
 
@@ -31,6 +35,7 @@
   display: flex;
   flex-direction: row;
   height: 25px;
+  width: 65%;
 }
 
 .link {
@@ -40,7 +45,7 @@
   text-decoration: none;
   font-family: "Ubuntu";
   font-style: normal;
-  font-weight: 200;
+  font-weight: 300;
   font-size: 22px;
   line-height: 25px;
   color: #FFFFFF;
@@ -51,7 +56,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-left:27%;
   font-style: normal;
   font-weight: 300;
   font-size: 14px;
@@ -115,4 +119,16 @@
   width: 24px;
   height: 24px;
   margin-right: 60px;
+}
+
+@media screen and (max-width: 1600px) {
+  .navigation {
+
+    & .input_container {
+
+      & .input {
+        width: 130px;
+      }
+    }
+  }
 }
