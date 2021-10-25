@@ -5,6 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+
 const tempIgredients = [
   { title: "Сахар", id: 1, isOptional: false },
   { title: "Соль", id: 2, isOptional: false },
@@ -31,7 +32,7 @@ const tempIgredients = [
   { title: "Горчица", id: 23, isOptional: false }
 ];
 
-export default function DishIngredients({ingredientsAll, dishIngredients}: any) {
+export default function IngSelector({dishIngredients}: any) {
 const initialIngredients: any = [];
   const [items, setItems]: [any, (items: Object[]) => void] = React.useState(initialIngredients);
 
@@ -40,6 +41,12 @@ const initialIngredients: any = [];
       return a[prop] - b[prop];
     });
   };
+
+  const fetchAllIngredients = ()=> {
+
+  }
+
+  
   const mergeByProperty = (target: Object[], source: Object[] | undefined, prop: string): void => {
     source && source.forEach((sourceElement: any) => {
       let targetElement = target.find((targetElement: any) => {

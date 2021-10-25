@@ -2,29 +2,80 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { useTheme } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { Button } from '@mui/material';
+import { Button, Container } from '@mui/material';
+import { fetchIngredients } from '../../../common/apifetch/apifetch';
 const filter = createFilterOptions<ICIOptionType>();
 interface ICIOptionType {
     inputValue?: string;
-    title: string;
+    title: any;
     id?: number;
   }
 interface ICIFormProps {
     type: any;
 }
-
 export default function CIForm({type}: ICIFormProps) {
   const theme = useTheme();
-  const [value, setValue] = React.useState<ICIOptionType | null>(null);
-  const [currentValue, setCurrentValue]  = React.useState<string | null>(null);
+  const [iList, setIList] = React.useState<any>(null);
+  const [value, setValue] = React.useState<any>(null);
+  const [currentValue, setCurrentValue] = React.useState<ICIOptionType | null>(null);
   
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentValue(e.target.value);
+    setCurrentValue({title: e.target.value});
+  }
+  const getIngredients =()=> {
+    fetchIngredients('GET', `${process.env.REACT_APP_API}/ingredient`)
+    .then((response) => setIList(response.data.data))
+    .catch(err=>{
+        const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+        console.error(error);
+    })
   }
 
-  return (<div>
+  const deleteIngredient = () => {
+    fetchIngredients('DELETE', `${process.env.REACT_APP_API}/ingredient`, undefined, currentValue?.id)
+    .then((response) => {
+        getIngredients();
+        setValue(null);
+        setCurrentValue(null);
+    })
+    .catch(err=>{
+        const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+        console.error(error);
+    })
+  }
+  const saveIngredient = ()=>{
+
+   if (value?.id) {
+    fetchIngredients('PUT', `${process.env.REACT_APP_API}/ingredient`, currentValue, value?.id)
+    .then((response) =>  {
+        getIngredients();
+        setValue(response.data.data);
+    }
+        )
+    .catch(err=>{
+        const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+        console.error(error);
+    })
+   } else {
+    fetchIngredients('POST', `${process.env.REACT_APP_API}/ingredient`, currentValue)
+    
+    .then((response) =>  {
+        getIngredients();
+        setCurrentValue(null);
+    }
+        )
+    .catch(err=>{
+        const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+        console.error(error);
+    })
+        }
+  }
+
+
+  React.useEffect(()=>{
+    getIngredients();
+  }, [])
+  return (<Container sx={{p: theme.spacing(3), height: 300, display: "flex", flexDirection: "column", alignItems: "center"}}>
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
@@ -37,11 +88,18 @@ export default function CIForm({type}: ICIFormProps) {
           setValue({
             title: newValue.inputValue,
           });
+
+          setCurrentValue({
+            title: newValue.inputValue,
+        })
         } else {
           setValue(newValue);
+          setCurrentValue(newValue);
         }
-        setCurrentValue(newValue && newValue.title)
+
+
       }}
+      ListboxProps={{style: {maxHeight: 200}}}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
 
@@ -57,11 +115,12 @@ export default function CIForm({type}: ICIFormProps) {
 
         return filtered;
       }}
+
       selectOnFocus
       clearOnBlur
       handleHomeEndKeys
       id="ic-form"
-      options={top100Films}
+      options={iList}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input
         if (typeof option === 'string') {
@@ -75,59 +134,23 @@ export default function CIForm({type}: ICIFormProps) {
         return option.title;
       }}
       renderOption={(props, option) => <li {...props}>{option.title}
- {/*      <IconButton aria-label="delete">
-      <DeleteIcon color="error" />
-    </IconButton> */}</li>}
+    </li>}
       sx={{ width: 400, m: theme.spacing(3)}}
       /* freeSolo */
       renderInput={(params) => (
-        <TextField {...params} label={type} />
+        <TextField {...params} fullWidth variant="filled" label={`Search ${type}`}/>
       )}
     />
-    {
-     <form><TextField /* label={`Add/Edit ${type}`} */ defaultValue={currentValue} value={currentValue} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
-     <Button>Add</Button><Button>Delete</Button></form>
+    {value &&
+     <><TextField required 
+     fullWidth
+     id="title"
+     label={currentValue?.inputValue ? ` Add ${type}` : `Edit ${type}` }
+     name="title"
+     focused
+     autoComplete="title" value={currentValue?.inputValue || currentValue?.title || ''} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
+     <Container><Button onClick={saveIngredient}>Save</Button><Button onClick={deleteIngredient}>Delete</Button></Container></>
     }
-    </div>
+    </Container>
   );
 }
-
-
-
-const top100Films: readonly ICIOptionType[] = [
-  { title: 'The Shawshank Redemption', id: 1 },
-  { title: 'The Godfather', id: 2 },
-  { title: 'The Godfather: Part II', id: 3 },
-  { title: 'The Dark Knight', id: 4 },
-  { title: '12 Angry Men', id: 5 },
-  { title: "Schindler's List", id: 6 },
-  { title: 'Pulp Fiction', id: 7 },
-  {
-    title: 'The Lord of the Rings: The Return of the King',
-    id: 8,
-  },
-  { title: 'The Good, the Bad and the Ugly', id: 9 },
-  { title: 'Fight Club', id: 10 },
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring',
-    id: 11,
-  },
-  {
-    title: 'Star Wars: Episode V - The Empire Strikes Back',
-    id: 12,
-  },
-  { title: 'Forrest Gump', id: 13 },
-  { title: 'Inception', id: 14 },
-  {
-    title: 'The Lord of the Rings: The Two Towers',
-    id: 15,
-  },
-  { title: "One Flew Over the Cuckoo's Nest", id: 16 },
-  { title: 'Goodfellas', id: 17 },
-  { title: 'The Matrix', id: 18 },
-  { title: 'Seven Samurai', id: 19 },
-  {
-    title: 'Star Wars: Episode IV - A New Hope',
-    id: 20,
-  },
-];

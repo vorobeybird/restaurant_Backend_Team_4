@@ -1,13 +1,15 @@
-import { Grid, Container, TextField, Button, InputAdornment, Box, Typography } from '@mui/material';
+import { Grid, Container, TextField, Button, InputAdornment, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTheme } from '@mui/styles';
 import axios, {AxiosResponse, Method}  from 'axios';
-import DishIngredients from '../../ingredients/selector/IngSelector';
+import IngSelector from '../../ingredients/selector/IngSelector';
+
+
 
 interface IDish {
   id?: number;
   title: string;
-  default_ingredients: string;
+  default_ingredients: Array<Number>;
   price: number;
   weight: number;
   photos: Array<Object>
@@ -36,7 +38,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
             calories: dish.calories,
           },
           onSubmit: values => {
-            dish.id ? fillDish( 'PUT', process.env.REACT_APP_API!, values, dish.id) : fillDish('POST', process.env.REACT_APP_API!, values);
+            dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/dish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
           },
         });
         const fillDish = ( type: Method, url: string, data: IDish, id?: number) => {
@@ -125,7 +127,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 								</Grid>
 						</Grid>
 								<Grid item md={6} xs={12} sx={{ display:'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                  <DishIngredients />
+                  <IngSelector ingredients={dish.ingredients}/>
 								</Grid>
                 <Grid item md={12} xs={12} sx={{my: theme.spacing(3),  textAlign: 'center'}}><Typography variant="h4">Photo uploader here</Typography></Grid>
 							</Grid>

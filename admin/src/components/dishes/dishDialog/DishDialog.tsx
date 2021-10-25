@@ -20,7 +20,7 @@ const Transition = React.forwardRef(function Transition(
 interface IDish {
   id: number;
   title: string;
-  default_ingredients: string;
+  default_ingredients: Array<Number>;
   price: number;
   weight: number;
   photos: Array<Object>

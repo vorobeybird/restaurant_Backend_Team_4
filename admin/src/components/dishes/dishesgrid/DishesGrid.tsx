@@ -10,7 +10,7 @@ import IngDialog from '../ingredients/catIngDialog/CatIngDialog';
 interface IDish {
   id: number;
   title: string;
-  default_ingredients: string;
+  default_ingredients: Array<Number>;
   price: number;
   weight: number;
   photos: Array<Object>
@@ -82,7 +82,7 @@ const DishesGrid = () => {
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `${process.env.REACT_APP_API!}/${id}`;
+    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
     axios.delete<IResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -100,7 +100,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<IResponse>(apiUrl, {
+    axios.get<IResponse>(`${apiUrl}/dish`, {
         headers: {
             "Content-type": "application/json"
         }
