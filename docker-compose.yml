@@ -30,6 +30,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
+    # depends_on:
+    #   - db
     stdin_open: true
     tty: true
 
