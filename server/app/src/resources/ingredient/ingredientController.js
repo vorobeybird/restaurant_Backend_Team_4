@@ -7,7 +7,6 @@ module.exports = class IngredientController {
           res
             .status(404)
             .send({
-              status: 404,
               message: `Not found ingredients in ingredient table.`,
             });
         } else {
@@ -18,7 +17,7 @@ module.exports = class IngredientController {
           });
         }
       } else {
-        res.status(200).json({ status: 200, data });
+        res.status(200).json({data});
       }
     });
   };
@@ -27,7 +26,7 @@ module.exports = class IngredientController {
     if (!req.body) {
       res
         .status(400)
-        .json({ status: 400, message: "Created ingredient cannot be empty" });
+        .json({message: "Created ingredient cannot be empty" });
     }
     const ingredient = new Ingredient({
       title: req.body.title,
@@ -39,7 +38,7 @@ module.exports = class IngredientController {
             err.message || "Some error occurred while creating ingredient in DB.",
         });
       } else {
-        res.status(201).json({ status: 201, data });
+        res.status(201).json({ data });
       }
     });
   };
@@ -49,7 +48,6 @@ module.exports = class IngredientController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            status: 404,
             message: `Not found ingredient in ingredient table with the id: ${req.params.ingredientId}.`,
           });
         } else {
@@ -60,7 +58,7 @@ module.exports = class IngredientController {
           });
         }
       } else {
-        res.status(200).json({ status: 200, data });
+        res.status(200).json({ data });
       }
     });
   };
@@ -69,7 +67,7 @@ module.exports = class IngredientController {
     if (!req.body) {
       res
         .status(400)
-        .json({ status: 400, message: "Updated ingredient cannot be empty" });
+        .json({message: "Updated ingredient cannot be empty" });
     }
     await Ingredient.updateById(
       req.params.ingredientId,
@@ -88,7 +86,7 @@ module.exports = class IngredientController {
             });
           }
         } else {
-          res.status(200).json({ status: 200, data });
+          res.status(200).json({ data });
         }
       }
     );
