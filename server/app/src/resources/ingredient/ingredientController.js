@@ -4,29 +4,23 @@ module.exports = class IngredientController {
     await Ingredient.getAll((err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res
-            .status(404)
-            .send({
-              message: `Not found ingredients in ingredient table.`,
-            });
+          res.status(404).send({
+            message: `Ingredients not found.`,
+          });
         } else {
           res.status(500).json({
-            message:
-              err.message ||
-              "Some error occurred while retrieving ingredient from DB.",
+            message: err.message || "Error occured during getting ingredient.",
           });
         }
       } else {
-        res.status(200).json({data});
+        res.status(200).json({ data });
       }
     });
   };
 
   static create = async (req, res) => {
     if (!req.body) {
-      res
-        .status(400)
-        .json({message: "Created ingredient cannot be empty" });
+      res.status(400).json({ message: "Ingredient cannot be empty" });
     }
     const ingredient = new Ingredient({
       title: req.body.title,
@@ -34,8 +28,7 @@ module.exports = class IngredientController {
     await Ingredient.create(ingredient, (err, data) => {
       if (err) {
         res.status(500).json({
-          message:
-            err.message || "Some error occurred while creating ingredient in DB.",
+          message: err.message || "Error occured during creating ingredient.",
         });
       } else {
         res.status(201).json({ data });
@@ -48,13 +41,13 @@ module.exports = class IngredientController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found ingredient in ingredient table with the id: ${req.params.ingredientId}.`,
+            message: `Not found ingredient id: ${req.params.ingredientId}.`,
           });
         } else {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while retrieving ingredient id: ${req.params.ingredientId} from DB.`,
+              `Error occured during retrieving ingredient id: ${req.params.ingredientId}.`,
           });
         }
       } else {
@@ -65,9 +58,7 @@ module.exports = class IngredientController {
 
   static updateById = async (req, res) => {
     if (!req.body) {
-      res
-        .status(400)
-        .json({message: "Updated ingredient cannot be empty" });
+      res.status(400).json({ message: "Updated ingredient cannot be empty" });
     }
     await Ingredient.updateById(
       req.params.ingredientId,
@@ -76,13 +67,13 @@ module.exports = class IngredientController {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
-              message: `Not found ingredient in ingredient table with the id:  ${req.params.ingredientId}.`,
+              message: `Ingredient not found id:  ${req.params.ingredientId}.`,
             });
           } else {
             res.status(500).json({
               message:
                 err.message ||
-                `Some error occurred while updating ingredient id: ${req.params.ingredientId} in DB.`,
+                `Error occured during updating ingredient id: ${req.params.ingredientId} in DB.`,
             });
           }
         } else {
@@ -97,18 +88,18 @@ module.exports = class IngredientController {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found ingredient in ingredient table with the id: ${req.params.ingredientId}.`,
+            message: `Ingredient not found id: ${req.params.ingredientId}.`,
           });
         } else {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while deleting ingredient id: ${req.params.ingredientId} from the DB.`,
+              `Error occured during deleting ingredient id: ${req.params.ingredientId}`,
           });
         }
       } else {
         res.status(200).json({
-          message: `Ingredient ${req.params.ingredientId} was successfully deleted from the DB.`,
+          message: `Ingredient ${req.params.ingredientId} successfully deleted.`,
         });
       }
     });
@@ -125,12 +116,12 @@ module.exports = class IngredientController {
           res.status(500).json({
             message:
               err.message ||
-              `Some error occurred while pruning DB table ingredient.`,
+              `Error occured during getting pruning DB table ingredient.`,
           });
         }
       } else {
         res.status(200).json({
-          message: `Ingredientes were successfully deleted from the DB.`,
+          message: `Ingredientes were deleted.`,
         });
       }
     });
