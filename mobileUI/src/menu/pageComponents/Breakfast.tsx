@@ -1,89 +1,68 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList } from '../Menu';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import { Dish } from './dishes/Dish';
+import { Dishes } from './dishes/Dish';
+import axios, { AxiosResponse } from "axios"
 
-export const Breakfast = () => {
-  const navigation = useNavigation<RootStackParamList>();
-  const [dishesList, setDishesList] = useState([
-    { id: 1, name: 'Название блюда' },
-    { id: 2, name: 'Название блюда' },
-    { id: 3, name: 'Название блюда' },
-    { id: 4, name: 'Название блюда' },
-    { id: 5, name: 'Название блюда' },
-    { id: 6, name: 'Название блюда' },
-    { id: 7, name: 'Название блюда' },
-  ]);
+interface MenuItem {
+  title: string;
+  default_ingredients: string;
+  ingredients: number[];
+  price: number;
+  weight: number;
+  categories: number[];
+  calories: number;
+  photo: string;
+  data:any;
+}
+export  const  Breakfast = () => {
+  const [date, setDate] = useState({} as any);
+  
 
+  const getItems = async () => {
+    const response = await axios.get<MenuItem[]>('http://ec2-18-192-170-78.eu-central-1.compute.amazonaws.com:5000/api/dish')
+    const res = response.data
+    return res.data
+  }
+  const fetchMenuItems = async () => {
+    const items = await getItems()
+    setDate(items)
+  }
+  useEffect(() => {
+    fetchMenuItems()
+    
+  },[])   
+ 
   return (
-    <View style={styles.FullContainer}>
-      <View style={styles.Header}>
-        <View style={styles.SearchContainer}></View>
-        <View style={styles.HeaderContainer}>
-          <View style={styles.HeaderBtn} onTouchStart={() => { navigation.navigate('Menu') }}>
-            <Image source={require('../../../img/arrowLeft.png')}
-              style={styles.HeaderBtn__img}
-            ></Image>
-          </View>
-          <Text style={styles.Title} >Завтраки</Text>
+        <View style={styles.Scroll}>
+          <Text style={styles.Title}>Завтраки</Text>
+          <FlatList 
+            style={styles.Flat}
+            data={date}
+            renderItem={({ item }) => (
+              <Dishes id={item.id} title={item.title} photos={item.photos[0].photo_url} descr={item.default_ingredients} price={item.price}/>
+            )}
+          />
         </View>
-      </View>
-      <FlatList style={styles.ContentContainer} data={dishesList} renderItem={({ item }) => (
-        <Dish el={item} />
-      )} />
-    </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  FullContainer: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    alignItems: 'center'
-  },
-  Header: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '15%'
-  },
-  SearchContainer: {
-    height: '30%'
-  },
-  HeaderContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  HeaderBtn: {
-    height: '80%',
-    width: '10%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  HeaderBtn__img: {
-    height: '50%',
-    width: '50%',
-  },
   Title: {
+    height:'7%',
+    alignSelf:'center',
     fontFamily: 'Open Sans',
     fontSize: 30,
     fontWeight: 'bold',
+    color:'black'
   },
-  ContentContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '90%',
+  Scroll:{
+    paddingBottom:'30%'
   },
-<<<<<<< HEAD
+  Flat:{
+    top:'2%',
+  }
 });
-=======
-});
-
->>>>>>> dev
