@@ -23,8 +23,8 @@
   font-family: "Regattia";
   font-style: normal;
   font-weight: bold;
-  font-size: 32px;
-  line-height: 38px;
+  font-size: 2rem;
+  line-height: 2rem;
   color: #FFFFFF; 
   white-space: nowrap;
   margin-left: 2.5%;
@@ -46,8 +46,8 @@
   font-family: "Ubuntu";
   font-style: normal;
   font-weight: 300;
-  font-size: 22px;
-  line-height: 25px;
+  font-size: 1.4rem;
+  line-height: 1.6rem;
   color: #FFFFFF;
   white-space: nowrap;
 }
@@ -58,8 +58,8 @@
   align-items: center;
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 1rem;
+  line-height: 1.1rem;
   color: #9D9D9D; 
   height: 30px;
 }
@@ -76,8 +76,8 @@
   font-family: "Ubuntu";
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 0.9rem;
+  line-height: 1rem;
   color: #9D9D9D;
   display: flex;
   justify-content: center;
@@ -121,8 +121,46 @@
   margin-right: 60px;
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1599px) {
   .navigation {
+
+    & .input_container {
+
+      & .input {
+        width: 130px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .navigation {
+
+    & .links {
+      
+      & .link {
+        font-size: 1.2rem;
+      }
+    }
+
+    & .input_container {
+
+      & .input {
+        width: 130px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .navigation {
+
+    & .links {
+      
+      & .link {
+        font-size: 1.2rem;
+      }
+    }
 
     & .input_container {
 
