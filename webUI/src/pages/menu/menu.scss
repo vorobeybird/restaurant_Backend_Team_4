@@ -20,8 +20,8 @@
 .menu_title {
   font-style: normal;
   font-weight: normal;
-  font-size: 48px;
-  line-height: 55px;
+  font-size: 3rem;
+  line-height: normal;
   color: #000000;
 }
 
@@ -123,16 +123,16 @@
         & .price {
           font-style: normal;
           font-weight: 500;
-          font-size: 24px;
-          line-height: 24px;
+          font-size: 1.4rem;
+          line-height: normal;
           color: #000000;
         }
 
         & .currency {
           font-style: normal;
           font-weight: normal;
-          font-size: 18px;
-          line-height: 24px;
+          font-size: 1rem;
+          line-height: normal;
           color: #000000;
         }
       }
@@ -146,16 +146,16 @@
         & .weight {
           font-style: normal;
           font-weight: normal;
-          font-size: 18px;
-          line-height: 24px;
+          font-size: 1rem;
+          line-height: normal;
           color: #939393;
         }
 
         & .measure {
           font-style: normal;
           font-weight: normal;
-          font-size: 18px;
-          line-height: 24px;
+          font-size: 1rem;
+          line-height: normal;
           color: #997d7d;
         }
       }
@@ -166,9 +166,12 @@
 .btn-wrapper {
   width: 60%;
   position: relative;
+  height: 30%;
+
 }
 
 .button {   
+  height: 100%;
 
   & button {
     border: 1px solid #EF742F;
@@ -182,6 +185,7 @@
     text-align: center;
     color: #EF742F;
     background: none;
+    height: 100%;
 
     &:hover {
       color: white;
@@ -201,6 +205,29 @@
 }
 
 @media screen and (max-width: 1439px) {
+  .menu {
+    height: 1000px;
+  }
+
+  .tabs {
+    justify-content: space-around;
+
+    & a {
+      flex: 1;
+    }
+  }
+}
+
+
+@media screen and (max-width: 1023px) {
+  .menu {
+    height: 800px;
+  }
+  
+  .menu_title {
+    font-size: 2rem;
+  }
+
   .tabs {
     justify-content: space-around;
 

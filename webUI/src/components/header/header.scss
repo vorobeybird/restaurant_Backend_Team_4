@@ -11,7 +11,9 @@
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  background: url(../../assets/background/header_bg.png) center no-repeat;
+  background-image: url(../../assets/background/header_bg.png);
+  background-size: cover;
+  background-position: center;
   
   & .header_inner {
     display: flex;
@@ -155,6 +157,7 @@
 
 @media screen and (max-width: 767px) {
   .header {
+    height: 450px;
     
     & .header_inner {
   

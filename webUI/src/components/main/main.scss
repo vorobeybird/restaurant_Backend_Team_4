@@ -192,12 +192,20 @@
   border-radius: 50%;
 }
 
+.meals_container {
+  width: 80%;
+}
+
 .left_btn {
-  background: url('../../assets/background/btn-left-background.png') no-repeat center;
+  background-image: url('../../assets/background/btn-left-background.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .right_btn {
-  background: url('../../assets/background/btn-right-background.png') no-repeat center;
+  background-image: url('../../assets/background/btn-right-background.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .meals_container {
@@ -304,8 +312,6 @@
     width: 100%;
     justify-content: center;
     align-content: stretch;
-    
-    
   
     & .step {
       display: flex;
@@ -340,11 +346,109 @@
       }
     }
   }
+
+  .table_reserve_container {
+    height: 550px;
+  
+    & .table_reserve {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      width: 86%;
+      height: 75%;
+      background: #FFFFFF;
+      box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
+      position: relative;
+    
+      & p {
+        font-size: 2rem;
+        line-height: normal;
+        color: #000000;
+        height: 5%;
+      }
+  
+      & .inputs_container {
+        width: 50%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+      }
+  
+      & .main_input_container {
+        height: 20%;
+      }
+  
+      & .time_and_date_input_container {
+        height: 20%;
+        width: 100%;
+  
+        & .main_inputCTA_container {
+          height: 100%;
+          width: 100%;
+        }
+      }
+  
+      & .reserve-btn {
+        width: 35%;
+        height: 10%;
+        background: #EF742F;
+        border-radius: 2px;
+        font-size: 1.2rem;
+        line-height: normal;
+        color: #FFFFFF;
+        border: none;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .main_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 500px;
+  
+    & .main_menu__title {
+      display: flex;
+      justify-content: center;
+      width: 500px;
+      height: 10%;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 2rem;
+      line-height: normal;
+      color: #000000;
+    }
+  }
+  
+  .main_meals_container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .main_meals_container__btn {
+    width: 30px;
+    height: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+  }
 }
 
 @media screen and (max-width: 767px) {
   .how_it_works {
-    height: 200px;
+    height: 150px;
     & .label {
       width: 80%;
       height: 20%;
@@ -401,7 +505,7 @@
         line-height: normal;
         color: #000000;
         margin-left: 12px;
-        white-space: nowrap;
+        
       }
     }
   }
@@ -412,7 +516,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 800px;
+    height: 500px;
   
     & .table_reserve {
       position: relative;
@@ -470,4 +574,49 @@
     }
   }
   
+  .main_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 400px;
+  
+    & .main_menu__title {
+      display: flex;
+      justify-content: center;
+      width: 500px;
+      height: 10%;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 2rem;
+      line-height: normal;
+      color: #000000;
+    }
+  }
+  
+  .main_meals_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+  }
+
+  .meals_container {
+    width: 20%;
+  }
+
+  
+  
+  .main_meals_container__btn {
+    width: 25px;
+    height: 25px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+  }
 }
