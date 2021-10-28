@@ -22,7 +22,7 @@ export  const  Breakfast = () => {
   
 
   const getItems = async () => {
-    const response = await axios.get<MenuItem[]>('http://ec2-18-192-170-78.eu-central-1.compute.amazonaws.com:5000/api/dish')
+    const response = await axios.get<MenuItem[]>('http://18.192.61.153:5000/api/dish')
     const res = response.data
     return res.data
   }
