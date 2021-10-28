@@ -68,6 +68,9 @@ const Navigation = () => {
 
         <ul className="menu__box">
           <div className="menu__item">
+            <div>
+            < img className="search_icon" src={SearchIcon} alt="search icon"></img>
+            </div>
             <Link to="/#">
               <img className="cart_icon" src={Cart} alt="cart icon"></img>
             </Link>

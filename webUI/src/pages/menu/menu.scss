@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  min-width: 320px;
 }
 
 .menu_wrapper {
@@ -29,21 +30,23 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 15%;
+  height: 25%;
   align-items: center;
   border-bottom: 1px solid #C6C5C5;
   justify-content: flex-start;
+  position: relative;
   
   & a {
     text-decoration: none;
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
-    line-height: 21px;
+    font-size: 1rem;
+    line-height: normal;
     color: #000000;
     height: 100%;
     width: 11%;
     text-align: center;
+    vertical-align: top;
   }
 
   .menu_active_link {
@@ -106,8 +109,8 @@
     & .dish-title {
       font-style: normal;
       font-weight: normal;
-      font-size: 18px;
-      line-height: 24px;
+      font-size: 1rem;
+      line-height: normal;
       color: #000000;
       text-align: left;
     }
@@ -142,6 +145,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
+        align-items: center;
 
         & .weight {
           font-style: normal;
@@ -180,8 +184,8 @@
     cursor: pointer;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 1rem;
+    line-height: normal;
     text-align: center;
     color: #EF742F;
     background: none;
@@ -233,6 +237,216 @@
 
     & a {
       flex: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .menu {
+    height: 600px;
+  }
+  
+  .menu_title {
+    font-size: 1.5rem;
+  }
+
+  .tabs {
+    justify-content: space-around;
+    & a {
+      flex: 1;
+    }
+  }
+
+  .item_info {
+
+    & .dish-info {
+
+      & .dish-title {
+        font-size: 0.8rem;
+      }
+      
+      & .dish-price-weight {
+
+        & .dish-price {
+
+          & .price {
+            font-size: 1rem;
+          }
+          & .currency {
+            font-size: 0.8rem;
+          }
+        }
+
+        & .dish-weight {
+
+          & .weight {
+            font-size: 0.8rem;
+          }
+
+          & .measure {
+            font-size: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+  .button {   
+    height: 100%;
+  
+    & button {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .menu {
+    height: 500px;
+  }
+  
+  .menu_title {
+    font-size: 1.4rem;
+  }
+
+  .tabs {
+    height: 35%;
+    & a {
+      flex: 1;
+    }
+  }
+
+  .item_info {
+
+    & .dish-info {
+
+      & .dish-title {
+        font-size: 0.8rem;
+      }
+      
+      & .dish-price-weight {
+
+        & .dish-price {
+
+          & .price {
+            font-size: 1rem;
+          }
+          & .currency {
+            font-size: 0.8rem;
+          }
+        }
+
+        & .dish-weight {
+
+          & .weight {
+            font-size: 0.8rem;
+          }
+
+          & .measure {
+            font-size: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+  .button {   
+    height: 100%;
+  
+    & button {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .menu {
+    height: 800px;
+  }
+  
+  .menu_title {
+    font-size: 1.4rem;
+  }
+
+  .tabs {
+    height: 35%;
+    & a {
+      flex: 1;
+    }
+  }
+
+  .item_container {
+    height: calc((100% / 3) - 1rem);
+    width: calc((100% / 3) - 1rem);
+  }
+
+  .item_info {
+
+    & .dish-info {
+
+      & .dish-title {
+        font-size: 0.8rem;
+      }
+      
+      & .dish-price-weight {
+
+        & .dish-price {
+
+          & .price {
+            font-size: 1rem;
+          }
+          & .currency {
+            font-size: 0.8rem;
+          }
+        }
+
+        & .dish-weight {
+
+          & .weight {
+            font-size: 0.7rem;
+          }
+
+          & .measure {
+            font-size: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+  .button {   
+  
+    & button {
+      font-size: 0.6rem;
+    }
+  }
+}
+
+@media screen and (max-width: 399px) {
+  .menu {
+    height: 1000px;
+  }
+  
+  .menu_title {
+    font-size: 1.2rem;
+  }
+
+  .tabs {
+    height: 20%;
+    & a {
+      font-size: 0.7rem;
+    }
+  }
+
+  .item_container {
+    height: calc((100% / 4) - 1rem);
+    width: calc((100% / 2) - 1rem);
+  }
+
+  .item_info {
+
+    & .dish-info {
+
+      & .dish-title {
+        font-size: 0.8rem;
+      }
     }
   }
 }

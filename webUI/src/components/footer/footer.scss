@@ -69,3 +69,37 @@ footer {
     font-size: 0.8rem;
   }
 }
+
+@media screen and (max-width: 639px) {
+  footer {
+    flex-direction: column;
+    height: 250px;
+    justify-content: center;
+  
+    & .footer-logo {
+      font-size: 1.5rem;
+    }
+  
+    & .nav_links {
+      width: 90%;
+      margin-left: 5%;
+  
+      & li {
+        list-style-type: none;
+        width: auto;
+        margin-right: 1%;
+  
+        & a {
+          font-weight: 200;
+          font-size: 1rem;
+        }
+      }
+     }
+  }
+  
+  .all_rights_reserved {
+    top: 90%;
+    font-size: 0.8rem;
+
+  }
+}
