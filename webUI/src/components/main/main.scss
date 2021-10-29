@@ -5,7 +5,6 @@
   width: 100%;
   height: 250px;
   position: relative;
-
   & .label {
     width: 30%;
     height: 20%;
@@ -36,7 +35,6 @@
   height: 100px;
   position: relative;
   padding: 2%;
-
   & .step {
     display: flex;
     flex-direction: row;
@@ -77,7 +75,6 @@
   justify-content: center;
   width: 100%;
   height: 800px;
-
   & .table_reserve {
     position: relative;
     display: flex;
@@ -89,7 +86,6 @@
     background: #FFFFFF;
     box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
     position: relative;
-  
     & p {
       font-size: 3rem;
       line-height: normal;
@@ -113,7 +109,6 @@
     & .time_and_date_input_container {
       height: 20%;
       width: 100%;
-
       & .main_inputCTA_container {
         height: 100%;
         width: 100%;
@@ -138,7 +133,6 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-
   & div:first-child {
     margin-right: 10px;
   }
@@ -163,7 +157,6 @@
   width: 100%;
   height: 954px;
   position: relative;
-
   & .main_menu__title {
     display: flex;
     width: 80%;
@@ -261,7 +254,6 @@
 .main_logo {
   height: 350px;
   width: 300px;
-
   & img {
     width: 100%;
     height: 100%;
@@ -270,7 +262,6 @@
 
 .google_logo {
   width: 200px;
-
   & a {
     width: 100%;
     height: 100%;
@@ -289,63 +280,29 @@
       width: 80%;
       height: 20%;
       font-size: 2.5rem;
-      line-height: normal;
-      color: #000000;
-      margin-top: 40px;
-      white-space: nowrap;
     }
   
     & p {
       width: 80%;
-      height: 12%;
       font-size: 1.4rem;
-      line-height: normal;
-      color: #606060;
-      margin-top: 28px;
-      white-space: nowrap;
-      text-align: center;
     }
   }
   
   .steps_container {
-    display: flex;
     flex-wrap: wrap;
     height: 200px;
-    position: relative;
     width: 100%;
     justify-content: center;
     align-content: stretch;
-    padding: 2%;
-  
     & .step {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
       height: 50%;
-      position: relative;
       width: 50%;
-  
       .step_number {
         width: 20%;
-        height: 100%;
-        font-family: "Regattia";
-        font-style: normal;
-        font-weight: bold;
-        font-size: 7rem;
-        line-height: normal;
-        color: rgba(96, 96, 96, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
     
       p {
-        font-style: normal;
-        font-weight: 300;
         font-size: 1.3rem;
-        line-height: normal;
-        color: #000000;
-        margin-left: 12px;
         white-space: nowrap;
         width: 80%;
       }
@@ -354,155 +311,39 @@
 
   .table_reserve_container {
     height: 550px;
-  
     & .table_reserve {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 86%;
       height: 75%;
-      background: #FFFFFF;
-      box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
-      position: relative;
-    
       & p {
         font-size: 2rem;
-        line-height: normal;
-        color: #000000;
-        height: 5%;
-      }
-  
-      & .inputs_container {
-        width: 50%;
-        height: 40%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: stretch;
-      }
-  
-      & .main_input_container {
-        height: 20%;
-      }
-  
-      & .time_and_date_input_container {
-        height: 20%;
-        width: 100%;
-  
-        & .main_inputCTA_container {
-          height: 100%;
-          width: 100%;
-        }
       }
   
       & .reserve-btn {
-        width: 35%;
-        height: 10%;
-        background: #EF742F;
-        border-radius: 2px;
         font-size: 1.2rem;
-        line-height: normal;
-        color: #FFFFFF;
-        border: none;
-        cursor: pointer;
       }
     }
   }
 
   .main_menu {
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
     height: 500px;
-  
     & .main_menu__title {
       height: 10%;
       font-size: 2rem;
     }
   }
   
-  .main_meals_container {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-  }
-  
   .main_meals_container__btn {
     width: 30px;
     height: 30px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
   }
 }
 
 @media screen and (max-width: 767px) {
   .how_it_works {
     height: 150px;
-    & .label {
-      width: 80%;
-      height: 20%;
-    }
-  
-    & p {
-      width: 80%;
-      height: 12%;
-      font-size: 1.4rem;
-      line-height: normal;
-      color: #606060;
-      margin-top: 28px;
-      white-space: nowrap;
-      text-align: center;
-    }
   }
   
   .steps_container {
-    display: flex;
-    flex-wrap: wrap;
-    height: 200px;
     position: relative;
-    width: 100%;
-    justify-content: center;
-    align-content: stretch;
- 
-  
-    & .step {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 50%;
-      position: relative;
-      width: 50%;
-  
-      .step_number {
-        width: 20%;
-        height: 100%;
-        font-family: "Regattia";
-        font-style: normal;
-        font-weight: bold;
-        font-size: 7rem;
-        line-height: normal;
-        color: rgba(96, 96, 96, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    
-      p {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.3rem;
-        line-height: normal;
-        color: #000000;
-        margin-left: 12px;
-      }
-    }
 
     & .step:last-child {
       p {
@@ -512,52 +353,15 @@
   }
 
   .table_reserve_container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
     height: 500px;
-  
     & .table_reserve {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 86%;
       height: 60%;
-      background: #FFFFFF;
-      box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
-      position: relative;
-    
-      & p {
-        font-size: 2rem;
-        line-height: normal;
-        color: #000000;
-      }
-  
-      & .inputs_container {
-        width: 50%;
-        height: 40%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: stretch;
-      }
-  
       & .main_input_container {
         height: 20%;
       }
   
       & .time_and_date_input_container {
-        height: 20%;
-        width: 100%;
-  
         & .main_inputCTA_container {
-          height: 100%;
-          width: 100%;
-          
           & .main_inputCTA_img  {
             right: 0;
           }
@@ -568,63 +372,16 @@
           }
         }
       }
-  
-      & .reserve-btn {
-        width: 35%;
-        height: 10%;
-        background: #EF742F;
-        border-radius: 2px;
-        font-size: 1.2rem;
-        line-height: normal;
-        color: #FFFFFF;
-        border: none;
-        cursor: pointer;
-      }
     }
   }
   
   .main_menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
     height: 400px;
-  
-    & .main_menu__title {
-      display: flex;
-      justify-content: center;
-      width: 500px;
-      height: 10%;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 2rem;
-      line-height: normal;
-      color: #000000;
-    }
-  }
-  
-  .main_meals_container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    position: relative;
-  }
-
-  .meals_container {
-    width: 20%;
   }
 
   .main_meals_container__btn {
     width: 25px;
     height: 25px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
   }
 }
 
@@ -633,44 +390,28 @@
     height: 150px;
     & .label {
       width: 80%;
-      height: 20%;
       font-size: 2rem;
     }
   
     & p {
       width: 80%;
-      height: 12%;
       font-size: 1.1rem;
-      line-height: normal;
-      color: #606060;
-      margin-top: 28px;
       white-space: pre-wrap;
-      text-align: center;
     }
   }
   
   .steps_container {
     height: 130px;
-    width: 100%;
-  
     & .step {
-      display: flex;
-      flex-direction: row;
       align-items: center;
-      height: 50%;
       position: relative;
-      width: 50%;
   
       .step_number {
         font-size: 4rem;
       }
     
       p {
-        font-style: normal;
-        font-weight: 300;
         font-size: 1.1rem;
-        line-height: normal;
-        color: #000000;
         margin-left: 12px;
         white-space: pre-wrap;
       }
@@ -679,19 +420,8 @@
 
   .table_reserve_container {
     height: 300px;
-  
     & .table_reserve {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 86%;
       height: 80%;
-      background: #FFFFFF;
-      box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
-      position: relative;
-    
       & p {
         font-size: 1.5rem;
         line-height: normal;
@@ -703,18 +433,8 @@
         height: 40%;
       }
   
-      & .main_input_container {
-        height: 20%;
-      }
-  
       & .time_and_date_input_container {
-        height: 20%;
-        width: 100%;
-  
         & .main_inputCTA_container {
-          height: 100%;
-          width: 100%;
-
           & .main_inputCTA_img  {
             right: 0;
           }
@@ -738,45 +458,25 @@
     height: 150px;
     & .label {
       width: 80%;
-      height: 20%;
       font-size: 2rem;
     }
   
     & p {
       width: 80%;
-      height: 12%;
       font-size: 1.1rem;
-      line-height: normal;
-      color: #606060;
-      margin-top: 28px;
-      white-space: pre-wrap;
-      text-align: center;
     }
   }
   
   .steps_container {
     height: 150px;
-    width: 100%;
-  
     & .step {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 50%;
-      position: relative;
       width: 40%;
-  
       .step_number {
         font-size: 3rem;
       }
     
       p {
-        font-style: normal;
-        font-weight: 300;
         font-size: 0.8rem;
-        line-height: normal;
-        color: #000000;
-        margin-left: 12px;
         white-space: pre-wrap;
       }
     }
@@ -784,47 +484,18 @@
 
   .table_reserve_container {
     height: 300px;
-  
     & .table_reserve {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      width: 86%;
       height: 80%;
-      background: #FFFFFF;
-      box-shadow: 0px 12px 40px rgba(96, 96, 96, 0.16); 
-      position: relative;
-    
       & p {
         font-size: 1.5rem;
-        line-height: normal;
-        color: #000000;
       }
   
       & .inputs_container {
         width: 70%;
-        height: 40%;
-
-      }
-  
-      & .main_input_container {
-        height: 20%;
       }
   
       & .time_and_date_input_container {
-        height: 20%;
-        width: 100%;
-  
         & .main_inputCTA_container {
-          height: 100%;
-          width: 100%;
-
-          & .main_inputCTA_img  {
-            right: 0;
-          }
-
           & .main_inputCTA_img img{
             height: 15px;
             width: 15px;
@@ -839,19 +510,9 @@
   }
 
   .main_menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
     height: 300px;
-    position: relative;
-  
     & .main_menu__title {
-      width: 80%;
-      height: 10%;
       font-size: 1.5rem;
-      justify-content: center;
     }
   }
 }

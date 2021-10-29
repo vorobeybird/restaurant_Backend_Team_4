@@ -35,7 +35,6 @@
   border-bottom: 1px solid #C6C5C5;
   justify-content: flex-start;
   position: relative;
-  
   & a {
     text-decoration: none;
     font-style: normal;
@@ -66,7 +65,6 @@
 
 .item_container {
   height: calc((100% / 2) - 1rem);
-  // height: 33vh;
   width: calc((100% / 4) - 1rem);
   display: flex;
   flex-direction: column;
@@ -85,7 +83,6 @@
 .item_photos {
   height: 65%;
   width: 100%;
-
   & img {
     height: 100%;
     width: 100%;
@@ -100,7 +97,6 @@
   width: 100%;
   justify-content: space-around;
   align-items: center;
-
   & .dish-info {
     display: flex;
     flex-direction: column;
@@ -119,10 +115,8 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-
       & .dish-price {
         flex: 1;
-
         & .price {
           font-style: normal;
           font-weight: 500;
@@ -146,7 +140,6 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-
         & .weight {
           font-style: normal;
           font-weight: normal;
@@ -171,12 +164,10 @@
   width: 60%;
   position: relative;
   height: 30%;
-
 }
 
 .button {   
   height: 100%;
-
   & button {
     border: 1px solid #EF742F;
     box-sizing: border-box;
@@ -190,7 +181,6 @@
     color: #EF742F;
     background: none;
     height: 100%;
-
     &:hover {
       color: white;
       background-color: #EF742F;
@@ -215,7 +205,6 @@
 
   .tabs {
     justify-content: space-around;
-
     & a {
       flex: 1;
     }
@@ -234,7 +223,6 @@
 
   .tabs {
     justify-content: space-around;
-
     & a {
       flex: 1;
     }
@@ -258,17 +246,12 @@
   }
 
   .item_info {
-
     & .dish-info {
-
       & .dish-title {
         font-size: 0.8rem;
       }
-      
       & .dish-price-weight {
-
         & .dish-price {
-
           & .price {
             font-size: 1rem;
           }
@@ -278,7 +261,6 @@
         }
 
         & .dish-weight {
-
           & .weight {
             font-size: 0.8rem;
           }
@@ -292,7 +274,6 @@
   }
   .button {   
     height: 100%;
-  
     & button {
       font-size: 0.8rem;
     }
@@ -316,17 +297,13 @@
   }
 
   .item_info {
-
     & .dish-info {
-
       & .dish-title {
         font-size: 0.8rem;
       }
       
       & .dish-price-weight {
-
         & .dish-price {
-
           & .price {
             font-size: 1rem;
           }
@@ -336,7 +313,6 @@
         }
 
         & .dish-weight {
-
           & .weight {
             font-size: 0.8rem;
           }
@@ -350,7 +326,6 @@
   }
   .button {   
     height: 100%;
-  
     & button {
       font-size: 0.8rem;
     }
@@ -379,17 +354,13 @@
   }
 
   .item_info {
-
     & .dish-info {
-
       & .dish-title {
         font-size: 0.8rem;
       }
       
       & .dish-price-weight {
-
         & .dish-price {
-
           & .price {
             font-size: 1rem;
           }
@@ -399,7 +370,6 @@
         }
 
         & .dish-weight {
-
           & .weight {
             font-size: 0.7rem;
           }
@@ -412,7 +382,6 @@
     }
   }
   .button {   
-  
     & button {
       font-size: 0.6rem;
     }
@@ -441,9 +410,7 @@
   }
 
   .item_info {
-
     & .dish-info {
-
       & .dish-title {
         font-size: 0.8rem;
       }

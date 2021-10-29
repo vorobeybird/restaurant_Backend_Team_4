@@ -6,7 +6,6 @@ footer {
   height: 177px;
   background: #212529;
   position: relative;
-
   & .footer-logo {
     font-family: Regattia;
     font-style: normal;
@@ -25,12 +24,10 @@ footer {
     align-items: center;
     width: 70%;
     margin-left: 5%;
-
     & li {
       list-style-type: none;
       width: auto;
       margin-right: 1%;
-
       & a {
         text-decoration: none;
         font-style: normal;
@@ -40,7 +37,7 @@ footer {
         color: #FFFFFF;
       }
     }
-   }
+  }
 }
 
 .all_rights_reserved {
@@ -55,9 +52,7 @@ footer {
 }
 
 @media screen and (max-width: 1599px) {
-
   footer {
-
     & .nav_links {
       flex-direction: column;
     }
@@ -75,7 +70,6 @@ footer {
     flex-direction: column;
     height: 250px;
     justify-content: center;
-  
     & .footer-logo {
       font-size: 1.5rem;
     }
@@ -83,23 +77,20 @@ footer {
     & .nav_links {
       width: 90%;
       margin-left: 5%;
-  
       & li {
         list-style-type: none;
         width: auto;
         margin-right: 1%;
-  
         & a {
           font-weight: 200;
           font-size: 1rem;
         }
       }
-     }
+    }
   }
   
   .all_rights_reserved {
     top: 90%;
     font-size: 0.8rem;
-
   }
 }

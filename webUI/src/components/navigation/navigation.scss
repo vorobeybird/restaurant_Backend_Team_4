@@ -218,9 +218,7 @@
 
 @media screen and (max-width: 1599px) {
   .navigation {
-
     & .input_container {
-
       & .input {
         width: 130px;
       }
@@ -230,20 +228,17 @@
 
 @media screen and (max-width: 1439px) {
   .navigation {
-
     & .logo {
       font-size: 1.4rem;
     }
 
     & .links {
-      
       & .link {
         font-size: 1.2rem;
       }
     }
 
     & .input_container {
-
       & .input {
         width: 130px;
       }
@@ -253,20 +248,17 @@
 
 @media screen and (max-width: 1023px) {
   .navigation {
-
     & .logo {
       font-size: 1.2rem;
     }
 
     & .links {
-      
       & .link {
         font-size: 1rem;
       }
     }
 
     & .input_container {
-
       & .input {
         width: 100px;
       }
@@ -276,7 +268,6 @@
 
 @media screen and (max-width: 767px) {
   .navigation {
-
     & .logo {
       font-size: 1.2rem;
     }
@@ -302,12 +293,10 @@
   }
 
   .menu__item:first-child{
-
     & div {
       display: flex;
       position: relative;
       width: 33%;
-
     }
 
     a {
@@ -319,5 +308,4 @@
     position: initial;
     right: 0;
   }
-
 }

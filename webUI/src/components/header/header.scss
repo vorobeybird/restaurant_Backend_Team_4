@@ -88,23 +88,10 @@
 
 @media screen and (max-width: 1439px) {
   .header {
-    
     & .header_inner {
-  
       & .header_content {
-  
         & .header_logo{
           font-size: 6rem;
-        }
-  
-        & .header_text {
-          font-style: normal;
-          font-weight: normal;
-          font-size: 1.8rem;
-          line-height: 2rem;
-          color: #FFFFFF;
-          width: auto;
-          white-space: nowrap;
         }
   
         & .header_btn {
@@ -114,7 +101,6 @@
   
           .button {
             height: 100%;
-            
             & button {
               font-size: 1.8rem;
             }
@@ -127,11 +113,8 @@
 
 @media screen and (max-width: 1023px) {
   .header {
-    
     & .header_inner {
-  
       & .header_content {
-  
         & .header_logo{
           font-size: 5rem;
         }
@@ -141,10 +124,8 @@
         }
   
         & .header_btn {
-  
           .button {
             height: 100%;
-            
             & button {
               font-size: 1.5rem;
             }
@@ -158,11 +139,8 @@
 @media screen and (max-width: 767px) {
   .header {
     height: 450px;
-    
     & .header_inner {
-  
       & .header_content {
-  
         & .header_logo{
           font-size: 4rem;
         }
@@ -172,10 +150,8 @@
         }
   
         & .header_btn {
-  
           .button {
             height: 100%;
-            
             & button {
               font-size: 1.5rem;
             }
@@ -189,11 +165,8 @@
 @media screen and (max-width: 639px) {
   .header {
     height: 450px;
-    
     & .header_inner {
-  
       & .header_content {
-  
         & .header_logo{
           font-size: 3rem;
         }
@@ -203,10 +176,8 @@
         }
   
         & .header_btn {
-  
           .button {
             height: 100%;
-            
             & button {
               font-size: 1.2rem;
             }
@@ -220,9 +191,7 @@
 @media screen and (max-width: 499px) {
   .header {
     height: 300px;
-    
     & .header_inner {
-  
       & .header_content {
         width: 80%;
         height: 70%;
@@ -235,10 +204,8 @@
         }
   
         & .header_btn {
-  
           .button {
             height: 100%;
-            
             & button {
               font-size: 1.2rem;
             }
@@ -248,4 +215,3 @@
     }
   }
 }
-
