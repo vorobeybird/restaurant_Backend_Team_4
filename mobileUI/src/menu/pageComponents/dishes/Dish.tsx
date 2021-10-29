@@ -1,15 +1,24 @@
 import React from "react";
-import { StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView} from 'react-native';
+
 
 export const Dishes = ({id, title, photos, descr, price} : {id:any,  title:any, photos:any, descr:any, price: any}) => {
-  
+
   return (
     <View key={id} style={styles.Wrapper}>
         <Text style={styles.Header}>{title}</Text>
-        <Image style={styles.Pict} source={{uri:photos}}/>
+        <ScrollView pagingEnabled horizontal style={styles.Pict}>
+          {
+            photos.map((image: any, index: any) => {return (
+              <Image key={index} style={styles.Pict} source={{uri:image}}/>
+            )
+            })
+          }
+          
+        </ScrollView>
         <View style={styles.BotText}>
-            <Text style={styles.Descr}> {descr} </Text>
-            <Text style={styles.Cost}>{price}</Text>
+            <Text style={styles.Descr}>Калорийность: {descr} калорий</Text>
+            <Text style={styles.Cost}>Цена: {price}BYN</Text>
         </View>
     </View>
   )
@@ -25,6 +34,7 @@ const styles = StyleSheet.create({
       color:'black'
     },
     Pict:{
+      resizeMode:'contain',
       width:250,
       height:170,
       backgroundColor:'white'
@@ -32,12 +42,10 @@ const styles = StyleSheet.create({
     BotText: {
       top:20,
       width:250,
-      flexDirection:'row',
-      justifyContent:'space-between',
-      alignContent:'space-between',
+      flexDirection:'column',
     },
     Descr:{
-      alignSelf:'flex-start',
+      textAlign:'left',
       color:'black',
     },
     Wrapper:{
@@ -47,7 +55,8 @@ const styles = StyleSheet.create({
       
     },
     Cost:{
-      left:20,
+      textAlign:'left',
       color:'black',
+      
     }
   });

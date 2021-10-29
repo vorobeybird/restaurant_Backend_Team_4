@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList } from '../Menu';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
 import { Dishes } from './dishes/Dish';
 import axios, { AxiosResponse } from "axios"
 
@@ -29,21 +29,28 @@ export  const  Breakfast = () => {
   const fetchMenuItems = async () => {
     const items = await getItems()
     setDate(items)
+    
   }
+
+  
   useEffect(() => {
     fetchMenuItems()
     
-  },[])   
- 
+  },[])
+  
   return (
+      
         <View style={styles.Scroll}>
           <Text style={styles.Title}>Завтраки</Text>
           <FlatList 
             style={styles.Flat}
             data={date}
-            renderItem={({ item }) => (
-              <Dishes id={item.id} title={item.title} photos={item.photos[0].photo_url} descr={item.default_ingredients} price={item.price}/>
-            )}
+            renderItem={({ item }) => { 
+              const photoArr = item.photos 
+              const urlArr =  photoArr.map((item: { photo_url: any; }) => item.photo_url) 
+              return (
+              <Dishes id={item.id} title={item.title} photos={urlArr} descr={item.default_ingredients} price={item.price}/>
+            )}}
           />
         </View>
 
