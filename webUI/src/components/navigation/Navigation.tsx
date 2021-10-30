@@ -21,7 +21,9 @@ const links: LinkType[] = [
 ];
 
 const Navigation = () => {
-  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+  const user = useSelector<AppStateType, AuthStateType>(
+    (state) => state.auth.user
+  );
 
   async function sighOutHandler() {
     try {
@@ -52,11 +54,16 @@ const Navigation = () => {
         <img className="search_icon" src={SearchIcon} alt="search icon"></img>
       </div>
       <div className="navigation_icons_container">
-        <Link to="/#">
+        <Link to="/cart">
           <img className="cart_icon" src={Cart} alt="cart icon"></img>
         </Link>
         <Link to="/login">
-          <img className="profile_icon" src={Profile} onClick={sighOutHandler} alt="profile icon"></img>
+          <img
+            className="profile_icon"
+            src={Profile}
+            onClick={sighOutHandler}
+            alt="profile icon"
+          ></img>
         </Link>
       </div>
     </div>
