@@ -3,13 +3,16 @@ import { MenuItem } from "../../store/menu/menu.types";
 import "./menu.scss";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { addToCart } from "../../store/cart/cart.actions";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { ICartItem } from "../../store/cart/cart.types";
 
 const MenuItemComponent = (item: MenuItem) => {
   const dispatch = useAppDispatch();
 
+  const items = useAppSelector((state) => state.cartItems.items);
+
   const onOrder = (item: MenuItem) => {
-    dispatch(addToCart(item));
+    dispatch(addToCart(item, items));
   };
 
   return (

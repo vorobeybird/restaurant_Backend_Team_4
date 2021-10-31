@@ -3,6 +3,9 @@ import "./cart.scss";
 import { useAppSelector } from "../../store/hooks";
 import MenuItemComponent from "../../pages/menu/MenuItem";
 import { CartItem } from "../cartItem/cartItem";
+import { MenuItem } from "../../store/menu/menu.types";
+import { useEffect, useState } from "react";
+import { ICartItem } from "../../store/cart/cart.types";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
@@ -16,7 +19,9 @@ export const Cart = () => {
       {items.length === 0 ? (
         <div className="no_items">No items</div>
       ) : (
-        items.map((item, index) => <CartItem key={index} {...item} />)
+        items.map((item: ICartItem, index) => (
+          <CartItem key={index} {...item} />
+        ))
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import { MenuItem } from "../../store/menu/menu.types";
 import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Gear from "../../assets/gear.png";
 import DeleteIcon from "../../assets/delete.png";
 import { Button } from "../common/button/Button";
@@ -9,8 +9,11 @@ import { useAppDispatch } from "../../store/hooks";
 import { deleteFromCart } from "../../store/cart/cart.actions";
 import { useAppSelector } from "../../store/hooks";
 import "./cart.scss";
+import { ICartItem } from "../../store/cart/cart.types";
+import Plus from "../../assets/plus.png";
+import Minus from "../../assets/minus.png";
 
-export const CartItem = (item: MenuItem) => {
+export const CartItem = (item: ICartItem) => {
   const [gearState, setGearState] = useState(false);
   const [pickedIngredients, setPickedIngredients] = useState<number[]>(
     [...item.ingredients].sort()
@@ -52,6 +55,16 @@ export const CartItem = (item: MenuItem) => {
     dispatch(deleteFromCart(id));
   };
 
+  const [dishNumber, setDishNumber] = useState(item.amount);
+
+  const incrementNumber = () => {
+    setDishNumber(dishNumber + 1);
+  };
+
+  const decrementNumber = () => {
+    setDishNumber(dishNumber > 1 ? dishNumber - 1 : dishNumber);
+  };
+
   return (
     <div className="item_container">
       <div className="item_photos">
@@ -86,6 +99,20 @@ export const CartItem = (item: MenuItem) => {
           <Button type="button" onClick={() => deleteDish(item.id)}>
             <img src={DeleteIcon} alt="delete" />
           </Button>
+        </div>
+
+        <div className="dish-number">
+          <div>
+            <Button onClick={incrementNumber} type="button">
+              <img src={Plus} alt="plus" />
+            </Button>
+          </div>
+          <div>{dishNumber}</div>
+          <div>
+            <Button type="button" onClick={decrementNumber}>
+              <img src={Minus} alt="minus" />
+            </Button>
+          </div>
         </div>
         <div>Вес: {item.weight} г.</div>
         <div>Калории: {item.calories}</div>

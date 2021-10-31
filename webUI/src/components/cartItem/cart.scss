@@ -8,3 +8,16 @@
     height: 100%;
   }
 }
+
+.dish-number {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}
