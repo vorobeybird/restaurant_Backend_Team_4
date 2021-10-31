@@ -1,6 +1,5 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import { menuReducer } from '../features/menu/menu.reducer';
-import { ReducerState } from '../features/menu/menu.types';
+import { menuReducer } from '../store/menu/menu.reducer'
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { authReducer } from "./auth/auth.reducer";

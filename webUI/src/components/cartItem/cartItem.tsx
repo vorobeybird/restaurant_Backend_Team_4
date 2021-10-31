@@ -1,4 +1,4 @@
-import { MenuItem } from "../../features/menu/menu.types";
+import { MenuItem } from "../../store/menu/menu.types";
 import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { useState } from "react";

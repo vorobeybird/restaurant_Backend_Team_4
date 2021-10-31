@@ -1,5 +1,5 @@
 import { Button } from "../../components/common/button/Button";
-import { MenuItem } from "../../features/menu/menu.types";
+import { MenuItem } from "../../store/menu/menu.types";
 import "./menu.scss";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { addToCart } from "../../store/cart/cart.actions";

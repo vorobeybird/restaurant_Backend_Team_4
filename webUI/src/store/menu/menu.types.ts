@@ -1,4 +1,5 @@
 export interface MenuItem {
+  id: number
   title: string;
   default_ingredients: string;
   ingredients: number[];

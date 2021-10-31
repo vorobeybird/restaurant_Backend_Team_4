@@ -1,4 +1,4 @@
-import { ReducerState } from "../../features/menu/menu.types";
+import { ReducerState } from "../../store/menu/menu.types";
 import { CartConstants } from "./cart.types";
 import {AnyAction} from 'redux'
 

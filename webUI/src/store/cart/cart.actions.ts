@@ -1,5 +1,5 @@
 import { AppDispatch } from ".."
-import { MenuItem } from "../../features/menu/menu.types"
+import { MenuItem } from "../../store/menu/menu.types"
 import { CartConstants } from "./cart.types"
 
 export const addToCart = (item: MenuItem) => (dispatch: AppDispatch) => {
