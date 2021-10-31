@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   DishIngredient.init({
     dish_id: DataTypes.INTEGER,
     ingredient_id: DataTypes.INTEGER,
-    is_default: DataTypes.BOOLEAN
+    is_default: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 'true'
+    }
   }, {
     sequelize,
     timestamps: false,

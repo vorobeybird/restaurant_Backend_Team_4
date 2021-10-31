@@ -100,4 +100,29 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
+  async addIngredient(req, res) {
+    try {
+      const dish = await Dish.findOne({where: {id: req.body.dishID}, include: "ingredient"});
+      if (!dish) {
+        return res.status(404).send({
+          message: "dish Not Found",
+        });
+      }
+      const ingredient = await Ingredient.findOne({where: {id: req.body.ingredientID}});
+      if (!ingredient) {
+        return res.status(404).send({
+          message: "Course Not Found",
+        });
+      }
+      await dish.setIngredient(ingredient,{ through: { is_default: false }})
+      .then(()=>{
+        return res.status(200).send(dish);
+      })
+      
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error);
+    }
+  }
+
 };
