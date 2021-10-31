@@ -4,6 +4,7 @@ const DishPhoto = require("../models").DishPhoto;
 const Category = require("../models").Category;
 
 module.exports = {
+
   list(req, res) {
     return Dish.findAll({
       include: [
@@ -27,28 +28,38 @@ module.exports = {
       });
   },
 
-//   getById(req, res) {
-//     return Classroom.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: Student,
-//           as: "students",
-//         },
-//       ],
-//     })
-//       .then((classroom) => {
-//         if (!classroom) {
-//           return res.status(404).send({
-//             message: "Classroom Not Found",
-//           });
-//         }
-//         return res.status(200).send(classroom);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         res.status(400).send(error);
-//       });
-//   },
+
+  getById(req, res) {
+    console.log("HELLO");
+    return Dish.findByPk(req.params.id, {
+      include: [
+        {
+          model: Category,
+          as: "category",
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
+      ],
+    })
+      .then((dish) => {
+        if (!dish) {
+          return res.status(404).send({
+            message: "dish Not Found",
+          });
+        }
+        return res.status(200).send(dish);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
+      });
+  },
 
   add(req, res) {
     return Dish.create({
@@ -61,44 +72,32 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-//   update(req, res) {
-//     return Classroom.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: Student,
-//           as: "students",
-//         },
-//       ],
-//     })
-//       .then((classroom) => {
-//         if (!classroom) {
-//           return res.status(404).send({
-//             message: "Classroom Not Found",
-//           });
-//         }
-//         return classroom
-//           .update({
-//             class_name: req.body.class_name || classroom.class_name,
-//           })
-//           .then(() => res.status(200).send(classroom))
-//           .catch((error) => res.status(400).send(error));
-//       })
-//       .catch((error) => res.status(400).send(error));
-//   },
+  async update(req,res) {
+    try {
+      const result = await Dish.update(
+        req.body ,
+        { where: { id: req.params.id } }
+      )
+      res.status(201).send("Dish was updated succesfully")
+    } catch (err) {
+      res.status(400).send(error)
+    }
+  },
 
-//   delete(req, res) {
-//     return Classroom.findByPk(req.params.id)
-//       .then((classroom) => {
-//         if (!classroom) {
-//           return res.status(400).send({
-//             message: "Classroom Not Found",
-//           });
-//         }
-//         return classroom
-//           .destroy()
-//           .then(() => res.status(204).send())
-//           .catch((error) => res.status(400).send(error));
-//       })
-//       .catch((error) => res.status(400).send(error));
-//   },
+  delete(req, res) {
+    return Dish.findByPk(req.params.id)
+      .then((dish) => {
+        if (!dish) {
+          return res.status(400).send({
+            message: "Dish Not Found",
+          });
+        }
+        return dish
+          .destroy()
+          .then(() => res.status(204).send())
+          .catch((error) => res.status(400).send(error));
+      })
+      .catch((error) => res.status(400).send(error));
+  },
+
 };
