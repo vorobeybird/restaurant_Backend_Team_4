@@ -1,14 +1,18 @@
 import { Link, RouteComponentProps } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { AppStateType } from "../../store";
 import { MenuItem } from "../../store/menu/menu.types";
 import Navigation from "../../components/navigation/Navigation";
 import MenuItemComponent from "./MenuItem";
 import "./menu.scss";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { fetchMenuItems } from "../../store/menu/menu.actions";
 import  Contacts  from '../../components/contacts/Contacts';
 import  Footer  from '../../components/footer/Footer';
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../store";
+import { AuthStateType } from "../../store/auth/auth.reducer";
+import Modal from "../../components/common/modal/Modal";
+import LoginForm from "../login/loginForm/LoginForm";
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -26,7 +30,8 @@ const Menu = ({ location }: MenuProps) => {
   useEffect(() => {
     dispatch(fetchMenuItems());
   }, []);
-
+  const [modalActive, setModalActive] = useState<Boolean>(false);
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
   const items = useAppSelector((state) => state.menu.items);
 
   const currentPath = location.pathname as MenuPathType;
@@ -35,6 +40,10 @@ const Menu = ({ location }: MenuProps) => {
   const filteredItems = items.filter((item) =>
     item.categories.includes(activeLink + 1)
   );
+  const onOrder = () => {
+    (user === null) ? setModalActive(true) : alert("You are auth user so You can make an order")
+    console.log("ordered");
+  };
 
   return (
     <>
@@ -59,9 +68,10 @@ const Menu = ({ location }: MenuProps) => {
         </div>
         <div className="item_container_wrapper">
           {filteredItems.map((item) => (
-            <MenuItemComponent {...item} />
+            <MenuItemComponent {...item} onOrder={onOrder} />
           ))}
         </div>
+        <Modal active={modalActive} setActive={setModalActive} title={"Для оформления заказа, пожалуйста, войдите или зарегистрируйтесь"}><LoginForm isRedirect={false} callback={setModalActive} /></Modal>
       </div>
       <Contacts />
       <Footer />

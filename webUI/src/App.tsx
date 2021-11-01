@@ -1,7 +1,7 @@
 import MainPage from "./pages/mainPage/MainPage";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import "./app.scss";
-import {Authentication} from "./pages/login/Login";
+import {LoginPage} from "./pages/login/LoginPage";
 import Menu from "./pages/menu/Menu";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
@@ -58,7 +58,7 @@ const App = () => {
         <Router>
             <Switch>
                 <Route exact path="/" component={MainPage}/>
-                <Route exact path="/login" component={Authentication}/>
+                <Route exact path="/login" component={LoginPage}/>
                 <Route exact path="/menu/bar" component={Menu}/>
                 <Route exact path="/menu/breakfast" component={Menu}/>
                 <Route exact path="/menu" component={Menu}/>

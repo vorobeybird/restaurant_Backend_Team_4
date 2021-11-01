@@ -6,6 +6,7 @@ import { useState } from "react";
 import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 
+
 const MenuItemComponent = ({
   title,
   default_ingredients,
@@ -14,6 +15,7 @@ const MenuItemComponent = ({
   calories,
   photos,
   price,
+  onOrder,
 }: MenuItem) => {
   const [gearState, setGearState] = useState(false);
   const [pickedIngredients, setPickedIngredients] = useState<number[]>(
@@ -21,10 +23,6 @@ const MenuItemComponent = ({
   );
 
   const onGear = () => setGearState(!gearState);
-
-  const onOrder = () => {
-    console.log("ordered");
-  };
 
   const onCheckbox = (item: number) => {
     if (pickedIngredients.includes(item)) {

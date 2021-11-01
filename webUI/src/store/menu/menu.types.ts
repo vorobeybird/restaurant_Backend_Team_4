@@ -12,6 +12,7 @@ export interface MenuItem {
     width: number, 
     height: number
   }[];
+  onOrder: ((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void) | undefined;
 }
 
 export enum MenuConstants {
