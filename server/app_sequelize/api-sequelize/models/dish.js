@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         as: "category",
         foreignKey: "dish_id",
       });
+      
+      Dish.belongsToMany(models.Order,{
+        through: "OrderDish",
+        as: "order",
+        foreignKey: "dish_id"
+      })
     }
   }
   Dish.init(

@@ -2,6 +2,7 @@ const Dish = require("../models").Dish;
 const Ingredient = require("../models").Ingredient;
 const DishPhoto = require("../models").DishPhoto;
 const Category = require("../models").Category;
+const Order = require("../models").Order;
 
 module.exports = {
 
@@ -28,9 +29,33 @@ module.exports = {
       });
   },
 
+  listSelected(req, res) {
+    const idList = (req.params.list).split(',')
+    return Dish.findAll({
+      where: {id: idList},
+      include: [
+        {
+          model: Category,
+          as: "category",
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
+      ],
+    })
+      .then((classrooms) => res.status(200).send(classrooms))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+
 
   getById(req, res) {
-    console.log("HELLO");
     return Dish.findByPk(req.params.id, {
       include: [
         {
