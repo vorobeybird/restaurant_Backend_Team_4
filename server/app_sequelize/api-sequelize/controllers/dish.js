@@ -89,32 +89,35 @@ module.exports = {
       .then((dish) => {
         if (!dish) {
           return res.status(400).send({
-            message: "Dish Not Found",
+            message: `Dish Not Found dish with id ${req.params.id}`,
           });
         }
         return dish
           .destroy()
-          .then(() => res.status(204).send())
+          .then(() => res.status(204).send(`Dish with id ${req.params.id} was deleted`))
           .catch((error) => res.status(400).send(error));
       })
       .catch((error) => res.status(400).send(error));
   },
 
   async addIngredient(req, res) {
+    const dishID = req.body.dishID,
+      ingredientID = req.body.ingredientID,
+      canChange = req.body.is_default
     try {
-      const dish = await Dish.findOne({where: {id: req.body.dishID}, include: "ingredient"});
+      const dish = await Dish.findOne({where: {id:dishID }, include: "ingredient"});
       if (!dish) {
         return res.status(404).send({
           message: "dish Not Found",
         });
       }
-      const ingredient = await Ingredient.findOne({where: {id: req.body.ingredientID}});
+      const ingredient = await Ingredient.findOne({where: {id:ingredientID }});
       if (!ingredient) {
         return res.status(404).send({
           message: "Course Not Found",
         });
       }
-      await dish.setIngredient(ingredient,{ through: { is_default: false }})
+      await dish.setIngredient(ingredient,{ through: { is_default: canChange }})
       .then(()=>{
         return res.status(200).send(dish);
       })
@@ -123,6 +126,31 @@ module.exports = {
       console.log(error)
       res.status(400).send(error);
     }
-  }
+  },
+
+  async addCategory(req, res) {
+    try {
+      const dish = await Dish.findOne({where: {id: req.body.dishID}, include: "ingredient"});
+      if (!dish) {
+        return res.status(404).send({
+          message: "dish Not Found",
+        });
+      }
+      const category = await Category.findOne({where: {id: req.body.categoryID}});
+      if (!category) {
+        return res.status(404).send({
+          message: "Category Not Found",
+        });
+      }
+      await dish.setCategory(category)
+      .then(()=>{
+        return res.status(200).send(dish);
+      })
+      
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error);
+    }
+  },
 
 };

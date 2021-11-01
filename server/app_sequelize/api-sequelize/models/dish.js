@@ -21,10 +21,23 @@ module.exports = (sequelize, DataTypes) => {
   }
   Dish.init(
     {
-      title: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      weight: DataTypes.INTEGER,
-      calories: DataTypes.INTEGER,
+      title:{
+        type: DataTypes.STRING,
+        allowNull:false
+      } ,
+      price:
+      {
+        type: DataTypes.INTEGER,
+        allowNull:false
+      },
+      weight:      {
+        type: DataTypes.INTEGER,
+        allowNull:false
+      },
+      calories:      {
+        type: DataTypes.INTEGER,
+        allowNull:false
+      },
     },
     {
       sequelize,

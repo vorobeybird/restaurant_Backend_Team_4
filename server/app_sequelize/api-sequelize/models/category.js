@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
   };
   Category.init({
     title: DataTypes.STRING,
-    show_in_menu: DataTypes.BOOLEAN
+    show_in_menu:{
+      type:DataTypes.BOOLEAN,
+      defaultValue: true
+    } 
   }, {
     sequelize,
     timestamps: false,
