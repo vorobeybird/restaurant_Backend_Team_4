@@ -1,0 +1,57 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-oceanbar-dev-232002-authRole",
+      "UnauthRoleArn": "arn:aws:iam::255674984703:role/amplify-oceanbar-dev-232002-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::255674984703:role/amplify-oceanbar-dev-232002-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-oceanbar-dev-232002-deployment",
+      "UnauthRoleName": "amplify-oceanbar-dev-232002-unauthRole",
+      "StackName": "amplify-oceanbar-dev-232002",
+      "StackId": "arn:aws:cloudformation:eu-central-1:255674984703:stack/amplify-oceanbar-dev-232002/21525ea0-2d2c-11ec-b79e-0ac2d9fd9ade",
+      "AmplifyAppId": "d3bef9t75e867x"
+    }
+  },
+  "auth": {
+    "oceanbar263fe797": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "loginMechanisms": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "eu-central-1_4TF3QpcdU",
+        "AppClientIDWeb": "umqjsrckt87isrst0pekhaalu",
+        "AppClientID": "2q3r1u37ij7l9r6qa594ucca7u",
+        "IdentityPoolId": "eu-central-1:bfddd279-f012-4e50-837d-299b91b789c6",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-central-1:255674984703:userpool/eu-central-1_4TF3QpcdU",
+        "IdentityPoolName": "oceanbar263fe797_identitypool_263fe797__dev",
+        "UserPoolName": "oceanbar263fe797_userpool_263fe797"
+      },
+      "lastPushTimeStamp": "2021-10-21T13:12:20.059Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-oceanbar-dev-232002-deployment/amplify-cfn-templates/auth/oceanbar263fe797-cloudformation-template.yml",
+        "logicalId": "authoceanbar263fe797"
+      }
+    }
+  }
+}
