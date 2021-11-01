@@ -38,3 +38,18 @@
   display: flex;
   justify-content: center;
 }
+
+.order_actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.order_buttons {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 30px;
+}

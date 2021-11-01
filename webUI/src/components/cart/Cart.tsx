@@ -6,10 +6,24 @@ import { CartItem } from "../cartItem/cartItem";
 import { MenuItem } from "../../store/menu/menu.types";
 import { useEffect, useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
+import { Button } from "../common/button/Button";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
+
+  const onBookTable = () => {
+    console.log("table is booked");
+  };
+
+  const onDelivery = () => {
+    console.log("lunch is running!");
+  };
+
+  const onTakeaway = () => {
+    console.log("takeaway");
+  };
+
   return (
     <>
       <Navigation />
@@ -23,7 +37,27 @@ export const Cart = () => {
           {items.map((item: ICartItem, index) => (
             <CartItem key={index} {...item} />
           ))}
-          <div>Итого: {totalPrice}</div>
+          <div>Итого: {totalPrice} BYN</div>
+          <div className="order_actions">
+            <div>Тип заказа: </div>
+            <div className="order_buttons">
+              <div>
+                <Button type="button" onClick={onBookTable}>
+                  Забронировать стол
+                </Button>
+              </div>
+              <div>
+                <Button type="button" onClick={onDelivery}>
+                  Доставка
+                </Button>
+              </div>
+              <div>
+                <Button type="button" onClick={onTakeaway}>
+                  Навынос
+                </Button>
+              </div>
+            </div>
+          </div>
         </>
       )}
     </>
