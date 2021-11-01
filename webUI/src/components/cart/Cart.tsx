@@ -9,7 +9,7 @@ import { ICartItem } from "../../store/cart/cart.types";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
-
+  const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   return (
     <>
       <Navigation />
@@ -19,9 +19,12 @@ export const Cart = () => {
       {items.length === 0 ? (
         <div className="no_items">No items</div>
       ) : (
-        items.map((item: ICartItem, index) => (
-          <CartItem key={index} {...item} />
-        ))
+        <>
+          {items.map((item: ICartItem, index) => (
+            <CartItem key={index} {...item} />
+          ))}
+          <div>Итого: {totalPrice}</div>
+        </>
       )}
     </>
   );

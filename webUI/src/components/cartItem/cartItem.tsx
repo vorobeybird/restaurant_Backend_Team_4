@@ -6,7 +6,12 @@ import Gear from "../../assets/gear.png";
 import DeleteIcon from "../../assets/delete.png";
 import { Button } from "../common/button/Button";
 import { useAppDispatch } from "../../store/hooks";
-import { deleteFromCart } from "../../store/cart/cart.actions";
+import {
+  addToCart,
+  decrementNumofDishes,
+  deleteFromCart,
+  incrementNumOfDishes,
+} from "../../store/cart/cart.actions";
 import { useAppSelector } from "../../store/hooks";
 import "./cart.scss";
 import { ICartItem } from "../../store/cart/cart.types";
@@ -55,14 +60,12 @@ export const CartItem = (item: ICartItem) => {
     dispatch(deleteFromCart(id));
   };
 
-  const [dishNumber, setDishNumber] = useState(item.amount);
-
-  const incrementNumber = () => {
-    setDishNumber(dishNumber + 1);
+  const incrementNumber = (id: number) => {
+    dispatch(incrementNumOfDishes(id));
   };
 
-  const decrementNumber = () => {
-    setDishNumber(dishNumber > 1 ? dishNumber - 1 : dishNumber);
+  const decrementNumber = (id: number) => {
+    dispatch(decrementNumofDishes(id));
   };
 
   return (
@@ -103,13 +106,13 @@ export const CartItem = (item: ICartItem) => {
 
         <div className="dish-number">
           <div>
-            <Button onClick={incrementNumber} type="button">
+            <Button onClick={() => incrementNumber(item.id)} type="button">
               <img src={Plus} alt="plus" />
             </Button>
           </div>
-          <div>{dishNumber}</div>
+          <div>{item.amount}</div>
           <div>
-            <Button type="button" onClick={decrementNumber}>
+            <Button type="button" onClick={() => decrementNumber(item.id)}>
               <img src={Minus} alt="minus" />
             </Button>
           </div>
@@ -117,19 +120,6 @@ export const CartItem = (item: ICartItem) => {
         <div>Вес: {item.weight} г.</div>
         <div>Калории: {item.calories}</div>
         <div>Стоимость: {item.price} BYN</div>
-        <div className="dish-info">
-          <div className="dish-title">{item.title}</div>
-          <div className="dish-price-weight">
-            <div className="dish-price">
-              <span className="price">{item.price}</span>
-              <span className="currency"> BYN</span>
-            </div>
-            <div className="dish-weight">
-              <span className="weight">{item.weight}</span>
-              <span className="measure"> г.</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
