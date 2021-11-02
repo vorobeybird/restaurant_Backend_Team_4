@@ -17,32 +17,31 @@ module.exports = (sequelize, DataTypes) => {
         as: "category",
         foreignKey: "dish_id",
       });
-      
-      Dish.belongsToMany(models.Order,{
+
+      Dish.belongsToMany(models.Order, {
         through: "OrderDish",
         as: "order",
-        foreignKey: "dish_id"
-      })
+        foreignKey: "dish_id",
+      });
     }
   }
   Dish.init(
     {
-      title:{
+      title: {
         type: DataTypes.STRING,
-        allowNull:false
-      } ,
-      price:
-      {
-        type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull: false,
       },
-      weight:      {
+      price: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull: false,
       },
-      calories:      {
+      weight: {
         type: DataTypes.INTEGER,
-        allowNull:false
+        allowNull: false,
+      },
+      calories: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {

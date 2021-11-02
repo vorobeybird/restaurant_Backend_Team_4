@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class DishIngredient extends Model {
     /**
@@ -12,19 +10,22 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  DishIngredient.init({
-    dish_id: DataTypes.INTEGER,
-    ingredient_id: DataTypes.INTEGER,
-    is_default: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 'true'
+  }
+  DishIngredient.init(
+    {
+      dish_id: DataTypes.INTEGER,
+      ingredient_id: DataTypes.INTEGER,
+      is_default: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: "true",
+      },
+    },
+    {
+      sequelize,
+      timestamps: false,
+      tableName: "DishIngredient",
+      modelName: "DishIngredient",
     }
-  }, {
-    sequelize,
-    timestamps: false,
-    tableName: "DishIngredient",
-    modelName: 'DishIngredient',
-  });
+  );
   return DishIngredient;
 };

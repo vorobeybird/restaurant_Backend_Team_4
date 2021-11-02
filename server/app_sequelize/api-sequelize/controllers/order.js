@@ -44,7 +44,7 @@ module.exports = {
     const dish = req.body.dish;
     try {
       const date = req.body.delivery_date;
-    //   const date = new Date(req.body.delivery_date)
+      //   const date = new Date(req.body.delivery_date)
       const order = await Order.create({
         customer_id: req.body.customer_id,
         delivery_method: req.body.delivery_method,
@@ -56,11 +56,13 @@ module.exports = {
         status: req.body.status,
         comment: req.body.comment,
       });
-      for (const elem of dish){
-        const dish_item =  await Dish.findByPk(elem.dish_id);
-        await order.addDish(dish_item,{through: { quantity: elem.dish_amount }})
+      for (const elem of dish) {
+        const dish_item = await Dish.findByPk(elem.dish_id);
+        await order.addDish(dish_item, {
+          through: { quantity: elem.dish_amount },
+        });
       }
-        res.status(200).send(order);
+      res.status(200).send(order);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
