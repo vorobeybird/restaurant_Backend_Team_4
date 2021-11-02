@@ -2,15 +2,13 @@ const Dish = require("../models").Dish;
 const Ingredient = require("../models").Ingredient;
 
 module.exports = {
-
   list(req, res) {
-    return Ingredient.findAll({ })
+    return Ingredient.findAll({})
       .then((classrooms) => res.status(200).send(classrooms))
       .catch((error) => {
         res.status(400).send(error);
       });
   },
-
 
   getById(req, res) {
     console.log("HELLO");
@@ -44,15 +42,14 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-  async update(req,res) {
+  async update(req, res) {
     try {
-      const result = await Ingredient.update(
-        req.body ,
-        { where: { id: req.params.id } }
-      )
-      res.status(201).send("Ingredient was updated succesfully")
+      const result = await Ingredient.update(req.body, {
+        where: { id: req.params.id },
+      });
+      res.status(201).send("Ingredient was updated succesfully");
     } catch (err) {
-      res.status(400).send(error)
+      res.status(400).send(error);
     }
   },
 
@@ -71,5 +68,4 @@ module.exports = {
       })
       .catch((error) => res.status(400).send(error));
   },
-
 };

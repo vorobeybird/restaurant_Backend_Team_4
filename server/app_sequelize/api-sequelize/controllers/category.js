@@ -43,7 +43,7 @@ module.exports = {
   add(req, res) {
     return Category.create({
       title: req.body.title,
-      show_in_menu: req.body.show_in_menu
+      show_in_menu: req.body.show_in_menu,
     })
       .then((category) => res.status(201).send(category))
       .catch((error) => res.status(400).send(error));
@@ -54,7 +54,7 @@ module.exports = {
       const result = await Category.update(req.body, {
         where: { id: req.params.id },
       });
-      res.status(201).send({message: "Category was updated succesfully"});
+      res.status(201).send({ message: "Category was updated succesfully" });
     } catch (err) {
       res.status(400).send(error);
     }
@@ -70,7 +70,11 @@ module.exports = {
         }
         return category
           .destroy()
-          .then(() => res.status(204).send(`Category with id ${req.params.id} was deleted`))
+          .then(() =>
+            res
+              .status(204)
+              .send(`Category with id ${req.params.id} was deleted`)
+          )
           .catch((error) => res.status(400).send(error));
       })
       .catch((error) => res.status(400).send(error));
