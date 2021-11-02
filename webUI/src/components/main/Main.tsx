@@ -106,7 +106,7 @@ const Main = () => {
         <div className="main_menu__title">Предложение недели</div>
         <div className="main_meals_container">
           <button className="main_meals_container__btn .left_btn"></button>
-          {MEAL_BLOCKS.map(({ image, name, price, onclick }) => {
+          {/* {MEAL_BLOCKS.map(({ image, name, price, onclick }) => {
             return (
               <div className="meals_container">
                 <div className="meal">
@@ -117,13 +117,13 @@ const Main = () => {
                     <p>{name}</p>
                     <p>Цена: ${price}</p>
                   </div>
-                  <div>
-                    <Button type="button" onClick={onclick}>Заказать</Button>
-                  </div>
                 </div>
               </div>
             );
-          })}
+          })} */}
+          <div className="meals_container">
+
+          </div>
           <button className="main_meals_container__btn .right_btn"></button>
         </div>
       </div>
