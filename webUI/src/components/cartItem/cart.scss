@@ -1,0 +1,26 @@
+.item_container {
+  margin-bottom: 30px;
+}
+
+.delete-dish {
+  width: 70px;
+  height: 60px;
+  margin-bottom: 10px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.dish-number {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  & img {
+    width: 30px;
+    height: 30px;
+  }
+}

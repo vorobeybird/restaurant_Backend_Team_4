@@ -1,4 +1,7 @@
+import { ICartItem } from "../cart/cart.types";
+
 export interface MenuItem {
+  id: number
   title: string;
   default_ingredients: string;
   ingredients: number[];

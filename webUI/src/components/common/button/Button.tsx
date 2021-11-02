@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import "./button.scss";
-import { MouseEvent } from 'react';
+import { MouseEvent } from "react";
 
 interface ButtonProps {
-  children: string;
+  children: ReactNode;
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
-  type: "button" | "submit" | "reset" ;
+  type: "button" | "submit" | "reset";
 }
 
 export const Button = ({ children, onClick }: ButtonProps) => {

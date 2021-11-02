@@ -2,6 +2,8 @@ import { ReducerState, MenuActions, MenuConstants } from './menu.types';
 
 const initialState = {items: []}
 
+
+
 export function menuReducer(
   state: ReducerState = initialState,
   action: MenuActions

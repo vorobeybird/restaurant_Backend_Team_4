@@ -7,8 +7,8 @@ import MenuItemComponent from "./MenuItem";
 import "./menu.scss";
 import { useEffect } from "react";
 import { fetchMenuItems } from "../../store/menu/menu.actions";
-import  Contacts  from '../../components/contacts/Contacts';
-import  Footer  from '../../components/footer/Footer';
+import Contacts from "../../components/contacts/Contacts";
+import Footer from "../../components/footer/Footer";
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -58,8 +58,8 @@ const Menu = ({ location }: MenuProps) => {
           </div>
         </div>
         <div className="item_container_wrapper">
-          {filteredItems.map((item) => (
-            <MenuItemComponent {...item} />
+          {filteredItems.map((item, index) => (
+            <MenuItemComponent {...item} key={index} />
           ))}
         </div>
       </div>
@@ -136,4 +136,3 @@ export default Menu;
 // };
 
 // export default Menu;
-

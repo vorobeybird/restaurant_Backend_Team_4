@@ -39,13 +39,11 @@ const NAV_LINKS = [
 const Footer = () => {
   return (
     <footer>
-      <div className="footer-logo">
-        Ocean bar
-      </div>
+      <div className="footer-logo">Ocean bar</div>
 
       <ul className="nav_links">
-        {NAV_LINKS.map(({ title, link }) => (
-          <li>
+        {NAV_LINKS.map(({ title, link }, index) => (
+          <li key={index}>
             <a href={link}>{title}</a>
           </li>
         ))}
