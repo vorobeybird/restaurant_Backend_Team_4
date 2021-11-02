@@ -29,7 +29,7 @@ module.exports = {
   },
 
   listSelected(req, res) {
-    const idList = req.params.list.split();
+    const idList = req.params.list.split(",");
     return Dish.findAll({
       where: { id: idList },
       include: [
