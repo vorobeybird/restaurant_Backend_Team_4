@@ -60,6 +60,35 @@ const Navigation = () => {
           <img className="profile_icon" src={Profile} onClick={sighOutHandler} alt="profile icon"></img>
         </Link>
       </div>
+
+      <div className="hamburger-menu">
+        <input id="menu__toggle" type="checkbox" />
+        <label className="menu__btn" htmlFor="menu__toggle">
+          <span></span>
+        </label>
+
+        <ul className="menu__box">
+          <div className="menu__item">
+            <div>
+            < img className="search_icon" src={SearchIcon} alt="search icon"></img>
+            </div>
+            <Link to="/#">
+              <img className="cart_icon" src={Cart} alt="cart icon"></img>
+            </Link>
+            <Link to="/login">
+              <img className="profile_icon" src={Profile} onClick={sighOutHandler} alt="profile icon"></img>
+            </Link>
+          </div>
+          {links.map(({ title, link }) => {
+            return (
+              <Link key={title} className="menu__item" to={link}>
+                {title}
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
+
     </div>
   );
 };

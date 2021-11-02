@@ -1,5 +1,5 @@
 import { Button } from "../../components/common/button/Button";
-import { MenuItem } from "../../features/menu/menu.types";
+import { MenuItem } from "../../store/menu/menu.types";
 import Gear from "../../assets/gear.png";
 import "./menu.scss";
 import { useState } from "react";
