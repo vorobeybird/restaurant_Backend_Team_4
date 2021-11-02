@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^1.2.21",
+    "@cloudinary/react": "^1.0.0-beta.11",
+    "@cloudinary/url-gen": "^1.1.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.4",

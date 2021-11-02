@@ -8,7 +8,7 @@ import { useTheme } from '@mui/styles';
 import IngDialog from '../ingredients/catIngDialog/CatIngDialog';
 
 interface IDish {
-  id: number;
+  id?: string;
   title: string;
   default_ingredients: Array<Number>;
   price: number;
@@ -50,20 +50,21 @@ const DishesGrid = () => {
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'title', headerName: 'Title', width: 250 },
-    {
-      field: 'default_ingredients',
+    { field: 'title', headerName: 'Title', width: 350 },
+/*     {
+      field: 'ingredients',
       headerName: 'Ingredients',
       sortable: true,
       width: 160,
-    },
-    { field: 'categories', headerName: 'Category', width: 300 },
+    }, */
+   
     { field: 'price', headerName: 'Price', width: 150, align: 'center' },
     { field: 'dishes_photos', headerName: 'Photos', width: 120, align: 'center',
       valueGetter: (params: GridValueGetterParams) =>{
         const photos: any = params.getValue(params.id, 'photos')
       return photos.length;
     }},
+    { field: 'categories', headerName: 'Category', width: 300 },
     { field:'Edit', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any): void => {
       setCurrentDish(params.api.getRow(params.id));
@@ -106,7 +107,6 @@ const DishesGrid = () => {
         }
     })
     .then(response=> {
-        console.log(response.data.data);
         setDishes(response.data.data);
     })
     .catch(err=>{
@@ -128,8 +128,8 @@ useEffect(() => {
         <Grid container spacing={0} >
         <Grid item md={6} xs={12} sx={{my: theme.spacing(3) }}><Button variant="contained" onClick={handleClickOpen}>Add a new Dish</Button></Grid>
       <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', my: theme.spacing(3)}}>
-      <Button id="ingredient" onClick={(e)=>{openInCa(e, 'ingredient')}} sx={{mr: theme.spacing(1)}} key={"ingredient"} variant="contained" color="warning" size="small">Add an ingredient</Button>
-      <Button id="category" onClick={(e)=>{openInCa(e, 'category')}} sx={{ml: theme.spacing(1)}} variant="contained" color="warning" size="small">Add a category</Button></Grid>
+      <Button id="ingredient" onClick={(e)=>{openInCa(e, 'ingredient')}} sx={{mr: theme.spacing(1)}} variant="contained" color="warning" size="small">Ingredients</Button>
+      <Button id="category" onClick={(e)=>{openInCa(e, 'category')}} sx={{ml: theme.spacing(1)}} variant="contained" disabled color="warning" size="small">Categories</Button></Grid>
       </Grid>
       </Container>
 
@@ -137,7 +137,7 @@ useEffect(() => {
         rows={dishes}
         columns={columns}
         pageSize={10}
-        rowsPerPageOptions={[5]}
+        rowsPerPageOptions={[10]}
         checkboxSelection = {false}
       />
      
