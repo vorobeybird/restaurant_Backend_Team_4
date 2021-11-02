@@ -5,7 +5,7 @@ import Profile from "../../assets/profile.png";
 import "./navigation.scss";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { AppStateType } from "../../store";
 import { AuthStateType } from "../../store/auth/auth.reducer";
 
@@ -21,9 +21,8 @@ const links: LinkType[] = [
 ];
 
 const Navigation = () => {
-  const user = useSelector<AppStateType, AuthStateType>(
-    (state) => state.auth.user
-  );
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+  const dispatch = useDispatch();
 
   async function sighOutHandler() {
     try {

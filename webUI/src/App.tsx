@@ -1,10 +1,5 @@
 import MainPage from "./pages/mainPage/MainPage";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import "./app.scss";
 import { Authentication } from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
@@ -19,13 +14,12 @@ import { Cart } from "./components/cart/Cart";
 Amplify.configure(awsconfig);
 
 const App = () => {
-  const user = useSelector<AppStateType, AuthStateType>(
-    (state) => state.auth.user
-  );
-  console.log("App rendering");
-  console.log(user);
-  const dispatch = useDispatch();
-
+    const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+    const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
+    console.log("App rendering")
+    console.log(state)
+    console.log("User is : " + user)
+    const dispatch = useDispatch();
   useEffect(() => {
     checkUser();
     setAuthListener();

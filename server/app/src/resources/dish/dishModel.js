@@ -50,6 +50,7 @@ class Dish {
                 res.forEach((row) => {
                   const photo = {
                     photo_url: row.photo_url,
+                    public_id: row.public_id,
                     ordinal_num: row.ordinal_num,
                     width: row.width,
                     height: row.height,
@@ -203,6 +204,7 @@ class Dish {
               res.forEach((row) => {
                 const photo = {
                   photo_url: row.photo_url,
+                  public_id: row.public_id,
                   ordinal_num: row.ordinal_num,
                   width: row.width,
                   height: row.height,

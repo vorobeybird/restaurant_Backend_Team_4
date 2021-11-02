@@ -17,13 +17,20 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+interface IPhoto {
+  photo_url: string,
+  public_id: string,
+  ordinal_num: number,
+  width: number,
+  height: number,
+}
 interface IDish {
-  id: number;
+  id?: string;
   title: string;
   default_ingredients: Array<Number>;
   price: number;
   weight: number;
-  photos: Array<Object>
+  photos: Array<IPhoto>
   categories: Array<Number>;
   ingredients: Array<Number>;
   calories: number;

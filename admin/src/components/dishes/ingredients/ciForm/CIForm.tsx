@@ -149,7 +149,7 @@ export default function CIForm({type}: ICIFormProps) {
      name="title"
      focused
      autoComplete="title" value={currentValue?.inputValue || currentValue?.title || ''} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
-     <Container><Button onClick={saveIngredient}>Save</Button><Button onClick={deleteIngredient}>Delete</Button></Container></>
+     <Container sx={{width: 400, display: "flex", justifyContent: "space-evenly", p: 0}}><Button sx={{m: theme.spacing(3), width: 80}} onClick={saveIngredient} color="primary" variant="contained">Save</Button><Button sx={{m: theme.spacing(3),  width: 80}} color="error" variant="contained" onClick={deleteIngredient}>Delete</Button></Container></>
     }
     </Container>
   );
