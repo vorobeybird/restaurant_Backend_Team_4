@@ -47,7 +47,7 @@
         "IdentityPoolName": "oceanbar263fe797_identitypool_263fe797__dev",
         "UserPoolName": "oceanbar263fe797_userpool_263fe797"
       },
-      "lastPushTimeStamp": "2021-10-21T13:12:20.059Z",
+
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-oceanbar-dev-232002-deployment/amplify-cfn-templates/auth/oceanbar263fe797-cloudformation-template.yml",
         "logicalId": "authoceanbar263fe797"
