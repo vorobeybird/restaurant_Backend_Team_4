@@ -15,7 +15,6 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-const Stack = createStackNavigator();
 
 export const BottomTabNavigation = () => {
     return (

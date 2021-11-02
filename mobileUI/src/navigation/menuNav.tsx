@@ -6,6 +6,7 @@ import { Breakfast } from '../menu/pageComponents/Breakfast';
 import { MainMenu } from '../menu/pageComponents/MainMenu';
 import { BarMenu } from '../menu/pageComponents/BarMenu';
 import { WeekCatch } from '../menu/pageComponents/WeekCatch';
+import { DishPage } from "./DishPage";
 
 export type RootStackParamList = {
     MenuTabNavigation: undefined;
@@ -13,6 +14,8 @@ export type RootStackParamList = {
     BarMenu: undefined;
     WeekCatch: undefined;
     Menu: undefined;
+    Breakfast: undefined;
+    DishPage: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -41,6 +44,9 @@ export const MenuTabNavigation = () => {
             name="WeekCatch"
             component={WeekCatch}
         />
-        
+        <Stack.Screen
+                    name="DishPage"
+                    component={DishPage}
+                />
     </Stack.Navigator>
 }

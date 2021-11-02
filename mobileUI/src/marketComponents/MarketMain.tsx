@@ -5,6 +5,7 @@ import {
     Text,
     View,
 } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { OrderedDish } from './OrderedDish';
 
@@ -14,9 +15,10 @@ export const MarketMain = () => {
     <View>
          <View style={styles.PictCont}>
             <Image source={require('../../img/close.png')}/>
+            <Text style={styles.Header}>Заказ</Text>
             <Image source={require('../../img/bin.png')}/>
         </View>
-        <Text style={styles.Header}>Заказ</Text>
+        
         <OrderedDish/>
         <View style={styles.TypeWrapper}>
             <Text style={styles.TextType}>Выберите вид заказа:</Text>
@@ -44,8 +46,7 @@ const styles = StyleSheet.create({
         paddingRight:5
     },
     Header: {
-        top: 50,
-        left:'5%',
+        alignSelf:'center',
         fontFamily: 'Open Sans',
         fontStyle: 'normal',
         fontWeight: 'normal',
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
         left:'10%',
     },
     TypeWrapper:{
-        top:'30%',
+        top:'5%',
         position:'relative',
         flexDirection:'row',
         justifyContent:'space-evenly'
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     FinalCheckCont:{
         width: 341,
         height: 60.43,
-        top:'70%',
+        top:'20%',
         flexDirection:'row',
         alignSelf: 'center',
         alignItems:'center',

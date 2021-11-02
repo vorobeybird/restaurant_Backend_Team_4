@@ -1,26 +1,36 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, ScrollView} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native';
 
 
-export const Dishes = ({id, title, photos, descr, price} : {id:any,  title:any, photos:any, descr:any, price: any}) => {
+type RootStackParamList = {
+  DishPageNavigation: undefined;
+  DishPage: undefined;
+  navigate: any;
+};
 
+
+export const Dishes = ({id, title, photos, descr, price, cal, weight} : {id:any,  title:any, photos:any, descr:any, price: any,cal:any, weight:any}) => {
+  const navigation = useNavigation<RootStackParamList>();
   return (
-    <View key={id} style={styles.Wrapper}>
+    <TouchableOpacity onPress={() => navigation.navigate('DishPage', { names: [id,title, photos, descr, price, cal, weight ]})}>
+      <View key={id} style={styles.Wrapper}>
         <Text style={styles.Header}>{title}</Text>
         <ScrollView pagingEnabled horizontal style={styles.Pict}>
           {
             photos.map((image: any, index: any) => {return (
               <Image key={index} style={styles.Pict} source={{uri:image}}/>
-            )
+             )
             })
-          }
-          
+          }    
         </ScrollView>
         <View style={styles.BotText}>
-            <Text style={styles.Descr}>Калорийность: {descr} калорий</Text>
+            <Text style={styles.Descr}>Калорийность: {cal} калорий</Text>
             <Text style={styles.Cost}>Цена: {price}BYN</Text>
         </View>
-    </View>
+      </View>
+    </TouchableOpacity>
   )
 };
 

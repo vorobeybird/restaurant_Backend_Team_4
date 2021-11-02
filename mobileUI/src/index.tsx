@@ -3,7 +3,8 @@ import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports'
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { BottomTabNavigation } from './navigation/nav'
-
+import { Store } from './store/index'
+import { Provider } from 'react-redux'
 Amplify.configure({
   ...awsconfig,
   Analytics: {
@@ -33,7 +34,9 @@ const signUpConfig = {
 
 const App = () => {
   return (
+    <Provider store={Store}>
       <BottomTabNavigation/>
+    </Provider>
   )
 }
 
