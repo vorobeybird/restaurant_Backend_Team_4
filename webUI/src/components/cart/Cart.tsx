@@ -53,8 +53,8 @@ export const Cart = () => {
     order.dish = dishesShortInfo;
 
     axios
-      .post("http://localhost:5000/api", order, {
-        headers: { "Content-type": "application/json" },
+      .post("http:localhost:5500/api/order", order, {
+        headers: { "Content-type": "application/json", "cross-domain": "true" },
       })
       .then((response) => console.log(response))
       .catch((err) => console.log(err));

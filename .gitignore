@@ -4,3 +4,4 @@ mysqldb/
 db/
 .idea/
 .vscode/
+/config.json
