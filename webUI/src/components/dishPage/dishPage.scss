@@ -1,0 +1,19 @@
+.dish-page {
+    width: 100%;
+    height: 1800px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    & .dish-page__container{
+        display: flex;
+        height: 100%;
+        width: 90%;
+        position: relative;
+        & .bread-crumbs {
+            display: flex;
+            height: 10%;
+            width: 100%;
+        }
+    }
+}

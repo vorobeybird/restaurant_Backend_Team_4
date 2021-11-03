@@ -99,7 +99,6 @@ export function Authentication() {
 
     return (
         <>
-            <Navigation/>
             <div className="login_logo">
                 <img src={Logo} alt="logo"/>
             </div>

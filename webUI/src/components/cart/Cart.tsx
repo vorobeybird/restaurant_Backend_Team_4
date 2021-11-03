@@ -1,4 +1,3 @@
-import Navigation from "../navigation/Navigation";
 import "./cart.scss";
 import { useAppSelector } from "../../store/hooks";
 import MenuItemComponent from "../../pages/menu/MenuItem";
@@ -63,7 +62,6 @@ export const Cart = () => {
 
   return (
     <>
-      <Navigation />
       <div className="cart_title">
         <h1>Корзина</h1>
       </div>
