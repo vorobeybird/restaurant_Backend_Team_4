@@ -149,7 +149,7 @@ module.exports = {
       await dish
         .setIngredient(ingredient, { through: { is_default: canChange } })
         .then(() => {
-          return res.status(200).send(dish);
+          return res.status(200).send({ message: `Ingredient ${ingredient.title} was added to ${dish.title}` });
         });
     } catch (error) {
       console.log(error);

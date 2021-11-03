@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       timestamps: false,
-      tableName: "dish",
+      tableName: "Dish",
       modelName: "Dish",
     }
   );
