@@ -30,6 +30,7 @@ router.post("/api/category", categoryController.add);
 router.get("/api/category/:id", categoryController.getById);
 router.put("/api/category/:id", categoryController.update);
 router.delete("/api/category/:id", categoryController.delete);
+router.get("/api/categoryByTitle/:title", categoryController.getByTitle);
 
 router.get("/api/order", orderController.list);
 router.post("/api/order", orderController.add);

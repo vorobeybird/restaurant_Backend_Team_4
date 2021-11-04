@@ -2,7 +2,9 @@ const Dish = require("../models").Dish;
 const Category = require("../models").Category;
 
 module.exports = {
+
   list(req, res) {
+    const data = {};
     return Category.findAll({
       include: [
         {
@@ -11,7 +13,7 @@ module.exports = {
         },
       ],
     })
-      .then((categories) => res.status(200).send(categories))
+      .then((categories) => res.status(200).send({data:categories}))
       .catch((error) => {
         res.status(400).send(error);
       });
@@ -19,6 +21,31 @@ module.exports = {
 
   getById(req, res) {
     return Category.findByPk(req.params.id, {
+      include: [
+        {
+          model: Dish,
+          as: "dish",
+        },
+      ],
+    })
+      .then((category) => {
+        if (!category) {
+          return res.status(404).send({
+            message: "category Not Found",
+          });
+        }
+        return res.status(200).send(category);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
+      });
+  },
+
+  getByTitle(req, res) {
+    console.log(req.params.title)
+    return Category.findOne({
+      where: { title: req.params.title },
       include: [
         {
           model: Dish,
