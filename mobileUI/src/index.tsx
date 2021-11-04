@@ -33,6 +33,7 @@ const signUpConfig = {
 }
 
 const App = () => {
+
   return (
     <Provider store={Store}>
       <BottomTabNavigation/>

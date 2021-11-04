@@ -5,12 +5,69 @@ import {
     Text,
     View,
 } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
-
+import { useEffect,  } from 'react';
 import { OrderedDish } from './OrderedDish';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTotals } from '../store/StoreCard';
+import axios from "axios";
 
+interface DishShortInfo {
+    dish_id: number;
+    dish_amount: number;
+  }
+
+  interface Order {
+    adress: string;
+    customer_id: string;
+    delivery_method: string;
+    total_price: number;
+    delivery_date: Date;
+    contact_info: string;
+    payment_method: boolean;
+    comment: string;
+    dish: DishShortInfo[];
+  }
 export const MarketMain = () => {
+    const cart = useSelector((state) => state.dishes);
+    const dispatch = useDispatch();
+    
+    const onMakingOrder = () => {
+        let order = {} as Order;
+        order.adress = "Brest";
+        order.customer_id = "asdfjorop21341234";
+        order.delivery_method = "Самовывоз";
+        order.total_price = cart.cardTotalAmount;
+        order.delivery_date = new Date();
+        order.contact_info = "EdgarAllanPoe +375666666666";
+    
+        order.payment_method = true;
+        order.comment = "Hi, I'm hardcode comment :)";
+    
+        let dishesShortInfo = cart.dishes.map((item:any) => {
+          let dish = {} as DishShortInfo;
+          dish.dish_id = item.id;
+          dish.dish_amount = item.amount;
+          return dish;
+        });
+    
+        order.dish = dishesShortInfo;
+    
+        axios
+          .post("http://localhost:5000/api", order, {
+            headers: { "Content-type": "application/json" },
+          })
+          .then((response) => console.log(response))
+          .catch((err) => console.log(err));
+        console.log(order);
+      };
 
+
+
+
+    useEffect(() => {
+        dispatch(getTotals());
+      }, [cart, dispatch]);
+      console.log()
   return (
     <View>
          <View style={styles.PictCont}>
@@ -30,8 +87,8 @@ export const MarketMain = () => {
             </View>
         </View>
         <View style={styles.FinalCheckCont}>
-            <Text style={styles.SimpText}>Итоговая сумма: 18 BYN</Text>
-            <Text style={styles.But}>Далее</Text>
+            <Text style={styles.SimpText}>Итоговая сумма: {cart.cardTotalAmount} BYN</Text>
+            <Text style={styles.But} onPress={onMakingOrder}>Далее</Text>
         </View>
     </View>
   );

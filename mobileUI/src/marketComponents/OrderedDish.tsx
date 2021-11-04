@@ -9,10 +9,16 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from 'react-redux';
 import { delFromCard, decreaseCartQuant, addToCard } from '../store/StoreCard';
+import { useEffect,  } from 'react';
+import { getTotals } from '../store/StoreCard';
 
 export const OrderedDish = () => {
     const card = useSelector((state) => state.dishes)
     const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getTotals());
+      }, [card, dispatch]);
+  
     const handleDecreaseCartQuant = (item:any) => {
         dispatch(decreaseCartQuant(item))
     }
@@ -38,6 +44,7 @@ export const OrderedDish = () => {
                             <Text style={styles.StyledText}>{item.title}</Text>
                             <Text style={styles.SimpText}>{item.price} BYN</Text>
                         </View>
+                        
                         <View style={styles.CountCont} >
                             <TouchableOpacity onPress={() => handleDecreaseCartQuant(item)}>
                                 <Image  source={require('../../img/minus.png')}/>
@@ -137,21 +144,4 @@ const styles = StyleSheet.create({
 });
 
 
-{/*<View style={styles.MainCont} >
-<Image source={require('../../img/food.png')}/>
-<View style={styles.Wrapper}>
-    <View style={styles.TextContainer}>
-        <Text style={styles.StyledText}>Английский завтрак</Text>
-        <Text style={styles.SimpText}>18 BYN</Text>
-    </View>
-    <View style={styles.CountCont}>
-        <Image source={require('../../img/minus.png')}/>
-        <Text style={styles.StyledCount}>1</Text>
-        <Image source={require('../../img/plus.png')}/>
-    </View>
-</View>
-</View>
-<View style={styles.DelPasEng} >
-<Text style={styles.DellText}>Убрать ингредиент(ы)</Text>
-<Text style={styles.AddText}>Добавить еще одно блюдо</Text>
-</View>*/}
+{/*item.price * item.cardQuantity*/}

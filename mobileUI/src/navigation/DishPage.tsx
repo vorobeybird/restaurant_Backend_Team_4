@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button} from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button, ToastAndroid} from 'react-native';
 import {addToCard} from '../store/StoreCard'
 import { useDispatch, useSelector } from "react-redux";
 import dishSlice from "../store/StoreCard";
@@ -25,6 +25,13 @@ export const DishPage = ({  navigation: { goBack }, route }:{navigation:any, rou
   const handleAddToCard = (item:any) => {
     dispatch(addToCard(item))
   }
+  const showToast = () => {
+    ToastAndroid.showWithGravity(
+      "Блюдо добавлено в корзину",
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP
+    );
+  };
     return (
 
       <View key={id} style={styles.Wrapper}>
@@ -50,7 +57,7 @@ export const DishPage = ({  navigation: { goBack }, route }:{navigation:any, rou
         </View>
         <View style={styles.ButtonWrapper}>
           <Button
-            onPress={ ()=> {handleAddToCard(item)} }
+            onPress={ ()=> {handleAddToCard(item); showToast()} }
             title="Добавить в корзину"
             color="#841584"
           />

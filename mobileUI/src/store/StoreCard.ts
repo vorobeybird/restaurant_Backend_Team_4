@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 interface CounterState {
     dishes: Dish[];
+    cardTotalQuantity:number;
+    cardTotalAmount:number
   }
 interface Dish {
     id: string;
@@ -8,10 +10,13 @@ interface Dish {
     photos:any[];
     price:number;
     cardQuantity:number;
+
 }
 
 const initialState:CounterState = {
-    dishes:[]
+    dishes:[],
+    cardTotalQuantity:0,
+    cardTotalAmount:0
 }
 const dishSlice = createSlice({
     name:"dishSlice",
@@ -48,8 +53,28 @@ const dishSlice = createSlice({
                 state.dishes = nextItems
             }
         },
+        getTotals(state, action) {
+            let { total, quantity } = state.dishes.reduce(
+              (cartTotal, cartItem) => {
+                const { price, cardQuantity } = cartItem;
+                const itemTotal = price * cardQuantity;
+      
+                cartTotal.total += itemTotal;
+                cartTotal.quantity += cardQuantity;
+      
+                return cartTotal;
+              },
+              {
+                total: 0,
+                quantity: 0,
+              }
+            );
+            total = parseFloat(total.toFixed(2));
+            state.cardTotalQuantity = quantity;
+            state.cardTotalAmount = total;
+          },
         
     }
 })
 export default dishSlice.reducer;
-export const {addToCard,delFromCard, decreaseCartQuant, } = dishSlice.actions;
+export const {addToCard,delFromCard, decreaseCartQuant, getTotals} = dishSlice.actions;
