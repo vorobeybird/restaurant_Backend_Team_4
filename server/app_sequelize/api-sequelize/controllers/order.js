@@ -50,8 +50,8 @@ module.exports = {
         delivery_method: req.body.delivery_method,
         total_price: req.body.total_price,
         delivery_date: date,
-        name: req.body.name,
-        phone: req.body.phone,
+        contact_name: req.body.contact_name,
+        contact_phone: req.body.contact_phone,
         payment_method: req.body.payment_method,
         adress: req.body.adress,
         status: req.body.status,
@@ -75,7 +75,7 @@ module.exports = {
       const result = await Order.update(req.body, {
         where: { id: req.params.id },
       });
-      res.status(201).send("Order was updated succesfully");
+      res.status(200).send("Order was updated succesfully");
     } catch (err) {
       res.status(400).send(error);
     }
@@ -92,7 +92,7 @@ module.exports = {
         return order
           .destroy()
           .then(() =>
-            res.status(204).send(`Order with id ${req.params.id} was deleted`)
+            res.status(200).send(`Order with id ${req.params.id} was deleted`)
           )
           .catch((error) => res.status(400).send(error));
       })

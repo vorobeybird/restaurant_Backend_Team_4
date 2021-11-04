@@ -13,7 +13,21 @@ module.exports = {
         },
       ],
     })
-      .then((categories) => res.status(200).send({data:categories}))
+      .then((categories) => res.status(200).send(categories))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+  
+  listAllIncluded(req, res) {
+    return Category.findAll({
+      include: [
+        {
+          all: true
+        },
+      ],
+    })
+      .then((categories) => res.status(200).send(categories))
       .catch((error) => {
         res.status(400).send(error);
       });
@@ -43,7 +57,6 @@ module.exports = {
   },
 
   getByTitle(req, res) {
-    console.log(req.params.title)
     return Category.findOne({
       where: { title: req.params.title },
       include: [
@@ -81,7 +94,7 @@ module.exports = {
       const result = await Category.update(req.body, {
         where: { id: req.params.id },
       });
-      res.status(201).send({ message: "Category was updated succesfully" });
+      res.status(200).send({ message: "Category was updated succesfully" });
     } catch (err) {
       res.status(400).send(error);
     }
@@ -99,7 +112,7 @@ module.exports = {
           .destroy()
           .then(() =>
             res
-              .status(204)
+              .status(200)
               .send(`Category with id ${req.params.id} was deleted`)
           )
           .catch((error) => res.status(400).send(error));

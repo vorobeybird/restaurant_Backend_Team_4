@@ -84,6 +84,47 @@ module.exports = {
       });
   },
 
+  async getByCategory(req, res) {
+    const {category} = req.query;
+    if(!category){
+      module.exports.list(req, res)
+    } else {
+      return Dish.findAll({
+        include: [
+          {
+            model: Category,
+            as: "category",
+            where: {
+              id: category
+            }
+          },
+          {
+            model: DishPhoto,
+            as: "photo",
+          },
+          {
+            model: Ingredient,
+            as: "ingredient",
+          },
+        ],
+      })
+        .then((dish) => {
+          if (!dish) {
+            return res.status(404).send({
+              message: "dish Not Found",
+            });
+          }
+          return res.status(200).send(dish);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(400).send(error);
+        });
+    }
+    
+  },
+  
+
   add(req, res) {
     return Dish.create({
       title: req.body.title,
@@ -147,7 +188,7 @@ module.exports = {
         });
       }
       await dish
-        .setIngredient(ingredient, { through: { is_default: canChange } })
+        .addIngredient(ingredient, { through: { is_default: canChange } })
         .then(() => {
           return res.status(200).send({ message: `Ingredient ${ingredient.title} was added to ${dish.title}` });
         });
@@ -176,7 +217,7 @@ module.exports = {
           message: "Category Not Found",
         });
       }
-      await dish.setCategory(category).then(() => {
+      await dish.addCategory(category).then(() => {
         return res.status(200).send(dish);
       });
     } catch (error) {
