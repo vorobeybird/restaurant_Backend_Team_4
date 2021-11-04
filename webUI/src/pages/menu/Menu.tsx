@@ -7,6 +7,7 @@ import "./menu.scss";
 import { fetchMenuItems } from "../../store/menu/menu.actions";
 import { useEffect, useState } from "react";
 import { setSelectedDish } from "../../store/dishPage/dishPage.actions";
+import { ICartItem } from "../../store/cart/cart.types";
 
 interface MenuProps extends RouteComponentProps {
   items: MenuItem[];
@@ -25,7 +26,7 @@ const Menu = ({ location }: MenuProps) => {
     dispatch(fetchMenuItems());
   }, []);
 
-  const handleDishClick = (item : MenuItem) => {
+  const handleDishClick = (item : ICartItem | MenuItem) => {
     dispatch(setSelectedDish(item));
   }
 

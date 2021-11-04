@@ -10,9 +10,10 @@
         height: 100%;
         width: 90%;
         position: relative;
+        flex-direction: column;
         & .bread-crumbs {
             display: flex;
-            height: 10%;
+            height: 5%;
             width: 100%;
         }
     }

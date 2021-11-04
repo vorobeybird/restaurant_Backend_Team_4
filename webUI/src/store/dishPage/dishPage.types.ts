@@ -1,7 +1,8 @@
 import { MenuItem } from "../../store/menu/menu.types";
+import { ICartItem} from "../../store/cart/cart.types";
 
 export interface ReducerState {
-  selectedDish: MenuItem
+  selectedDish: ICartItem
 }
 
 export enum MenuConstants {
@@ -10,5 +11,5 @@ export enum MenuConstants {
 
 export interface MenuActions {
   type: MenuConstants
-  payload: MenuItem
+  payload: ICartItem
 }
