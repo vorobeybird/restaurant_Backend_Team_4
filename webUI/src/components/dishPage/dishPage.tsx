@@ -5,6 +5,7 @@ import MenuItemComponent from "../../pages/menu/MenuItem";
 import { CartItem } from "../cartItem/cartItem";
 import { ICartItem } from "../../store/cart/cart.types";
 import Carousel from "@brainhubeu/react-carousel";
+import { ImageSlider } from "../imageSlider/imageSlider";
 
 const DishPage = () => {
     interface MenuItem {
@@ -25,12 +26,16 @@ const DishPage = () => {
     }
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
     
-    const [gearState, setGearState] = useState(false);
-    const [pickedIngredients, setPickedIngredients] = useState<number[]>(
-        [...selectedDish.ingredients].sort()
-    );
+    // const [gearState, setGearState] = useState(false);
+    // const [pickedIngredients, setPickedIngredients] = useState<number[]>(
+    //     [...selectedDish.ingredients].sort()
+    // );
 
-    const onGear = () => setGearState(!gearState);
+    // const onGear = () => setGearState(!gearState);
+
+    const sliderData: {image: string}[] = selectedDish.photos.map((photo, index) => {
+        return { image: photo.photo_url };
+    })
 
     return (
         <div className="dish-page">
@@ -39,17 +44,16 @@ const DishPage = () => {
                 <div className="dish-title">{selectedDish.title}</div>
                 <div className="dish-item-container">
                     <div className="dish-item-photos">
-                        <Carousel plugins={["arrows"]}>
-                            {selectedDish.photos.map((photo, index) => {
-                                return <img key={index} src={photo.photo_url} alt="dish" />;
-                            })}
-                        </Carousel>
+                        {<ImageSlider sliderData={sliderData} />}
                     </div>
                     <div className="dish-item-info">
-
+                        <div className="dish-gear_wrapper">
+                            <div className="gear-title">Состав</div>
+                            <button className="gear-button">Изменить</button>
+                        </div>
+                        
                     </div>
                 </div>
-                {/* <CartItem {...selectedDish}/> */}
                 <div className="may-interest"></div>
             </div>
         </div>
