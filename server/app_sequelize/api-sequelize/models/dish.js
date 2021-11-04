@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
     toJSON(){
-      return { ...this.get(), DishCategory: undefined, DishIngredient: undefined}
+      return { ...this.get(), DishCategory: undefined, DishIngredient: undefined }
     }
   }
   Dish.init(

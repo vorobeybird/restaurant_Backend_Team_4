@@ -25,6 +25,7 @@ router.get("/api/dishes", dishController.getByCategory);
 router.put("/api/dish/:id", dishController.update);
 router.delete("/api/dish/:id", dishController.delete);
 router.post("/api/dish/addIngredient", dishController.addIngredient);
+router.delete("/api/dishremoveIngredient", dishController.deleteIngredient);
 router.post("/api/dish/addCategory", dishController.addCategory);
 
 router.get("/api/ingredient", ingredientController.list);

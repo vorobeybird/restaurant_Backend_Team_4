@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "order_id",
       });
     }
+    toJSON(){
+      return { ...this.get(), dish_id: undefined, order_id: undefined}
+    }
   }
   Order.init(
     {

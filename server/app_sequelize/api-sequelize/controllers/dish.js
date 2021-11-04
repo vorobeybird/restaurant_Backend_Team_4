@@ -85,9 +85,9 @@ module.exports = {
   },
 
   async getByCategory(req, res) {
-    const {category} = req.query;
-    if(!category){
-      module.exports.list(req, res)
+    const { category } = req.query;
+    if (!category) {
+      module.exports.list(req, res);
     } else {
       return Dish.findAll({
         include: [
@@ -95,8 +95,8 @@ module.exports = {
             model: Category,
             as: "category",
             where: {
-              id: category
-            }
+              id: category,
+            },
           },
           {
             model: DishPhoto,
@@ -121,9 +121,7 @@ module.exports = {
           res.status(400).send(error);
         });
     }
-    
   },
-  
 
   add(req, res) {
     return Dish.create({
@@ -184,14 +182,64 @@ module.exports = {
       });
       if (!ingredient) {
         return res.status(404).send({
-          message: "Course Not Found",
+          message: "Ingredient Not Found",
         });
       }
       await dish
         .addIngredient(ingredient, { through: { is_default: canChange } })
         .then(() => {
-          return res.status(200).send({ message: `Ingredient ${ingredient.title} was added to ${dish.title}` });
+          return res
+            .status(200)
+            .send({
+              message: `Ingredient ${ingredient.title} was added to ${dish.title}`,
+            });
         });
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+  async haveOrder(dishId) {
+    const dish = await Dish.findByPk(dishId, {
+      include: [{ model: Order, as: "order", attributes: ["status"] }],
+    });
+    return (dish.order).length
+  },
+  async deleteIngredient(req, res) {
+    const dishID = req.body.dishID,
+      ingredientID = req.body.ingredientID,
+      canChange = req.body.is_default;
+    orderStatus = await module.exports.haveOrder(dishID)
+    if(orderStatus){
+      return res.status(400).send({
+        message: "This ingredient is used in active order",
+      });
+    }
+    try {
+      const dish = await Dish.findOne({
+        where: { id: dishID },
+        include: "ingredient",
+      });
+      if (!dish) {
+        return res.status(404).send({
+          message: "dish Not Found",
+        });
+      }
+      const ingredient = await Ingredient.findOne({
+        where: { id: ingredientID },
+      });
+      if (!ingredient) {
+        return res.status(404).send({
+          message: "Ingredient Not Found",
+        });
+      }
+      await dish.removeIngredient(ingredient).then(() => {
+        return res
+          .status(200)
+          .send({
+            message: `Ingredient ${ingredient.title} was removed from ${dish.title}`,
+          });
+      });
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
