@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    toJSON(){
+      return { ...this.get(), dish_id: undefined, ingredient_id: undefined}
+    }
   }
   DishIngredient.init(
     {
@@ -17,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       ingredient_id: DataTypes.INTEGER,
       is_default: {
         type: DataTypes.BOOLEAN,
-        defaultValue: "true",
+        defaultValue: true,
       },
     },
     {

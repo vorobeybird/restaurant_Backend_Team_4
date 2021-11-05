@@ -88,6 +88,7 @@ const DishesGrid = () => {
          }
       })
       .then(response=> {
+
         fetchDishes();
     })
     .catch(err=>{

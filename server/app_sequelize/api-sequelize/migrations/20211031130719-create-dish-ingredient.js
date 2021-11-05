@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       is_default: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        default: true
       },
     });
   },

@@ -47,7 +47,7 @@ module.exports = {
       const result = await Ingredient.update(req.body, {
         where: { id: req.params.id },
       });
-      res.status(201).send("Ingredient was updated succesfully");
+      res.status(200).send("Ingredient was updated succesfully");
     } catch (err) {
       res.status(400).send(error);
     }
