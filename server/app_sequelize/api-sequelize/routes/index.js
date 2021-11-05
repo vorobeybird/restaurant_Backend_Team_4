@@ -44,6 +44,5 @@ router.delete("/api/order/:id", orderController.delete);
 
 router.post("/api/image", upload.single("image"), dishPhotoController.add);
 router.delete("/api/image/:publicId", dishPhotoController.delete);
-//router.delete("/api/image/all/:dishId", dishPhotoController.deleteAllById);
 
 module.exports = router;

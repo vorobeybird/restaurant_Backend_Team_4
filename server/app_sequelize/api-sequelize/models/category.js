@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "category_id",
       });
     }
-    toJSON(){
-      return { ...this.get(), DishCategory: undefined}
+    toJSON() {
+      return { ...this.get(), DishCategory: undefined };
     }
   }
   Category.init(
