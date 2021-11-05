@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import {Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import IngDialog from '../ingredients/catIngDialog/CatIngDialog';
@@ -10,17 +10,15 @@ import IngDialog from '../ingredients/catIngDialog/CatIngDialog';
 interface IDish {
   id?: string;
   title: string;
-  default_ingredients: Array<Number>;
   price: number;
   weight: number;
-  photos: Array<Object>
-  categories: Array<Number>;
-  ingredients: Array<Number>;
+  photo: Array<Object>
+  category: Array<Object>;
+  ingredient: Array<Object>;
   calories: number;
 }
 
 interface IResponse {
-  status: number;
   data: IDish[];
   message?: string;
 }
@@ -52,19 +50,19 @@ const DishesGrid = () => {
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'title', headerName: 'Title', width: 350 },
 /*     {
-      field: 'ingredients',
+      field: 'ingredient',
       headerName: 'Ingredients',
       sortable: true,
       width: 160,
     }, */
    
     { field: 'price', headerName: 'Price', width: 150, align: 'center' },
-    { field: 'dishes_photos', headerName: 'Photos', width: 120, align: 'center',
-      valueGetter: (params: GridValueGetterParams) =>{
-        const photos: any = params.getValue(params.id, 'photos')
-      return photos.length;
-    }},
-    { field: 'categories', headerName: 'Category', width: 300 },
+/*     { field: 'photo', headerName: 'Photos', width: 120, align: 'center',
+      valueGetter: (params: any) =>{
+        const photo: any = params.photo
+      return photo.length;
+    }}, */
+    { field: 'category', headerName: 'Category', width: 300 },
     { field:'Edit', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any): void => {
       setCurrentDish(params.api.getRow(params.id));
@@ -84,13 +82,12 @@ const DishesGrid = () => {
   
   const deleteDish = (id: any) => {
     const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
-    axios.delete<IResponse>(urlToDelete, {
+    axios.delete<AxiosResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
          }
       })
       .then(response=> {
-        console.log(response.data.data)
         fetchDishes();
     })
     .catch(err=>{
@@ -101,13 +98,13 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<IResponse>(`${apiUrl}/dish`, {
+    axios.get<AxiosResponse | any>(`${apiUrl}/dish`, {
         headers: {
             "Content-type": "application/json"
         }
     })
     .then(response=> {
-        setDishes(response.data.data);
+        setDishes(response.data);
     })
     .catch(err=>{
   

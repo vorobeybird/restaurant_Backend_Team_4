@@ -16,7 +16,6 @@ Amplify.configure(awsconfig);
 
 
 function App() {
-    console.log(process.env.REACT_APP_API)
     const [authState, setAuthState] = useState<AuthState>();
     const [user, setUser] = useState<object | undefined>();
 

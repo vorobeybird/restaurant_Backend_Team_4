@@ -5,6 +5,10 @@ const ingredientController = require("../controllers").ingredient;
 const categoryController = require("../controllers").category;
 const orderController = require("../controllers").order;
 
+const dishPhotoController = require("../controllers").dishphoto;
+const multer = require("multer");
+const upload = multer({ dest: "dishesphotos/" });
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -36,5 +40,8 @@ router.post("/api/order", orderController.add);
 router.get("/api/order/:id", orderController.getById);
 router.put("/api/order/:id", orderController.update);
 router.delete("/api/order/:id", orderController.delete);
+
+router.post("/api/image", upload.single("image"), dishPhotoController.add);
+router.delete("/api/image/:publicId", dishPhotoController.delete);
 
 module.exports = router;

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { useTheme } from '@mui/material/styles';
 import { Button, Container } from '@mui/material';
-import { fetchIngredients } from '../../../common/apifetch/apifetch';
+import  fetchIngredients  from '../../../common/apifetch/apifetch';
 const filter = createFilterOptions<ICIOptionType>();
 interface ICIOptionType {
     inputValue?: string;

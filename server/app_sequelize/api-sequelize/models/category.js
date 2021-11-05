@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "category_id",
       });
     }
-    toJSON(){
-      return { ...this.get(), DishCategory: undefined}
+    toJSON() {
+      return { ...this.get(), DishCategory: undefined };
     }
   }
   Category.init(
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       timestamps: false,
-      tableName: "category",
+      tableName: "Category",
       modelName: "Category",
     }
   );

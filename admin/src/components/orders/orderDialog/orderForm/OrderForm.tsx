@@ -2,7 +2,6 @@ import { Grid, Container, TextField, Button, InputAdornment, Typography } from '
 import { useFormik } from 'formik';
 import { useTheme } from '@mui/styles';
 import axios, {AxiosResponse, Method}  from 'axios';
-import IngSelector from '../../ingredients/selector/IngSelector';
 
 
 
@@ -127,7 +126,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 								</Grid>
 						</Grid>
 								<Grid item md={6} xs={12} sx={{ display:'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                  <IngSelector ingredients={dish.ingredients}/>
+                 {/*  <IngSelector ingredients={dish.ingredients}/> */}
 								</Grid>
                 <Grid item md={12} xs={12} sx={{my: theme.spacing(3),  textAlign: 'center'}}><Typography variant="h4">Photo uploader here</Typography></Grid>
 							</Grid>
