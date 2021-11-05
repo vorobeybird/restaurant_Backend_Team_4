@@ -4,34 +4,63 @@ import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import MenuItemComponent from "../../pages/menu/MenuItem";
 import { CartItem } from "../cartItem/cartItem";
 import { ICartItem } from "../../store/cart/cart.types";
-import Carousel from "@brainhubeu/react-carousel";
 import { ImageSlider } from "../imageSlider/imageSlider";
+import caloriesImg from "../../assets/calories-icon.png";
+import { addToCart } from "../../store/cart/cart.actions";
 
 const DishPage = () => {
-    interface MenuItem {
-        id: number
+    interface Iingredients {
+        id: number;
         title: string;
-        default_ingredients: string;
-        ingredients: number[];
-        price: number;
-        weight: number;
-        categories: number[];
-        calories: number;
-        photos: {
-            photo_url: string,
-            ordinal_num: number
-            width: number,
-            height: number
-        }[];
+        DishIngredient: {
+            is_default: boolean
+        }
     }
-    const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
-    
-    // const [gearState, setGearState] = useState(false);
-    // const [pickedIngredients, setPickedIngredients] = useState<number[]>(
-    //     [...selectedDish.ingredients].sort()
-    // );
 
-    // const onGear = () => setGearState(!gearState);
+    const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
+    const mockIngredients: Iingredients[]  = [
+        {
+            "id": 2,
+            "title": "Лимон",
+            "DishIngredient": {
+                "is_default": true
+            }
+        },
+        {
+            "id": 3,
+            "title": "Лук",
+            "DishIngredient": {
+                "is_default": true
+            }
+        },
+        {
+            "id": 4,
+            "title": "Петрушка",
+            "DishIngredient": {
+                "is_default": false
+            }
+        },
+        {
+            "id": 5,
+            "title": "Перец",
+            "DishIngredient": {
+                "is_default": false
+            }
+        }
+    ]
+
+    const [gearState, setGearState] = useState(false);
+    const [pickedIngredients, setPickedIngredients] = useState<Iingredients[]>(
+        [...mockIngredients]
+    );
+
+    const onGear = () => setGearState(!gearState);
+
+    const dispatch = useAppDispatch();
+    const items = useAppSelector((state) => state.cartItems.items);
+    const onOrder = (item: ICartItem): void => {
+        dispatch(addToCart(item, items));
+    };
 
     const sliderData: {image: string}[] = selectedDish.photos.map((photo, index) => {
         return { image: photo.photo_url };
@@ -49,8 +78,28 @@ const DishPage = () => {
                     <div className="dish-item-info">
                         <div className="dish-gear_wrapper">
                             <div className="gear-title">Состав</div>
-                            <button className="gear-button">Изменить</button>
+                            <button className="gear-button" onClick={onGear}>Изменить</button>
                         </div>
+                        <div className="dish-description">
+                            <div className="dish-ingredients">
+                                {pickedIngredients.map((item: Iingredients) => {
+                                    return (
+                                        <div className="ingredient-wrapper">
+                                            {gearState && !item.DishIngredient.is_default ?
+                                                <input type="checkbox" className="ingredient-checkbox"></input>
+                                                : null}
+                                            <div className="ingredient-title"> &#8226; {item.title}</div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <div className="dish-calories">
+                                <img src={caloriesImg} alt="calories-img" className="calories-img"/>
+                                <div className="calories-amount">{selectedDish.calories} Ккал</div>
+                            </div>
+
+                        </div>
+                        <button className="dish-item-info__btn" onClick={() => onOrder(selectedDish)}>Заказать</button>
                         
                     </div>
                 </div>
