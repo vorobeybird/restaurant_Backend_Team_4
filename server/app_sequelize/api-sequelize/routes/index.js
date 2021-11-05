@@ -14,13 +14,10 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.get("/api/dish", dishController.list);
-
-router.post("/api/dish", dishController.add);
-router.get("/api/dish/:id", dishController.getById);
-
+//ids=1,3,4,5 & category=3 & filter=Сардины
 router.get("/api/dishes", dishController.showDishes);
 
+router.post("/api/dish", dishController.add);
 router.put("/api/dish/:id", dishController.update);
 router.delete("/api/dish/:id", dishController.delete);
 router.post("/api/dish/addIngredient", dishController.addIngredient);

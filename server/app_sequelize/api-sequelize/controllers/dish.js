@@ -7,11 +7,11 @@ const { Op } = require("sequelize");
 
 module.exports = {
   showDishes(req, res) {
-    const { sorted, category, filter } = req.query;
-    if (filter) {
+    const { ids, category, filter } = req.query;
+    if (ids) {
+      module.exports.listSelected(req, res, ids);
+    } else if (filter) {
       module.exports.filterByTitle(req, res, filter);
-    } else if (sorted) {
-      module.exports.listSelected(req, res, sorted);
     } else if (category) {
       module.exports.getByCategory(req, res, category);
     } else {
@@ -48,10 +48,6 @@ module.exports = {
 
   list(req, res) {
     return Dish.findAll({
-      // order:[['title', 'ASC']] ,
-      where: {
-        title: { [Op.like]: "к%" },
-      },
 
       include: [
         {
