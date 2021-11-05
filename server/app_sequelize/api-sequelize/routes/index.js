@@ -15,12 +15,11 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/api/dish", dishController.list);
-router.get("/api/dishSelect/:list", dishController.listSelected);
-router.post("/api/dish", dishController.add);
 
+router.post("/api/dish", dishController.add);
 router.get("/api/dish/:id", dishController.getById);
 
-router.get("/api/dishes", dishController.getByCategory);
+router.get("/api/dishes", dishController.showDishes);
 
 router.put("/api/dish/:id", dishController.update);
 router.delete("/api/dish/:id", dishController.delete);
@@ -39,8 +38,6 @@ router.post("/api/category", categoryController.add);
 router.get("/api/category/:id", categoryController.getById);
 router.put("/api/category/:id", categoryController.update);
 router.delete("/api/category/:id", categoryController.delete);
-router.get("/api/categorytitle/:title", categoryController.getByTitle);
-router.get("/api/categoryAlldata", categoryController.listAllIncluded);
 
 router.get("/api/order", orderController.list);
 router.post("/api/order", orderController.add);

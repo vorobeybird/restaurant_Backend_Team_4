@@ -3,10 +3,28 @@ const Ingredient = require("../models").Ingredient;
 const DishPhoto = require("../models").DishPhoto;
 const Category = require("../models").Category;
 const Order = require("../models").Order;
+const { Op } = require("sequelize");
 
 module.exports = {
-  list(req, res) {
+  showDishes(req, res) {
+    const { sorted, category, filter } = req.query;
+    if (filter) {
+      module.exports.filterByTitle(req, res, filter);
+    } else if (sorted) {
+      module.exports.listSelected(req, res, sorted);
+    } else if (category) {
+      module.exports.getByCategory(req, res, category);
+    } else {
+      module.exports.list(req, res);
+    }
+  },
+
+  filterByTitle(req, res, title) {
     return Dish.findAll({
+      where: {
+        title: { [Op.like]: `${title}%` },
+      },
+
       include: [
         {
           model: Category,
@@ -22,16 +40,19 @@ module.exports = {
         },
       ],
     })
-      .then((classrooms) => res.status(200).send(classrooms))
+      .then((dishes) => res.status(200).send(dishes))
       .catch((error) => {
         res.status(400).send(error);
       });
   },
 
-  listSelected(req, res) {
-    const idList = req.params.list.split(",");
+  list(req, res) {
     return Dish.findAll({
-      where: { id: idList },
+      // order:[['title', 'ASC']] ,
+      where: {
+        title: { [Op.like]: "к%" },
+      },
+
       include: [
         {
           model: Category,
@@ -47,7 +68,31 @@ module.exports = {
         },
       ],
     })
-      .then((classrooms) => res.status(200).send(classrooms))
+      .then((dishes) => res.status(200).send(dishes))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+
+  listSelected(req, res, sorted) {
+    return Dish.findAll({
+      where: { id: sorted.split(",") },
+      include: [
+        {
+          model: Category,
+          as: "category",
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
+      ],
+    })
+      .then((dishes) => res.status(200).send(dishes))
       .catch((error) => {
         res.status(400).send(error);
       });
@@ -84,43 +129,38 @@ module.exports = {
       });
   },
 
-  async getByCategory(req, res) {
-    const { category } = req.query;
-    if (!category) {
-      module.exports.list(req, res);
-    } else {
-      return Dish.findAll({
-        include: [
-          {
-            model: Category,
-            as: "category",
-            where: {
-              id: category,
-            },
+  async getByCategory(req, res, category) {
+    return Dish.findAll({
+      include: [
+        {
+          model: Category,
+          as: "category",
+          where: {
+            id: category,
           },
-          {
-            model: DishPhoto,
-            as: "photo",
-          },
-          {
-            model: Ingredient,
-            as: "ingredient",
-          },
-        ],
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
+      ],
+    })
+      .then((dish) => {
+        if (!dish) {
+          return res.status(404).send({
+            message: "dish Not Found",
+          });
+        }
+        return res.status(200).send(dish);
       })
-        .then((dish) => {
-          if (!dish) {
-            return res.status(404).send({
-              message: "dish Not Found",
-            });
-          }
-          return res.status(200).send(dish);
-        })
-        .catch((error) => {
-          console.log(error);
-          res.status(400).send(error);
-        });
-    }
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
+      });
   },
 
   add(req, res) {
@@ -156,7 +196,9 @@ module.exports = {
         return dish
           .destroy()
           .then(() =>
-            res.status(204).send(`Dish with id ${req.params.id} was deleted`)
+            res
+              .status(200)
+              .send({ message: `Dish with id ${req.params.id} was deleted` })
           )
           .catch((error) => res.status(400).send(error));
       })
@@ -188,11 +230,9 @@ module.exports = {
       await dish
         .addIngredient(ingredient, { through: { is_default: canChange } })
         .then(() => {
-          return res
-            .status(200)
-            .send({
-              message: `Ingredient ${ingredient.title} was added to ${dish.title}`,
-            });
+          return res.status(200).send({
+            message: `Ingredient ${ingredient.title} was added to ${dish.title}`,
+          });
         });
     } catch (error) {
       console.log(error);
@@ -203,14 +243,14 @@ module.exports = {
     const dish = await Dish.findByPk(dishId, {
       include: [{ model: Order, as: "order", attributes: ["status"] }],
     });
-    return (dish.order).length
+    return dish.order.length;
   },
   async deleteIngredient(req, res) {
     const dishID = req.body.dishID,
       ingredientID = req.body.ingredientID,
       canChange = req.body.is_default;
-    orderStatus = await module.exports.haveOrder(dishID)
-    if(orderStatus){
+    orderStatus = await module.exports.haveOrder(dishID);
+    if (orderStatus) {
       return res.status(400).send({
         message: "This ingredient is used in active order",
       });
@@ -234,11 +274,9 @@ module.exports = {
         });
       }
       await dish.removeIngredient(ingredient).then(() => {
-        return res
-          .status(200)
-          .send({
-            message: `Ingredient ${ingredient.title} was removed from ${dish.title}`,
-          });
+        return res.status(200).send({
+          message: `Ingredient ${ingredient.title} was removed from ${dish.title}`,
+        });
       });
     } catch (error) {
       console.log(error);
