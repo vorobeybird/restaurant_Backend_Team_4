@@ -97,10 +97,8 @@ const DishPage = () => {
                                 <img src={caloriesImg} alt="calories-img" className="calories-img"/>
                                 <div className="calories-amount">{selectedDish.calories} Ккал</div>
                             </div>
-
                         </div>
                         <button className="dish-item-info__btn" onClick={() => onOrder(selectedDish)}>Заказать</button>
-                        
                     </div>
                 </div>
                 <div className="may-interest"></div>

@@ -204,6 +204,7 @@ $btnColor: #EF742F;
                     flex-direction: row;
                     position: relative;
                     align-items: center;
+                    margin-top: 5px;
                     & .calories-img{
                       height: 24px;
                       width: 19px;
@@ -264,6 +265,7 @@ $btnColor: #EF742F;
             & .dish-item-info {
                 height: 70%;
                 width: 30%;
+                
                 }
             }
           }
@@ -307,6 +309,15 @@ $btnColor: #EF742F;
           & .dish-item-photos {
 
               & .slider {
+                & .slider-left-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+
+                & .slider-right-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
                 & .slide.active {
                   & .slider-img{
                     width: 400px;
@@ -325,6 +336,9 @@ $btnColor: #EF742F;
 
               }
             }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
         }
       }    
     }
@@ -332,17 +346,176 @@ $btnColor: #EF742F;
 }
 
 @media screen and (max-width: 767px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 80%;
+              height: 50%;
+              & .slider {
+                & .slider-left-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
 
+                & .slider-right-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+                & .slide.active {
+                  & .slider-img{
+                    width: 400px;
+                    height: 250px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
 }
 
 @media screen and (max-width: 640px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 80%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 350px;
+                    height: 250px;
+                  }
+                }
+              }
+          }
 
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
 }
 
 @media screen and (max-width: 585px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 100%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 300px;
+                    height: 200px;
+                  }
+                }
+              }
+          }
 
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
 }
 
 @media screen and (max-width: 399px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 100%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 250px;
+                    height: 200px;
+                  }
+                }
+              }
+          }
 
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
 }
