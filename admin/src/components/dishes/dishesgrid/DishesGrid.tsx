@@ -90,7 +90,7 @@ const DishesGrid = () => {
          }
       })
       .then(response=> {
-        console.log(response.data.data)
+        console.log(response)
         fetchDishes();
     })
     .catch(err=>{

@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "order_id",
       });
     }
+    toJSON(){
+      return { ...this.get(), dish_id: undefined, order_id: undefined}
+    }
   }
   Order.init(
     {
@@ -21,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       delivery_method: DataTypes.TEXT,
       total_price: DataTypes.INTEGER,
       delivery_date: DataTypes.DATE,
-      contact_info: DataTypes.STRING,
+      contact_name:DataTypes.STRING,
+      contact_phone: DataTypes.STRING,
       payment_method: DataTypes.BOOLEAN,
       adress: DataTypes.STRING,
       status: {
@@ -32,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "order",
+      tableName: "Order",
       modelName: "Order",
     }
   );

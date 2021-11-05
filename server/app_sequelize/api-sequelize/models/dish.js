@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
     toJSON(){
-      return { ...this.get(), DishCategory: undefined}
+      return { ...this.get(), DishCategory: undefined, DishIngredient: undefined }
     }
   }
   Dish.init(
@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique:true
       },
       price: {
         type: DataTypes.INTEGER,
@@ -50,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       timestamps: false,
-      tableName: "dish",
+      tableName: "Dish",
       modelName: "Dish",
     }
   );

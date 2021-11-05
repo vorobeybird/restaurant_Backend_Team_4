@@ -2,10 +2,10 @@
   "development": {
     "username": "root",
     "password": "123OceanDB123",
-    "database": "sq_OceanDB",
-    "host": "127.0.0.1",
+    "database": "OceanDB",
+    "host": "18.198.161.12",
     "dialect": "mysql",
-    "port": "3307"
+    "port": "3306"
   },
   "test": {
     "username": "root",
