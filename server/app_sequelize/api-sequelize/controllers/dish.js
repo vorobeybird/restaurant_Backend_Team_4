@@ -6,6 +6,43 @@ const Order = require("../models").Order;
 const { Op } = require("sequelize");
 
 module.exports = {
+  async addBigDish(req, res) {
+    const categories = req.body.category,
+      ingredients = req.body.ingredient;
+    try {
+      const dish = await Dish.create(
+        {
+          title: req.body.title,
+          price: req.body.price,
+          weight: req.body.weight,
+          calories: req.body.calories,
+          photo: req.body.photo,
+        },
+        {
+          include: [
+            {
+              model: DishPhoto,
+              as: "photo",
+            },
+          ],
+        }
+      );
+
+      for (const elem of categories) {
+        const category = await Category.findByPk(elem.id);
+        await dish.addCategory(category);
+      }
+      for (const elem of ingredients) {
+        const ingredient = await Ingredient.findByPk(elem.id);
+        await dish.addIngredient(ingredient,{through: { is_default: elem.is_default }
+        });
+      }
+      await res.status(200).send(dish);
+    } catch (error) {
+      res.status(400).send({message: error});
+    }
+  },
+
   showDishes(req, res) {
     const { ids, category, filter } = req.query;
     if (ids) {
@@ -48,7 +85,6 @@ module.exports = {
 
   list(req, res) {
     return Dish.findAll({
-
       include: [
         {
           model: Category,
