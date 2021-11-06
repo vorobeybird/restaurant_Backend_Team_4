@@ -63,20 +63,20 @@ const DishesGrid = () => {
       return photo.length;
     }}, */
     { field: 'category', headerName: 'Category', width: 300 },
-    { field:'Edit', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
+    { field:'Edit', headerName: 'Правка', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any): void => {
       setCurrentDish(params.api.getRow(params.id));
       handleClickOpen();
       }
-      return <Button color="warning" variant="contained" onClick={onClick}>Edit</Button>
+      return <Button color="warning" variant="contained" onClick={onClick}>Правка</Button>
     },},
-    { field:'Delete', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
+    { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation(); 
             deleteDish(params.id);
       };
   
-      return <Button color="error" variant="contained" onClick={onClick}>Delete</Button>;
+      return <Button color="error" variant="contained" onClick={onClick}>Удалить</Button>;
     },}
   ];
   
@@ -99,7 +99,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<AxiosResponse | any>(`${apiUrl}/dish`, {
+    axios.get<AxiosResponse | any>(`${apiUrl}/dishes`, {
         headers: {
             "Content-type": "application/json"
         }
@@ -124,10 +124,10 @@ useEffect(() => {
       
       <Container sx={{textAlign: 'center'}}>
         <Grid container spacing={0} >
-        <Grid item md={6} xs={12} sx={{my: theme.spacing(3) }}><Button variant="contained" onClick={handleClickOpen}>Add a new Dish</Button></Grid>
+        <Grid item md={6} xs={12} sx={{my: theme.spacing(3) }}><Button variant="contained" onClick={handleClickOpen}>Добавить блюдо</Button></Grid>
       <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', my: theme.spacing(3)}}>
-      <Button id="ingredient" onClick={(e)=>{openInCa(e, 'ingredient')}} sx={{mr: theme.spacing(1)}} variant="contained" color="warning" size="small">Ingredients</Button>
-      <Button id="category" onClick={(e)=>{openInCa(e, 'category')}} sx={{ml: theme.spacing(1)}} variant="contained" disabled color="warning" size="small">Categories</Button></Grid>
+      <Button id="ingredient" onClick={(e)=>{openInCa(e, 'ingredient')}} sx={{mr: theme.spacing(1)}} variant="contained" color="warning" size="small">Ингредиенты</Button>
+      <Button id="category" onClick={(e)=>{openInCa(e, 'category')}} sx={{ml: theme.spacing(1)}} variant="contained" disabled color="warning" size="small">Категории</Button></Grid>
       </Grid>
       </Container>
 

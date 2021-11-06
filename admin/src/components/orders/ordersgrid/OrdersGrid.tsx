@@ -68,10 +68,10 @@ const OrdersGrid = () => {
        setOrder();
   }
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 50, filterable: false, },
+    { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', align: 'center', filterable: false, },
     {
       field: 'delivery_date',
-      headerName: 'Delivery date',
+      headerName: 'Дата доставки',
       sortable: true,
       width: 160,
       renderCell: (params: GridRenderCellParams) => { 
@@ -85,7 +85,7 @@ const OrdersGrid = () => {
     },
     {
       field: 'updatedAt',
-      headerName: 'Updated',
+      headerName: 'Дата изменения',
       sortable: true,
       width: 160,
       renderCell: (params: GridRenderCellParams) => { 
@@ -96,10 +96,10 @@ const OrdersGrid = () => {
      },
     },
     { field: 'contact_name', headerName: 'Имя', width: 150 },
-    { field: 'contact_phone', headerName: 'Телефон', width: 150 },
-    { field: 'adress', headerName: 'Address', width: 150 },
-    { field: 'comment', headerName: 'Comment', width: 150 },
-    { field: 'total_price', headerName: 'Price', width: 100, align: 'center' },
+    { field: 'contact_phone', headerName: 'Телефон', width: 120 },
+    { field: 'adress', headerName: 'Адрес', width: 150 },
+    { field: 'comment', headerName: 'Комментарий', width: 150 },
+    { field: 'total_price', headerName: 'Цена', width: 100, align: 'center' },
     { field:'status', headerName: 'Статус заказа', width: 200, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
         setCurrentOrder(params.row);
