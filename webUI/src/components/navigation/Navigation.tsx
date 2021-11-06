@@ -24,7 +24,7 @@ const Navigation = () => {
   const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
   const dispatch = useDispatch();
 
-  async function sighOutHandler() {
+  async function signOutHandler() {
     try {
       if (user) {
         await Auth.signOut();
@@ -60,7 +60,7 @@ const Navigation = () => {
           <img
             className="profile_icon"
             src={Profile}
-            onClick={sighOutHandler}
+            onClick={signOutHandler}
             alt="profile icon"
           ></img>
         </Link>
@@ -81,7 +81,7 @@ const Navigation = () => {
               <img className="cart_icon" src={Cart} alt="cart icon"></img>
             </Link>
             <Link to="/login">
-              <img className="profile_icon" src={Profile} onClick={sighOutHandler} alt="profile icon"></img>
+              <img className="profile_icon" src={Profile} onClick={signOutHandler} alt="profile icon"></img>
             </Link>
           </div>
           {links.map(({ title, link }) => {
