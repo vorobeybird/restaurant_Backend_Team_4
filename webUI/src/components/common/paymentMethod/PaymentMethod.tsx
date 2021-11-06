@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { changePaymentMethod } from "../../../store/order/order.actions";
 
 export const PaymentMethod = () => {
-  const [paymentMethod, setpaymentMethod] = useState("2");
+  const dispatch = useAppDispatch();
+
+  const currentPaymentMethod = useAppSelector(
+    (state) => state.order.order.payment_method
+  );
 
   const onValueChange = (event: any) => {
-    setpaymentMethod(event.target.value);
+    dispatch(changePaymentMethod(Number(event.target.value)));
   };
-
-  console.log(paymentMethod);
 
   return (
     <div>
@@ -19,7 +22,7 @@ export const PaymentMethod = () => {
               <input
                 type="radio"
                 value="0"
-                checked={paymentMethod === "0"}
+                checked={currentPaymentMethod === 0}
                 onChange={onValueChange}
               />
               Наличными
@@ -30,7 +33,7 @@ export const PaymentMethod = () => {
               <input
                 type="radio"
                 value="1"
-                checked={paymentMethod === "1"}
+                checked={currentPaymentMethod === 1}
                 onChange={onValueChange}
               />
               Картой онлайн
@@ -41,7 +44,7 @@ export const PaymentMethod = () => {
               <input
                 type="radio"
                 value="2"
-                checked={paymentMethod === "2"}
+                checked={currentPaymentMethod === 2}
                 onChange={onValueChange}
               />
               Картой на месте

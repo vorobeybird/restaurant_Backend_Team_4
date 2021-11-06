@@ -23,6 +23,9 @@ export interface ReducerState {
 export enum OrderConstants {
   CHANGE_DATE = "CHANGE_DATE",
   CHANGE_TIME = "CHANGE_TIME",
+  ENTER_NAME = "ENTER_NAME",
+  ENTER_PHONE = "ENTER_PHONE",
+  CHANGE_PAYMENT_METHOD = "CHANGE_PAYMENT_METHOD",
 }
 
 export interface OrderActions {

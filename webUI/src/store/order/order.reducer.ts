@@ -33,6 +33,12 @@ export function orderReducer(
         order: { ...state.order, delivery_date: newDate },
       };
     }
+    case OrderConstants.ENTER_PHONE:
+      return { order: { ...state.order, contact_phone: action.payload } };
+    case OrderConstants.ENTER_NAME:
+      return { order: { ...state.order, contact_name: action.payload } };
+    case OrderConstants.CHANGE_PAYMENT_METHOD:
+      return { order: { ...state.order, payment_method: action.payload } };
     default:
       return state;
   }

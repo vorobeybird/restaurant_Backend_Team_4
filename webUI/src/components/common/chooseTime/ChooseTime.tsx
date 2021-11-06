@@ -19,8 +19,6 @@ export const ChooseTime = () => {
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.order.order.delivery_date);
 
-  console.log(date, "dadad");
-
   const handleChangeTime = (time: string) => {
     const [hours, minutes] = time.split(":");
     dispatch(changeTime(hours, minutes));
