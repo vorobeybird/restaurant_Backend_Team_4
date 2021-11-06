@@ -1,35 +1,18 @@
 import Navigation from "../navigation/Navigation";
 import "./cart.scss";
 import { useAppSelector } from "../../store/hooks";
-import MenuItemComponent from "../../pages/menu/MenuItem";
 import { CartItem } from "../cartItem/cartItem";
-import { MenuItem } from "../../store/menu/menu.types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
 import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
+import { Takeaway } from "../takeaway/Takeaway";
+import { DishShortInfo, Order } from "../../store/order/order.types";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
-  const userId = useAppSelector((state) => state.auth.user.attributes.sub);
+  const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
-
-  interface DishShortInfo {
-    dish_id: number;
-    dish_amount: number;
-  }
-
-  interface Order {
-    adress: string;
-    customer_id: string;
-    delivery_method: string;
-    total_price: number;
-    delivery_date: Date;
-    contact_info: string;
-    payment_method: boolean;
-    comment: string;
-    dish: DishShortInfo[];
-  }
 
   const onMakingOrder = () => {
     let order = {} as Order;
@@ -38,9 +21,9 @@ export const Cart = () => {
     order.delivery_method = "Самовывоз";
     order.total_price = totalPrice;
     order.delivery_date = new Date();
-    order.contact_info = "EdgarAllanPoe +375666666666";
-
-    order.payment_method = true;
+    order.contact_name = "kolya";
+    order.contact_phone = "+375...";
+    order.payment_method = 2;
     order.comment = "Hi, I'm hardcode comment :)";
 
     let dishesShortInfo = items.map((item) => {
@@ -52,13 +35,20 @@ export const Cart = () => {
 
     order.dish = dishesShortInfo;
 
-    axios
-      .post("http:localhost:5500/api/order", order, {
-        headers: { "Content-type": "application/json", "cross-domain": "true" },
-      })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http:localhost:5500/api/order", order, {
+    //     headers: { "Content-type": "application/json", "cross-domain": "true" },
+    //   })
+    //   .then((response) => console.log(response))
+    //   .catch((err) => console.log(err));
+
     console.log(order);
+  };
+
+  const [orderType, setOrderType] = useState("takeaway");
+
+  const onChangeTab = (e: any) => {
+    setOrderType(e.target.name);
   };
 
   return (
@@ -75,6 +65,32 @@ export const Cart = () => {
             <CartItem key={index} {...item} />
           ))}
           <div>Итого: {totalPrice} BYN</div>
+
+          <div className="order_actions">
+            <div>Тип заказа: </div>
+            <div className="order_buttons">
+              <Button type="button" name="bookTable" onClick={onChangeTab}>
+                Забронировать стол
+              </Button>
+              <Button type="button" name="delivery" onClick={onChangeTab}>
+                Доставка
+              </Button>
+              <Button type="button" name="takeaway" onClick={onChangeTab}>
+                Навынос
+              </Button>
+            </div>
+          </div>
+
+          {orderType === "bookTable" ? (
+            <div className="order_title">Забронировать стол</div>
+          ) : orderType === "delivery" ? (
+            <div className="order_title">Доставка</div>
+          ) : orderType === "takeaway" ? (
+            <Takeaway />
+          ) : (
+            <div></div>
+          )}
+
           <div className="make_order">
             <Button type="button" onClick={onMakingOrder}>
               Оформить Заказ
