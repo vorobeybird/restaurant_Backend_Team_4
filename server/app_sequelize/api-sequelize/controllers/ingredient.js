@@ -11,7 +11,6 @@ module.exports = {
   },
 
   getById(req, res) {
-    console.log("HELLO");
     return Ingredient.findByPk(req.params.id, {
       include: [
         {
@@ -54,16 +53,35 @@ module.exports = {
   },
 
   delete(req, res) {
-    return Ingredient.findByPk(req.params.id)
+    return Ingredient.findByPk(req.params.id, {
+      include: [
+        {
+          model: Dish,
+          as: "dish",
+        },
+      ],
+    })
       .then((ingredient) => {
         if (!ingredient) {
           return res.status(400).send({
             message: "Ingredient Not Found",
           });
         }
+        if (ingredient.dish.length) {
+          if (req.params.hard !== "delete") {
+            const inDishes = ingredient.dish.map((d) => d.id);
+            return res.status(200).send({
+              dishes: inDishes,
+            });
+          }
+        }
         return ingredient
           .destroy()
-          .then(() => res.status(204).send())
+          .then(() =>
+            res
+              .status(200)
+              .send({ result: `Ingredient ${req.params.id} was deleted` })
+          )
           .catch((error) => res.status(400).send(error));
       })
       .catch((error) => res.status(400).send(error));

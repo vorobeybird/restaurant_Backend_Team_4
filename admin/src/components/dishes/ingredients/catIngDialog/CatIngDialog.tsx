@@ -26,7 +26,7 @@ export default function CatIngDialog({type, handleClose}: any ) {
       >
         <DialogTitle id="responsive-dialog-title">
         <Container sx={{p: theme.spacing(3), textAlign: "center"}}><Typography sx={{ ml: 2, flex: 1 }} variant="h3">
-         Edit {type==="ingredient" ? "ingredient" : "categorie"}s
+         Редактирование {type==="ingredient" ? "ингредиентов" : "тегов (категорий)"}
         </Typography>
         </Container>
         </DialogTitle>
@@ -36,7 +36,7 @@ export default function CatIngDialog({type, handleClose}: any ) {
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-            Close
+            Закрыть
           </Button>
         </DialogActions>
       </Dialog>
