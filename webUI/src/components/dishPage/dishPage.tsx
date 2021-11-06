@@ -62,7 +62,7 @@ const DishPage = () => {
         dispatch(addToCart(item, items));
     };
 
-    const sliderData: {image: string}[] = selectedDish.photos.map((photo, index) => {
+    const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {
         return { image: photo.photo_url };
     })
 

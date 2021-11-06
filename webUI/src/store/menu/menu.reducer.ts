@@ -1,16 +1,19 @@
-import { ReducerState, MenuActions, MenuConstants } from './menu.types';
+import { ReducerState, MenuActions, MenuConstants, Category, MenuItem } from './menu.types';
 
-const initialState = {items: []}
-
-
+const initialState = {
+  items: [],
+  categories: []
+}
 
 export function menuReducer(
   state: ReducerState = initialState,
   action: MenuActions
 ): ReducerState {
   switch (action.type) {
-    case MenuConstants.FETCH_ITEMS:
-      return { items: action.payload};
+    case MenuConstants.GET_CATEGORIES:
+      return { ...state, categories: action.payload as Category[] };
+    case MenuConstants.GET_DISHES:
+      return { ...state, items: action.payload as MenuItem[] };
     default:
       return state;
   }
