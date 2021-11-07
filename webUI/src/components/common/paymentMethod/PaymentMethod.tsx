@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changePaymentMethod } from "../../../store/order/order.actions";
+import "./paymentMethod.scss";
 
 export const PaymentMethod = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ export const PaymentMethod = () => {
   };
 
   return (
-    <div>
+    <div className="payment_method_container">
       <div>Оплата</div>
       <div>
         <form>

@@ -1,48 +1,57 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { enterName, enterPhone } from "../../../store/order/order.actions";
 import Input from "../input/Input";
 import "./enterContacts.scss";
 
-export const EnterContacts = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+interface EnterContactsProps {
+  name: string;
+  setName: (name: string) => void;
+  phone: string;
+  setPhone: (phone: string) => void;
+  isValidName: () => boolean;
+  isValidPhone: () => boolean;
+}
 
+export const EnterContacts = ({ ...props }: EnterContactsProps) => {
   const dispatch = useAppDispatch();
 
-  const isValidName = () => {
-    const reg = /[-|a-z|а-я]{2,30}/i;
-    return reg.test(name);
-  };
-
-  const isValidPhone = () => {
-    const reg = /^\+375[0-9]{9}$/;
-    return reg.test(phone);
-  };
+  const order = useAppSelector((state) => state.order.order);
 
   const handleChangeName = (e: any) => {
-    setName(e.target.value);
+    props.setName(e.target.value);
   };
 
   const handleChangePhone = (e: any) => {
-    setPhone(e.target.value);
+    props.setPhone(e.target.value);
   };
 
   useEffect(() => {
-    isValidName() ? dispatch(enterName(name)) : dispatch(enterName(""));
-  }, [name]);
+    props.isValidName()
+      ? dispatch(enterName(props.name))
+      : dispatch(enterName(""));
+  }, [props.name]);
 
   useEffect(() => {
-    isValidPhone() ? dispatch(enterPhone(phone)) : dispatch(enterPhone(""));
-  }, [phone]);
+    props.isValidPhone()
+      ? dispatch(enterPhone(props.phone))
+      : dispatch(enterPhone(""));
+  }, [props.phone]);
+
+  console.log(props, "  contacts");
 
   return (
     <div className="enter_contacts_container">
       <div>Контакты</div>
-      <div className="contact-information">
+      <div className="contact_information">
         <div>Контактная информация</div>
-        <Input type="text" onChange={handleChangeName} placeholder="Имя" />
-        {isValidName() ? (
+        <Input
+          type="text"
+          onChange={handleChangeName}
+          placeholder="Имя"
+          value={props.name}
+        />
+        {props.isValidName() ? (
           <div>this name is valid</div>
         ) : (
           <div>
@@ -54,8 +63,9 @@ export const EnterContacts = () => {
           type="text"
           onChange={handleChangePhone}
           placeholder="+375 (_ _) _ _ _ _ _ _ _ _"
+          value={props.phone}
         />
-        {isValidPhone() ? (
+        {props.isValidPhone() ? (
           <div>this phone is valid</div>
         ) : (
           <div>Телефон должен содержать 9 цифр. Обязательно к заполнению.</div>

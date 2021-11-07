@@ -8,23 +8,28 @@ import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
 import { Takeaway } from "../takeaway/Takeaway";
 import { DishShortInfo, Order } from "../../store/order/order.types";
+import TakeawayIcon from "../../assets/takeaway.png";
+import DeliveryIcon from "../../assets/delivery.png";
+import BookTableIcon from "../../assets/book-table.png";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
+  const order = useAppSelector((state) => state.order.order);
 
   const onMakingOrder = () => {
-    let order = {} as Order;
-    order.adress = "Brest";
-    order.customer_id = userId;
-    order.delivery_method = "Самовывоз";
-    order.total_price = totalPrice;
-    order.delivery_date = new Date();
-    order.contact_name = "kolya";
-    order.contact_phone = "+375...";
-    order.payment_method = 2;
-    order.comment = "Hi, I'm hardcode comment :)";
+    let currentOrder = {} as Order;
+    currentOrder.adress = order.adress;
+    currentOrder.customer_id = userId;
+
+    currentOrder.delivery_method = orderType;
+    currentOrder.total_price = totalPrice;
+    currentOrder.delivery_date = order.delivery_date;
+    currentOrder.contact_name = order.contact_name;
+    currentOrder.contact_phone = order.contact_phone;
+    currentOrder.payment_method = order.payment_method;
+    currentOrder.comment = "Hi, I'm hardcode comment :)";
 
     let dishesShortInfo = items.map((item) => {
       let dish = {} as DishShortInfo;
@@ -33,16 +38,16 @@ export const Cart = () => {
       return dish;
     });
 
-    order.dish = dishesShortInfo;
+    currentOrder.dish = dishesShortInfo;
 
-    // axios
-    //   .post("http:localhost:5500/api/order", order, {
-    //     headers: { "Content-type": "application/json", "cross-domain": "true" },
-    //   })
-    //   .then((response) => console.log(response))
-    //   .catch((err) => console.log(err));
+    axios
+      .post("http:localhost:5500/api/order", currentOrder, {
+        headers: { "Content-type": "application/json", "cross-domain": "true" },
+      })
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
 
-    console.log(order);
+    console.log(currentOrder);
   };
 
   const [orderType, setOrderType] = useState("takeaway");

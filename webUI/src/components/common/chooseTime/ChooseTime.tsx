@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeTime } from "../../../store/order/order.actions";
 import { Button } from "../button/Button";
@@ -15,13 +16,18 @@ const possibleTime = [
   "20:30",
 ];
 
+// interface ChooseTimeProps {
+//   onChange: (date: Date) => void;
+// }
+
 export const ChooseTime = () => {
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.order.order.delivery_date);
 
-  const handleChangeTime = (time: string) => {
+  const handleChangeTime = (e: any, time: string) => {
     const [hours, minutes] = time.split(":");
     dispatch(changeTime(hours, minutes));
+    // onChange?.(date);
   };
 
   return (
@@ -33,8 +39,20 @@ export const ChooseTime = () => {
           {possibleTime.map((time) => {
             return (
               <div className="timebox">
-                <Button type="button" onClick={() => handleChangeTime(time)}>
-                  {time}
+                <Button
+                  type="button"
+                  name={time}
+                  onClick={(e) => handleChangeTime(e, time)}
+                >
+                  <span
+                    className={
+                      time === "" + date.getHours() + ":" + date.getMinutes()
+                        ? "pushed_button"
+                        : undefined
+                    }
+                  >
+                    {time}
+                  </span>
                 </Button>
               </div>
             );
