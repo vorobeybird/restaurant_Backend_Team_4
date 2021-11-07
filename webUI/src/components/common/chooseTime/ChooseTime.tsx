@@ -16,18 +16,19 @@ const possibleTime = [
   "20:30",
 ];
 
-// interface ChooseTimeProps {
-//   onChange: (date: Date) => void;
-// }
+interface ChooseTimeProps {
+  time: string;
+  setTime: (time: string) => void;
+}
 
-export const ChooseTime = () => {
+export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.order.order.delivery_date);
 
   const handleChangeTime = (e: any, time: string) => {
     const [hours, minutes] = time.split(":");
     dispatch(changeTime(hours, minutes));
-    // onChange?.(date);
+    props.setTime(time);
   };
 
   return (
@@ -36,22 +37,20 @@ export const ChooseTime = () => {
       <div>
         <div>Время</div>
         <div className="time_container">
-          {possibleTime.map((time) => {
+          {possibleTime.map((timeItem) => {
             return (
               <div className="timebox">
                 <Button
                   type="button"
-                  name={time}
-                  onClick={(e) => handleChangeTime(e, time)}
+                  name={timeItem}
+                  onClick={(e) => handleChangeTime(e, timeItem)}
                 >
                   <span
                     className={
-                      time === "" + date.getHours() + ":" + date.getMinutes()
-                        ? "pushed_button"
-                        : undefined
+                      timeItem === props.time ? "pushed_button" : undefined
                     }
                   >
-                    {time}
+                    {timeItem}
                   </span>
                 </Button>
               </div>

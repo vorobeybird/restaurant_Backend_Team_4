@@ -38,8 +38,6 @@ export const EnterContacts = ({ ...props }: EnterContactsProps) => {
       : dispatch(enterPhone(""));
   }, [props.phone]);
 
-  console.log(props, "  contacts");
-
   return (
     <div className="enter_contacts_container">
       <div>Контакты</div>

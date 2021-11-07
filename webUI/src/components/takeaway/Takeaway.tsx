@@ -22,6 +22,8 @@ export const Takeaway = () => {
     return reg.test(phone);
   };
 
+  const [time, setTime] = useState("");
+
   const ADD_TAKEAWAY_STEPS = [
     {
       id: "ChooseDate",
@@ -31,7 +33,10 @@ export const Takeaway = () => {
     {
       id: "ChooseTime",
       Component: ChooseTime,
-      props: {},
+      props: {
+        time,
+        setTime,
+      },
     },
     {
       id: "EnterContacts",
@@ -73,7 +78,7 @@ export const Takeaway = () => {
       case 0:
         return true;
       case 1:
-        return order.delivery_date.getHours() !== 0;
+        return time;
       case 2:
         return isValidPhone() && isValidName();
       case 3:
