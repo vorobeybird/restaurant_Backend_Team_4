@@ -1,22 +1,22 @@
 import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import {DishPage} from './DishPage';
+import {ConfirmOrder} from './ConfirmOrder';
 
 export type RootStackParamList = {
-    DishPageNavigation: undefined;
-    DishPage: undefined;
+    ConfirmOrderNavigation: undefined;
+    ConfirmOrder: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
-export const DishPageNavigation = () => {
+export const ConfirmOrderNavigation = () => {
     return (      
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
                 <Stack.Screen
-                    name="DishPage"
-                    component={DishPage}
+                    name="ConfirmOrder"
+                    component={ConfirmOrder}
                 />
             </Stack.Navigator>
     )

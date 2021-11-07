@@ -31,78 +31,89 @@ export const OrderedDish = () => {
     }
     return (
         <View style={styles.GreatCont}>
-            {card.dishes.length === 0 ? (
-                <Text style={styles.SimpText}>Корзина пуста</Text>
-            ): (
             <ScrollView style={styles.ScrollStyle}>
                 {card.dishes.map((item:any) => (
                     <View key = {item.id} style={styles.StyledDish}>
-                    <View style={styles.MainCont} >
-                    <Image source={{uri:item.photos[0]}} style={styles.Pict}/>
-                    <View style={styles.Wrapper}>
-                        <View style={styles.TextContainer}>
-                            <Text style={styles.StyledText}>{item.title}</Text>
-                            <Text style={styles.SimpText}>{item.price} BYN</Text>
+                        <View style={styles.MainCont} >
+                            <Image source={{uri:item.photos[1]}} style={styles.Pict}/>
+                            <View style={styles.Wrapper}>
+                                <View style={styles.TextContainer}>
+                                    <Text style={styles.StyledText}>{item.title}</Text>
+                                </View>
+                                <Text style={styles.changeText}>Изменить состав</Text>
+                                <View style={styles.CountCont} >
+                                    <Text style={styles.SimpText}>{item.price} BYN</Text>
+                                    <View style={styles.Conta}>
+                                        <TouchableOpacity onPress={() => handleDecreaseCartQuant(item)}>
+                                            <Image style={styles.PictBut}  source={require('../../img/desMin.png')}/>
+                                        </TouchableOpacity>
+                                        <Text style={styles.StyledCount}>{item.cardQuantity}</Text>
+                                        <TouchableOpacity onPress={() => handleIncreaseCartQuant(item)}>
+                                            <Image style={styles.PictBut} source={require('../../img/desPlus.png')}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
-                        
-                        <View style={styles.CountCont} >
-                            <TouchableOpacity onPress={() => handleDecreaseCartQuant(item)}>
-                                <Image  source={require('../../img/minus.png')}/>
-                            </TouchableOpacity>
-                            <Text style={styles.StyledCount}>{item.cardQuantity}</Text>
-                            <TouchableOpacity onPress={() => handleIncreaseCartQuant(item)}>
-                                <Image source={require('../../img/plus.png')}/>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    </View>
-                    <View style={styles.DelPasEng} >
-                    <Text onPress={() => handleDelFromCard(item)} style={styles.DellText}>Убрать блюдо</Text>
-                    <Text style={styles.AddText}>Добавить еще одно блюдо</Text>
-                    </View>
+                    
                     </View>
                 ))}
                 
                 </ScrollView>
             
-            )
-            }
+            
+            
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    Conta:{
+        flexDirection:'row',
+        alignItems:'center',
+        left:30,
+    },
     Pict:{
         resizeMode:'contain',
-        width:150,
-        height:100,
-        backgroundColor:'white'
+        width:160,
+        height:150,
+        backgroundColor:'white',
+        borderRadius: 8,
       },
     StyledDish:{
-
-        marginBottom:100
+        marginBottom:'5%',
     },
     GreatCont: {
-        justifyContent:'space-between',
+        justifyContent:'space-around',
     },
     MainCont:{
-        position:'relative',
-        top: '20%',
+        top: '5%',
         flexDirection: 'row',
-        justifyContent:'space-evenly',
+        justifyContent:'space-around',
+        
     },
     CountCont: {
         alignItems: 'center',
         paddingRight: 15,
         flexDirection: 'row',
-        justifyContent:'space-evenly',
+        justifyContent:'space-between',
+        bottom:'24%',
     },
     TextContainer:{
-        paddingRight: 10,
+        
+        
         flexDirection: 'row',
-        justifyContent:'space-between',
+        
     },
     StyledText: {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '700',
+        fontSize: 16,
+        lineHeight: 20,
+        top:4,
+
+
         paddingRight:15,
         color: '#000000',
     },
@@ -112,8 +123,11 @@ const styles = StyleSheet.create({
         color: '#000000',
     },
     Wrapper: {
-        flexDirection:'column',
+        top:'3%',
+        right:'30%',
         justifyContent:'space-between',
+        flexDirection:'column',
+        
     },
     DelPasEng:{
         position:'relative',
@@ -137,9 +151,26 @@ const styles = StyleSheet.create({
     },
     SimpText:{
         color: '#000000',
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: 15,
+        lineHeight: 15,
     },
     ScrollStyle:{
         height:'60%'
+    },
+    PictBut:{
+       width:25,
+       height:25
+    },
+    changeText:{
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: '600',
+        fontSize: 14,
+        lineHeight: 15,
+        color:'#FF4D00',
     }
 });
 

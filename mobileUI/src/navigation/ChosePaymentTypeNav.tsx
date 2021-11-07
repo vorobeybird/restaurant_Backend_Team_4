@@ -1,22 +1,22 @@
 import React from "react";
 
 import { createStackNavigator } from "@react-navigation/stack";
-import {DishPage} from './DishPage';
+import {ChosePaymentType} from './ChosePaymentType';
 
 export type RootStackParamList = {
-    DishPageNavigation: undefined;
-    DishPage: undefined;
+    ChosePaymentTypeNavigation: undefined;
+    ChosePaymentType: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
-export const DishPageNavigation = () => {
+export const ChosePaymentTypeNavigation = () => {
     return (      
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
                 <Stack.Screen
-                    name="DishPage"
-                    component={DishPage}
+                    name="ChosePaymentType"
+                    component={ChosePaymentType}
                 />
             </Stack.Navigator>
     )

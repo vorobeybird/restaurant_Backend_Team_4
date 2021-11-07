@@ -7,6 +7,9 @@ import { MainMenu } from '../menu/pageComponents/MainMenu';
 import { BarMenu } from '../menu/pageComponents/BarMenu';
 import { WeekCatch } from '../menu/pageComponents/WeekCatch';
 import { DishPage } from "./DishPage";
+import { ChoseTypeOrder} from "./ChoseTypeOrder";
+import { ConfirmOrder} from "./ConfirmOrder";
+import { ChosePaymentType } from './ChosePaymentType';
 
 export type RootStackParamList = {
     MenuTabNavigation: undefined;
@@ -16,6 +19,9 @@ export type RootStackParamList = {
     Menu: undefined;
     Breakfast: undefined;
     DishPage: undefined;
+    ChoseTypeOrder:undefined;
+    ConfirmOrder:undefined;
+    ChosePaymentType:undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -48,5 +54,18 @@ export const MenuTabNavigation = () => {
                     name="DishPage"
                     component={DishPage}
                 />
+        <Stack.Screen
+                    name="ChoseTypeOrder"
+                    component={ChoseTypeOrder}
+                />
+        <Stack.Screen
+                    name="ConfirmOrder"
+                    component={ConfirmOrder}
+                />
+        <Stack.Screen
+                    name="ChosePaymentType"
+                    component={ChosePaymentType}
+                />
+        
     </Stack.Navigator>
 }

@@ -25,8 +25,8 @@ export const BottomTabNavigation = () => {
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         position: 'absolute',
-                        height: 90,
-                        backgroundColor: 'white',
+                        height: '10%',
+                        backgroundColor: 'black',
                     }
                 }}>
                 <Tab.Screen
@@ -37,7 +37,7 @@ export const BottomTabNavigation = () => {
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/dish.png')} resizeMode='contain' />
+                                <Image style={styles.PictStyle} source={require('../../img/leftBotTab.png')} resizeMode='contain' />
                                 <Text style={styles.SimpText}>Блюда</Text>
                             </View>;
                         }
@@ -50,7 +50,7 @@ export const BottomTabNavigation = () => {
                         title: 'MarketMain',
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/marketPhoto.png')} />
+                                <Image style={styles.PictStyleCent} source={require('../../img/centTab.png')} />
                                 <Text style={styles.SimpText}>Корзина</Text>
                             </View>
                         }
@@ -63,7 +63,7 @@ export const BottomTabNavigation = () => {
                         title: 'MarketMain',
                         tabBarIcon: ({ focused }) => {
                             return <View>
-                                <Image style={styles.PictStyle} source={require('../../img/profPhoto.png')} resizeMode='contain' />
+                                <Image style={styles.PictStyle} source={require('../../img/rightTab.png')} resizeMode='contain' />
                                 <Text style={styles.SimpText}>Профиль</Text>
                             </View>
                         }
@@ -76,17 +76,22 @@ export const BottomTabNavigation = () => {
 
 const styles = StyleSheet.create({
     SmWrapper: {
-        top: '2%',
+        top: '4%',
         flexDirection: 'column',
         alignItems: 'center',
         color: '#000000',
     },
     PictStyle: {
-        width: 76,
-        height: 76,
+        width: 120,
+        height: '100%',
     },
     SimpText: {
         bottom: 5,
         color: '#000000',
-    }
+    },
+    PictStyleCent: {
+        width: 120,
+        height: '80%',
+        top:'10%',
+    },
 })

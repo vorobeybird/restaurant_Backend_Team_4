@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 interface CounterState {
     dishes: Dish[];
     cardTotalQuantity:number;
-    cardTotalAmount:number
+    cardTotalAmount:number;
+    orderType:string;
+    date:any;
+    paymentType:string;
+    
   }
 interface Dish {
     id: string;
@@ -13,10 +17,13 @@ interface Dish {
 
 }
 
-const initialState:CounterState = {
-    dishes:[],
-    cardTotalQuantity:0,
-    cardTotalAmount:0
+export const initialState:CounterState = {
+    dishes: [],
+    cardTotalQuantity: 0,
+    cardTotalAmount: 0,
+    orderType: "",
+    date: "",
+    paymentType: ""
 }
 const dishSlice = createSlice({
     name:"dishSlice",
@@ -72,9 +79,21 @@ const dishSlice = createSlice({
             total = parseFloat(total.toFixed(2));
             state.cardTotalQuantity = quantity;
             state.cardTotalAmount = total;
-          },
+        },
+        addOrderType(state, action) {
+            state.orderType = action.payload
+            console.log(state.orderType)
+        },
+        addDate(state, action) {
+            state.date = action.payload
+            console.log(state.date)
+        },
+        addPaymentType(state,action) {
+            state.paymentType = action.payload
+            console.log(state.paymentType)
+        },
         
     }
 })
 export default dishSlice.reducer;
-export const {addToCard,delFromCard, decreaseCartQuant, getTotals} = dishSlice.actions;
+export const {addToCard,delFromCard, decreaseCartQuant, getTotals, addOrderType, addDate, addPaymentType} = dishSlice.actions;

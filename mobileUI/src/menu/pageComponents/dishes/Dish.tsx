@@ -16,7 +16,7 @@ export const Dishes = ({id, title, photos, descr, price, cal, weight} : {id:any,
   return (
     <TouchableOpacity onPress={() => navigation.navigate('DishPage', { names: [id,title, photos, descr, price, cal, weight ]})}>
       <View key={id} style={styles.Wrapper}>
-        <Text style={styles.Header}>{title}</Text>
+        
         <ScrollView pagingEnabled horizontal style={styles.Pict}>
           {
             photos.map((image: any, index: any) => {return (
@@ -26,8 +26,11 @@ export const Dishes = ({id, title, photos, descr, price, cal, weight} : {id:any,
           }    
         </ScrollView>
         <View style={styles.BotText}>
-            <Text style={styles.Descr}>Калорийность: {cal} калорий</Text>
-            <Text style={styles.Cost}>Цена: {price}BYN</Text>
+            <Text style={styles.Header}>{title}</Text>
+            <View style={styles.btCont}>
+              <Text style={styles.Cost}>{price} <Text style={styles.Header}>BYN</Text></Text>
+              <Text style={styles.Descr}> {weight} г</Text>
+            </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -35,28 +38,33 @@ export const Dishes = ({id, title, photos, descr, price, cal, weight} : {id:any,
 };
 
 const styles = StyleSheet.create({
+    btCont:{
+      top:'4%',
+      justifyContent:'space-between',
+      flexDirection:'row',
+    },
     Header:{
-    
+      fontFamily:'Roboto',
+      lineHeight:20,
       bottom:'2%',
-      fontFamily: 'Open Sans',
-      fontSize: 20,
-      fontWeight: 'bold',
+      fontSize:18,
       color:'black'
     },
     Pict:{
+      borderRadius: 8,
       resizeMode:'contain',
-      width:250,
-      height:170,
-      backgroundColor:'white'
+      width:324,
+      height:200,
+      
     },
     BotText: {
       top:20,
-      width:250,
+      width:300,
       flexDirection:'column',
     },
     Descr:{
       textAlign:'left',
-      color:'black',
+      color:'#939393',
     },
     Wrapper:{
       top:'1%',
@@ -65,8 +73,11 @@ const styles = StyleSheet.create({
       
     },
     Cost:{
-      textAlign:'left',
+      fontSize: 20,
+      fontWeight: 'bold',
       color:'black',
+      textAlign:'left',
+      
       
     }
   });
