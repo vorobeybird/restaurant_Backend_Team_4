@@ -46,15 +46,18 @@ const Menu = ({ location }: MenuProps) => {
           <div className="tabs">
             {useAppSelector((state) => state.menu.categories.map((item) => {
               const isActive = activeLink === item.id;
-              return (
-                <div
-                  className={isActive ? "menu_active_link" : undefined}
-                  key={item.id}
-                  onClick={() => setCategory(item.id)}
-                >
-                  {item.title}
-                </div>
-              );
+              if(item.show_in_menu) {
+                return (
+                  <div
+                    className={isActive ? "menu_active_link" : undefined}
+                    key={item.id}
+                    onClick={() => setCategory(item.id)}
+                  >
+                    {item.title}
+                  </div>
+                );
+              }
+              
             }))}
           </div>
         </div>

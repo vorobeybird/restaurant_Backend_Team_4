@@ -68,7 +68,7 @@ export const CartItem = (item: ICartItem) => {
   };
 
   return (
-    <div className="item_container">
+    <div className="cart-item_container">
       <div className="item_photos">
         <Carousel plugins={["arrows"]}>
           {item.photo.map((photo, index) => {

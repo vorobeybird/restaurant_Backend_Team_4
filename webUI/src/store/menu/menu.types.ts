@@ -24,7 +24,7 @@ export interface MenuItem {
     id: number,
     title: string,
     DishIngredient: {
-      is_defaul: boolean
+      is_default: boolean
     }
   }[];
 }
