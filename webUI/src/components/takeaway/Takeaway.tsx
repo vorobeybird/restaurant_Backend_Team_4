@@ -83,29 +83,34 @@ export const Takeaway = () => {
   };
 
   return (
-    <div className="takeaway_container">
-      <button
-        className={`${
-          currentStep === 0 ? "swiper_disabled" : undefined
-        } swiper_takeaway`}
-        type="button"
-        onClick={handleChangeCurrentStepPrev}
-      >
-        <img src={PrevStepIcon} alt="prev" />
-      </button>
-      <Component
-        key={id}
-        {...(ADD_TAKEAWAY_STEPS[currentStep]?.props as any)}
-      />
-      <button
-        className={`${
-          currentStep === 3 ? "swiper_disabled" : undefined
-        } swiper_takeaway`}
-        type="button"
-        onClick={handleChangeCurrentStepNext}
-      >
-        <img src={NextStepIcon} alt="prev" />
-      </button>
+    <div className="takeaway_container_wrapper">
+      <div className="takeaway_container">
+        <button
+          className={`${
+            currentStep === 0 ? "swiper_disabled" : undefined
+          } swiper_takeaway`}
+          type="button"
+          onClick={handleChangeCurrentStepPrev}
+        >
+          <img src={PrevStepIcon} alt="prev" />
+        </button>
+        <Component
+          key={id}
+          {...(ADD_TAKEAWAY_STEPS[currentStep]?.props as any)}
+        />
+        <button
+          className={`${
+            currentStep === 3 ? "swiper_disabled" : undefined
+          } swiper_takeaway`}
+          type="button"
+          onClick={handleChangeCurrentStepNext}
+        >
+          <img src={NextStepIcon} alt="prev" />
+        </button>
+      </div>
+      <div className="step_progress">
+        Шаг {currentStep + 1}/{ADD_TAKEAWAY_STEPS.length}
+      </div>
     </div>
   );
 };
