@@ -2,7 +2,8 @@ import { ReducerState, MenuActions, MenuConstants, Category, MenuItem } from './
 
 const initialState = {
   items: [],
-  categories: []
+  categories: [],
+  selectedCategory: 1
 }
 
 export function menuReducer(
@@ -14,6 +15,8 @@ export function menuReducer(
       return { ...state, categories: action.payload as Category[] };
     case MenuConstants.GET_DISHES:
       return { ...state, items: action.payload as MenuItem[] };
+    case MenuConstants.SET_SELECTED_CATEGORY:
+      return { ...state, selectedCategory: action.payload as number };
     default:
       return state;
   }

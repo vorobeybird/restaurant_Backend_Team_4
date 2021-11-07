@@ -6,7 +6,7 @@ export interface MenuItem {
   price: number;
   weight: number;
   calories: number;
-  categories: {
+  category: {
     id: number,
     title: string,
     show_in_menu: boolean
@@ -38,22 +38,24 @@ export interface Category {
 
 export enum MenuConstants {
   GET_DISHES = 'GET_DISHES',
-  GET_CATEGORIES = "GET_CATEGORIES"
+  GET_CATEGORIES = "GET_CATEGORIES",
+  SET_SELECTED_CATEGORY = "SET_SELECTED_CATEGORY"
 }
 
 export interface ReducerState {
   items: MenuItem[],
   categories: Category[]
+  selectedCategory: number
 }
 
 export interface Response {
-  data: any,
+  data: MenuItem[] | Category[] | number,
   status: number
 }
 
 export interface MenuActions {
   type: MenuConstants,
-  payload: MenuItem[] | Category[]
+  payload: MenuItem[] | Category[] | number
 } 
 
 

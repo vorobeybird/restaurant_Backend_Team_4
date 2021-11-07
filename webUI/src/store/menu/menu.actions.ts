@@ -26,3 +26,7 @@ export const fetchDishes = () => async (dispatch: AppDispatch) => {
   const dishes = await getDishes();
   dispatch({ type: MenuConstants.GET_DISHES, payload: dishes });
 };
+
+export const setSelectedCategory = (id: number) => (dispatch: AppDispatch) => {
+  dispatch({type: MenuConstants.SET_SELECTED_CATEGORY, payload: id });
+}

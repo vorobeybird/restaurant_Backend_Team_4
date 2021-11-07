@@ -66,10 +66,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login" component={Authentication} />
-        <Route exact path="/menu/bar" component={Menu} />
-        <Route exact path="/menu/breakfast" component={Menu} />
         <Route exact path="/menu" component={Menu} />
-        <Route exact path="/menu/catch" component={Menu} />
         <Route exact path="/cart" component={Cart} />
         <Route path="/dishPage" component={DishPage}/>
       </Switch>
