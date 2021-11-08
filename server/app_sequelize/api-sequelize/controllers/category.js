@@ -1,6 +1,7 @@
 const Dish = require("../models").Dish;
 const Category = require("../models").Category;
-
+const Ingredient = require("../models").Ingredient;
+const DishPhoto = require("../models").DishPhoto;
 module.exports = {
 
   list(req, res) {
@@ -10,6 +11,17 @@ module.exports = {
         {
           model: Dish,
           as: "dish",
+          //uncommit in case of task for getting all dish info in category
+          // include: [
+          //   {
+          //     model: Ingredient,
+          //     as: "ingredient",
+          //   },
+          //   {
+          //     model: DishPhoto,
+          //     as: "photo",
+          //   },
+          // ]
         },
       ],
     })

@@ -1,5 +1,6 @@
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
+import DeleteAlertDialog from '../dishDialog/DeleteAlertDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
@@ -82,6 +83,7 @@ const DishesGrid = () => {
   
   const deleteDish = (id: any) => {
     const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
+
     axios.delete<AxiosResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -141,6 +143,7 @@ useEffect(() => {
      
       </Container>
       </div>
+    <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
     <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
     <IngDialog handleClose={handleClose} type={entityToAdd} />
     </>
