@@ -40,7 +40,7 @@ export const Cart = () => {
     currentOrder.dish = dishesShortInfo;
 
     axios
-      .post("http:localhost:5500/api/order", currentOrder, {
+      .post("http://localhost:5000/api/order", currentOrder, {
         headers: { "Content-type": "application/json", "cross-domain": "true" },
       })
       .then((response) => console.log(response))
@@ -49,7 +49,7 @@ export const Cart = () => {
     console.log(currentOrder);
   };
 
-  const [orderType, setOrderType] = useState("takeaway");
+  const [orderType, setOrderType] = useState("");
 
   const onChangeTab = (e: any) => {
     setOrderType(e.target.name);
