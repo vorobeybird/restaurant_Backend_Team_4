@@ -110,7 +110,7 @@ export const Takeaway = () => {
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
-          <img src={NextStepIcon} alt="prev" />
+          <img src={NextStepIcon} alt="next" />
         </button>
       </div>
       <div className="step_progress">

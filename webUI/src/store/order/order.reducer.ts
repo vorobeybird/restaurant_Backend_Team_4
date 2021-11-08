@@ -44,6 +44,23 @@ export function orderReducer(
       return { order: { ...state.order, contact_name: action.payload } };
     case OrderConstants.CHANGE_PAYMENT_METHOD:
       return { order: { ...state.order, payment_method: action.payload } };
+    case OrderConstants.RESET_STATE: {
+      let tempOrder = { ...state.order };
+      tempOrder.adress = "";
+      tempOrder.comment = "";
+      tempOrder.contact_name = "";
+      tempOrder.contact_phone = "";
+      tempOrder.delivery_date = new Date();
+      tempOrder.delivery_date.setHours(0);
+      tempOrder.delivery_date.setMinutes(0);
+      tempOrder.delivery_date.setSeconds(0);
+      tempOrder.payment_method = 2;
+      return {
+        order: { ...tempOrder },
+      };
+    }
+    case OrderConstants.ENTER_ADDRESS:
+      return { order: { ...state.order, adress: action.payload } };
     default:
       return state;
   }

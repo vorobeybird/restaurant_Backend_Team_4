@@ -25,3 +25,11 @@ export const changePaymentMethod =
       payload: payment_method,
     });
   };
+
+export const clearOrder = () => (dispatch: AppDispatch) => {
+  dispatch({ type: OrderConstants.RESET_STATE, payload: {} });
+};
+
+export const chooseAddress = (address: string) => (dispatch: AppDispatch) => {
+  dispatch({ type: OrderConstants.ENTER_ADDRESS, payload: address });
+};
