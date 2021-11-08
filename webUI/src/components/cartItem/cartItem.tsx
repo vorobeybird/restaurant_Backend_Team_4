@@ -18,37 +18,36 @@ import Minus from "../../assets/minus.png";
 
 export const CartItem = (item: ICartItem) => {
   const [gearState, setGearState] = useState(false);
-  const [pickedIngredients, setPickedIngredients] = useState<number[]>(
-    [...item.ingredients].sort()
-  );
+  const [pickedIngredients, setPickedIngredients] = useState(
+    item.ingredient);
 
   const onGear = () => setGearState(!gearState);
 
-  const onCheckbox = (item: number) => {
-    if (pickedIngredients.includes(item)) {
-      const array = [...pickedIngredients];
-      const index = array.indexOf(item);
-      if (index > -1) {
-        array.splice(index, 1);
-      }
-      setPickedIngredients(array.sort());
-    } else {
-      setPickedIngredients([...pickedIngredients, item].sort());
-    }
-  };
+  // const onCheckbox = (item: number) => {
+  //   if (pickedIngredients.includes(item)) {
+  //     const array = [...pickedIngredients];
+  //     const index = array.indexOf(item);
+  //     if (index > -1) {
+  //       array.splice(index, 1);
+  //     }
+  //     setPickedIngredients(array.sort());
+  //   } else {
+  //     setPickedIngredients([...pickedIngredients, item].sort());
+  //   }
+  // };
 
-  const renderIngredient = (item: number) => (
-    <div key={item} className="item_ingredients_list_item">
-      <p>{item}</p>
-      {gearState && (
-        <input
-          type="checkbox"
-          checked={pickedIngredients.includes(item)}
-          onChange={() => onCheckbox(item)}
-        />
-      )}
-    </div>
-  );
+  // const renderIngredient = (item: ICartItem) => (
+  //   <div key={item.id} className="item_ingredients_list_item">
+  //     <p>{item}</p>
+  //     {gearState && (
+  //       <input
+  //         type="checkbox"
+  //         checked={pickedIngredients.includes(item)}
+  //         onChange={() => onCheckbox(item)}
+  //       />
+  //     )}
+  //   </div>
+  // );
 
   const dispatch = useAppDispatch();
 
@@ -67,10 +66,10 @@ export const CartItem = (item: ICartItem) => {
   };
 
   return (
-    <div className="item_container">
+    <div className="cart-item_container">
       <div className="item_photos">
         <Carousel plugins={["arrows"]}>
-          {item.photos.map((photo, index) => {
+          {item.photo.map((photo, index) => {
             return <img key={index} src={photo.photo_url} alt="dish" />;
           })}
         </Carousel>
@@ -82,11 +81,11 @@ export const CartItem = (item: ICartItem) => {
         <div className="item_ingredients_container">
           <div className="item_ingredients">
             <p>Состав: </p>
-            <p>{item.default_ingredients}</p>
+            <p>{item.ingredient.map(ingredient => ingredient.title)}</p>
             <div className="item_ingredients_list">
-              {gearState
-                ? item.ingredients.map((item) => renderIngredient(item))
-                : pickedIngredients.map((item) => renderIngredient(item))}
+              {/* {gearState
+                ? item.ingredient.map((item) => renderIngredient(item))
+                : pickedIngredients.map((item) => renderIngredient(item))} */}
             </div>
           </div>
           <div className="button_redact_ingredients">

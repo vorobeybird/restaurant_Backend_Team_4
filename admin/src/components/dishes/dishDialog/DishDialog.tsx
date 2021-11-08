@@ -30,7 +30,7 @@ interface IDish {
   default_ingredients: Array<Number>;
   price: number;
   weight: number;
-  photos: Array<IPhoto>
+  photo: Array<IPhoto>
   categories: Array<Number>;
   ingredients: Array<Number>;
   calories: number;

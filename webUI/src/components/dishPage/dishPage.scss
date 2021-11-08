@@ -1,0 +1,539 @@
+$arrowsColor: #EF742F;
+$btnColor: #EF742F;
+
+.dish-page {
+    width: 100%;
+    height: 1200px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    & .dish-page__container{
+        display: flex;
+        height: 100%;
+        width: 90%;
+        position: relative;
+        flex-direction: column;
+        & .bread-crumbs {
+            display: flex;
+            height: 5%;
+            width: 100%;
+        }
+
+        & .dish-title {
+            display: flex;
+            height: 5%;
+            width: 100%;
+            font-size: 3rem;
+            line-height: normal;
+            color: #000000;
+        }
+        
+        & .dish-item-container {
+            height: 50%;
+            width: 100%;
+            display: flex;
+            align-items: none;
+            border: none;
+            border-radius: 0px;
+            flex-direction: row;
+            justify-content: space-between;
+            & .dish-item-photos {
+                height: 100%;
+                width: 60%;
+                display: flex;
+                align-items: center;
+                position: relative;
+                & .slider {
+                  display: flex;
+                  flex: 1;
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                  border-radius: 10px;
+                  z-index: 0;
+                  & .slider-left-arrow {
+                    z-index: 10;
+                    cursor: pointer;
+                    user-select: none;
+                    height: 50px;
+                    width: 50px;
+                    background: #FFFFFF;
+                    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+                    display: flex;
+                    border-radius: 50%;
+                    border: none;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    & img {
+                      object-fit: cover;
+                      width: 30%;
+                      height: 30%;
+                    }
+                  }
+
+                  & .slider-right-arrow {
+                    z-index: 10;
+                    cursor: pointer;
+                    user-select: none;
+                    height: 50px;
+                    width: 50px;
+                    background: #FFFFFF;
+                    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+                    display: flex;
+                    border-radius: 50%;
+                    border: none;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    & img {
+                      object-fit: cover;
+                      width: 30%;
+                      height: 30%;
+                    }
+                  }
+
+                  & .slide {
+                    opacity: 0;
+                    transition-duration: 1s ease;
+                    position: relative;
+                    & .slider-img{
+                      position: inherit;
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 5px;
+                      object-fit: cover;
+                    }
+                  }
+
+                  & .slide.active {
+                    opacity: 1;
+                    transition-duration: 1s;
+                    transform: scale(1.08);
+                    z-index: 0;
+                    & .slider-img{
+                      position: inherit;
+                      width: 780px;
+                      height: 550px;
+                      border-radius: 10px;
+                      object-fit: cover;
+                    }
+                  }
+                }
+            }
+
+            & .dish-item-info {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 38%;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                & .dish-gear_wrapper {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: flex-start;
+                  align-items: center;
+                  width: 100%;
+                  height: 10%;
+                  & .gear-title {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 2rem;
+                    line-height: normal;
+                    color: #000000;
+                  }
+                  & .gear-button {
+                    cursor: pointer;
+                    width: 20%;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 1rem;
+                    line-height: normal;
+                    text-align: center;
+                    color: #EF742F;
+                    background: none;
+                    border: none;
+                    margin-left: 10px;
+                    transition: 0.1s;
+                  }
+
+                  & .gear-button:active {
+                    transform: scale(1.5);
+                  }
+                }
+                
+                & .dish-description {
+                  position: relative;
+                  width: 100%;
+                  height: 80%;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-around;
+                  & .dish-ingredients {
+                    width: 80%;
+                    height: 50%;
+                    border-bottom: 2px dotted;
+                    & .ingredient-wrapper {
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: flex-start;
+                      align-items: center;
+                      flex: 1;
+                      position: relative;
+                      & .ingredient-title {
+                        font-style: normal;
+                        font-weight: 300;
+                        font-size: 1rem;
+                        line-height: normal;
+                        color: #000000;
+                        height: 100%;
+                        margin-left: 10px;
+                      }
+                    }
+                  }
+
+                  & .dish-calories {
+                    width: 100%;
+                    height: 10%;
+                    display: flex;
+                    flex-direction: row;
+                    position: relative;
+                    align-items: center;
+                    margin-top: 5px;
+                    & .calories-img{
+                      height: 24px;
+                      width: 19px;
+                      margin-right: 5px;
+                    }
+                  }
+
+                  & .dish-price{
+                    width: 100%;
+                    height: 20%;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 2rem;
+                    line-height: normal;
+                    color: #000000;
+                  }
+                }
+
+                & .dish-item-info__btn {
+                  height: 20%;
+                  width: 100%;
+                  background: $btnColor;
+                  border-radius: 2px;
+                  border: none;
+                  font-style: normal;
+                  font-weight: normal;
+                  font-size: 1.8rem;
+                  line-height: normal;
+                  color: #FFFFFF;
+                  cursor: pointer;
+                }
+            }
+
+        }
+
+        & .may-interest {
+            display: flex;
+            width: 100%;
+            height: 40%;
+        }
+    }
+}
+
+@media screen and (max-width: 1599px) {
+  .dish-page {
+    & .dish-page__container{
+        
+        & .dish-item-container {
+            height: 50%;
+            width: 100%;
+            align-items: center;
+            & .dish-item-photos {
+                height: 100%;
+                width: 60%;
+                display: flex;
+                align-items: center;
+                position: relative;
+                & .slider {
+                  & .slide.active {
+                    & .slider-img{
+                      width: 600px;
+                      height: 400px;
+                    }
+                  }
+                }
+            }
+
+            & .dish-item-info {
+                height: 70%;
+                width: 30%;
+                
+                }
+            }
+          }
+  }
+}
+
+@media screen and (max-width: 1110px) {
+  .dish-page {
+    height: 800px;
+    & .dish-page__container{
+      & .dish-item-container {
+          & .dish-item-photos {
+
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 500px;
+                    height: 300px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+              height: 80%;
+              }
+          }
+        }
+  }
+}
+
+
+@media screen and (max-width: 929px) {
+  .dish-page {
+    height: 800px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2.5rem;
+      }
+      & .dish-item-container {
+          & .dish-item-photos {
+
+              & .slider {
+                & .slider-left-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+
+                & .slider-right-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+                & .slide.active {
+                  & .slider-img{
+                    width: 400px;
+                    height: 250px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 70%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+
+              }
+            }
+            
+            & .dish-description {
+              & .dish-price{
+                width: 100%;
+                height: 20%;
+                font-size: 1.5rem;
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 80%;
+              height: 50%;
+              & .slider {
+                & .slider-left-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+
+                & .slider-right-arrow {
+                  height: 30px;
+                  width: 30px;
+                }
+                & .slide.active {
+                  & .slider-img{
+                    width: 400px;
+                    height: 250px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 80%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 350px;
+                    height: 250px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
+}
+
+@media screen and (max-width: 585px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 100%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 300px;
+                    height: 200px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
+}
+
+@media screen and (max-width: 399px) {
+  .dish-page {
+    height: 1400px;
+    & .dish-page__container{
+      & .dish-title {
+        font-size: 2rem;
+        height: 2%;
+      }
+      & .dish-item-container {
+        flex-direction: column;
+          & .dish-item-photos {
+              width: 100%;
+              height: 50%;
+              & .slider {
+                & .slide.active {
+                  & .slider-img{
+                    width: 250px;
+                    height: 200px;
+                  }
+                }
+              }
+          }
+
+          & .dish-item-info {
+            height: 50%;
+            width: 80%;
+            & .dish-gear_wrapper {
+
+              & .gear-title {
+                font-size: 1.5rem;
+
+              }
+            }
+            & .dish-item-info__btn {
+              font-size: 1.3rem;
+            }
+        }
+      }    
+    }
+  }
+}

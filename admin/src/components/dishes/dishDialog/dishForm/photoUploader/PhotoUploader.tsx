@@ -40,7 +40,6 @@ const PhotoUploader = ({newImages, setNewImages, dishId}: IPhotoUploaderProps) =
     const file = e.target.files[0];
     if (file) {
     const result = await postImage(file, dishId);
-    console.log(result)
     setNewImages([
       ...newImages,
       result
@@ -56,9 +55,7 @@ const PhotoUploader = ({newImages, setNewImages, dishId}: IPhotoUploaderProps) =
   }
 
   const deleteClick = async (publicId: string) => {
-    console.log(publicId)
     const result = await deleteImage(publicId);
-    console.log(result)
     const filteredImages = newImages.filter((i: IPhoto)=> i.public_id !== result.data.public_id);
     setNewImages(filteredImages);
   }

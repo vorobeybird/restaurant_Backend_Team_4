@@ -14,13 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "category_id",
       });
     }
-    toJSON(){
-      return { ...this.get(), DishCategory: undefined}
+    toJSON() {
+      return { ...this.get(), DishCategory: undefined };
     }
   }
   Category.init(
     {
-      title: DataTypes.STRING,
+      title:{
+        type: DataTypes.STRING,
+        unique: true
+      } ,
       show_in_menu: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
@@ -29,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       timestamps: false,
-      tableName: "category",
+      tableName: "Category",
       modelName: "Category",
     }
   );

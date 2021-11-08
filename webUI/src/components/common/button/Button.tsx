@@ -9,15 +9,17 @@ interface ButtonProps {
   name?: string;
 }
 
-export const Button = ({ children, onClick, name }: ButtonProps) => {
+export const Button = ({ children, onClick, name, type }: ButtonProps) => {
   return (
     <div className="button">
       <button
+        type={type}
         name={name}
         onClick={onClick ? (elem) => onClick(elem) : undefined}
       >
         {children}
       </button>
+
     </div>
   );
 };

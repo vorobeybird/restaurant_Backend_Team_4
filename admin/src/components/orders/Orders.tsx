@@ -1,8 +1,9 @@
-const Orders = ()=>(
-    <div>
-        Orders component
-    </div>
-);
+import OrdersGrid from "./ordersgrid/OrdersGrid";
+const Orders = ()=>{
 
-export default Orders;
-
+    return (
+        <OrdersGrid />
+    )
+    }
+    
+    export default Orders;

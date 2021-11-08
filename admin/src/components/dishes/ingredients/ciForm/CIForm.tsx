@@ -2,8 +2,8 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { useTheme } from '@mui/material/styles';
-import { Button, Container } from '@mui/material';
-import { fetchIngredients } from '../../../common/apifetch/apifetch';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import  fetchIngredients  from '../../../common/apifetch/apifetch';
 const filter = createFilterOptions<ICIOptionType>();
 interface ICIOptionType {
     inputValue?: string;
@@ -18,13 +18,14 @@ export default function CIForm({type}: ICIFormProps) {
   const [iList, setIList] = React.useState<any>(null);
   const [value, setValue] = React.useState<any>(null);
   const [currentValue, setCurrentValue] = React.useState<ICIOptionType | null>(null);
+  const [inDishes, setInDishes] = React.useState<Number[]>([]);
   
   const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentValue({title: e.target.value});
   }
   const getIngredients =()=> {
     fetchIngredients('GET', `${process.env.REACT_APP_API}/ingredient`)
-    .then((response) => setIList(response.data.data))
+    .then((response) => setIList(response.data))
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
         console.error(error);
@@ -32,11 +33,18 @@ export default function CIForm({type}: ICIFormProps) {
   }
 
   const deleteIngredient = () => {
-    fetchIngredients('DELETE', `${process.env.REACT_APP_API}/ingredient`, undefined, currentValue?.id)
+    const apiUrl = inDishes.length > 0 ? `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}/delete` : `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}`;
+    fetchIngredients('DELETE', apiUrl)
     .then((response) => {
-        getIngredients();
+      console.log(response.data)
+        if (response.data.dishes) {
+          setInDishes(response.data.dishes);
+        } else {
+          setInDishes([]);
         setValue(null);
         setCurrentValue(null);
+        getIngredients();
+        }
     })
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
@@ -49,7 +57,7 @@ export default function CIForm({type}: ICIFormProps) {
     fetchIngredients('PUT', `${process.env.REACT_APP_API}/ingredient`, currentValue, value?.id)
     .then((response) =>  {
         getIngredients();
-        setValue(response.data.data);
+        setValue(response.data);
     }
         )
     .catch(err=>{
@@ -75,10 +83,12 @@ export default function CIForm({type}: ICIFormProps) {
   React.useEffect(()=>{
     getIngredients();
   }, [])
-  return (<Container sx={{p: theme.spacing(3), height: 300, display: "flex", flexDirection: "column", alignItems: "center"}}>
+  return (<Container sx={{p: theme.spacing(3), height: 330, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start"}}>
+    <Box sx={{height:30}}><Typography color="error">{inDishes.length > 0 && `Ингредиент содержится в блюдах: ${inDishes.join(", ")}.` }</Typography></Box>
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
+        setInDishes([]);
         if (typeof newValue === 'string') {
           setValue({
             title: newValue,
@@ -109,7 +119,7 @@ export default function CIForm({type}: ICIFormProps) {
         if (inputValue !== '' && !isExisting) {
           filtered.push({
             inputValue,
-            title: `Add "${inputValue}"`,
+            title: `Добавить "${inputValue}"`,
           });
         }
 
@@ -138,18 +148,21 @@ export default function CIForm({type}: ICIFormProps) {
       sx={{ width: 400, m: theme.spacing(3)}}
       /* freeSolo */
       renderInput={(params) => (
-        <TextField {...params} fullWidth variant="filled" label={`Search ${type}`}/>
+        <TextField {...params} fullWidth variant="filled" label={`Поиск ингредиентов`}/>
       )}
     />
     {value &&
      <><TextField required 
      fullWidth
      id="title"
-     label={currentValue?.inputValue ? ` Add ${type}` : `Edit ${type}` }
+     label={currentValue?.inputValue ? ` Добавить ${type}` : `Редактировать ${type}` }
      name="title"
      focused
      autoComplete="title" value={currentValue?.inputValue || currentValue?.title || ''} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
-     <Container sx={{width: 400, display: "flex", justifyContent: "space-evenly", p: 0}}><Button sx={{m: theme.spacing(3), width: 80}} onClick={saveIngredient} color="primary" variant="contained">Save</Button><Button sx={{m: theme.spacing(3),  width: 80}} color="error" variant="contained" onClick={deleteIngredient}>Delete</Button></Container></>
+     <Container sx={{width: 400, display: "flex", justifyContent: "space-evenly", p: 0}}>
+       <Button sx={{m: theme.spacing(3), width: 100}} onClick={saveIngredient} color="primary" variant="contained">Save</Button>
+       <Button sx={{m: theme.spacing(3),  width: 100}} color={inDishes.length ? "error" : "warning"} variant="contained" onClick={deleteIngredient}>{inDishes.length ? "Удалить?" : "Удалить"}</Button>
+     </Container></>
     }
     </Container>
   );

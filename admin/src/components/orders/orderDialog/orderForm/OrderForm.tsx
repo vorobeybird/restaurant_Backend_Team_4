@@ -1,24 +1,17 @@
-import {useState} from 'react';
-import { Grid, Container, TextField, Button, InputAdornment } from '@mui/material';
+import { Grid, Container, TextField, Button, InputAdornment, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTheme } from '@mui/styles';
-import IngSelector from '../../ingredients/selector/IngSelector';
-import PhotoUploader from './photoUploader/PhotoUploader';
 import axios, {AxiosResponse, Method}  from 'axios';
-interface IPhoto {
-  photo_url: string,
-  public_id: string,
-  ordinal_num: number,
-  width: number,
-  height: number,
-}
+
+
+
 interface IDish {
-  id?: string;
+  id?: number;
   title: string;
   default_ingredients: Array<Number>;
   price: number;
   weight: number;
-  photo: Array<IPhoto>
+  photos: Array<Object>
   categories: Array<Number>;
   ingredients: Array<Number>;
   calories: number;
@@ -30,10 +23,6 @@ fetchDishes: Function;
 }
 
 const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
-  const [ingredients, setIngredients]: [any, (items: Object[]) => void] = useState<any[]>([]);
-  const initialImages = dish.photo || [];
-  const [newImages, setNewImages] = useState<IPhoto[]>(initialImages);
-  
   const theme = useTheme();
 
         const formik = useFormik({
@@ -42,18 +31,16 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
             default_ingredients: dish.default_ingredients,
             price: dish.price,
             weight: dish.weight,
-            photo: dish.photo,
+            photos: dish.photos,
             categories: dish.categories,
             ingredients: dish.ingredients,
             calories: dish.calories,
           },
           onSubmit: values => {
-            console.log(values)
-            values.photo = newImages;
             dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/dish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
           },
         });
-        const fillDish = ( type: Method, url: string, data: IDish, id?: string) => {
+        const fillDish = ( type: Method, url: string, data: IDish, id?: number) => {
 
           const queryUrl = id ? `${url}/${id}`: url;
           axios.request<AxiosResponse>({
@@ -73,9 +60,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
               console.error(error);
           })
       }
-
-
-        return (<Container maxWidth="lg" sx={{mt: theme.spacing(5)}}>
+        return (<Container maxWidth="lg" sx={{marginTop: theme.spacing(5)}}>
           <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={4}>
 								<Grid item md={6} xs={12}>
@@ -141,12 +126,9 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 								</Grid>
 						</Grid>
 								<Grid item md={6} xs={12} sx={{ display:'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                  {/* <IngSelector ingredients={ingredients} setIngredients={setIngredients}/> */}
+                 {/*  <IngSelector ingredients={dish.ingredients}/> */}
 								</Grid>
-                <Grid item  md={12} xs={12}>
-                  <PhotoUploader dishId={dish.id} newImages={newImages} setNewImages={setNewImages} />
-                  </Grid>
-
+                <Grid item md={12} xs={12} sx={{my: theme.spacing(3),  textAlign: 'center'}}><Typography variant="h4">Photo uploader here</Typography></Grid>
 							</Grid>
         <Container sx={{mt: theme.spacing(3), textAlign: 'center'}}>
         <Button variant="contained" type="submit">{dish.id ? 'Edit a dish' : 'Add a new dish'}</Button>
