@@ -1,13 +1,11 @@
-import { MenuItem } from "../../store/menu/menu.types";
 import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Gear from "../../assets/gear.png";
 import DeleteIcon from "../../assets/delete.png";
 import { Button } from "../common/button/Button";
 import { useAppDispatch } from "../../store/hooks";
 import {
-  addToCart,
   decrementNumofDishes,
   deleteFromCart,
   incrementNumOfDishes,

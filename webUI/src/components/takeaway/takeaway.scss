@@ -1,0 +1,36 @@
+.takeaway_container {
+  width: 800px;
+  height: 400px;
+  border: 1px black solid;
+  margin: 0 auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.swiper_disabled {
+  opacity: 0.2;
+}
+
+.swiper_takeaway {
+  border: none;
+  background-color: white;
+}
+
+.swiper_takeaway:hover {
+  background-color: white;
+}
+
+.takeaway_container_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.step_progress {
+  margin-top: 10px;
+}

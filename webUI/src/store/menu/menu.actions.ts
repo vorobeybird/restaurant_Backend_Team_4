@@ -8,7 +8,9 @@ const GET_CATEGORIES_URL: any = `${process.env.REACT_APP_GET_DISHES}/api/categor
 const GET_DISHES_URL: any = `${process.env.REACT_APP_GET_DISHES}/api/dishes`;
 
 const getCategories = async () => {
-  const response = (await axios.get(GET_CATEGORIES_URL)) as AxiosResponse<Response>;
+  const response = (await axios.get(
+    GET_CATEGORIES_URL
+  )) as AxiosResponse<Response>;
   return response.data;
 };
 
@@ -28,5 +30,5 @@ export const fetchDishes = () => async (dispatch: AppDispatch) => {
 };
 
 export const setSelectedCategory = (id: number) => (dispatch: AppDispatch) => {
-  dispatch({type: MenuConstants.SET_SELECTED_CATEGORY, payload: id });
-}
+  dispatch({ type: MenuConstants.SET_SELECTED_CATEGORY, payload: id });
+};
