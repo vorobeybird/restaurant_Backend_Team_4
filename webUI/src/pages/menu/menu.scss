@@ -35,7 +35,7 @@
   border-bottom: 1px solid #C6C5C5;
   justify-content: flex-start;
   position: relative;
-  & a {
+  & div {
     text-decoration: none;
     font-style: normal;
     font-weight: normal;
@@ -43,7 +43,7 @@
     line-height: normal;
     color: #000000;
     height: 100%;
-    width: 11%;
+    flex: 1;
     text-align: center;
     vertical-align: top;
   }
@@ -63,9 +63,17 @@
   justify-content: center;
 }
 
-.item_container {
+.dish-link {
+  display: flex;
   height: calc((100% / 2) - 1rem);
   width: calc((100% / 4) - 1rem);
+  text-decoration: none;
+  z-index: 0;
+}
+
+.item_container {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,6 +95,7 @@
     height: 100%;
     width: 100%;
     border-radius: 8px;
+    object-fit: cover;
   }
 }
 
@@ -164,6 +173,7 @@
   width: 60%;
   position: relative;
   height: 30%;
+  z-index: 1;
 }
 
 .button {   
@@ -205,7 +215,7 @@
 
   .tabs {
     justify-content: space-around;
-    & a {
+    & div {
       flex: 1;
     }
   }
@@ -223,7 +233,7 @@
 
   .tabs {
     justify-content: space-around;
-    & a {
+    & div {
       flex: 1;
     }
   }
@@ -240,7 +250,7 @@
 
   .tabs {
     justify-content: space-around;
-    & a {
+    & div {
       flex: 1;
     }
   }
@@ -291,7 +301,7 @@
 
   .tabs {
     height: 35%;
-    & a {
+    & div {
       flex: 1;
     }
   }
@@ -343,12 +353,12 @@
 
   .tabs {
     height: 35%;
-    & a {
+    & div {
       flex: 1;
     }
   }
 
-  .item_container {
+  .dish-link {
     height: calc((100% / 3) - 1rem);
     width: calc((100% / 3) - 1rem);
   }
@@ -399,13 +409,13 @@
 
   .tabs {
     height: 20%;
-    & a {
+    & div {
       font-size: 0.7rem;
     }
   }
 
-  .item_container {
-    height: calc((100% / 4) - 1rem);
+  .dish-link {
+    height: calc((100% / 3) - 1rem);
     width: calc((100% / 2) - 1rem);
   }
 

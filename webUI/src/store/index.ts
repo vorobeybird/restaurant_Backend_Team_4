@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./auth/auth.reducer";
 import { cartReducer } from "./cart/cart.reducer";
 import { orderReducer } from "./order/order.reducer";
+import dishPageReducer from "./dishPage/dishPage.reducer";
 
 export type AppDispatch = typeof store.dispatch;
 export type AppStateType = ReturnType<typeof rootReducer>;
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   cartItems: cartReducer,
   order: orderReducer,
-});
+  dishPage: dishPageReducer
+})
 
 const store = createStore<AppStateType, any, any, any>(
   rootReducer,

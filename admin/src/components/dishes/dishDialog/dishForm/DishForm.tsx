@@ -18,7 +18,7 @@ interface IDish {
   default_ingredients: Array<Number>;
   price: number;
   weight: number;
-  photos: Array<IPhoto>
+  photo: Array<IPhoto>
   categories: Array<Number>;
   ingredients: Array<Number>;
   calories: number;
@@ -31,7 +31,7 @@ fetchDishes: Function;
 
 const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
   const [ingredients, setIngredients]: [any, (items: Object[]) => void] = useState<any[]>([]);
-  const initialImages = dish.photos || [];
+  const initialImages = dish.photo || [];
   const [newImages, setNewImages] = useState<IPhoto[]>(initialImages);
   
   const theme = useTheme();
@@ -42,14 +42,14 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
             default_ingredients: dish.default_ingredients,
             price: dish.price,
             weight: dish.weight,
-            photos: dish.photos,
+            photo: dish.photo,
             categories: dish.categories,
             ingredients: dish.ingredients,
             calories: dish.calories,
           },
           onSubmit: values => {
             console.log(values)
-            values.photos = newImages;
+            values.photo = newImages;
             dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/dish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
           },
         });
@@ -141,7 +141,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 								</Grid>
 						</Grid>
 								<Grid item md={6} xs={12} sx={{ display:'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                  <IngSelector ingredients={ingredients} setIngredients={setIngredients}/>
+                  {/* <IngSelector ingredients={ingredients} setIngredients={setIngredients}/> */}
 								</Grid>
                 <Grid item  md={12} xs={12}>
                   <PhotoUploader dishId={dish.id} newImages={newImages} setNewImages={setNewImages} />

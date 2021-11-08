@@ -1,4 +1,3 @@
-import Navigation from "../navigation/Navigation";
 import "./cart.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
@@ -43,12 +42,15 @@ export const Cart = () => {
 
     currentOrder.dish = dishesShortInfo;
 
-    // axios
-    //   .post("http:localhost:5500/api/order", currentOrder, {
-    //     headers: { "Content-type": "application/json", "cross-domain": "true" },
-    //   })
-    //   .then((response) => console.log(response))
-    //   .catch((err) => console.log(err));
+    axios
+      .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
+        headers: {
+          "Content-type": "application/json",
+          "cross-domain": "true",
+        },
+      })
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
 
     console.log(currentOrder);
   };
@@ -62,7 +64,6 @@ export const Cart = () => {
 
   return (
     <>
-      <Navigation />
       <div className="cart_title">
         <h1>Корзина</h1>
       </div>
