@@ -1,6 +1,6 @@
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
-import DeleteAlertDialog from '../dishDialog/DeleteAlertDialog';
+import DishAlertDialog from '../dishDialog/DishAlertDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
@@ -29,6 +29,7 @@ const DishesGrid = () => {
   const allDishes:IDish[] = [];
   const initialDish: any = {};
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const [currentDish, setCurrentDish] = useState(initialDish);
   const [dishes, setDishes]: [IDish[], (dishes: IDish[])=> void] = useState(allDishes);
   const [entityToAdd, setEntityToAdd] = useState('');
@@ -144,7 +145,7 @@ useEffect(() => {
       </Container>
       </div>
     <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
-    <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
+    {/* <DishAlertDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={Boolean(openAlert)} /> */}
     <IngDialog handleClose={handleClose} type={entityToAdd} />
     </>
   );

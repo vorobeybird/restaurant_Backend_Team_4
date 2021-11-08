@@ -45,6 +45,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       comment: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {

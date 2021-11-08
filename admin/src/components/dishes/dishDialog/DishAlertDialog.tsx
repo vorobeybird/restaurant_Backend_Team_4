@@ -32,7 +32,6 @@ export default function AlertDialog() {
     type: string;
     handleClose: any;
     open: boolean;
-    fetchDishes: Function;
     }
   return (
     <div>
