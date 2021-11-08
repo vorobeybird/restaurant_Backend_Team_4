@@ -18,40 +18,10 @@ const DishPage = () => {
     }
 
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
-    const mockIngredients: Iingredients[]  = [
-        {
-            "id": 2,
-            "title": "Лимон",
-            "DishIngredient": {
-                "is_default": true
-            }
-        },
-        {
-            "id": 3,
-            "title": "Лук",
-            "DishIngredient": {
-                "is_default": true
-            }
-        },
-        {
-            "id": 4,
-            "title": "Петрушка",
-            "DishIngredient": {
-                "is_default": false
-            }
-        },
-        {
-            "id": 5,
-            "title": "Перец",
-            "DishIngredient": {
-                "is_default": false
-            }
-        }
-    ]
 
     const [gearState, setGearState] = useState(false);
-    const [pickedIngredients, setPickedIngredients] = useState<Iingredients[]>(
-        [...mockIngredients]
+    const [pickedIngredients, setPickedIngredients] = useState(
+        [...selectedDish.ingredient]
     );
 
     const onGear = () => setGearState(!gearState);
@@ -62,7 +32,7 @@ const DishPage = () => {
         dispatch(addToCart(item, items));
     };
 
-    const sliderData: {image: string}[] = selectedDish.photos.map((photo, index) => {
+    const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {
         return { image: photo.photo_url };
     })
 
@@ -82,7 +52,7 @@ const DishPage = () => {
                         </div>
                         <div className="dish-description">
                             <div className="dish-ingredients">
-                                {pickedIngredients.map((item: Iingredients) => {
+                                {pickedIngredients.map((item) => {
                                     return (
                                         <div className="ingredient-wrapper">
                                             {gearState && !item.DishIngredient.is_default ?
@@ -97,6 +67,7 @@ const DishPage = () => {
                                 <img src={caloriesImg} alt="calories-img" className="calories-img"/>
                                 <div className="calories-amount">{selectedDish.calories} Ккал</div>
                             </div>
+                            <div className="dish-price"> {selectedDish.price} BYN</div>
                         </div>
                         <button className="dish-item-info__btn" onClick={() => onOrder(selectedDish)}>Заказать</button>
                     </div>
