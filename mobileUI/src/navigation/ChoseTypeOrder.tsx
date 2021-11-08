@@ -51,7 +51,7 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
             <Text style={styles.Header}>Выберите тип заказа</Text>
             <View style={styles.OrderWrapper}>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/orderTable.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/orderTable.png')}/>
                     <Text style={styles.OrderText}>Забронировать стол</Text>
                     <CheckBox
                         onPress={() => {checkFuncFirst()}}
@@ -60,7 +60,7 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/delivery.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/delivery.png')}/>
                     <Text style={styles.OrderText}>Доставка</Text>
                     <CheckBox
                         onPress={() => {checkFuncSec()}}
@@ -69,7 +69,7 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/takeAway.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/takeAway.png')}/>
                     <Text style={styles.OrderText}>Навынос</Text>
                     <CheckBox
                         onPress={() => {checkFuncThird()}}
@@ -78,9 +78,13 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
             </View>
-            <TouchableOpacity style={styles.Button} onPress={()=> { if(checkedThird) {
+            <TouchableOpacity style={styles.Button} onPress={()=> { 
+                if(checkedThird) {
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Навынос");
-            }}}>
+                } else if(checkedSecond) {
+                    navigation.navigate('ConfirmOrder');handleAddOrderType("Доставка");
+                }
+            }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>
             </TouchableOpacity>
         </View>
@@ -88,6 +92,9 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
 }
 
 const styles = StyleSheet.create({
+    imgLeft:{
+        left:20,
+    },
     Wrapper:{
         flex:1,
         

@@ -45,11 +45,11 @@ export const OrderedDish = () => {
                                     <Text style={styles.SimpText}>{item.price} BYN</Text>
                                     <View style={styles.Conta}>
                                         <TouchableOpacity onPress={() => handleDecreaseCartQuant(item)}>
-                                            <Image style={styles.PictBut}  source={require('../../img/desMin.png')}/>
+                                            <Image style={styles.PictBut1}  source={require('../../img/desMin.png')}/>
                                         </TouchableOpacity>
                                         <Text style={styles.StyledCount}>{item.cardQuantity}</Text>
                                         <TouchableOpacity onPress={() => handleIncreaseCartQuant(item)}>
-                                            <Image style={styles.PictBut} source={require('../../img/desPlus.png')}/>
+                                            <Image style={styles.PictBut2} source={require('../../img/desPlus.png')}/>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
         color: '#000000',
     },
     StyledCount: {
-        fontSize: 36,
-        lineHeight: 49,
+        fontSize: 24,
+        lineHeight: 40,
         color: '#000000',
     },
     Wrapper: {
@@ -160,9 +160,15 @@ const styles = StyleSheet.create({
     ScrollStyle:{
         height:'60%'
     },
-    PictBut:{
-       width:25,
-       height:25
+    PictBut1:{
+        right:5,
+        width:25,
+        height:25
+    },
+    PictBut2:{
+        left:5,
+        width:25,
+        height:25
     },
     changeText:{
         fontFamily: 'Roboto',

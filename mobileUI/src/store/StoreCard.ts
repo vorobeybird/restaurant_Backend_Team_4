@@ -25,7 +25,7 @@ export const initialState:CounterState = {
     date: "",
     paymentType: ""
 }
-const dishSlice = createSlice({
+export const dishSlice = createSlice({
     name:"dishSlice",
     initialState,
     reducers: {
@@ -80,6 +80,9 @@ const dishSlice = createSlice({
             state.cardTotalQuantity = quantity;
             state.cardTotalAmount = total;
         },
+        clearCart(state){
+            state.dishes = []
+        },
         addOrderType(state, action) {
             state.orderType = action.payload
             console.log(state.orderType)
@@ -92,8 +95,10 @@ const dishSlice = createSlice({
             state.paymentType = action.payload
             console.log(state.paymentType)
         },
+
+
         
     }
 })
 export default dishSlice.reducer;
-export const {addToCard,delFromCard, decreaseCartQuant, getTotals, addOrderType, addDate, addPaymentType} = dishSlice.actions;
+export const {addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType} = dishSlice.actions;

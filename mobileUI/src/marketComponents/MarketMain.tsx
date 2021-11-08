@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from 'react';
 import { OrderedDish } from './OrderedDish';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTotals } from '../store/StoreCard';
+import { getTotals, clearCart } from '../store/StoreCard';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 
@@ -39,7 +39,9 @@ export const MarketMain = () => {
     const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch();
     const navigation = useNavigation<RootStackParamList>();
-    
+    const handleClear= () => {
+      dispatch(clearCart())
+  };
 
     useEffect(() => {
         dispatch(getTotals());
@@ -49,7 +51,9 @@ export const MarketMain = () => {
     <View style ={styles.mainCont}>
          <View style={styles.PictCont}>
             <Text style={styles.Header}>Корзина</Text>
-            <Image style={styles.Bin} source={require('../../img/bin.png')}/>
+            <TouchableOpacity onPress={() => handleClear()}>
+              <Image style={styles.Bin} source={require('../../img/bin.png')}/>
+            </TouchableOpacity>
         </View>
         {cart.dishes.length === 0 ? (
                 <View style={styles.emptyCardWrapper}>

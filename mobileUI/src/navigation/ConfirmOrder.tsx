@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Button, Touchable} from 'react-native';
 import { useState } from "react";
 import { addDate } from '../store/StoreCard' 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 type RootStackParamList = {
@@ -12,6 +12,7 @@ type RootStackParamList = {
 
 
 export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+    const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());
@@ -42,21 +43,22 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
         dispatch(addDate(item))
     };
     
+    
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
             <TouchableOpacity onPress={() => goBack()}>
                 <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
             </TouchableOpacity>
-            <Text style={styles.TitleText}> Навынос</Text>
+            <Text style={styles.TitleText}> {cart.orderType}</Text>
             </View>
             <View>
                     <TouchableOpacity onPress={showDatepicker} style={styles.box}>
-                        <Text style={styles.dateText}>Выберать дату</Text>
+                        <Text style={styles.dateText}>Выбрать дату</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>Выберать время</Text>
+                        <Text style={styles.dateText}>Выбрать время</Text>
                         <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
                     </TouchableOpacity>
                 {show && (
@@ -71,7 +73,14 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                 )}
             </View>
             
-            <TouchableOpacity style={styles.Button} onPress={() => {handleAddDate(date.toString());navigation.navigate('ChosePaymentType')}}>
+            <TouchableOpacity style={styles.Button} onPress={() => {
+                handleAddDate(date.toString());
+                if(cart.orderType == 'Навынос'){
+                    navigation.navigate('ChosePaymentType')
+                } else if(cart.orderType == 'Доставка') {
+                    navigation.navigate('writeAdress')
+                }
+                }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>

@@ -10,6 +10,7 @@ import { DishPage } from "./DishPage";
 import { ChoseTypeOrder} from "./ChoseTypeOrder";
 import { ConfirmOrder} from "./ConfirmOrder";
 import { ChosePaymentType } from './ChosePaymentType';
+import { writeAdress } from './writeAdress'
 
 export type RootStackParamList = {
     MenuTabNavigation: undefined;
@@ -22,6 +23,7 @@ export type RootStackParamList = {
     ChoseTypeOrder:undefined;
     ConfirmOrder:undefined;
     ChosePaymentType:undefined;
+    writeAdress:undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -65,6 +67,10 @@ export const MenuTabNavigation = () => {
         <Stack.Screen
                     name="ChosePaymentType"
                     component={ChosePaymentType}
+                />
+        <Stack.Screen
+                    name="writeAdress"
+                    component={writeAdress}
                 />
         
     </Stack.Navigator>

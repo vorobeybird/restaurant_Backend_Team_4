@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import {addPaymentType} from '../store/StoreCard'
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type RootStackParamList = {
     ChoseTypeOrder: undefined;
@@ -14,6 +14,7 @@ type RootStackParamList = {
 
 export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const dispatch = useDispatch()
+    const cart = useSelector((state) => state.dishes);
     const navigation = useNavigation<RootStackParamList>();
     const [checkedFirs, toggleCheckedFirs] = useState(false);
     const [checkedSecond, toggleCheckedSecond] = useState(false);
@@ -45,12 +46,12 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
             <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
                 <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
             </TouchableOpacity>
-            <Text style={styles.TitleText}> Навынос</Text>
+            <Text style={styles.TitleText}> {cart.orderType}</Text>
             </View>
             <Text style={styles.Header}>Выберите способ оплаты</Text>
             <View style={styles.OrderWrapper}>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/nall.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/nall.png')}/>
                     <Text style={styles.OrderText}>Наличными</Text>
                     <CheckBox
                         onPress={() => {checkFuncFirst()}}
@@ -59,7 +60,7 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/cardOnline.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/cardOnline.png')}/>
                     <Text style={styles.OrderText}>Картой онлайн</Text>
                     <CheckBox
                         onPress={() => {checkFuncSec()}}
@@ -68,7 +69,7 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
                 <View style={styles.ContentWrapper}>
-                    <Image source={require('../../img/card.png')}/>
+                    <Image style={styles.imgLeft} source={require('../../img/card.png')}/>
                     <Text style={styles.OrderText}>Картой на месте</Text>
                     <CheckBox
                         onPress={() => {checkFuncThird()}}
@@ -87,6 +88,9 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
 }
 
 const styles = StyleSheet.create({
+    imgLeft:{
+        left:20,
+    },
     Wrapper:{
         flex:1,
         

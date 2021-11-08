@@ -25,7 +25,7 @@ export const BottomTabNavigation = () => {
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         position: 'absolute',
-                        height: '10%',
+                        height: '13%',
                         backgroundColor: 'black',
                     }
                 }}>
@@ -38,7 +38,7 @@ export const BottomTabNavigation = () => {
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
                                 <Image style={styles.PictStyle} source={require('../../img/leftBotTab.png')} resizeMode='contain' />
-                                <Text style={styles.SimpText}>Блюда</Text>
+                                
                             </View>;
                         }
                     }}
@@ -51,7 +51,7 @@ export const BottomTabNavigation = () => {
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
                                 <Image style={styles.PictStyleCent} source={require('../../img/centTab.png')} />
-                                <Text style={styles.SimpText}>Корзина</Text>
+                                
                             </View>
                         }
                     }}
@@ -64,7 +64,7 @@ export const BottomTabNavigation = () => {
                         tabBarIcon: ({ focused }) => {
                             return <View>
                                 <Image style={styles.PictStyle} source={require('../../img/rightTab.png')} resizeMode='contain' />
-                                <Text style={styles.SimpText}>Профиль</Text>
+                                
                             </View>
                         }
                     }}
