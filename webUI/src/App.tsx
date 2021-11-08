@@ -21,8 +21,8 @@ const App = () => {
     const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
     const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
     console.log("App rendering")
-    console.log(state)
-    console.log("User is : " + user)
+    // console.log(state)
+    console.log(user)
     const dispatch = useDispatch();
   useEffect(() => {
     checkUser();

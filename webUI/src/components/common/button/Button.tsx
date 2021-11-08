@@ -8,10 +8,10 @@ interface ButtonProps {
   type: "button" | "submit" | "reset";
 }
 
-export const Button = ({ children, onClick }: ButtonProps) => {
+export const Button = ({ children, onClick, type }: ButtonProps) => {
   return (
     <div className="button" onClick={onClick}>
-      <button>{children}</button>
+      <button type={type}>{children}</button>
     </div>
   );
 };
