@@ -13,8 +13,9 @@ type RootStackParamList = {
 
 export const Dishes = ({id, title, photos, descr, price, cal, weight} : {id:any,  title:any, photos:any, descr:any, price: any,cal:any, weight:any}) => {
   const navigation = useNavigation<RootStackParamList>();
+  
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('DishPage', { names: [id,title, photos, descr, price, cal, weight ]})}>
+    <TouchableOpacity onPress={() => navigation.navigate('DishPage', {id,title, photos, descr, price, cal, weight})}>
       <View key={id} style={styles.Wrapper}>
         
         <ScrollView pagingEnabled horizontal style={styles.Pict}>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     Wrapper:{
       top:'1%',
       alignItems: 'center',
-      paddingBottom:'14%'
+      paddingBottom:'16%'
       
     },
     Cost:{

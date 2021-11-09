@@ -24,16 +24,14 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
         setShow(true);
         setMode(currentMode);
     };
-
     const showDatepicker = () => {
         showMode('date');
     };
-
     const showTimepicker = () => {
         showMode('time');
     };
     const hideDatePicker = () => {
-        showMode(false);
+        setShow(false);
     };
     const handleConfirm = () => {
         hideDatePicker();
@@ -42,8 +40,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
-    
-    
+
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
@@ -63,20 +60,20 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                     </TouchableOpacity>
                 {show && (
                     <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={ ()=>handleConfirm }
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={ ()=> handleConfirm() }
                     />
                 )}
             </View>
-            
             <TouchableOpacity style={styles.Button} onPress={() => {
-                handleAddDate(date.toString());
+                handleAddDate(date.toString())
                 if(cart.orderType == 'Навынос'){
                     navigation.navigate('ChosePaymentType')
+                    
                 } else if(cart.orderType == 'Доставка') {
                     navigation.navigate('writeAdress')
                 }

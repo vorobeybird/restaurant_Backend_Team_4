@@ -35,7 +35,7 @@ export const OrderedDish = () => {
                 {card.dishes.map((item:any) => (
                     <View key = {item.id} style={styles.StyledDish}>
                         <View style={styles.MainCont} >
-                            <Image source={{uri:item.photos[1]}} style={styles.Pict}/>
+                            <Image source={{uri:item.photos[0]}} style={styles.Pict}/>
                             <View style={styles.Wrapper}>
                                 <View style={styles.TextContainer}>
                                     <Text style={styles.StyledText}>{item.title}</Text>

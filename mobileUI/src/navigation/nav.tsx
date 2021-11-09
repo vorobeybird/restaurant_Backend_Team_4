@@ -25,7 +25,7 @@ export const BottomTabNavigation = () => {
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         position: 'absolute',
-                        height: '13%',
+                        height: '10%',
                         backgroundColor: 'black',
                     }
                 }}>

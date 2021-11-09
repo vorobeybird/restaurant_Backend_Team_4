@@ -2,24 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button, ToastAndroid} from 'react-native';
 import {addToCard} from '../store/StoreCard'
 import { useDispatch } from "react-redux";
-import dishSlice from "../store/StoreCard";
 
 
 export const DishPage = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-  const id = route.params.names[0]
-  const title = route.params.names[1]
-  const photos = route.params.names[2]
-  const descr = route.params.names[3]
-  const price = route.params.names[4]
-  const cal = route.params.names[5]
-  const weight = route.params.names[6]
-  const item = {
-    id:id,
-    title:title,
-    photos:photos,
-    price:price,
-  }
-
+  const { id, title, photos, descr, price, cal, weight } = route.params
+  const item = {id, title, photos, price}
   const dispatch = useDispatch()
   
   const handleAddToCard = (item:any) => {
@@ -32,6 +19,7 @@ export const DishPage = ({  navigation: { goBack }, route }:{navigation:any, rou
       ToastAndroid.TOP
     );
   };
+  
     return (
 
       <View key={id} style={styles.Wrapper}>
@@ -53,10 +41,11 @@ export const DishPage = ({  navigation: { goBack }, route }:{navigation:any, rou
             <Text style={styles.Sostav}>Состав:</Text>
             
             {
-            descr.split(", ").map((item: any, index: any) => {return (
+            descr.map((item: any, index: any) => { 
+                return (
               <View style={styles.list}>
                 <Image style={styles.listPict} source={require('../../img/circle.png')}/>
-                <Text key={index} style={styles.SostItem}>{item}</Text>
+                <Text key={index} style={styles.SostItem}>{item.title}</Text>
               </View>
               
              )
@@ -102,7 +91,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '800',
     fontSize: 18,
-    lineHeight: 15,
+    lineHeight: 20,
     color: '#000000',
   },
   list:{
