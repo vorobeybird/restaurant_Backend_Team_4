@@ -53,23 +53,17 @@ const DishesGrid = () => {
     currentDish.id && setCurrentDish(initialDish);
   };
 
-  const columns: GridColDef[] = [
+    const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'title', headerName: 'Title', width: 350 },
-/*     {
-      field: 'ingredient',
-      headerName: 'Ingredients',
-      sortable: true,
-      width: 160,
-    }, */
-   
-    { field: 'price', headerName: 'Price', width: 150, align: 'center' },
-/*     { field: 'photo', headerName: 'Photos', width: 120, align: 'center',
-      valueGetter: (params: any) =>{
-        const photo: any = params.photo
-      return photo.length;
-    }}, */
-    { field: 'category', headerName: 'Category', width: 300 },
+    { field: 'title', headerName: 'Название', width: 200 }, 
+    { field: 'category', headerName: 'Категории', width: 350,  renderCell: (params) => {
+      return params.row.category.map((c:any)=> c.title).join(', ');
+    }, },
+    { field: 'ingredient', headerName: 'Ингредиенты', sortable: true, width: 400,  renderCell: (params) => {
+        return params.row.ingredient.map((i:any)=> i.title).join(', ');
+      },
+    },
+    { field: 'price', headerName: 'Цена', width: 150, align: 'center' },
     { field:'Edit', headerName: 'Правка', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any): void => {
       setCurrentDish(params.api.getRow(params.id));
@@ -79,15 +73,8 @@ const DishesGrid = () => {
     },},
     { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
-        e.stopPropagation();
-        const activeOrders = params.row.order.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
-        setCurrentDish(params.id);
-        if(activeOrders.length > 0 ){
-          handleClickOpenAlert();
-        } else {
+        e.stopPropagation(); 
             deleteDish(params.id);
-        }
-        
       };
   
       return <Button color="error" variant="contained" onClick={onClick}>Удалить</Button>;
