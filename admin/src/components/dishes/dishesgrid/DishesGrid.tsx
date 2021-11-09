@@ -114,7 +114,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<AxiosResponse | any>(`${apiUrl}/dishes`, {
+    axios.get<AxiosResponse | any>(`${apiUrl}/dishes?allInfo=true`, {
         headers: {
             "Content-type": "application/json"
         }
