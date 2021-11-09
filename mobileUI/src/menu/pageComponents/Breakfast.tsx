@@ -14,27 +14,15 @@ interface MenuItem {
   photo: string;
   data:any;
 }
-export  const  Breakfast = ({  navigation: { goBack } }:{navigation:any}) => {
+export  const  Breakfast = ({  navigation: { goBack }, route }:{navigation:any,route:any}) => {
   
   const [date, setDate] = useState({} as any);
-  
-
-  const getItems = async () => {
-    const response = await axios.get<MenuItem[]>('http://18.192.61.153:5000/api/dish')
-    const res = response.data
-    return res.data
+  const {id, title, dish, } = route.params
+  const item = {
+    id,
+    title,
+    dish,
   }
-  const fetchMenuItems = async () => {
-    const items = await getItems()
-    setDate(items)
-    
-  }
-
-  
-  useEffect(() => {
-    fetchMenuItems()
-    
-  },[])
   
   return (
         <View style={styles.Scroll}>
@@ -42,19 +30,19 @@ export  const  Breakfast = ({  navigation: { goBack } }:{navigation:any}) => {
             <TouchableOpacity onPress={() => goBack()}>
                 <Image style={styles.Arrow} source={require('../../../img/arrowLeft.png')}/>
             </TouchableOpacity>
-            <Text style={styles.TitleText} >Завтраки</Text>
+            <Text style={styles.TitleText} >{item.title}</Text>
             
             <Image style={styles.Scope}  source={require('../../../img/scop.png')}/>
             
           </View>
           <FlatList 
             style={styles.Flat}
-            data={date}
+            data={item.dish}
             renderItem={({ item }) => { 
-              const photoArr = item.photos 
-              const urlArr =  photoArr.map((item: { photo_url: any; }) => item.photo_url) 
+              const photos = item.photo
+              const urlArr =  photos.map((item:any) => item.photo_url) 
               return (
-              <Dishes id={item.id} title={item.title} photos={urlArr} descr={item.default_ingredients} price={item.price} cal={item.calories} weight={item.weight}/>
+              <Dishes id={item.id} title={item.title} photos={urlArr} descr={item.ingredient} price={item.price} cal={item.calories} weight={item.weight}/>
             )}}
           />
         </View>

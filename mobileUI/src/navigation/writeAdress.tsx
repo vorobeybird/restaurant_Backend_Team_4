@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Button, Touchable, TextInput, ToastAndroid} from 'react-native';
 import { useState } from "react";
-import { addDate } from '../store/StoreCard' 
+
 import { useDispatch, useSelector } from "react-redux";
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 type RootStackParamList = {
     ConfirmOrder: undefined;
@@ -66,8 +65,8 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
             <TouchableOpacity style={styles.Button} onPress={() => {
                     if(street !='' && home !=''){
                         navigation.navigate('ChosePaymentType')
-                        console.log(street)
-                    } else {
+                    } 
+                    else {
                         
                         return (
                             showToast()

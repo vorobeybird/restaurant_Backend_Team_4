@@ -41,7 +41,7 @@ export const MarketMain = () => {
     const navigation = useNavigation<RootStackParamList>();
     const handleClear= () => {
       dispatch(clearCart())
-  };
+    };
 
     useEffect(() => {
         dispatch(getTotals());
@@ -61,22 +61,23 @@ export const MarketMain = () => {
                   <Text style={styles.emptyCardText}> Ваша корзина пуста </Text>
                   <Text style={styles.emptyText}> Похоже, вы пока ничего не </Text>
                   <Text style={styles.emptyText}> добавили в корзину </Text>
-                  <View style={styles.ButtonWrapper}>
-                    <TouchableOpacity onPress={ ()=> {navigation.navigate('Menu')} }>
+                  <TouchableOpacity onPress={ ()=> {navigation.navigate('Menu')} }>
+                    <View style={styles.ButtonWrapper}>
                       <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
-                    </TouchableOpacity>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+            ):(
+                <>
+                <OrderedDish />
+                <View style={styles.FinalCheckCont}>
+                  <Text style={styles.SimpText}>Итого: {cart.cardTotalAmount} BYN</Text>
+                  <View style={styles.ButWrapp}>
+                    <Text style={styles.But} onPress={() => navigation.navigate('ChoseTypeOrder')}>ДАЛЕЕ</Text>
                   </View>
                 </View>
-            ): (
-            <>
-            <OrderedDish />
-            <View style={styles.FinalCheckCont}>
-              <Text style={styles.SimpText}>Итого: {cart.cardTotalAmount} BYN</Text>
-              <View style={styles.ButWrapp}>
-                <Text style={styles.But} onPress={() => navigation.navigate('ChoseTypeOrder')}>ДАЛЕЕ</Text>
-              </View>
-          </View></>
-        )}
+                </>
+                )}
     </View>
     
   );
@@ -196,8 +197,8 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent:'center',
       top:'20%',
-      height:'15%',
-      width:'80%',
+      height:'33%',
+      width:'90%',
       alignSelf:'center',
       backgroundColor:'#FF4D00',
       borderRadius: 4,
