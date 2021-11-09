@@ -3,6 +3,7 @@ import { Grid, Container, TextField, Button, InputAdornment } from '@mui/materia
 import { useFormik } from 'formik';
 import { useTheme } from '@mui/styles';
 import IngSelector from '../../ingredients/selector/IngSelector';
+import CatSelector from '../../categories/selector/CatSelector';
 import PhotoUploader from './photoUploader/PhotoUploader';
 import axios, {AxiosResponse, Method}  from 'axios';
 interface IPhoto {
@@ -15,12 +16,11 @@ interface IPhoto {
 interface IDish {
   id?: string;
   title: string;
-  default_ingredients: Array<Number>;
   price: number;
   weight: number;
   photo: Array<IPhoto>
-  categories: Array<Number>;
-  ingredients: Array<Number>;
+  category: Array<Number>;
+  ingredient: Array<Object>;
   calories: number;
 }
 interface IDishFormProps{
@@ -30,7 +30,8 @@ fetchDishes: Function;
 }
 
 const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
-  const [ingredients, setIngredients]: [any, (items: Object[]) => void] = useState<any[]>([]);
+  const [ingredients, setIngredients]: [any, (items: Object[]) => void] = useState<any[]>(dish.ingredient);
+  const [categories, setCategories]: [any, (items: Object[]) => void] = useState<any[]>(dish.category);
   const initialImages = dish.photo || [];
   const [newImages, setNewImages] = useState<IPhoto[]>(initialImages);
   
@@ -39,18 +40,18 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
         const formik = useFormik({
           initialValues: {
             title: dish.title,
-            default_ingredients: dish.default_ingredients,
             price: dish.price,
             weight: dish.weight,
             photo: dish.photo,
-            categories: dish.categories,
-            ingredients: dish.ingredients,
+            category: dish.category,
+            ingredient: dish.ingredient,
             calories: dish.calories,
           },
           onSubmit: values => {
-            console.log(values)
             values.photo = newImages;
-            dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/dish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
+            values.ingredient = ingredients.map((ingredient: any) => ({id: ingredient.id, is_default: ingredient.DishIngredient.is_default}));
+            values.category = categories.map((category: any)=>({id: category.id}))
+            dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/addBigDish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
           },
         });
         const fillDish = ( type: Method, url: string, data: IDish, id?: string) => {
@@ -85,7 +86,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 										required
 										fullWidth
 										id="title"
-										label="Dish Title"
+										label="Название блюда"
 										name="title"
 										autoComplete="title"
                     onChange={formik.handleChange}
@@ -99,7 +100,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 										required
 										fullWidth
 										id="price"
-										label="Price"
+										label="Цена"
 										name="price"
 										autoComplete="price"
                     onChange={formik.handleChange}
@@ -117,7 +118,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 										required
 										fullWidth
 										id="weight"
-										label="Weight (grams)"
+										label="Вес (граммы)"
 										name="weight"
 										autoComplete="weight"
                     onChange={formik.handleChange}
@@ -130,7 +131,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 										required
 										fullWidth
 										id="calores"
-										label="Calories"
+										label="Калории"
 										name="calories"
 										autoComplete="calories"
                     onChange={formik.handleChange}
@@ -141,7 +142,12 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 								</Grid>
 						</Grid>
 								<Grid item md={6} xs={12} sx={{ display:'flex', flexDirection: 'column', alignItems:'flex-start'}}>
-                  {/* <IngSelector ingredients={ingredients} setIngredients={setIngredients}/> */}
+                <Grid container item xs={12} spacing={0}>
+                   <IngSelector ingredients={ingredients} setIngredients={setIngredients}/>
+                   </Grid>
+                   <Grid container item xs={12} spacing={0} sx={{mt: theme.spacing(3)}}>
+                  <CatSelector categories={categories} setCategories={setCategories}/>
+                  </Grid>
 								</Grid>
                 <Grid item  md={12} xs={12}>
                   <PhotoUploader dishId={dish.id} newImages={newImages} setNewImages={setNewImages} />
@@ -149,7 +155,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
 
 							</Grid>
         <Container sx={{mt: theme.spacing(3), textAlign: 'center'}}>
-        <Button variant="contained" type="submit">{dish.id ? 'Edit a dish' : 'Add a new dish'}</Button>
+        <Button variant="contained" type="submit">{dish.id ? 'Редактировать блюдо' : 'Добавить блюдо'}</Button>
         </Container>
         </form>
 
