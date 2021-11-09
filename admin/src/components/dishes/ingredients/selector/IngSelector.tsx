@@ -7,26 +7,30 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import fetchIngredients from "../../../common/apifetch/apifetch";
 
-interface IIngredientType {
+interface IIngSelectorProps {
+  ingredients: IIngredient[] | [];
+  setIngredients: Function;
+}
+interface IIngredient {
   title: any;
   id: number;
-  isOptional?: boolean;
+  DishIngredient: Object;
 }
 export default function IngSelector({ingredients, setIngredients}: any) {
 
-  const [allIngredients, setAllIngredients] = useState<any>(null);
-  //const [items, setItems]: [any, (items: Object[]) => void] = useState<any[]>([]);
+  const [allIngredients, setAllIngredients] = useState<IIngredient[]>([]);
 
   const sortByProperty = (arr: Object[], prop: string) => {
     return arr.sort((a:any, b: any) => {
-      return a[prop] - b[prop];
+      return b.DishIngredient[prop] - a.DishIngredient[prop];
     });
   };
 
   const fetchAllIngredients = ()=> {
+    console.log('fetch')
     fetchIngredients('GET', `${process.env.REACT_APP_API}/ingredient`)
     .then((response: any) => {
-      const boolIngredients: Object[] = response.data.data.map((ingredient: any) => ({...ingredient, isOptional: false}));
+      const boolIngredients: IIngredient[] = response.data.map((ingredient: any) => ({...ingredient, DishIngredient: {is_default: false}}));
       setAllIngredients(boolIngredients);
     })
     .catch(err=>{
@@ -35,25 +39,15 @@ export default function IngSelector({ingredients, setIngredients}: any) {
     })
   }
 
-  
-  const mergeByProperty = (target: Object[], source: Object[] | undefined, prop: string): void => {
-    source && source.forEach((sourceElement: any) => {
-      let targetElement = target.find((targetElement: any) => {
-        return sourceElement[prop] === targetElement[prop];
-      });
-      targetElement && Object.assign(targetElement, sourceElement);
-    });
-  };
   const handleChangeInput = (
     e: React.SyntheticEvent,
-    values: any,
+    newValues: any,
     reason: string
   ) => {
-    reason === "clear" &&
-    allIngredients.map((ingredient:any) => (ingredient.isOptional = false));
-    mergeByProperty(values, ingredients, "id");
-    sortByProperty(values, "isOptional");
-    setIngredients(values);
+    if (reason === "clear") {allIngredients.map((ingredient:any) => (ingredient.DishIngredient.is_default = false));}
+    console.log(reason)
+    sortByProperty(newValues, "is_default");
+    setIngredients(newValues);
   };
   useEffect(()=> {
     fetchAllIngredients();
@@ -65,6 +59,8 @@ export default function IngSelector({ingredients, setIngredients}: any) {
       options={allIngredients}
       freeSolo
       disableCloseOnSelect
+      value={ingredients ? ingredients : []}
+      isOptionEqualToValue={(option, value)=> option.id === value.id}
       getOptionLabel={(option) => option.title}
       onChange={handleChangeInput}
       renderOption={(props, option, { selected }) => {
@@ -78,6 +74,7 @@ export default function IngSelector({ingredients, setIngredients}: any) {
             }}
           >
             {option.title}
+            
             {selected && (
               <FormGroup>
                 <FormControlLabel
@@ -90,44 +87,42 @@ export default function IngSelector({ingredients, setIngredients}: any) {
                         );
                         const newItems: any = ingredients && ingredients.map((item: Object, idx: number) => {
                           if (itemIndex === idx) {
-                            return { ...item, isOptional: e.target.checked };
+                            return { ...item, DishIngredient: {is_default: e.target.checked} };
                           }
                           return { ...item };
                         });
-                        sortByProperty(newItems, "isOptional");
-                        setIngredients(newItems);
+                        sortByProperty(newItems, "is_default");
+                        setIngredients(newItems);                      
                       }}
-                      onClick={(e) => {
+/*                       onClick={(e) => {
                         e.stopPropagation();
-                      }}
-                      checked={
-                        ingredients.find((item: any): boolean => option.id === item.id).isOptional
-                      }
+                      }} */
+                      checked={ingredients.find((item: any): boolean => option.id === item.id).DishIngredient.is_default}
                     />
                   }
-                  label="Optional"
+                  label={ingredients.find((item: any): boolean => option.id === item.id).DishIngredient.is_default ? "Обязательный" : "Опциональный"}
                 />
               </FormGroup>
-            )}
+             )} 
           </li>
         );
       }}
       style={{ width: '100%' }}
-      renderTags={(value, getTagProps) => {
-        return ingredients.map((option: any, index: number) => (
+      renderTags={(tagValue, getTagProps) => 
+        ingredients.map((option: any, index: number) => (
           <Chip
-            variant={option.isOptional ? "outlined" : "filled"}
-            color={option.isOptional ? "primary" : "error"}
+            variant={option.DishIngredient.is_default ? "filled" : "outlined" }
+            color={option.DishIngredient.is_default ? "error" : "primary"}
             label={option.title}
             {...getTagProps({ index })}
           />
-        ));
-      }}
+        ))
+      }
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Ingredients"
-          placeholder="Add ingredient"
+          label="Ингредиенты"
+          placeholder="Добавить ингредиент"
         />
       )}
     />

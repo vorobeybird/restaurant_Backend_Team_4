@@ -48,7 +48,6 @@ module.exports = {
 
   list(req, res) {
     return Dish.findAll({
-
       include: [
         {
           model: Category,
@@ -175,6 +174,7 @@ module.exports = {
       const result = await Dish.update(req.body, {
         where: { id: req.params.id },
       });
+      console.log(req.body);
       res.status(201).send("Dish was updated succesfully");
     } catch (err) {
       res.status(400).send(error);
@@ -305,6 +305,44 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
+    }
+  },
+
+  async addBigDish(req, res) {
+    const categories = req.body.category,
+      ingredients = req.body.ingredient;
+    try {
+      const dish = await Dish.create(
+        {
+          title: req.body.title,
+          price: req.body.price,
+          weight: req.body.weight,
+          calories: req.body.calories,
+          photo: req.body.photo,
+        },
+        {
+          include: [
+            {
+              model: DishPhoto,
+              as: "photo",
+            },
+          ],
+        }
+      );
+
+      for (const elem of categories) {
+        const category = await Category.findByPk(elem.id);
+        await dish.addCategory(category);
+      }
+      for (const elem of ingredients) {
+        const ingredient = await Ingredient.findByPk(elem.id);
+        await dish.addIngredient(ingredient, {
+          through: { is_default: elem.is_default },
+        });
+      }
+      await res.status(200).send(dish);
+    } catch (error) {
+      console.log(error);
     }
   },
 };
