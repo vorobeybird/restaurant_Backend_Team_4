@@ -1,5 +1,5 @@
 import "./cart.scss";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
 import { useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
@@ -10,19 +10,38 @@ import { DishShortInfo, Order } from "../../store/order/order.types";
 import TakeawayIcon from "../../assets/takeaway.png";
 import DeliveryIcon from "../../assets/delivery.png";
 import BookTableIcon from "../../assets/book-table.png";
+import { Delivery } from "../delivery/Delivery";
+import { clearOrder } from "../../store/order/order.actions";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   const order = useAppSelector((state) => state.order.order);
+  const dispatch = useAppDispatch();
+
+  const checkOrder = (order: Order) =>
+    order.adress &&
+    order.comment &&
+    order.contact_name &&
+    order.contact_phone &&
+    order.customer_id &&
+    order.customer_id &&
+    order.delivery_date &&
+    order.delivery_method &&
+    order.dish.length !== 0 &&
+    order.payment_method &&
+    order.total_price;
 
   const onMakingOrder = () => {
     let currentOrder = {} as Order;
-    currentOrder.adress = order.adress;
-    currentOrder.customer_id = userId;
-
     currentOrder.delivery_method = orderType;
+    if (currentOrder.delivery_method === "takeaway") {
+      currentOrder.adress = "takeaway";
+    } else {
+      currentOrder.adress = order.adress;
+    }
+    currentOrder.customer_id = userId;
     currentOrder.total_price = totalPrice;
     currentOrder.delivery_date = order.delivery_date;
     currentOrder.contact_name = order.contact_name;
@@ -38,24 +57,26 @@ export const Cart = () => {
     });
 
     currentOrder.dish = dishesShortInfo;
-
-    axios
-      .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
-        headers: {
-          "Content-type": "application/json",
-          "cross-domain": "true",
-        },
-      })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+    if (checkOrder(currentOrder)) {
+      axios
+        .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
+          headers: {
+            "Content-type": "application/json",
+            "cross-domain": "true",
+          },
+        })
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+    } else console.log("invalid order!");
 
     console.log(currentOrder);
   };
 
-  const [orderType, setOrderType] = useState("takeaway");
+  const [orderType, setOrderType] = useState("");
 
   const onChangeTab = (e: any) => {
-    setOrderType(e.target.name);
+    dispatch(clearOrder());
+    setOrderType(e.target.alt);
   };
 
   return (
@@ -75,22 +96,40 @@ export const Cart = () => {
           <div className="order_actions">
             <div>Тип заказа: </div>
             <div className="order_buttons">
-              <Button type="button" name="bookTable" onClick={onChangeTab}>
-                Забронировать стол
-              </Button>
-              <Button type="button" name="delivery" onClick={onChangeTab}>
-                Доставка
-              </Button>
-              <Button type="button" name="takeaway" onClick={onChangeTab}>
-                Навынос
-              </Button>
+              <button
+                className={
+                  orderType === "bookTable" ? "order_button_pushed" : undefined
+                }
+                type="button"
+                onClick={onChangeTab}
+              >
+                <img src={BookTableIcon} alt="bookTable" />
+              </button>
+              <button
+                className={
+                  orderType === "delivery" ? "order_button_pushed" : undefined
+                }
+                type="button"
+                onClick={onChangeTab}
+              >
+                <img src={DeliveryIcon} alt="delivery" />
+              </button>
+              <button
+                className={
+                  orderType === "takeaway" ? "order_button_pushed" : undefined
+                }
+                type="button"
+                onClick={onChangeTab}
+              >
+                <img src={TakeawayIcon} alt="takeaway" />
+              </button>
             </div>
           </div>
 
           {orderType === "bookTable" ? (
             <div className="order_title">Забронировать стол</div>
           ) : orderType === "delivery" ? (
-            <div className="order_title">Доставка</div>
+            <Delivery />
           ) : orderType === "takeaway" ? (
             <Takeaway />
           ) : (

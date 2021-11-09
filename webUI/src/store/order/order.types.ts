@@ -26,6 +26,8 @@ export enum OrderConstants {
   ENTER_NAME = "ENTER_NAME",
   ENTER_PHONE = "ENTER_PHONE",
   CHANGE_PAYMENT_METHOD = "CHANGE_PAYMENT_METHOD",
+  RESET_STATE = "RESET_STATE",
+  ENTER_ADDRESS = "ENTER_ADDRESS",
 }
 
 export interface OrderActions {
