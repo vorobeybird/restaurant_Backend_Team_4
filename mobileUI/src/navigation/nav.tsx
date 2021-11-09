@@ -15,7 +15,6 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-const Stack = createStackNavigator();
 
 export const BottomTabNavigation = () => {
     return (
@@ -26,8 +25,8 @@ export const BottomTabNavigation = () => {
                     tabBarShowLabel: false,
                     tabBarStyle: {
                         position: 'absolute',
-                        height: 90,
-                        backgroundColor: 'white',
+                        height: '13%',
+                        backgroundColor: 'black',
                     }
                 }}>
                 <Tab.Screen
@@ -38,8 +37,8 @@ export const BottomTabNavigation = () => {
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/dish.png')} resizeMode='contain' />
-                                <Text style={styles.SimpText}>Блюда</Text>
+                                <Image style={styles.PictStyle} source={require('../../img/leftBotTab.png')} resizeMode='contain' />
+                                
                             </View>;
                         }
                     }}
@@ -51,8 +50,8 @@ export const BottomTabNavigation = () => {
                         title: 'MarketMain',
                         tabBarIcon: ({ focused }) => {
                             return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/marketPhoto.png')} />
-                                <Text style={styles.SimpText}>Корзина</Text>
+                                <Image style={styles.PictStyleCent} source={require('../../img/centTab.png')} />
+                                
                             </View>
                         }
                     }}
@@ -64,8 +63,8 @@ export const BottomTabNavigation = () => {
                         title: 'MarketMain',
                         tabBarIcon: ({ focused }) => {
                             return <View>
-                                <Image style={styles.PictStyle} source={require('../../img/profPhoto.png')} resizeMode='contain' />
-                                <Text style={styles.SimpText}>Профиль</Text>
+                                <Image style={styles.PictStyle} source={require('../../img/rightTab.png')} resizeMode='contain' />
+                                
                             </View>
                         }
                     }}
@@ -77,17 +76,22 @@ export const BottomTabNavigation = () => {
 
 const styles = StyleSheet.create({
     SmWrapper: {
-        top: '2%',
+        top: '4%',
         flexDirection: 'column',
         alignItems: 'center',
         color: '#000000',
     },
     PictStyle: {
-        width: 76,
-        height: 76,
+        width: 120,
+        height: '100%',
     },
     SimpText: {
         bottom: 5,
         color: '#000000',
-    }
+    },
+    PictStyleCent: {
+        width: 120,
+        height: '80%',
+        top:'10%',
+    },
 })

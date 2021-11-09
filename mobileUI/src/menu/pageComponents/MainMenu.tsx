@@ -1,13 +1,7 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { RootStackParamList } from '../Menu';
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
-import { Dishes } from './dishes/Dish';
 
 export const MainMenu = () => {
-  const navigation = useNavigation<RootStackParamList>();
-
 
   return (
     <View>
