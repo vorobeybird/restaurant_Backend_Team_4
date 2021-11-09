@@ -34,7 +34,7 @@ module.exports = {
       },
       payment_method: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
       },
       adress: {
         allowNull: false,
@@ -45,6 +45,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       comment: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       createdAt: {
