@@ -6,6 +6,7 @@ interface CounterState {
     orderType:string;
     date:any;
     paymentType:string;
+    email:string;
     
   }
 interface Dish {
@@ -23,7 +24,8 @@ export const initialState:CounterState = {
     cardTotalAmount: 0,
     orderType: "",
     date: "",
-    paymentType: ""
+    paymentType: "",
+    email:"",
 }
 export const dishSlice = createSlice({
     name:"dishSlice",
@@ -95,10 +97,13 @@ export const dishSlice = createSlice({
             state.paymentType = action.payload
             console.log(state.paymentType)
         },
-
+        addEmail(state, action) {
+            state.email = action.payload
+            console.log(state.email)
+        },
 
         
     }
 })
 export default dishSlice.reducer;
-export const {addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType} = dishSlice.actions;
+export const {addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail} = dishSlice.actions;

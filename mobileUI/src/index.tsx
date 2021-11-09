@@ -1,44 +1,47 @@
 import React from 'react'
 import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports'
-import { withAuthenticator } from 'aws-amplify-react-native'
+import { withAuthenticator, Authenticator, SignIn, ConfirmSignIn, ForgotPassword } from 'aws-amplify-react-native'
 import { BottomTabNavigation } from './navigation/nav'
 import { Store } from './store/index'
 import { Provider } from 'react-redux'
+import SignUp from './authComponents/SignUp'
+import ConfirmSignUp from './authComponents/ConfirmSignUp'
+import Auth from '@aws-amplify/auth'
 Amplify.configure({
   ...awsconfig,
   Analytics: {
     disabled: true,
   },
 })
-
-const signUpConfig = {
-  hideAllDefaults: true,
-  signUpFields: [
-    {
-      label: 'Username',
-      key: 'username',
-      required: true,
-      displayOrder: 1,
-      type: 'string',
-    },
-    {
-      label: 'Password',
-      key: 'password',
-      required: true,
-      displayOrder: 2,
-      type: 'password',
-    },
-  ],
-}
+// const DisplayNav = (props:any) => {
+//   if(props.authState === 'signedIn'){
+//     return (
+//     <Provider store={Store}>
+//       <BottomTabNavigation/>
+//     </Provider>
+//     ) 
+//   }else {
+//     return (
+//       <>
+//       </>
+//     )
+//   }
+// }
 
 const App = () => {
 
   return (
     <Provider store={Store}>
-      <BottomTabNavigation/>
+      
+        <SignUp/>
+        <SignIn/>
+        <ConfirmSignUp/>
+        <ConfirmSignIn/>
+        <ForgotPassword/>
+      
     </Provider>
   )
 }
 
-export default withAuthenticator(App, {signUpConfig})
+export default withAuthenticator(App)
