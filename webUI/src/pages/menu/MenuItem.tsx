@@ -18,7 +18,7 @@ const MenuItemComponent = (item: MenuItem) => {
   return (
     <div className="item_container">
       <div className="item_photos">
-        <img src={item.photos[0].photo_url} alt="dish-main-photo" />
+        <img src={item.photo[0].photo_url} alt="dish-main-photo" />
       </div>
       <div className="item_info">
         <div className="dish-info">

@@ -21,8 +21,8 @@ const App = () => {
     const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
     const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
     console.log("App rendering")
-    console.log(state)
-    console.log("User is : " + user)
+    // console.log(state)
+    console.log(user)
     const dispatch = useDispatch();
   useEffect(() => {
     checkUser();
@@ -66,10 +66,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login" component={Authentication} />
-        <Route exact path="/menu/bar" component={Menu} />
-        <Route exact path="/menu/breakfast" component={Menu} />
         <Route exact path="/menu" component={Menu} />
-        <Route exact path="/menu/catch" component={Menu} />
         <Route exact path="/cart" component={Cart} />
         <Route path="/dishPage" component={DishPage}/>
       </Switch>
