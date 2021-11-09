@@ -1,5 +1,6 @@
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
+import DishAlertDialog from '../dishDialog/DishAlertDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
 import axios, { AxiosResponse } from 'axios';
@@ -28,17 +29,23 @@ const DishesGrid = () => {
   const allDishes:IDish[] = [];
   const initialDish: any = {};
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const [currentDish, setCurrentDish] = useState(initialDish);
   const [dishes, setDishes]: [IDish[], (dishes: IDish[])=> void] = useState(allDishes);
   const [entityToAdd, setEntityToAdd] = useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
-
   };
   const openInCa = (e: React.SyntheticEvent, type: string) => {
     setEntityToAdd(type);
   }
+  const handleCloseAlert = () => {
+    setOpenAlert(false);
+  }
+  const handleClickOpenAlert = () => {
+    setOpenAlert(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -72,8 +79,15 @@ const DishesGrid = () => {
     },},
     { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
+        const activeOrders = params.row.order.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
+        setCurrentDish(params.id);
+        if(activeOrders.length > 0 ){
+          handleClickOpenAlert();
+        } else {
             deleteDish(params.id);
+        }
+        
       };
   
       return <Button color="error" variant="contained" onClick={onClick}>Удалить</Button>;
@@ -82,6 +96,7 @@ const DishesGrid = () => {
   
   const deleteDish = (id: any) => {
     const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
+
     axios.delete<AxiosResponse>(urlToDelete, {
       headers: {
           "Content-type": "application/json"
@@ -99,7 +114,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<AxiosResponse | any>(`${apiUrl}/dishes`, {
+    axios.get<AxiosResponse | any>(`${apiUrl}/dishes?allInfo=true`, {
         headers: {
             "Content-type": "application/json"
         }
@@ -142,6 +157,7 @@ useEffect(() => {
       </Container>
       </div>
     <DishDialog dish={currentDish} handleClose={handleClose} type={currentDish.id ? "Edit a" : "Add a"} open={open} fetchDishes={fetchDishes} />
+    <DishAlertDialog handleClose={handleCloseAlert}  open={openAlert} deleteDish={deleteDish} dish={currentDish}/>
     <IngDialog handleClose={handleClose} type={entityToAdd} />
     </>
   );

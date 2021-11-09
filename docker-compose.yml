@@ -17,9 +17,9 @@ services:
       - 3307:3306
 
   server:
-    container_name: api
+    container_name: server
     build:
-      context: ./server/app
+      context: ./server/app_sequelize/api-sequelize
       dockerfile: Dockerfile
     restart: always
     ports:
@@ -30,6 +30,11 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_SECRET_KEY: ${CLOUDINARY_SECRET_KEY}
+      CLOUDINARY_URL: ${CLOUDINARY_URL}
+
     # depends_on:
     #   - db
     stdin_open: true
