@@ -1,5 +1,5 @@
 import "./cart.scss";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
 import { useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
@@ -10,12 +10,16 @@ import { DishShortInfo, Order } from "../../store/order/order.types";
 import TakeawayIcon from "../../assets/takeaway.png";
 import DeliveryIcon from "../../assets/delivery.png";
 import BookTableIcon from "../../assets/book-table.png";
+import { clearCart } from "../../store/cart/cart.actions";
+import emptyCart from "../../assets/empty-cart.png";
+import { Link } from "react-router-dom";
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   const order = useAppSelector((state) => state.order.order);
+  const dispatch = useAppDispatch();
 
   const onMakingOrder = () => {
     let currentOrder = {} as Order;
@@ -38,8 +42,9 @@ export const Cart = () => {
     });
 
     currentOrder.dish = dishesShortInfo;
+    console.log(currentOrder)
 
-    axios
+    return axios
       .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
         headers: {
           "Content-type": "application/json",
@@ -48,9 +53,13 @@ export const Cart = () => {
       })
       .then((response) => console.log(response))
       .catch((err) => console.log(err));
-
-    console.log(currentOrder);
   };
+
+  const handleOnMakingOrder = async () => {
+    await onMakingOrder();
+    console.log("Order done");
+    dispatch(clearCart(items));
+  }
 
   const [orderType, setOrderType] = useState("takeaway");
 
@@ -60,13 +69,27 @@ export const Cart = () => {
 
   return (
     <>
-      <div className="cart_title">
-        <h1>Корзина</h1>
-      </div>
       {items.length === 0 ? (
-        <div className="no_items">No items</div>
+        <div className="empty-cart">
+          <div className="empty-cart__container">
+            <div className="cart-title">Корзина</div>
+            <div className="cart-body">
+                <div className="empty-cart__img">
+                  <img src={emptyCart} alt="empty-cart-img" />
+                </div>
+                <div className="empty-cart__title">Ваша корзина пуста</div>
+                <div className="empty-cart__text">Похоже, вы пока ничего не добавили в корзину</div>
+                <Link to="/menu" className="empty-cart__menu-link">
+                  Перейти в меню
+                </Link>
+            </div>
+          </div>
+        </div>
       ) : (
-        <>
+        <div className="full-cart">
+            <div className="cart_title">
+              <h1>Корзина</h1>
+            </div>
           {items.map((item: ICartItem, index) => (
             <CartItem key={index} {...item} />
           ))}
@@ -98,11 +121,11 @@ export const Cart = () => {
           )}
 
           <div className="make_order">
-            <Button type="button" onClick={onMakingOrder}>
+            <Button type="button" onClick={handleOnMakingOrder} >
               Оформить Заказ
             </Button>
           </div>
-        </>
+        </div>
       )}
     </>
   );
