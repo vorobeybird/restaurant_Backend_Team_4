@@ -51,7 +51,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
             values.photo = newImages;
             values.ingredient = ingredients.map((ingredient: any) => ({id: ingredient.id, is_default: ingredient.DishIngredient.is_default}));
             values.category = categories.map((category: any)=>({id: category.id}))
-            dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/dish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
+            dish.id ? fillDish( 'PUT', `${process.env.REACT_APP_API}/addBigDish`, values, dish.id) : fillDish('POST', `${process.env.REACT_APP_API}/dish`, values);
           },
         });
         const fillDish = ( type: Method, url: string, data: IDish, id?: string) => {
