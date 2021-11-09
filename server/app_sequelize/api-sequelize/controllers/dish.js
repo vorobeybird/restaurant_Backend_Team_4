@@ -34,24 +34,28 @@ module.exports = {
       }
       for (const elem of ingredients) {
         const ingredient = await Ingredient.findByPk(elem.id);
-        await dish.addIngredient(ingredient,{through: { is_default: elem.is_default }
+        await dish.addIngredient(ingredient, {
+          through: { is_default: elem.is_default },
         });
       }
       await res.status(200).send(dish);
     } catch (error) {
-      res.status(400).send({message: error});
+      res.status(400).send({ message: error });
     }
   },
 
   showDishes(req, res) {
-    const { ids, category, filter } = req.query;
+    const { ids, category, filter, allInfo } = req.query;
     if (ids) {
       module.exports.listSelected(req, res, ids);
     } else if (filter) {
       module.exports.filterByTitle(req, res, filter);
     } else if (category) {
       module.exports.getByCategory(req, res, category);
-    } else {
+    } else if(allInfo) {
+      module.exports.listAllInfo(req, res, category);
+    } 
+    else {
       module.exports.list(req, res);
     }
   },
@@ -106,6 +110,34 @@ module.exports = {
       });
   },
 
+  listAllInfo(req, res) {
+    return Dish.findAll({
+      include: [
+        {
+          model: Category,
+          as: "category",
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
+        {
+          model: Order,
+          as:"order",
+          attributes: ['id','status']
+        }
+      ],
+    })
+      .then((dishes) => res.status(200).send(dishes))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+
   listSelected(req, res, sorted) {
     return Dish.findAll({
       where: { id: sorted.split(",") },
@@ -122,6 +154,11 @@ module.exports = {
           model: Ingredient,
           as: "ingredient",
         },
+        {
+          model: Order,
+          as:"order",
+          attributes: ['id']
+        }
       ],
     })
       .then((dishes) => res.status(200).send(dishes))

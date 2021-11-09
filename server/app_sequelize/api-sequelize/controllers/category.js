@@ -11,17 +11,16 @@ module.exports = {
         {
           model: Dish,
           as: "dish",
-          //uncommit in case of task for getting all dish info in category
-          // include: [
-          //   {
-          //     model: Ingredient,
-          //     as: "ingredient",
-          //   },
-          //   {
-          //     model: DishPhoto,
-          //     as: "photo",
-          //   },
-          // ]
+          include: [
+            {
+              model: Ingredient,
+              as: "ingredient",
+            },
+            {
+              model: DishPhoto,
+              as: "photo",
+            },
+          ]
         },
       ],
     })
