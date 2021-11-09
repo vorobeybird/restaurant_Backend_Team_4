@@ -74,7 +74,13 @@ const DishesGrid = () => {
     { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation(); 
+        const activeOrders = params.row.order.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
+        setCurrentDish(params.id);
+        if(activeOrders.length > 0 ){
+          handleClickOpenAlert();
+        } else {
             deleteDish(params.id);
+        }
       };
   
       return <Button color="error" variant="contained" onClick={onClick}>Удалить</Button>;
