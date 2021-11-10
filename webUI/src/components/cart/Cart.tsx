@@ -77,10 +77,10 @@ export const Cart = () => {
   const handleOnMakingOrder = async () => {
     await onMakingOrder();
     console.log("Order done");
-    dispatch(clearCart(items));
+    dispatch(clearCart());
   }
 
-  const [orderType, setOrderType] = useState("takeaway");
+  const [orderType, setOrderType] = useState("");
 
 
   const onChangeTab = (e: any) => {

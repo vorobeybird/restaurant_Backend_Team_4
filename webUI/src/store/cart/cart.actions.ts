@@ -30,7 +30,7 @@ export const decrementNumofDishes = (id: number) => (dispatch: AppDispatch) => {
   dispatch({ type: CartConstants.DECREMENT_NUMBER_OF_DISHES, payload: id });
 };
 
-export const clearCart = (items: ICartItem[]) => (dispatch: AppDispatch) => {
-  dispatch({type: CartConstants.CLEAR_CART, payload: items.splice(0, items.length)})
+export const clearCart = () => (dispatch: AppDispatch) => {
+  dispatch({type: CartConstants.CLEAR_CART, payload: []})
 }
 
