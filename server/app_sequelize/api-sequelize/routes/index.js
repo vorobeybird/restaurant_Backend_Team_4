@@ -18,6 +18,9 @@ router.get("/", function (req, res, next) {
 router.get("/api/dishes", dishController.showDishes);
 
 router.post("/api/dish", dishController.add);
+
+router.post("/api/addBigDish", dishController.addBigDish);
+
 router.put("/api/dish/:id", dishController.update);
 router.delete("/api/dish/:id", dishController.delete);
 router.post("/api/dish/addIngredient", dishController.addIngredient);

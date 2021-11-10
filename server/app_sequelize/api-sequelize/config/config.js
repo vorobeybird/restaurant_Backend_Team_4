@@ -1,9 +1,11 @@
+require('dotenv').config(); // this is important!
+module.exports = 
 {
   "development": {
-    "username": "root",
-    "password": "123OceanDB123",
-    "database": "OceanDB",
-    "host": "18.198.161.12",
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASSWORD,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
     "dialect": "mysql",
     "port": "3306"
   },
@@ -12,7 +14,7 @@
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgre"
   },
   "production": {
     "username": "root",

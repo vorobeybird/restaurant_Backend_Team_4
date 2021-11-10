@@ -31,8 +31,8 @@ interface IDish {
   price: number;
   weight: number;
   photo: Array<IPhoto>
-  categories: Array<Number>;
-  ingredients: Array<Number>;
+  category: Array<Number>;
+  ingredient: Array<Number>;
   calories: number;
 }
 interface IDishDIalogProps {
@@ -63,7 +63,7 @@ const DishDialog = ({type, dish, handleClose, open, fetchDishes}: IDishDIalogPro
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h3" component="div">
-              {type} dish
+              Настройки блюда
             </Typography>
           </Toolbar>
         </AppBar>

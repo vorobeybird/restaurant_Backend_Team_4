@@ -18,8 +18,7 @@ import Minus from "../../assets/minus.png";
 
 export const CartItem = (item: ICartItem) => {
   const [gearState, setGearState] = useState(false);
-  const [pickedIngredients, setPickedIngredients] = useState(
-    item.ingredient);
+  const [pickedIngredients, setPickedIngredients] = useState(item.ingredient);
 
   const onGear = () => setGearState(!gearState);
 
@@ -81,19 +80,19 @@ export const CartItem = (item: ICartItem) => {
         <div className="item_ingredients_container">
           <div className="item_ingredients">
             <p>Состав: </p>
-            <p>{item.ingredient.map(ingredient => ingredient.title)}</p>
+            <p>{item.ingredient.map((ingredient) => ingredient.title)}</p>
             <div className="item_ingredients_list">
               {/* {gearState
                 ? item.ingredient.map((item) => renderIngredient(item))
                 : pickedIngredients.map((item) => renderIngredient(item))} */}
             </div>
           </div>
-          <div className="button_redact_ingredients">
+          {/* <div className="button_redact_ingredients">
             <button onClick={onGear}>
               <img src={Gear} />
               <span>Изменить состав</span>
             </button>
-          </div>
+          </div> */}
         </div>
         <div className="delete-dish">
           <Button type="button" onClick={() => deleteDish(item.id)}>

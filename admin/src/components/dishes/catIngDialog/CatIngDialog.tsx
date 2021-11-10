@@ -5,8 +5,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import CIForm from '../ciForm/CIForm';
+import IngredientsForm from '../ingredients/ingredientsForm/IngredientsForm';
 import { Container } from '@mui/material';
+import CategoriesForm from '../categories/categoriesForm/CategoriesForm';
 /* 
 interface ICatIng{
     id: number;
@@ -32,7 +33,7 @@ export default function CatIngDialog({type, handleClose}: any ) {
         </DialogTitle>
         <DialogContent>
           
-<CIForm type={type} />
+{type === 'ingredient' ? <IngredientsForm type={type} /> : <CategoriesForm type={type} />}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>

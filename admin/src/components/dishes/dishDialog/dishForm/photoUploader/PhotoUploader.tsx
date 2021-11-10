@@ -75,7 +75,7 @@ const PhotoUploader = ({newImages, setNewImages, dishId}: IPhotoUploaderProps) =
   <label htmlFor="contained-button-file">
      <Input onChange={fileChange} accept="image/*" id="contained-button-file" type="file" />
 <Button variant="contained" component="span" startIcon={<PhotoCamera/>} >
-Upload a photo
+Загрузить фото
 </Button>
 </label></Grid>
 </Grid>

@@ -6,15 +6,56 @@ const Order = require("../models").Order;
 const { Op } = require("sequelize");
 
 module.exports = {
+  async addBigDish(req, res) {
+    const categories = req.body.category,
+      ingredients = req.body.ingredient;
+    try {
+      const dish = await Dish.create(
+        {
+          title: req.body.title,
+          price: req.body.price,
+          weight: req.body.weight,
+          calories: req.body.calories,
+          photo: req.body.photo,
+        },
+        {
+          include: [
+            {
+              model: DishPhoto,
+              as: "photo",
+            },
+          ],
+        }
+      );
+
+      for (const elem of categories) {
+        const category = await Category.findByPk(elem.id);
+        await dish.addCategory(category);
+      }
+      for (const elem of ingredients) {
+        const ingredient = await Ingredient.findByPk(elem.id);
+        await dish.addIngredient(ingredient, {
+          through: { is_default: elem.is_default },
+        });
+      }
+      await res.status(200).send(dish);
+    } catch (error) {
+      res.status(400).send({ message: error });
+    }
+  },
+
   showDishes(req, res) {
-    const { ids, category, filter } = req.query;
+    const { ids, category, filter, allInfo } = req.query;
     if (ids) {
       module.exports.listSelected(req, res, ids);
     } else if (filter) {
       module.exports.filterByTitle(req, res, filter);
     } else if (category) {
       module.exports.getByCategory(req, res, category);
-    } else {
+    } else if(allInfo) {
+      module.exports.listAllInfo(req, res, category);
+    } 
+    else {
       module.exports.list(req, res);
     }
   },
@@ -48,7 +89,6 @@ module.exports = {
 
   list(req, res) {
     return Dish.findAll({
-
       include: [
         {
           model: Category,
@@ -62,6 +102,11 @@ module.exports = {
           model: Ingredient,
           as: "ingredient",
         },
+        {
+          model: Order,
+          as:"order",
+          attributes: ['id','status']
+        }
       ],
     })
       .then((dishes) => res.status(200).send(dishes))
@@ -86,6 +131,11 @@ module.exports = {
           model: Ingredient,
           as: "ingredient",
         },
+        {
+          model: Order,
+          as:"order",
+          attributes: ['id']
+        }
       ],
     })
       .then((dishes) => res.status(200).send(dishes))
@@ -175,6 +225,7 @@ module.exports = {
       const result = await Dish.update(req.body, {
         where: { id: req.params.id },
       });
+      console.log(req.body);
       res.status(201).send("Dish was updated succesfully");
     } catch (err) {
       res.status(400).send(error);
@@ -305,6 +356,44 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
+    }
+  },
+
+  async addBigDish(req, res) {
+    const categories = req.body.category,
+      ingredients = req.body.ingredient;
+    try {
+      const dish = await Dish.create(
+        {
+          title: req.body.title,
+          price: req.body.price,
+          weight: req.body.weight,
+          calories: req.body.calories,
+          photo: req.body.photo,
+        },
+        {
+          include: [
+            {
+              model: DishPhoto,
+              as: "photo",
+            },
+          ],
+        }
+      );
+
+      for (const elem of categories) {
+        const category = await Category.findByPk(elem.id);
+        await dish.addCategory(category);
+      }
+      for (const elem of ingredients) {
+        const ingredient = await Ingredient.findByPk(elem.id);
+        await dish.addIngredient(ingredient, {
+          through: { is_default: elem.is_default },
+        });
+      }
+      await res.status(200).send(dish);
+    } catch (error) {
+      console.log(error);
     }
   },
 };
