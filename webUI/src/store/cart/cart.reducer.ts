@@ -1,4 +1,4 @@
-import { ReducerState } from "../../store/cart/cart.types";
+import { ICartItem, ReducerState } from "../../store/cart/cart.types";
 import { CartConstants } from "./cart.types";
 import { AnyAction } from "redux";
 
@@ -51,6 +51,9 @@ export function cartReducer(
               amount: newItems[itemIndex].amount,
             };
       return { items: newItems };
+    }
+    case CartConstants.CLEAR_CART: {
+      return { ...state, items:  action.payload};
     }
     default:
       return state;
