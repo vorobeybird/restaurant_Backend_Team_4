@@ -12,8 +12,8 @@ import {
 import { useAppSelector } from "../../store/hooks";
 import "./cart.scss";
 import { ICartItem } from "../../store/cart/cart.types";
-import Plus from "../../assets/plus.png";
-import Minus from "../../assets/minus.png";
+import Plus from "../../assets/plus.svg";
+import Minus from "../../assets/minus.svg";
 
 export const CartItem = (item: ICartItem) => {
   const [gearState, setGearState] = useState(false);
@@ -78,41 +78,42 @@ export const CartItem = (item: ICartItem) => {
           </button>
         </div>
         <div className="cart-item__info price">{item.price} BYN</div>
-        {gearState ? (<div className="dish-ingredients">
-          {pickedIngredients.map((item) => {
-            return (
-              <div className="ingredient-wrapper">
-                {gearState && !item.DishIngredient.is_default ? (
-                  <input
-                    type="checkbox"
-                    className="ingredient-checkbox"
-                  ></input>
-                ) : null}
-                <div className="ingredient-title"> &#8226; {item.title}</div>
-              </div>
-            );
-          })}
-        </div>) : null}
-        
+        {gearState ? (
+          <div className="dish-ingredients">
+            {pickedIngredients.map((item) => {
+              return (
+                <div className="ingredient-wrapper">
+                  {gearState && !item.DishIngredient.is_default ? (
+                    <input
+                      type="checkbox"
+                      className="ingredient-checkbox"
+                    ></input>
+                  ) : null}
+                  <div className="ingredient-title"> &#8226; {item.title}</div>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
       <div className="cart-item__actions">
-        <div className="cart-item__actions button">
-            <Button onClick={() => incrementNumber(item.id)} type="button">
-              <img src={Plus} alt="plus" />
-            </Button>
-          </div>
-          <div>{item.amount}</div>
-          <div>
-            <Button type="button" onClick={() => decrementNumber(item.id)}>
-              <img src={Minus} alt="minus" />
-            </Button>
-          </div>
-          <div className="delete-dish">
-            <Button type="button" onClick={() => deleteDish(item.id)}>
-              <img src={DeleteIcon} alt="delete" />
-            </Button>
-          </div>
-          </div>
+        <div className="calculate">
+          <button onClick={() => incrementNumber(item.id)} type="button">
+            <img src={Plus} alt="plus" />
+          </button>
+          <div className="quantity">{item.amount}</div>
+          <button type="button" onClick={() => decrementNumber(item.id)}>
+            <img src={Minus} alt="minus" />
+          </button>
         </div>
+        <button
+          className="button-trash"
+          type="button"
+          onClick={() => deleteDish(item.id)}
+        >
+          <img src={DeleteIcon} alt="delete" />
+        </button>
+      </div>
+    </div>
   );
 };
