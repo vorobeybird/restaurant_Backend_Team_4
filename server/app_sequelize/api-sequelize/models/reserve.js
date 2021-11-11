@@ -1,15 +1,16 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class TableOrder extends Model {
+  class Reserve extends Model {
     toJSON(){
-      return { ...this.get(), table_id: undefined, order_id: undefined }
+      return { ...this.get() }
     }
   }
-  TableOrder.init(
+  Reserve.init(
     {
         table_id: DataTypes.INTEGER,
-        order_id: DataTypes.INTEGER,
+        reserve_date: DataTypes.DATEONLY,
+        reserve_time: DataTypes.TIME
     },
     {
       sequelize,
@@ -18,5 +19,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "TableOrder",
     }
   );
-  return TableOrder;
+  return Reserve;
 };

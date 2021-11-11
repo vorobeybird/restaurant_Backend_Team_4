@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "dish",
         foreignKey: "order_id",
       });
-      Order.belongsToMany(models.Table, {
-        throught: "TableOrder",
-        as: "table",
-        foreignKey: "table_id"
+      Order.belongsTo(models.Reserve, {
+        throught: "Reserve",
+        as: "reserve",
+        foreignKey: "reserve_id"
       })
     }
     toJSON(){
@@ -38,11 +38,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: "Принят в работу",
       },
-      comment: DataTypes.STRING,
-
-      table_id: DataTypes.INTEGER,
-      reserve_date: DataTypes.DATEONLY,
-      reserve_time: DataTypes.DATE      
+      comment: DataTypes.STRING,  
+      reserve_id: DataTypes.INTEGER 
     },
     {
       sequelize,

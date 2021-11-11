@@ -3,15 +3,15 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Table extends Model {
     static associate(models) {
-      Table.hasMany(models.Order, {
-        through: "TableOrder",
-        as: "order",
+      Table.hasMany(models.Reserve, {
+        through: "Reserve",
+        as: "reserve",
         foreignKey: "table_id",
       });
     }
 
     toJSON(){
-      return { ...this.get(), table_id: undefined }
+      return { ...this.get(), reserve_id: undefined }
     }
   }
   Table.init(
@@ -23,19 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       persons: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      reserved_day_start: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      reserved_day_middle: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      reserved_day_end: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
+      }
     },
     {
       sequelize,
