@@ -1,0 +1,22 @@
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  class TableOrder extends Model {
+    toJSON(){
+      return { ...this.get(), table_id: undefined, order_id: undefined }
+    }
+  }
+  TableOrder.init(
+    {
+        table_id: DataTypes.INTEGER,
+        order_id: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      timestamps: false,
+      tableName: "TableOrder",
+      modelName: "TableOrder",
+    }
+  );
+  return TableOrder;
+};
