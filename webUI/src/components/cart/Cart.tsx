@@ -35,7 +35,7 @@ export const Cart = () => {
     order.dish.length !== 0 &&
     order.payment_method &&
     order.total_price;
-  
+
   const onMakingOrder = () => {
     let currentOrder = {} as Order;
     currentOrder.delivery_method = orderType;
@@ -61,7 +61,7 @@ export const Cart = () => {
 
     currentOrder.dish = dishesShortInfo;
 
-    console.log(currentOrder)
+    console.log(currentOrder);
 
     return axios
       .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
@@ -78,10 +78,9 @@ export const Cart = () => {
     await onMakingOrder();
     console.log("Order done");
     dispatch(clearCart());
-  }
+  };
 
   const [orderType, setOrderType] = useState("");
-
 
   const onChangeTab = (e: any) => {
     dispatch(clearOrder());
@@ -92,29 +91,36 @@ export const Cart = () => {
     <>
       {items.length === 0 ? (
         <div className="empty-cart">
-          <div className="empty-cart__container">
+          <div className="empty-cart__container empty-cart__container--small">
             <div className="cart-title">Корзина</div>
             <div className="cart-body">
-                <div className="empty-cart__img">
-                  <img src={emptyCart} alt="empty-cart-img" />
-                </div>
-                <div className="empty-cart__title">Ваша корзина пуста</div>
-                <div className="empty-cart__text">Похоже, вы пока ничего не добавили в корзину</div>
-                <Link to="/menu" className="empty-cart__menu-link">
-                  Перейти в меню
-                </Link>
+              <div className="empty-cart__img">
+                <img src={emptyCart} alt="empty-cart-img" />
+              </div>
+              <div className="empty-cart__title">Ваша корзина пуста</div>
+              <div className="empty-cart__text">
+                Похоже, вы пока ничего не добавили в корзину
+              </div>
+              <Link to="/menu" className="empty-cart__menu-link">
+                Перейти в меню
+              </Link>
             </div>
           </div>
         </div>
       ) : (
         <div className="full-cart">
+          <div className="cart_order_container">
             <div className="cart_title">
-              <h1>Корзина</h1>
+              <p>Корзина</p>
             </div>
-          {items.map((item: ICartItem, index) => (
-            <CartItem key={index} {...item} />
-          ))}
-          <div>Итого: {totalPrice} BYN</div>
+            <div className="cart_order">
+              <h1>Ваш заказ</h1>
+            </div>
+            {items.map((item: ICartItem, index) => (
+              <CartItem key={index} {...item} />
+            ))}
+            <div>Итого: {totalPrice} BYN</div>
+          </div>
 
           <div className="order_actions">
             <div>Тип заказа: </div>
@@ -160,7 +166,7 @@ export const Cart = () => {
           )}
 
           <div className="make_order">
-            <Button type="button" onClick={handleOnMakingOrder} >
+            <Button type="button" onClick={handleOnMakingOrder}>
               Оформить Заказ
             </Button>
           </div>
