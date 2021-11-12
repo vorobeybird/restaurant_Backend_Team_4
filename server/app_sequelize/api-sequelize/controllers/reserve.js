@@ -1,6 +1,7 @@
 const Reserve = require("../models/").Reserve;
 const Table = require("../models/").Table;
 const Order = require("../models/").Order;
+const Dish = require("../models/").Dish;
 const { Op, literal } = require("sequelize");
 
 // const checkReservation = (reserve_date, num_of_persons, reserve_time) => {
@@ -44,11 +45,7 @@ module.exports = {
         reserve_time: startTime,
         table_id: tables[0].id
       });
-
-      console.log(`name = ${req.body.name}`);
-
-      
-        
+      try {
       const order = await Order.create({
           customer_id: req.body.customer_id,
           delivery_method: req.body.delivery_method,
@@ -62,7 +59,18 @@ module.exports = {
           comment: req.body.comment,
           reserve_id: reserve.id
       });
+      const dish = req.body.dish
+      for (const elem of dish) {
+        const dish_item = await Dish.findByPk(elem.dish_id);
+        await order.addDish(dish_item, {
+          through: { quantity: elem.dish_amount },
+        });
+      }
       res.status(200).send(tables[0]);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
     },
 
     async getTables ( startTime, endTime, persons, reserveDate) {

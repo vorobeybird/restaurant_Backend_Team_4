@@ -1,6 +1,16 @@
 const Table = require("../models/").Table;
 
 module.exports = {
+
+  add(req, res) {
+    return Table.create({
+      table_number: req.body.table_number,
+      persons: req.body.persons,
+    })
+      .then((table) => res.status(201).send(table))
+      .catch((error) => res.status(400).send(error));
+  },
+
   async getTables(req, res) {
     return Table.findAll({
       include: [
