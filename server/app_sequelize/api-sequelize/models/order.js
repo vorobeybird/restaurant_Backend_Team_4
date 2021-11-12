@@ -13,9 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         as: "dish",
         foreignKey: "order_id",
       });
+      Order.belongsTo(models.Reserve, {
+        as: "reserve",
+        foreignKey: "reserve_id"
+      })
     }
     toJSON(){
-      return { ...this.get(), dish_id: undefined, order_id: undefined}
+      return { ...this.get(), dish_id: undefined, order_id: undefined, table_id: undefined}
     }
   }
   Order.init(
@@ -25,15 +29,17 @@ module.exports = (sequelize, DataTypes) => {
       total_price: DataTypes.INTEGER,
       delivery_date: DataTypes.DATE,
       contact_name:DataTypes.STRING,
-
       contact_phone: DataTypes.STRING,
       payment_method: DataTypes.INTEGER,
       adress: DataTypes.STRING,
+      contact_phone: DataTypes.STRING,
+
       status: {
         type: DataTypes.STRING,
         defaultValue: "Принят в работу",
       },
-      comment: DataTypes.STRING,
+      comment: DataTypes.STRING,  
+      reserve_id: DataTypes.INTEGER 
     },
     {
       sequelize,

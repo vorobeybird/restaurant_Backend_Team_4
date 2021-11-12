@@ -8,16 +8,16 @@ import { ImageSlider } from "../imageSlider/imageSlider";
 import caloriesImg from "../../assets/calories-icon.png";
 import { addToCart } from "../../store/cart/cart.actions";
 import Modal from "../common/modal/Modal";
+import toast, { Toaster } from "react-hot-toast";
 
 const DishPage = () => {
-    interface Iingredients {
-        id: number;
-        title: string;
-        DishIngredient: {
-            is_default: boolean
-        }
-    }
-
+  interface Iingredients {
+    id: number;
+    title: string;
+    DishIngredient: {
+      is_default: boolean;
+    };
+  }
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
     const [showModal, setShowModal] = useState(false);
     const [omitIngredients, setOmitIngredients] = useState<any>([]);
@@ -32,8 +32,9 @@ const DishPage = () => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.cartItems.items);
     const onOrder = (item: ICartItem): void => {
-        const strIngredients = omitIngredients.join(', ')
-        const editedItem = {...item, excluded_ingredients: strIngredients}
+        toast.success(`Блюдо "${item.title}" добавлено в корзину`);
+        const strIngredients = omitIngredients.join(', ');
+        const editedItem = {...item, excluded_ingredients: strIngredients};
         dispatch(addToCart(editedItem, items));
     };
 
@@ -76,16 +77,18 @@ const DishPage = () => {
                     <Modal active={showModal} setActive={setShowModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
                     <div className="ingredients-form">
                     <div className="ingredients-list">
-                        {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> : <input type="checkbox" onClick={editIngredients} value={item.title} defaultChecked className="ingredient-checkbox" />}  {item.title}</label></div>)}
+                        {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default 
+                    ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> 
+                    : <input type="checkbox" className="ingredient-checkbox" onClick={editIngredients} value={item.title} defaultChecked />}  {item.title}</label></div>)}
                             </div>
                             <div className="button-container"><button onClick={modalOpen} className="ingredients-edit__btn">Готово</button></div>
 
                     </div></Modal>
-                </div>
-                <div className="may-interest"></div>
-            </div>
         </div>
-    )
-}
+        <div className="may-interest"></div>
+      </div>
+    </div>
+  );
+};
 
 export default DishPage;

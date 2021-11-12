@@ -1,10 +1,17 @@
 import React from 'react'
 import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports'
-import { withAuthenticator } from 'aws-amplify-react-native'
+import { Authenticator, ConfirmSignIn, ForgotPassword } from 'aws-amplify-react-native'
 import { BottomTabNavigation } from './navigation/nav'
 import { Store } from './store/index'
-import { Provider } from 'react-redux'
+
+import { Provider, useSelector, useDispatch } from 'react-redux'
+import SignUp from './authComponents/SignUp'
+import SignIn from './authComponents/SignIn'
+import { addSignInStat} from './store/StoreCard'
+
+import ConfirmSignUp from './authComponents/ConfirmSignUp'
+
 Amplify.configure({
   ...awsconfig,
   Analytics: {
@@ -12,33 +19,58 @@ Amplify.configure({
   },
 })
 
-const signUpConfig = {
-  hideAllDefaults: true,
-  signUpFields: [
-    {
-      label: 'Username',
-      key: 'username',
-      required: true,
-      displayOrder: 1,
-      type: 'string',
-    },
-    {
-      label: 'Password',
-      key: 'password',
-      required: true,
-      displayOrder: 2,
-      type: 'password',
-    },
-  ],
-}
-
-const App = () => {
-
+const ShowMainContent = () => {
   return (
-    <Provider store={Store}>
-      <BottomTabNavigation/>
-    </Provider>
+    <BottomTabNavigation/>
+  )
+}
+const ShowAuthContent = () => {
+  const dispatch = useDispatch()
+  const handleAddSignInStat = (item:any) => {
+      dispatch(addSignInStat(item))
+  }
+  return (
+    <Authenticator
+      usernameAttributes='email'
+      authState='signIn'
+      hideDefault={true}
+      onStateChange={(authState:any) => {console.log('...authState',authState);handleAddSignInStat(authState)}}>
+      <SignUp/>
+      <SignIn/>
+      <ConfirmSignUp/>
+      <ConfirmSignIn/>
+      <ForgotPassword/>  
+    </Authenticator>
+  )
+}
+const ShowContent = () => {
+  const cart = useSelector((state) => state.dishes);
+  
+  
+  return (
+    <>
+      {cart.isSignedIn ==='signedIn' ? (
+        <ShowMainContent/>
+        
+      ):(
+        <ShowAuthContent/>
+        
+      )}
+    </>
   )
 }
 
-export default withAuthenticator(App, {signUpConfig})
+
+const App = () => {
+  
+  return (
+      <Provider store={Store}>
+        <ShowContent/>
+      </Provider>
+    )
+  
+  
+}
+
+
+export default App
