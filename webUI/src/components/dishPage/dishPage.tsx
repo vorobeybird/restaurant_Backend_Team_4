@@ -32,7 +32,9 @@ const DishPage = () => {
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.cartItems.items);
     const onOrder = (item: ICartItem): void => {
-        dispatch(addToCart(item, items));
+        const strIngredients = omitIngredients.join(', ')
+        const editedItem = {...item, excluded_ingredients: strIngredients}
+        dispatch(addToCart(editedItem, items));
     };
 
     const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {

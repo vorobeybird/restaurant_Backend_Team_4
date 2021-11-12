@@ -8,7 +8,7 @@ export const addToCart =
     if (newItem) {
       dispatch({
         type: CartConstants.ADD_SAME_DISH,
-        payload: { ...newItem, amount: newItem.amount + 1 },
+        payload: { ...item, amount: newItem.amount + 1 },
       });
     } else {
       dispatch({
