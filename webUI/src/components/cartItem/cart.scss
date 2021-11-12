@@ -124,11 +124,8 @@
     justify-content: space-between;
     & .cart-item__image {
       width: 100%;
-      // max-width: 300px;
-      // max-height: 200px;
       overflow: hidden;
       border-radius: 10%;
-      padding-bottom: 10px;
       & img {
         object-fit: cover;
         width: 100%;
@@ -136,6 +133,7 @@
       }
     }
     & .cart-item__info{
+      padding-top: 1em;
       display: flex;
       justify-content: space-around;
       flex-direction: row;
@@ -192,15 +190,13 @@
     font-style: normal;
     font-weight: normal;
     font-size: 1rem;
+    white-space: nowrap;
     line-height: normal;
     text-align: center;
     color: #ef742f;
     background: none;
     border: none;
     transition: 0.1s;
-    &:hover {
-      text-decoration: underline;
-    }
   }
   
   .delete-dish {

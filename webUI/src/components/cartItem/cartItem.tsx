@@ -14,13 +14,13 @@ import "./cart.scss";
 import { ICartItem } from "../../store/cart/cart.types";
 import Plus from "../../assets/plus.svg";
 import Minus from "../../assets/minus.svg";
+import { Interface } from "readline";
 
 export const CartItem = (item: ICartItem) => {
   const [gearState, setGearState] = useState(false);
   const [pickedIngredients, setPickedIngredients] = useState(item.ingredient);
 
   const onGear = () => setGearState(!gearState);
-
   // const onCheckbox = (item: number) => {
   //   if (pickedIngredients.includes(item)) {
   //     const array = [...pickedIngredients];
@@ -63,6 +63,13 @@ export const CartItem = (item: ICartItem) => {
     dispatch(decrementNumofDishes(id));
   };
 
+  const [x, setX] = useState(false);
+
+  // const soldCheckbox = ({ target: { checked } }) => {
+  //   console.log(x, checked);
+  //   setX(checked);
+  // };
+
   return (
     <div className="cart-item">
       <div className="cart-item__image">
@@ -87,6 +94,7 @@ export const CartItem = (item: ICartItem) => {
                     <input
                       type="checkbox"
                       className="ingredient-checkbox"
+                      checked
                     ></input>
                   ) : null}
                   <div className="ingredient-title"> {item.title}</div>
