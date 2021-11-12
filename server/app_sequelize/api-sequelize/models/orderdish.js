@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       dish_id: DataTypes.INTEGER,
       order_id: DataTypes.INTEGER,
       quantity: DataTypes.INTEGER,
+      excluded_ingredients: DataTypes.STRING
     },
     {
       timestamps: false,
