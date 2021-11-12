@@ -3,9 +3,6 @@ import { Menu } from "../menu/Menu";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { Breakfast } from '../menu/pageComponents/Breakfast';
-import { MainMenu } from '../menu/pageComponents/MainMenu';
-import { BarMenu } from '../menu/pageComponents/BarMenu';
-import { WeekCatch } from '../menu/pageComponents/WeekCatch';
 import { DishPage } from "./DishPage";
 import { ChoseTypeOrder} from "./ChoseTypeOrder";
 import { ConfirmOrder} from "./ConfirmOrder";
@@ -39,18 +36,6 @@ export const MenuTabNavigation = () => {
         <Stack.Screen
             name="Breakfast"
             component={Breakfast}
-        />
-        <Stack.Screen
-            name="MainMenu"
-            component={MainMenu}
-        />
-        <Stack.Screen
-            name="BarMenu"
-            component={BarMenu}
-        />
-        <Stack.Screen
-            name="WeekCatch"
-            component={WeekCatch}
         />
         <Stack.Screen
                     name="DishPage"
