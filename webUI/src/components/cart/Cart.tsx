@@ -79,7 +79,10 @@ export const Cart = () => {
     console.log("Order done");
     dispatch(clearCart());
   };
-
+  const clearFullCart = async () => {
+    console.log("Order done");
+    dispatch(clearCart());
+  };
   const [orderType, setOrderType] = useState("");
 
   const onChangeTab = (e: any) => {
@@ -116,10 +119,16 @@ export const Cart = () => {
             <div className="cart_order">
               <h1>Ваш заказ</h1>
             </div>
+            <button className="clear-button" onClick={clearFullCart}>
+              Очистить корзину
+            </button>
             {items.map((item: ICartItem, index) => (
               <CartItem key={index} {...item} />
             ))}
-            <div>Итого: {totalPrice} BYN</div>
+            <div className="total-price">
+              <div>Итого:</div>
+              <div className="total-price__number">{totalPrice} BYN</div>
+            </div>
           </div>
 
           <div className="order_actions">

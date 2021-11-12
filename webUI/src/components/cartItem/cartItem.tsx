@@ -79,7 +79,7 @@ export const CartItem = (item: ICartItem) => {
         </div>
         <div className="cart-item__info price">{item.price} BYN</div>
         {gearState ? (
-          <div className="dish-ingredients">
+          <div className="ingredients">
             {pickedIngredients.map((item) => {
               return (
                 <div className="ingredient-wrapper">
@@ -89,7 +89,7 @@ export const CartItem = (item: ICartItem) => {
                       className="ingredient-checkbox"
                     ></input>
                   ) : null}
-                  <div className="ingredient-title"> &#8226; {item.title}</div>
+                  <div className="ingredient-title"> {item.title}</div>
                 </div>
               );
             })}

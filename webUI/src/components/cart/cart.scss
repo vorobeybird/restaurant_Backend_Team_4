@@ -17,7 +17,30 @@
     align-items: left;
   }
   & .cart_order{
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+  }
+  & .clear-button{
+    all: unset;
+    max-width: 20%;
+    margin: auto;
+    margin-right:10%;
+    text-align: center;
+    white-space:nowrap;
+    margin-bottom: 30px;
+    &:hover{
+      text-decoration: underline
+    }
+  }
+  & .total-price{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    margin-right: 10%;
+    font-weight: 300;
+    font-size: 36px;
+    & .total-price__number{
+      font-weight: 400;
+    }
   }
 }
 
