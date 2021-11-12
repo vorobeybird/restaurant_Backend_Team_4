@@ -1,5 +1,5 @@
 import MainPage from "./pages/mainPage/MainPage";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./app.scss";
 import { Authentication } from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
@@ -15,15 +15,18 @@ import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
+import { Toaster } from "react-hot-toast";
 Amplify.configure(awsconfig);
 
 const App = () => {
-    const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
-    const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
-    console.log("App rendering")
-    // console.log(state)
-    console.log(user)
-    const dispatch = useDispatch();
+  const user = useSelector<AppStateType, AuthStateType>(
+    (state) => state.auth.user
+  );
+  const state = useSelector<AppStateType, AuthStateType>((state) => state.auth);
+  console.log("App rendering");
+  // console.log(state)
+  console.log(user);
+  const dispatch = useDispatch();
   useEffect(() => {
     checkUser();
     setAuthListener();
@@ -63,12 +66,24 @@ const App = () => {
   return (
     <Router>
       <Navigation />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          className: "",
+          style: {
+            border: "3px solid #212529",
+            padding: "16px",
+            color: "#FFFFFF",
+            background: "#EF752B",
+          },
+        }}
+      />
       <Switch>
         <Route exact path="/" component={MainPage} />
         <Route exact path="/login" component={Authentication} />
         <Route exact path="/menu" component={Menu} />
         <Route exact path="/cart" component={Cart} />
-        <Route path="/dishPage" component={DishPage}/>
+        <Route path="/dishPage" component={DishPage} />
       </Switch>
       <Contacts />
       <Footer />

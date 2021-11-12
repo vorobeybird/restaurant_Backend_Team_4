@@ -81,12 +81,14 @@ export const BookTable = () => {
 
   console.log(order);
 
+  const isChoosenNumOfPeople = () => order.num_of_persons;
+
   const stepsController = () => {
     switch (currentStep) {
       case 0:
         return true;
       case 1:
-        return true;
+        return order.num_of_persons;
       case 2:
         return time;
       case 3:

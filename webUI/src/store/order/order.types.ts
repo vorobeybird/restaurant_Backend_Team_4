@@ -14,6 +14,7 @@ export interface Order {
   payment_method: number;
   comment: string;
   dish: DishShortInfo[];
+  num_of_persons: number;
 }
 
 export interface ReducerState {
@@ -28,6 +29,7 @@ export enum OrderConstants {
   CHANGE_PAYMENT_METHOD = "CHANGE_PAYMENT_METHOD",
   RESET_STATE = "RESET_STATE",
   ENTER_ADDRESS = "ENTER_ADDRESS",
+  CHANGE_NUMBER_OF_PEOPLE = "CHANGE_NUMBER_OF_PEOPLE",
 }
 
 export interface OrderActions {

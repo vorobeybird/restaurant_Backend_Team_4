@@ -1,7 +1,7 @@
 import "./cart.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
 import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
@@ -83,6 +83,8 @@ export const Cart = () => {
   };
 
   const [orderType, setOrderType] = useState("");
+
+  useEffect(() => dispatch(clearOrder()), []);
 
   const onChangeTab = (e: any) => {
     dispatch(clearOrder());

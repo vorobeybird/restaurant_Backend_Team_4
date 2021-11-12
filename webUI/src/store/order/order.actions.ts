@@ -33,3 +33,11 @@ export const clearOrder = () => (dispatch: AppDispatch) => {
 export const chooseAddress = (address: string) => (dispatch: AppDispatch) => {
   dispatch({ type: OrderConstants.ENTER_ADDRESS, payload: address });
 };
+
+export const chooseNumOfPeople =
+  (numOfPeople: number) => (dispatch: AppDispatch) => {
+    dispatch({
+      type: OrderConstants.CHANGE_NUMBER_OF_PEOPLE,
+      payload: numOfPeople,
+    });
+  };

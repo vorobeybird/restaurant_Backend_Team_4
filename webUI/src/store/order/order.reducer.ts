@@ -17,6 +17,7 @@ const initialState: ReducerState = {
     contact_phone: "",
     payment_method: 0,
     comment: "",
+    num_of_persons: 0,
     dish: [],
   },
 };
@@ -61,6 +62,8 @@ export function orderReducer(
     }
     case OrderConstants.ENTER_ADDRESS:
       return { order: { ...state.order, adress: action.payload } };
+    case OrderConstants.CHANGE_NUMBER_OF_PEOPLE:
+      return { order: { ...state.order, num_of_persons: action.payload } };
     default:
       return state;
   }
