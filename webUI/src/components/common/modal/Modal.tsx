@@ -21,7 +21,6 @@ const Modal = ({active, title, setActive, children}: IModalProps)=> {
         <div className={active ? "modal active" : "modal"} onClick={(e)=>setActive(false) }>
             <div className={active ? "modal__container active" : "modal__container"} onClick={(e)=>e.stopPropagation()}>
             <div className="close_container"><img className="close" onClick={(e)=>setActive(false) } src={close}
-              style={{ height: "1.7rem", width: "1.7rem" }}
               alt="close"
             /></div>
                 <div className="modal__title">{title}</div>

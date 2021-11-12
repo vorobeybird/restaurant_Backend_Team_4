@@ -31,10 +31,18 @@ $primaryLight: #ffae80;
       justify-content: flex-end;
       margin: 0.3rem;
       padding: 0.2rem;
+      & .close {
+        border-radius: 50%;
+        height: 3rem;
+        width: 3rem;
+        padding: 0.5rem;
+      }
       & .close:hover {
         cursor: pointer;
         background-color: $primary;
-        border-radius: 4px;
+        opacity: 0.8;
+        border-radius: 50%;
+        transform: rotate(180deg);
       }
     }
     &.active {
