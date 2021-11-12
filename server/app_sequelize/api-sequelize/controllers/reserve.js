@@ -63,7 +63,7 @@ module.exports = {
       for (const elem of dish) {
         const dish_item = await Dish.findByPk(elem.dish_id);
         await order.addDish(dish_item, {
-          through: { quantity: elem.dish_amount },
+          through: { quantity: elem.dish_amount, excluded_ingredients: elem.excluded_ingredients},
         });
       }
       res.status(200).send(tables[0]);
