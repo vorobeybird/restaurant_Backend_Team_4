@@ -56,6 +56,7 @@ export const Cart = () => {
       let dish = {} as DishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.amount;
+      dish.exclude_ingredients = item.exclude_ingredients;
       return dish;
     });
 

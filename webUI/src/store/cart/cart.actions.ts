@@ -13,7 +13,7 @@ export const addToCart =
     } else {
       dispatch({
         type: CartConstants.ADD_TO_CART,
-        payload: { ...item, amount: 1 },
+        payload: { ...item, amount: 1},
       });
     }
   };

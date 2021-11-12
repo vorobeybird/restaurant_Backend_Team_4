@@ -11,6 +11,7 @@ export enum CartConstants {
 
 export interface ICartItem extends MenuItem {
   amount: number;
+  exclude_ingredients: string;
 }
 
 export interface ReducerState {

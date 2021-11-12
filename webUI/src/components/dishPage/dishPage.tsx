@@ -7,6 +7,7 @@ import { ICartItem } from "../../store/cart/cart.types";
 import { ImageSlider } from "../imageSlider/imageSlider";
 import caloriesImg from "../../assets/calories-icon.png";
 import { addToCart } from "../../store/cart/cart.actions";
+import Modal from "../common/modal/Modal";
 
 const DishPage = () => {
     interface Iingredients {
@@ -18,13 +19,10 @@ const DishPage = () => {
     }
 
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
+    const [showModal, setShowModal] = useState(false);
+    const [pickedIngredients, setPickedIngredients] = useState([...selectedDish.ingredient]);
 
-    const [gearState, setGearState] = useState(false);
-    const [pickedIngredients, setPickedIngredients] = useState(
-        [...selectedDish.ingredient]
-    );
-
-    const onGear = () => setGearState(!gearState);
+    const modalOpen = () => setShowModal(!showModal);
 
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.cartItems.items);
@@ -35,7 +33,7 @@ const DishPage = () => {
     const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {
         return { image: photo.photo_url };
     })
-
+   
     return (
         <div className="dish-page">
             <div className="dish-page__container">
@@ -48,17 +46,14 @@ const DishPage = () => {
                     <div className="dish-item-info">
                         <div className="dish-gear_wrapper">
                             <div className="gear-title">Состав</div>
-                            <button className="gear-button" onClick={onGear}>Изменить</button>
+                            <button className="gear-button" onClick={modalOpen}>Изменить</button>
                         </div>
                         <div className="dish-description">
                             <div className="dish-ingredients">
-                                {pickedIngredients.map((item) => {
+                                { selectedDish.ingredient.map((item) => {
                                     return (
                                         <div className="ingredient-wrapper">
-                                            {gearState && !item.DishIngredient.is_default ?
-                                                <input type="checkbox" className="ingredient-checkbox"></input>
-                                                : null}
-                                            <div className="ingredient-title"> &#8226; {item.title}</div>
+                                            <div className="ingredient-title"> {item.title}</div>
                                         </div>
                                     )
                                 })}
@@ -71,6 +66,14 @@ const DishPage = () => {
                         </div>
                         <button className="dish-item-info__btn" onClick={() => onOrder(selectedDish)}>Заказать</button>
                     </div>
+                    <Modal active={showModal} setActive={setShowModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
+                    <div className="ingredients-form">
+                    <div className="ingredients-list">
+                        {selectedDish.ingredient.map(item => <div className="ingredient-item"><label>{item.DishIngredient.is_default ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> : <input type="checkbox" value={item.title} className="ingredient-checkbox" />}  {item.title}</label></div>)}
+                            </div>
+                            <div className="button-container"><button className="ingredients-edit__btn">Готово</button></div>
+
+                    </div></Modal>
                 </div>
                 <div className="may-interest"></div>
             </div>
