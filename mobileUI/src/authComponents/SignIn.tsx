@@ -3,44 +3,36 @@ import {Auth} from 'aws-amplify'
 import { View, Text,TouchableOpacity, Button, TextInput, StyleSheet, Dimensions,Alert} from 'react-native';
 import { BottomSheet } from "react-native-elements/dist/bottomSheet/BottomSheet";
 
-import {addEmail, addPassword} from '../store/StoreCard'
-import { useDispatch } from "react-redux";
+import {addEmail, addSignInStat} from '../store/StoreCard'
+import { useDispatch, useSelector } from "react-redux";
 
 
 const windowWidth = Dimensions.get('window').width
-const SignUp = (props: any)=> {
-    
+const SignIn = (props: any)=> {
+    const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
+   
+    
     const handleEmail = (email:any) =>{
         dispatch(addEmail(email))
     }
-    const handlePassword = (pass:any) =>{
-        dispatch(addPassword(pass))
-    }
     const [state, setState] = useState({
-        name:'',
-        surName:'',
         email:'',
         password:'',
-        phone:'',  
     })
     const [error, setError] = useState({
-        name:'',
-        surName:'',
         email:'',
         password:'',
         
     })
     
     const onSubmit = async () => {
+        
             try {
-                const user = await Auth.signUp({
-                    username:state.email,
-                    password: state.password
-                });
-                props.onStateChange('confirmSignUp', state)
-            } catch(error:any){
-                console.log(error)
+                const user = await Auth.signIn(state.email, state.password);
+                
+            } catch (error) {
+                console.log('error signing in', error);
             
              
         }
@@ -48,65 +40,45 @@ const SignUp = (props: any)=> {
         
     }
 
-    if(props.authState === 'signUp'){
-        
+    if(props.authState === 'signIn'){
         return (
         <View style={styles.Wrapper}>
-            <Text style={styles.HeadStyle}>Регистрация</Text>
+            <Text style={styles.HeadStyle}>Вход</Text>
             <TextInput 
-                    placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Имя'
-                    onChangeText={(val) => setState({...state,name:val})}
-                    
-                />
-            
-            <TextInput 
+                    placeholder='E-mail'
                     placeholderTextColor="#C6C6C6" 
-                    style={styles.street}
-                    placeholder='Фамилия'
-                    onChangeText={(val) => setState({...state,surName:val})}
-                    
-                />
-                
-            <TextInput 
-                    placeholderTextColor="#C6C6C6" 
-                    style={styles.street}
-                    placeholder='Емэйл'
                     onChangeText={(val) => setState({...state,email:val.toLowerCase()})}
                     value={state.email}
                 />
             <Text style={styles.error}>{error.email}</Text>
             <TextInput 
-                    placeholderTextColor="#C6C6C6" 
-                    style={styles.street}
-                    placeholder='Телефон'
-                    onChangeText={(val) => setState({...state,phone:val})}
-                    
-                />
-            <TextInput 
-                    placeholderTextColor="#C6C6C6" 
                     style={styles.street}
                     placeholder='Пароль'
-                    onChangeText={(val) => {setState({...state,password:val})}}
+                    placeholderTextColor="#C6C6C6" 
+                    onChangeText={(val) => setState({...state,password:val})}
                     secureTextEntry={true}
                 />
             <Text style={styles.error}>{error.password}</Text>
-            <View style={styles.ButCont}>
-                <TouchableOpacity
-                    onPress={() => props.onStateChange('signIn', {})}
+            <TouchableOpacity
+                style={styles.ForgPassButt}
+                    onPress={() => props.onStateChange('forgotPassword', {})}
                 >
-                    <Text style={styles.SimpText}>back to signIn</Text>
+                    <Text style={styles.ForgPass}>Забыли пароль?</Text>
                 </TouchableOpacity>
-                
-            </View>
+           
+                <TouchableOpacity
+                    style={styles.SignUpBut}
+                    onPress={() => props.onStateChange('signUp', {})}
+                >
+                    <Text style={styles.ForgPass}>ЗАРЕГИСТРИРОВАТЬСЯ</Text>
+                </TouchableOpacity>
+            
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 onSubmit()
                 handleEmail(state.email)
-                handlePassword(state.password)
-                
             }}>
-                <Text style={styles.ButText}> ЗАРЕГЕСТРИРОВАТЬСЯ</Text>
+                <Text style={styles.ButText}> ВХОД</Text>
             </TouchableOpacity>
         </View>
     )}
@@ -142,16 +114,34 @@ const styles = StyleSheet.create({
         marginBottom:'2%',
         Bottom:'5%',
         color:'black'
+        
 
     },
-    ButCont:{
-        top:'30%',
-        flexDirection:'row',
-        justifyContent:'space-evenly',
-        
+    SignUpBut:{
+        top:'25%',
+        alignSelf:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        width:windowWidth-windowWidth*0.2,
+        height:50,
+        backgroundColor:'white',
+        borderColor:'#FF4D00',
+        borderWidth:1,
+        borderRadius: 4,
+
     },
+  
     SimpText:{
-        color:'black'
+        color:'black',
+        fontWeight:'500',
+    },
+    ForgPass:{
+        fontWeight:'500',
+        color:'#FF4D00',
+    },
+    ForgPassButt:{
+        alignSelf:'flex-end',
+        top:'2%',
     },
     Button:{
         top:'5%',
@@ -167,8 +157,8 @@ const styles = StyleSheet.create({
     ButText:{
         fontFamily: 'Roboto',
         fontStyle: 'normal',
-        fontWeight: 'normal',
-        fontSize: 14,
+        fontWeight: '500',
+        fontSize: 18,
         lineHeight: 24,
         color: '#FFFFFF',
     },
@@ -178,4 +168,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SignUp
+export default SignIn

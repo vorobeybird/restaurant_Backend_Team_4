@@ -73,7 +73,6 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                 handleAddDate(date.toString())
                 if(cart.orderType == 'Навынос'){
                     navigation.navigate('ChosePaymentType')
-                    
                 } else if(cart.orderType == 'Доставка') {
                     navigation.navigate('writeAdress')
                 }

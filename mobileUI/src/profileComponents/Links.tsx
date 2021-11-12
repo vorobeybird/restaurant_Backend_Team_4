@@ -6,13 +6,18 @@ import {
 } from 'react-native'
 import { Auth } from 'aws-amplify'
 import {Authenticator, SignOut} from 'aws-amplify-react-native'
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { addSignInStat } from '../store/StoreCard' 
 export const Links = () => {
- 
+  const dispatch = useDispatch()
+  const handleAddSignInStat = (item:any) => {
+    dispatch(addSignInStat(item))
+  }
 async function signOut() {
   try {
       await Auth.signOut({ global: true });
+      handleAddSignInStat(false)
+      
   } catch (error) {
       console.log('error signing out: ', error);
   }

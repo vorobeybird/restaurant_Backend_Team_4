@@ -1,47 +1,76 @@
 import React from 'react'
 import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports'
-import { withAuthenticator, Authenticator, SignIn, ConfirmSignIn, ForgotPassword } from 'aws-amplify-react-native'
+import { Authenticator, ConfirmSignIn, ForgotPassword } from 'aws-amplify-react-native'
 import { BottomTabNavigation } from './navigation/nav'
 import { Store } from './store/index'
-import { Provider } from 'react-redux'
+
+import { Provider, useSelector, useDispatch } from 'react-redux'
 import SignUp from './authComponents/SignUp'
+import SignIn from './authComponents/SignIn'
+import { addSignInStat} from './store/StoreCard'
+
 import ConfirmSignUp from './authComponents/ConfirmSignUp'
-import Auth from '@aws-amplify/auth'
+
 Amplify.configure({
   ...awsconfig,
   Analytics: {
     disabled: true,
   },
 })
-// const DisplayNav = (props:any) => {
-//   if(props.authState === 'signedIn'){
-//     return (
-//     <Provider store={Store}>
-//       <BottomTabNavigation/>
-//     </Provider>
-//     ) 
-//   }else {
-//     return (
-//       <>
-//       </>
-//     )
-//   }
-// }
 
-const App = () => {
-
+const ShowMainContent = () => {
   return (
-    <Provider store={Store}>
-      
-        <SignUp/>
-        <SignIn/>
-        <ConfirmSignUp/>
-        <ConfirmSignIn/>
-        <ForgotPassword/>
-      
-    </Provider>
+    <BottomTabNavigation/>
+  )
+}
+const ShowAuthContent = () => {
+  const dispatch = useDispatch()
+  const handleAddSignInStat = (item:any) => {
+      dispatch(addSignInStat(item))
+  }
+  return (
+    <Authenticator
+      usernameAttributes='email'
+      authState='signIn'
+      hideDefault={true}
+      onStateChange={(authState:any) => {console.log('...authState',authState);handleAddSignInStat(authState)}}>
+      <SignUp/>
+      <SignIn/>
+      <ConfirmSignUp/>
+      <ConfirmSignIn/>
+      <ForgotPassword/>  
+    </Authenticator>
+  )
+}
+const ShowContent = () => {
+  const cart = useSelector((state) => state.dishes);
+  
+  
+  return (
+    <>
+      {cart.isSignedIn ==='signedIn' ? (
+        <ShowMainContent/>
+        
+      ):(
+        <ShowAuthContent/>
+        
+      )}
+    </>
   )
 }
 
-export default withAuthenticator(App)
+
+const App = () => {
+  
+  return (
+      <Provider store={Store}>
+        <ShowContent/>
+      </Provider>
+    )
+  
+  
+}
+
+
+export default App

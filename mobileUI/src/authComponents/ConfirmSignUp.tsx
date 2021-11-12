@@ -3,32 +3,31 @@ import {Auth} from 'aws-amplify'
 import { View, Text,TouchableOpacity, Button, TextInput, StyleSheet, Dimensions,Alert} from 'react-native';
 import { Provider, useSelector } from "react-redux";
 import { BottomTabNavigation } from '../navigation/nav'
+
 const windowWidth = Dimensions.get('window').width
 
-const DisplayNav = (props:any) => {
-    
-      return (
-      
-        <BottomTabNavigation/>
-    
-      ) 
-    
-}
-
-
 const ConfirmSignUp = (props: any)=> {
+    
     const cart = useSelector((state) => state.dishes);
     const [state, setState] = useState({
         email:cart.email,
         confirmationCode:'',
     })
+    const signInOnSub = async () => {
+        try {
+            const user = await Auth.signIn(cart.email, cart.password);
+
+        } catch(error:any){
+            console.log(error,"error signin", cart.email, cart.password)
+        }
+    }
 
     const onSubmit = async () => {
         const {email:username, confirmationCode: code} = state
             try {
                 const user = await Auth.confirmSignUp(cart.email,code);
-                console.log('succsess')
-                props.onStateChange('SignIn', state)
+                    
+                
             } catch(error:any){
                 console.log(error,"error")
             }
@@ -36,43 +35,43 @@ const ConfirmSignUp = (props: any)=> {
     
 
     if(props.authState === 'confirmSignUp'){
-    return (
-        <View style={styles.Wrapper}>
-            <Text style={styles.HeadStyle}>Подтвердить код</Text>
-            <TextInput 
-                    style={styles.street}
-                    placeholder='email'
-                    onChangeText={() => setState({...state,email:cart.email})}
-                    value={cart.email}
-                />
-            
-            <TextInput 
-                    style={styles.street}
-                    placeholder='Код'
-                    onChangeText={(val) => setState({...state,confirmationCode:val})}
-                    value={state.confirmationCode}
-                />
+        
+        return (
+            <View style={styles.Wrapper}>
+                <Text style={styles.HeadStyle}>Подтвердить код</Text>
+                <TextInput 
+                        style={styles.street}
+                        placeholder='email'
+                        onChangeText={() => setState({...state,email:cart.email})}
+                        value={cart.email}
+                    />
                 
-            <View style={styles.ButCont}>
-                <TouchableOpacity
-                    onPress={() => props.onStateChange('signIn', {})}
-                >
-                    <Text style={styles.SimpText}>back to signIn</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => props.onStateChange('signUp', {})}
-                >
-                    <Text style={styles.SimpText}>back to signUp</Text>
+                <TextInput 
+                        style={styles.street}
+                        placeholder='Код'
+                        onChangeText={(val) => setState({...state,confirmationCode:val})}
+                        value={state.confirmationCode}
+                    />
+                    
+                <View style={styles.ButCont}>
+                    <TouchableOpacity
+                        onPress={() => props.onStateChange('signIn', {})}
+                    >
+                        <Text style={styles.SimpText}>back to signIn</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => props.onStateChange('signUp', {})}
+                    >
+                        <Text style={styles.SimpText}>back to signUp</Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.Button} onPress={()=> { onSubmit(); signInOnSub()}}>
+                    <Text style={styles.ButText}> ЗАРЕГЕСТРИРОВАТЬСЯ</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.Button} onPress={()=> { onSubmit();}}>
-                <Text style={styles.ButText}> ЗАРЕГЕСТРИРОВАТЬСЯ</Text>
-            </TouchableOpacity>
-        </View>
-    )} else {
-        return (
-            <DisplayNav/>
         )
+    } else { 
+        return (<></>)
     }
 }
 
@@ -99,7 +98,8 @@ const styles = StyleSheet.create({
         borderRadius:4,
         borderColor:'#C6C6C6',
         marginBottom:'2%',
-        Bottom:'5%'
+        Bottom:'5%',
+        color:'black'
         
 
     },

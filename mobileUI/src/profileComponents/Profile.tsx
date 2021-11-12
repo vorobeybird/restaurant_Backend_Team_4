@@ -1,3 +1,4 @@
+import { a } from '@aws-amplify/ui';
 import React from 'react';
 import {
   StyleSheet,
@@ -5,12 +6,14 @@ import {
   View,
   Image,
 } from 'react-native';
+import {useSelector} from 'react-redux'
 
 const Profile = () => {
-
+  const cart = useSelector((state) => state.dishes);
+  console.log(cart.isSignedIn, 'lkajsflkasndjfklabfjlnp')
   return (
     <View style={styles.MainCont}>
-   
+        
         <Image style={styles.Pict} source={require('../../img/profPhoto.png')}/>
         <View style={styles.Conts}>
           <Text style={styles.TextStyle}>Фамилия Имя</Text>

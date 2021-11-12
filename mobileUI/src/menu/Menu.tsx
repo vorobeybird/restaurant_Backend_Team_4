@@ -62,6 +62,7 @@ export const Menu = () => {
 
 const styles = StyleSheet.create({
     Wrapper:{
+        flex:1,
         backgroundColor:'white',
     },
     Header: {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     },
     FoodContainer: {
         flexGrow: 1,
-        top: '5%',
+        top: '2%',
         left: '10%',
     }
 });

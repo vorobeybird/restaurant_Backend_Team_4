@@ -7,6 +7,8 @@ interface CounterState {
     date:any;
     paymentType:string;
     email:string;
+    password:string;
+    isSignedIn:boolean;
     
   }
 interface Dish {
@@ -26,11 +28,14 @@ export const initialState:CounterState = {
     date: "",
     paymentType: "",
     email:"",
+    password:"",
+    isSignedIn:false,
 }
 export const dishSlice = createSlice({
     name:"dishSlice",
     initialState,
     reducers: {
+        reset: state => initialState,
         addToCard(state,action) {
 
             const itemIndex = state.dishes.findIndex( item => item.id === action.payload.id)
@@ -101,9 +106,17 @@ export const dishSlice = createSlice({
             state.email = action.payload
             console.log(state.email)
         },
+        addPassword(state, action) {
+            state.password = action.payload
+            console.log(state.password)
+        },
+        addSignInStat(state,action) {
+            state.isSignedIn = action.payload
+            console.log(state.isSignedIn)
+        }
 
         
     }
 })
 export default dishSlice.reducer;
-export const {addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail} = dishSlice.actions;
+export const {reset,addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail, addSignInStat, addPassword} = dishSlice.actions;
