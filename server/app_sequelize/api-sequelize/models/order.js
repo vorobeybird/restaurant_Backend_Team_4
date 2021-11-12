@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "order_id",
       });
       Order.belongsTo(models.Reserve, {
-        throught: "Reserve",
         as: "reserve",
         foreignKey: "reserve_id"
       })
@@ -29,11 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       delivery_method: DataTypes.TEXT,
       total_price: DataTypes.INTEGER,
       delivery_date: DataTypes.DATE,
-      contact_name:DataTypes.STRING,
-
+      contact_name: DataTypes.STRING,
       contact_phone: DataTypes.STRING,
       payment_method: DataTypes.INTEGER,
       adress: DataTypes.STRING,
+      contact_phone: DataTypes.STRING,
+
       status: {
         type: DataTypes.STRING,
         defaultValue: "Принят в работу",

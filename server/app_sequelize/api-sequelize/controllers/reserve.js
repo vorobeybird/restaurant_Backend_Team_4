@@ -1,49 +1,91 @@
 const Reserve = require("../models/").Reserve;
-const checkReservation = (reserve_date, num_of_persons, reserve_time) => {
-    const { count, rows } = await Reserve.findAndCountAll({
-        include: [{
-            model: Table,
-            required: true,
-            where: { persons: num_of_persons }
-        }],
+const Table = require("../models/").Table;
+const Order = require("../models/").Order;
+const { Op, literal } = require("sequelize");
 
-        attributes: [
-            [sequelize.fn('COUNT', sequelize.col('*')), 'num_of_reservations']
-        ],
+// const checkReservation = (reserve_date, num_of_persons, reserve_time) => {
+//     const { count, rows } = await Reserve.findAndCountAll({
+//         include: [{
+//             model: Table,
+//             required: true,
+//             where: { persons: num_of_persons }
+//         }],
 
-        where: {
-            reserve_date: reserve_date,
-            reserve_time: {
-                [Op.between]: [reserve_time, reserve_time.addHours(2)]
-            }
-        }
-    });
-    return count === 0;
-}
+//         attributes: [
+//             [sequelize.fn('COUNT', sequelize.col('*')), 'num_of_reservations']
+//         ],
+
+//         where: {
+//             reserve_date: reserve_date,
+//             reserve_time: {
+//                 [Op.between]: [reserve_time, reserve_time.addHours(2)]
+//             }
+//         }
+//     });
+//     return count === 0;
+// }
 
 
 module.exports = {
     async add(req, res) {
-        
-        if(!checkReservation(req.body.reserve_date, req.body.num_of_persons, req.body.reserve_time)) {
-            res.status(400).send(error);
-        }
-       const reserve = await Reserve.create({
-        reserve_date = req.body.reserve_date,
-        reserve_time = req.body.reserve_time,
+      const reserveDate =  new Date(req.body.reserve_date);
+      const startTime = new Date(req.body.reserve_time);
+      const endTime = new Date(startTime); 
+      endTime.setHours(endTime.getHours() + 4);
+      console.log(typeof startTime);
 
-       })
+      const tables = await module.exports.getTables(startTime, endTime, req.body.num_of_persons, reserveDate);
+      if(!tables.length) {
+        res.status(400).send({message: "No tables found!"})
+        return;
+      }
+      const reserve = await Reserve.create({
+        reserve_date: reserveDate,
+        reserve_time: startTime,
+        table_id: tables[0].id
+      });
+
+      console.log(`name = ${req.body.name}`);
+
+      
         
-        const order = await Order.create({
-            customer_id: req.body.customer_id,
-            contact_name: req.body.contact_name,
-            contact_phone: req.body.contact_phone,
-            payment_method: req.body.payment_method,
-            adress: req.body.adress,
-            status: req.body.status,
-            comment: req.body.comment,
-        });
-        
-        return
+      const order = await Order.create({
+          customer_id: req.body.customer_id,
+          delivery_method: req.body.delivery_method,
+          total_price: req.body.total_price,
+          delivery_date: req.body.delivery_date,
+          contact_name: req.body.contact_name,
+          contact_phone: req.body.contact_phone,
+          payment_method: req.body.payment_method,
+          adress: req.body.adress,
+          status: req.body.status,
+          comment: req.body.comment,
+          reserve_id: reserve.id
+      });
+      res.status(200).send(tables[0]);
+    },
+
+    async getTables ( startTime, endTime, persons, reserveDate) {
+      return await Table.findAll({
+        include: [{
+          model: Reserve,
+          as: "reserve",
+          attributes: ['id'],
+          required: false,
+          where: {
+            reserve_date: reserveDate,
+            reserve_time: {
+              [Op.between]: [ startTime, endTime ]
+            }
+          }
+        }],
+        where: {
+          persons: {
+            [Op.gte]: persons
+          },
+          [Op.where]: literal('reserve.id IS NULL')
+        }, 
+        oder: persons
+      });
     }
 }

@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
   class Table extends Model {
     static associate(models) {
       Table.hasMany(models.Reserve, {
-        through: "Reserve",
         as: "reserve",
         foreignKey: "table_id",
       });
