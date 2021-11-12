@@ -20,8 +20,14 @@ const DishPage = () => {
 
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
     const [showModal, setShowModal] = useState(false);
-    const [pickedIngredients, setPickedIngredients] = useState([...selectedDish.ingredient]);
+    //const [pickedIngredients, setPickedIngredients] = useState([...selectedDish.ingredient]);
+    const [omitIngredients, setOmitIngredients] = useState<any>([]);
 
+    const editIngredients = (e: any) => {
+        !e.target.checked ? 
+        setOmitIngredients([...omitIngredients, e.target.value]) :
+        setOmitIngredients(omitIngredients.filter((item:any)=> item !== e.target.value))
+    }
     const modalOpen = () => setShowModal(!showModal);
 
     const dispatch = useAppDispatch();
@@ -53,7 +59,7 @@ const DishPage = () => {
                                 { selectedDish.ingredient.map((item) => {
                                     return (
                                         <div className="ingredient-wrapper">
-                                            <div className="ingredient-title"> {item.title}</div>
+                                            <div className={omitIngredients.includes(item.title) ? "ingredient-title omit" : "ingredient-title" }> {item.title}</div>
                                         </div>
                                     )
                                 })}
@@ -69,9 +75,9 @@ const DishPage = () => {
                     <Modal active={showModal} setActive={setShowModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
                     <div className="ingredients-form">
                     <div className="ingredients-list">
-                        {selectedDish.ingredient.map(item => <div className="ingredient-item"><label>{item.DishIngredient.is_default ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> : <input type="checkbox" value={item.title} className="ingredient-checkbox" />}  {item.title}</label></div>)}
+                        {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> : <input type="checkbox" onClick={editIngredients} value={item.title} defaultChecked className="ingredient-checkbox" />}  {item.title}</label></div>)}
                             </div>
-                            <div className="button-container"><button className="ingredients-edit__btn">Готово</button></div>
+                            <div className="button-container"><button onClick={modalOpen} className="ingredients-edit__btn">Готово</button></div>
 
                     </div></Modal>
                 </div>
