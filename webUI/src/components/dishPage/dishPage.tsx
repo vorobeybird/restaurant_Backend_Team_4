@@ -20,7 +20,6 @@ const DishPage = () => {
 
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
     const [showModal, setShowModal] = useState(false);
-    //const [pickedIngredients, setPickedIngredients] = useState([...selectedDish.ingredient]);
     const [omitIngredients, setOmitIngredients] = useState<any>([]);
 
     const editIngredients = (e: any) => {
@@ -58,7 +57,7 @@ const DishPage = () => {
                             <div className="dish-ingredients">
                                 { selectedDish.ingredient.map((item) => {
                                     return (
-                                        <div className="ingredient-wrapper">
+                                        <div className="ingredient-wrapper" key={item.id}>
                                             <div className={omitIngredients.includes(item.title) ? "ingredient-title omit" : "ingredient-title" }> {item.title}</div>
                                         </div>
                                     )
