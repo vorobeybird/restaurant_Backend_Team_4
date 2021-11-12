@@ -10,7 +10,7 @@ import {useSelector} from 'react-redux'
 
 const Profile = () => {
   const cart = useSelector((state) => state.dishes);
-  console.log(cart.isSignedIn, 'lkajsflkasndjfklabfjlnp')
+  
   return (
     <View style={styles.MainCont}>
         

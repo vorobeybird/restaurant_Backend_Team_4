@@ -136,26 +136,28 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
                 </View>
             </View>
             <TouchableOpacity style={styles.Button} onPress={()=> { 
-                if(checkedThird) {
-                    handleAddOrderType("2");
-                    onMakingOrder()
-                    showToast()
-                    handleClear()
-                    navigation.navigate('Menu')
-                } else if(checkedFirs){
-                    handleAddOrderType("1");
-                    onMakingOrder()
-                    showToast()
-                    handleClear()
-                    navigation.navigate('Menu')
-                } else if(checkedSecond){
-                    handleAddOrderType("0");
-                    onMakingOrder()
-                    showToast()
-                    handleClear()
-                    navigation.navigate('Menu')
-                }
+                    if(checkedFirs){
+                        handleAddOrderType("1");
+                        onMakingOrder()
+                        showToast()
+                        setTimeout(handleClear,0)
+                        navigation.navigate('Menu')
+                    } 
+                    else if(checkedSecond){
+                        handleAddOrderType("0");
+                        onMakingOrder()
+                        showToast()
+                        setTimeout(handleClear,0)
+                        navigation.navigate('Menu')
+                        
+                    }else if(checkedThird) {
+                        handleAddOrderType("2");
+                        onMakingOrder()
+                        showToast()
+                        setTimeout(handleClear,0)
+                        navigation.navigate('Menu')
             
+                    }
             }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>
             </TouchableOpacity>

@@ -19,7 +19,6 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
 
-
     const showMode = (currentMode:any) => {
         setShow(true);
         setMode(currentMode);
@@ -34,6 +33,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
         setShow(false);
     };
     const handleConfirm = () => {
+        
         hideDatePicker();
     };
 
@@ -65,7 +65,8 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                         mode={mode}
                         is24Hour={true}
                         display="default"
-                        onChange={ ()=> handleConfirm() }
+                        onChange={ ()=> {handleConfirm()} }
+                        
                     />
                 )}
             </View>
