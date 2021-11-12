@@ -26,25 +26,24 @@ $primaryLight: #ffae80;
     transform: scale(0.5);
     width: 50vw;
     text-align: center;
-    & .close_container {
-      display: flex;
-      justify-content: flex-end;
-      margin: 0.3rem;
-      padding: 0.2rem;
-      & .close {
-        border-radius: 50%;
-        height: 3rem;
-        width: 3rem;
-        padding: 0.5rem;
-      }
-      & .close:hover {
-        cursor: pointer;
-        background-color: $primary;
-        opacity: 0.8;
-        border-radius: 50%;
-        transform: rotate(180deg);
-      }
+    position: relative;
+    & .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      border-radius: 50%;
+      height: 3rem;
+      width: 3rem;
+      padding: 0.5rem;
     }
+    & .close:hover {
+      cursor: pointer;
+      background-color: $primary;
+      opacity: 0.8;
+      border-radius: 50%;
+      transform: rotate(180deg);
+    }
+
     &.active {
       opacity: 1;
       z-index: 10;
@@ -53,10 +52,10 @@ $primaryLight: #ffae80;
     }
     & .modal__title {
       text-align: center;
-      margin: 0;
+      margin: 2rem 0 1rem;
       font-weight: 400;
       font-style: normal;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
     }
     & .modal__content {
       display: flex;

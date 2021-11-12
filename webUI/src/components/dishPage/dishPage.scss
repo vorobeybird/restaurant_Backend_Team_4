@@ -253,7 +253,7 @@ $btnColor: #ef742f;
     & .dish-modal-title {
       width: 100%;
       text-align: left;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: #606060;
       margin: 0 2rem;
     }
@@ -263,7 +263,7 @@ $btnColor: #ef742f;
       flex-direction: column;
       justify-content: left;
       & .ingredients-list {
-        margin-left: 5rem;
+        margin: 1rem 0 1rem 5rem;
         text-align: left;
         font-size: 1.6rem;
         & .ingredient-item {

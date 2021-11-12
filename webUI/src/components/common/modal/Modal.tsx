@@ -10,19 +10,19 @@ interface IModalProps {
 }
 const Modal = ({active, title, setActive, children}: IModalProps)=> {
 
-    useEffect(()=> {
+/*     useEffect(()=> {
         if (active) {
             document.body.style.overflow = 'hidden';
           } else {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = 'scroll';
           }
-    },[active])
+    },[active]) */
     return (
         <div className={active ? "modal active" : "modal"} onClick={(e)=>setActive(false) }>
             <div className={active ? "modal__container active" : "modal__container"} onClick={(e)=>e.stopPropagation()}>
-            <div className="close_container"><img className="close" onClick={(e)=>setActive(false) } src={close}
+            <img className="close" onClick={(e)=>setActive(false) } src={close}
               alt="close"
-            /></div>
+            />
                 <div className="modal__title">{title}</div>
                 <div className="modal__content">
             {children}
