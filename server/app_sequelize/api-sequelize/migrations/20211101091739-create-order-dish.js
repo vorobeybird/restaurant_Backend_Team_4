@@ -18,6 +18,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      excluded_ingredients: {
+        type: Sequelize.STRING,
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
