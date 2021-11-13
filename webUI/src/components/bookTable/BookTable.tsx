@@ -27,6 +27,8 @@ export const BookTable = () => {
 
   const [time, setTime] = useState("");
 
+  const [numberOfPeople, setNumberOfPeople] = useState(2);
+
   const ADD_BOOKTABLE_STEPS = [
     {
       id: "ChooseDate",
@@ -88,7 +90,7 @@ export const BookTable = () => {
       case 0:
         return true;
       case 1:
-        return order.num_of_persons;
+        return true;
       case 2:
         return time;
       case 3:

@@ -17,7 +17,7 @@ const initialState: ReducerState = {
     contact_phone: "",
     payment_method: 0,
     comment: "",
-    num_of_persons: 0,
+    num_of_persons: 2,
     dish: [],
   },
 };

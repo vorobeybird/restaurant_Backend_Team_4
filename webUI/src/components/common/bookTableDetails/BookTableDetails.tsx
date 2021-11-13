@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { dispatch } from "react-hot-toast/dist/core/store";
-import { useAppDispatch } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { chooseNumOfPeople } from "../../../store/order/order.actions";
 
 const tableForSomePeople = [
@@ -27,6 +27,10 @@ const tableForSomePeople = [
 ];
 
 export const BookTableDetails = () => {
+  const order = useAppSelector((state) => state.order.order);
+
+  useEffect(() => setNumberOfPeople(order.num_of_persons), []);
+
   const dispatch = useAppDispatch();
 
   const [numberOfPeople, setNumberOfPeople] = useState(2);
@@ -43,7 +47,13 @@ export const BookTableDetails = () => {
       <div>Стол на</div>
       <select onChange={(e) => handleChangeTableForN(e)}>
         {tableForSomePeople.map((table) => {
-          return <option value={table.num}>{table.str}</option>;
+          if (order.num_of_persons === table.num)
+            return (
+              <option selected value={table.num}>
+                {table.str}
+              </option>
+            );
+          else return <option value={table.num}>{table.str}</option>;
         })}
       </select>
     </div>
