@@ -34,6 +34,11 @@ export const chooseAddress = (address: string) => (dispatch: AppDispatch) => {
   dispatch({ type: OrderConstants.ENTER_ADDRESS, payload: address });
 };
 
+export const changeDeliveryMethod =
+  (method: string) => (dispatch: AppDispatch) => {
+    dispatch({ type: "CHANGE_DELIVERY_METHOD", payload: method });
+  };
+
 export const chooseNumOfPeople =
   (numOfPeople: number) => (dispatch: AppDispatch) => {
     dispatch({

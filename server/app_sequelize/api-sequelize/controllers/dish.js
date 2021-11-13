@@ -102,6 +102,29 @@ module.exports = {
           model: Ingredient,
           as: "ingredient",
         },
+      ],
+    })
+      .then((dishes) => res.status(200).send(dishes))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+
+  listAllInfo(req, res) {
+    return Dish.findAll({
+      include: [
+        {
+          model: Category,
+          as: "category",
+        },
+        {
+          model: DishPhoto,
+          as: "photo",
+        },
+        {
+          model: Ingredient,
+          as: "ingredient",
+        },
         {
           model: Order,
           as:"order",

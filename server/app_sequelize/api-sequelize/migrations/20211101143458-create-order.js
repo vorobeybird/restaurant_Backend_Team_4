@@ -24,11 +24,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      name: {
+      contact_name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      phone: {
+      contact_phone: {
         allowNull: false,
         type: Sequelize.STRING
       },

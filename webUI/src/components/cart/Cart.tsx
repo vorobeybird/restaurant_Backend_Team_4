@@ -6,7 +6,11 @@ import { ICartItem } from "../../store/cart/cart.types";
 import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
 import { Takeaway } from "../takeaway/Takeaway";
-import { DishShortInfo, Order } from "../../store/order/order.types";
+import {
+  DishShortInfo,
+  Order,
+  OrderConstants,
+} from "../../store/order/order.types";
 import TakeawayIcon from "../../assets/takeaway.png";
 import DeliveryIcon from "../../assets/delivery.png";
 import BookTableIcon from "../../assets/book-table.png";
@@ -14,7 +18,10 @@ import { clearCart } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
 import { Link } from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
-import { clearOrder } from "../../store/order/order.actions";
+import {
+  changeDeliveryMethod,
+  clearOrder,
+} from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 
 export const Cart = () => {
@@ -40,18 +47,12 @@ export const Cart = () => {
 
   const onMakingOrder = () => {
     let currentOrder = {} as Order;
-    currentOrder.delivery_method = orderType;
-    if (currentOrder.delivery_method === "takeaway") {
-      currentOrder.adress = "takeaway";
-    } else {
-      currentOrder.adress = order.adress;
-    }
+
+    currentOrder.delivery_method = order.delivery_method;
+    currentOrder.payment_method = order.payment_method;
     currentOrder.customer_id = userId;
     currentOrder.total_price = totalPrice;
     currentOrder.delivery_date = order.delivery_date;
-    currentOrder.contact_name = order.contact_name;
-    currentOrder.contact_phone = order.contact_phone;
-    currentOrder.payment_method = order.payment_method;
     currentOrder.comment = "Hi, I'm hardcode comment :)";
 
     let dishesShortInfo = items.map((item) => {
@@ -62,6 +63,31 @@ export const Cart = () => {
     });
 
     currentOrder.dish = dishesShortInfo;
+    currentOrder.contact_name = order.contact_name;
+    currentOrder.contact_phone = order.contact_phone;
+
+    if (currentOrder.delivery_method === "takeaway") {
+      currentOrder.adress = "takeaway";
+    }
+
+    if (currentOrder.delivery_method === "bookTable") {
+      currentOrder.adress = "bookTable";
+      currentOrder.num_of_persons = order.num_of_persons;
+
+      return axios
+        .post(`http://localhost:5001/api/order`, currentOrder, {
+          headers: {
+            "Content-type": "application/json",
+            "cross-domain": "true",
+          },
+        })
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+    }
+
+    if (currentOrder.delivery_method === "delivery") {
+      currentOrder.adress = order.adress;
+    }
 
     console.log(currentOrder);
 
@@ -84,10 +110,19 @@ export const Cart = () => {
 
   const [orderType, setOrderType] = useState("");
 
-  useEffect(() => dispatch(clearOrder()), []);
+  useEffect(() => {
+    dispatch(changeDeliveryMethod(""));
+    dispatch(clearOrder());
+  }, []);
+
+  const clearFullCart = async () => {
+    console.log("Order done");
+    dispatch(clearCart());
+  };
 
   const onChangeTab = (e: any) => {
     dispatch(clearOrder());
+    dispatch(changeDeliveryMethod(e.target.alt));
     setOrderType(e.target.alt);
   };
 
@@ -95,7 +130,7 @@ export const Cart = () => {
     <>
       {items.length === 0 ? (
         <div className="empty-cart">
-          <div className="empty-cart__container">
+          <div className="empty-cart__container empty-cart__container--small">
             <div className="cart-title">Корзина</div>
             <div className="cart-body">
               <div className="empty-cart__img">
@@ -113,13 +148,24 @@ export const Cart = () => {
         </div>
       ) : (
         <div className="full-cart">
-          <div className="cart_title">
-            <h1>Корзина</h1>
+          <div className="cart_order_container">
+            <div className="cart_title">
+              <p>Корзина</p>
+            </div>
+            <div className="cart_order">
+              <h1>Ваш заказ</h1>
+            </div>
+            <button className="clear-button" onClick={clearFullCart}>
+              Очистить корзину
+            </button>
+            {items.map((item: ICartItem, index) => (
+              <CartItem key={index} {...item} />
+            ))}
+            <div className="total-price">
+              <div>Итого:</div>
+              <div className="total-price__number">{totalPrice} BYN</div>
+            </div>
           </div>
-          {items.map((item: ICartItem, index) => (
-            <CartItem key={index} {...item} />
-          ))}
-          <div>Итого: {totalPrice} BYN</div>
 
           <div className="order_actions">
             <div>Тип заказа: </div>

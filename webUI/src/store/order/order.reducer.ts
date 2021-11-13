@@ -56,6 +56,7 @@ export function orderReducer(
       tempOrder.delivery_date.setMinutes(0);
       tempOrder.delivery_date.setSeconds(0);
       tempOrder.payment_method = 2;
+      tempOrder.num_of_persons = 2;
       return {
         order: { ...tempOrder },
       };
@@ -64,6 +65,8 @@ export function orderReducer(
       return { order: { ...state.order, adress: action.payload } };
     case OrderConstants.CHANGE_NUMBER_OF_PEOPLE:
       return { order: { ...state.order, num_of_persons: action.payload } };
+    case OrderConstants.CHANGE_DELIVERY_METHOD:
+      return { order: { ...state.order, delivery_method: action.payload } };
     default:
       return state;
   }
