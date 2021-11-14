@@ -27,14 +27,14 @@ const DishPage = () => {
         setOmitIngredients([...omitIngredients, e.target.value]) :
         setOmitIngredients(omitIngredients.filter((item:any)=> item !== e.target.value))
     }
-    const modalOpen = () => setShowModal(!showModal);
+    const toggleModal = () => setShowModal(!showModal);
 
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.cartItems.items);
     const onOrder = (item: ICartItem): void => {
         toast.success(`Блюдо "${item.title}" добавлено в корзину`);
-        const strIngredients = omitIngredients.join(', ');
-        const editedItem = {...item, excluded_ingredients: strIngredients};
+        //const strIngredients = omitIngredients.join(', ');
+        const editedItem = {...item, excluded_ingredients: omitIngredients};
         dispatch(addToCart(editedItem, items));
     };
 
@@ -54,7 +54,7 @@ const DishPage = () => {
                     <div className="dish-item-info">
                         <div className="dish-gear_wrapper">
                             <div className="gear-title">Состав</div>
-                            <button className="gear-button" onClick={modalOpen}>Изменить</button>
+                            <button className="gear-button" onClick={toggleModal}>Изменить</button>
                         </div>
                         <div className="dish-description">
                             <div className="dish-ingredients">
@@ -74,14 +74,14 @@ const DishPage = () => {
                         </div>
                         <button className="dish-item-info__btn" onClick={() => onOrder(selectedDish)}>Заказать</button>
                     </div>
-                    <Modal active={showModal} setActive={setShowModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
+                    <Modal active={showModal} setActive={toggleModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
                     <div className="ingredients-form">
                     <div className="ingredients-list">
                         {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default 
                     ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> 
                     : <input type="checkbox" className="ingredient-checkbox" onClick={editIngredients} value={item.title} defaultChecked />}  {item.title}</label></div>)}
                             </div>
-                            <div className="button-container"><button onClick={modalOpen} className="ingredients-edit__btn">Готово</button></div>
+                            <div className="button-container"><button onClick={toggleModal} className="ingredients-edit__btn">Готово</button></div>
 
                     </div></Modal>
         </div>

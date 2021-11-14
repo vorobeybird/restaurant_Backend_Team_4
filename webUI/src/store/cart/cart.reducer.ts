@@ -55,6 +55,28 @@ export function cartReducer(
     case CartConstants.CLEAR_CART: {
       return { ...state, items:  action.payload};
     }
+    case CartConstants.OMIT_INGREDIENT: {
+      const newItems = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          return {
+            ...item, 
+            excluded_ingredients: [...item.excluded_ingredients, action.payload.ingredient]}
+        }
+        return item;
+      })
+      return { items: newItems };
+    }
+    case CartConstants.PICK_INGREDIENT: {
+      const newItems = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          return {
+            ...item, 
+            excluded_ingredients: item.excluded_ingredients.filter(ing => ing !== action.payload.ingredient)}
+        }
+        return item;
+      })
+      return { items: newItems };
+    }
     default:
       return state;
   }

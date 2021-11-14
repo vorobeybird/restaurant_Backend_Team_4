@@ -6,12 +6,14 @@ export enum CartConstants {
   DECREMENT_NUMBER_OF_DISHES = "DECREMENT_NUMBER_OF_DISHES",
   ADD_SAME_DISH = "ADD_SAME_DISH",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
-  CLEAR_CART = "CLEAR_CART"
+  CLEAR_CART = "CLEAR_CART",
+  OMIT_INGREDIENT = "OMIT_INGREDIENT",
+  PICK_INGREDIENT = "PICK_INGREDIENT",
 }
 
 export interface ICartItem extends MenuItem {
   amount: number;
-  excluded_ingredients: string;
+  excluded_ingredients: string[];
 }
 
 export interface ReducerState {

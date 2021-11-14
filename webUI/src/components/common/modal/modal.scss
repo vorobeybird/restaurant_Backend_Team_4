@@ -70,7 +70,7 @@ $primaryLight: #ffae80;
   }
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1599px) {
   .modal {
     & .modal__container {
       width: 50vw;
@@ -78,7 +78,7 @@ $primaryLight: #ffae80;
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1199px) {
   .modal {
     & .modal__container {
       width: 60vw;
@@ -91,7 +91,7 @@ $primaryLight: #ffae80;
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 639px) {
   .modal {
     & .modal__container {
       width: 90vw;
