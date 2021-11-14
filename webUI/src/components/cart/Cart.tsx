@@ -23,6 +23,7 @@ import {
   clearOrder,
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
+import Modal from "../common/modal/Modal";
 
 interface OrderTemp extends Order {
   reserve_time: Date;
