@@ -24,6 +24,11 @@ import {
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 
+interface OrderTemp extends Order {
+  reserve_time: Date;
+  reserve_date: Date;
+}
+
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
@@ -46,7 +51,7 @@ export const Cart = () => {
     order.total_price;
 
   const onMakingOrder = () => {
-    let currentOrder = {} as Order;
+    let currentOrder = {} as OrderTemp;
 
     currentOrder.delivery_method = order.delivery_method;
     currentOrder.payment_method = order.payment_method;
@@ -73,9 +78,11 @@ export const Cart = () => {
     if (currentOrder.delivery_method === "bookTable") {
       currentOrder.adress = "bookTable";
       currentOrder.num_of_persons = order.num_of_persons;
+      currentOrder.reserve_date = order.delivery_date;
+      currentOrder.reserve_time = order.delivery_date;
 
       return axios
-        .post(`http://localhost:5001/api/order`, currentOrder, {
+        .post(`http://localhost:5000/api/reserve`, currentOrder, {
           headers: {
             "Content-type": "application/json",
             "cross-domain": "true",
