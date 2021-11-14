@@ -17,6 +17,7 @@ const initialState: ReducerState = {
     contact_phone: "",
     payment_method: 0,
     comment: "",
+    num_of_persons: 2,
     dish: [],
   },
 };
@@ -55,12 +56,17 @@ export function orderReducer(
       tempOrder.delivery_date.setMinutes(0);
       tempOrder.delivery_date.setSeconds(0);
       tempOrder.payment_method = 2;
+      tempOrder.num_of_persons = 2;
       return {
         order: { ...tempOrder },
       };
     }
     case OrderConstants.ENTER_ADDRESS:
       return { order: { ...state.order, adress: action.payload } };
+    case OrderConstants.CHANGE_NUMBER_OF_PEOPLE:
+      return { order: { ...state.order, num_of_persons: action.payload } };
+    case OrderConstants.CHANGE_DELIVERY_METHOD:
+      return { order: { ...state.order, delivery_method: action.payload } };
     default:
       return state;
   }

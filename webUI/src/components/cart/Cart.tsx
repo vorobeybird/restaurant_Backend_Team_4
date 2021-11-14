@@ -1,12 +1,16 @@
 import "./cart.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
 import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
 import { Takeaway } from "../takeaway/Takeaway";
-import { DishShortInfo, Order } from "../../store/order/order.types";
+import {
+  DishShortInfo,
+  Order,
+  OrderConstants,
+} from "../../store/order/order.types";
 import TakeawayIcon from "../../assets/takeaway.png";
 import DeliveryIcon from "../../assets/delivery.png";
 import BookTableIcon from "../../assets/book-table.png";
@@ -14,7 +18,16 @@ import { clearCart } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
 import { Link } from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
-import { clearOrder } from "../../store/order/order.actions";
+import {
+  changeDeliveryMethod,
+  clearOrder,
+} from "../../store/order/order.actions";
+import { BookTable } from "../bookTable/BookTable";
+
+interface OrderTemp extends Order {
+  reserve_time: Date;
+  reserve_date: Date;
+}
 
 export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
@@ -33,23 +46,18 @@ export const Cart = () => {
     order.delivery_date &&
     order.delivery_method &&
     order.dish.length !== 0 &&
-    order.payment_method &&
+    order.payment_method >= 0 &&
+    order.payment_method < 3 &&
     order.total_price;
 
   const onMakingOrder = () => {
-    let currentOrder = {} as Order;
-    currentOrder.delivery_method = orderType;
-    if (currentOrder.delivery_method === "takeaway") {
-      currentOrder.adress = "takeaway";
-    } else {
-      currentOrder.adress = order.adress;
-    }
+    let currentOrder = {} as OrderTemp;
+
+    currentOrder.delivery_method = order.delivery_method;
+    currentOrder.payment_method = order.payment_method;
     currentOrder.customer_id = userId;
     currentOrder.total_price = totalPrice;
     currentOrder.delivery_date = order.delivery_date;
-    currentOrder.contact_name = order.contact_name;
-    currentOrder.contact_phone = order.contact_phone;
-    currentOrder.payment_method = order.payment_method;
     currentOrder.comment = "Hi, I'm hardcode comment :)";
 
     let dishesShortInfo = items.map((item) => {
@@ -60,6 +68,33 @@ export const Cart = () => {
     });
 
     currentOrder.dish = dishesShortInfo;
+    currentOrder.contact_name = order.contact_name;
+    currentOrder.contact_phone = order.contact_phone;
+
+    if (currentOrder.delivery_method === "takeaway") {
+      currentOrder.adress = "takeaway";
+    }
+
+    if (currentOrder.delivery_method === "bookTable") {
+      currentOrder.adress = "bookTable";
+      currentOrder.num_of_persons = order.num_of_persons;
+      currentOrder.reserve_date = order.delivery_date;
+      currentOrder.reserve_time = order.delivery_date;
+
+      return axios
+        .post(`http://localhost:5000/api/reserve`, currentOrder, {
+          headers: {
+            "Content-type": "application/json",
+            "cross-domain": "true",
+          },
+        })
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+    }
+
+    if (currentOrder.delivery_method === "delivery") {
+      currentOrder.adress = order.adress;
+    }
 
     console.log(currentOrder);
 
@@ -79,14 +114,22 @@ export const Cart = () => {
     console.log("Order done");
     dispatch(clearCart());
   };
+
+  const [orderType, setOrderType] = useState("");
+
+  useEffect(() => {
+    dispatch(changeDeliveryMethod(""));
+    dispatch(clearOrder());
+  }, []);
+
   const clearFullCart = async () => {
     console.log("Order done");
     dispatch(clearCart());
   };
-  const [orderType, setOrderType] = useState("");
 
   const onChangeTab = (e: any) => {
     dispatch(clearOrder());
+    dispatch(changeDeliveryMethod(e.target.alt));
     setOrderType(e.target.alt);
   };
 
@@ -165,7 +208,7 @@ export const Cart = () => {
           </div>
 
           {orderType === "bookTable" ? (
-            <div className="order_title">Забронировать стол</div>
+            <BookTable />
           ) : orderType === "delivery" ? (
             <Delivery />
           ) : orderType === "takeaway" ? (
