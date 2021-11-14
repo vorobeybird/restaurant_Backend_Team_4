@@ -89,6 +89,7 @@ export const Takeaway = () => {
 
   return (
     <div className="takeaway_container_wrapper">
+      <h1>Оформление заказа</h1>
       <div className="takeaway_container">
         <button
           className={`${

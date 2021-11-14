@@ -1,6 +1,6 @@
 import "./chooseDate.scss";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+// import "react-calendar/dist/Calendar.css";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeDate } from "../../../store/order/order.actions";
 
@@ -17,16 +17,11 @@ export const ChooseDate = () => {
   };
 
   return (
-    <div className="choose_date_container">
-      <div>
-        <p>Выберите дату</p>
-      </div>
-      <div className="calendar">
+      <div className="choose_date">
         <div>Дата</div>
         <div>
-          <Calendar onChange={onChangeData} value={date} />
+          <Calendar onChange={onChangeData} value={date} prev2Label={null} next2Label={null}/>
         </div>
       </div>
-    </div>
   );
 };
