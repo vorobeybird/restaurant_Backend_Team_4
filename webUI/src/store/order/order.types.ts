@@ -5,16 +5,17 @@ export interface DishShortInfo {
 }
 
 export interface Order {
-  adress: string;
-  customer_id: string;
   delivery_method: string;
+  payment_method: number;
+  customer_id: string;
   total_price: number;
   delivery_date: Date;
-  contact_name: string;
-  contact_phone: string;
-  payment_method: number;
   comment: string;
   dish: DishShortInfo[];
+  adress: string;
+  contact_name: string;
+  contact_phone: string;
+  num_of_persons: number;
 }
 
 export interface ReducerState {
@@ -29,6 +30,8 @@ export enum OrderConstants {
   CHANGE_PAYMENT_METHOD = "CHANGE_PAYMENT_METHOD",
   RESET_STATE = "RESET_STATE",
   ENTER_ADDRESS = "ENTER_ADDRESS",
+  CHANGE_NUMBER_OF_PEOPLE = "CHANGE_NUMBER_OF_PEOPLE",
+  CHANGE_DELIVERY_METHOD = "CHANGE_DELIVERY_METHOD",
 }
 
 export interface OrderActions {
