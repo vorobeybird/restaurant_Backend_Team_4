@@ -1,7 +1,7 @@
 import "./cart.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
-import { useEffect, useState } from "react";
+import { useEffect, useState, MouseEvent } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
 import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
@@ -14,7 +14,7 @@ import {
 import TakeawayIcon from "../../assets/takeaway.png";
 import DeliveryIcon from "../../assets/delivery.png";
 import BookTableIcon from "../../assets/book-table.png";
-import { clearCart } from "../../store/cart/cart.actions";
+import { clearCart, omitIngredient, pickIngredient } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
 import { Link } from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
@@ -30,11 +30,25 @@ interface OrderTemp extends Order {
 }
 
 export const Cart = () => {
+
+
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
+
+  const [selectedDish, setSelectedDish] = useState(null);
+  const dishItem = items.find(i => i.id === selectedDish);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => setShowModal(!showModal);
+
+  const editIngredients = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    !e.target.checked ? 
+    dispatch(omitIngredient(id, e.target.value)) :
+    dispatch(pickIngredient(id, e.target.value))
+}
 
   const checkOrder = (order: Order) =>
     order.adress &&
@@ -64,6 +78,7 @@ export const Cart = () => {
       let dish = {} as DishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.amount;
+      dish.excluded_ingredients = item.excluded_ingredients.join(', ');
       return dish;
     });
 
@@ -166,11 +181,11 @@ export const Cart = () => {
               Очистить корзину
             </button>
             {items.map((item: ICartItem, index) => (
-              <CartItem key={index} {...item} />
+              <CartItem key={index} toggleModal={toggleModal} item={item} setSelectedDish={setSelectedDish} />
             ))}
             <div className="total-price">
               <div>Итого:</div>
-              <div className="total-price__number">{totalPrice} BYN</div>
+              <div className="total-price__number"> {totalPrice} BYN</div>
             </div>
           </div>
 
@@ -222,6 +237,16 @@ export const Cart = () => {
               Оформить Заказ
             </Button>
           </div>
+          <Modal active={showModal} setActive={toggleModal} title={"Изменить состав"}><div className="dish-modal-title">{dishItem && dishItem.title}</div>
+                    <div className="ingredients-form">
+                    <div className="ingredients-list">
+                        {dishItem && dishItem.ingredient.map(i => <div className="ingredient-item" key={i.id}><label>{i.DishIngredient.is_default 
+                    ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> 
+                    : <input type="checkbox" className="ingredient-checkbox" onChange={ (e)=> editIngredients(e, dishItem.id)} checked={!dishItem.excluded_ingredients.includes(i.title)} value={i.title} />} {i.title}</label></div>)}
+                            </div>
+                            <div className="button-container"><button onClick={toggleModal} className="ingredients-edit__btn">Готово</button></div>
+
+                    </div></Modal>
         </div>
       )}
     </>

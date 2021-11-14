@@ -1,6 +1,7 @@
 export interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
+  excluded_ingredients: string;
 }
 
 export interface Order {

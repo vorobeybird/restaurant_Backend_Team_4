@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-    toJSON(){
-      return { ...this.get(), dish_id: undefined, order_id: undefined}
+    toJSON() {
+      return { ...this.get(), dish_id: undefined, order_id: undefined };
     }
   }
   OrderDish.init(
