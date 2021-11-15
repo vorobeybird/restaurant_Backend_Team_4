@@ -1,4 +1,4 @@
-import { ReducerState } from "../../store/cart/cart.types";
+import { ICartItem, ReducerState } from "../../store/cart/cart.types";
 import { CartConstants } from "./cart.types";
 import { AnyAction } from "redux";
 
@@ -50,6 +50,31 @@ export function cartReducer(
               ...newItems[itemIndex],
               amount: newItems[itemIndex].amount,
             };
+      return { items: newItems };
+    }
+    case CartConstants.CLEAR_CART: {
+      return { ...state, items:  action.payload};
+    }
+    case CartConstants.OMIT_INGREDIENT: {
+      const newItems = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          return {
+            ...item, 
+            excluded_ingredients: [...item.excluded_ingredients, action.payload.ingredient]}
+        }
+        return item;
+      })
+      return { items: newItems };
+    }
+    case CartConstants.PICK_INGREDIENT: {
+      const newItems = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          return {
+            ...item, 
+            excluded_ingredients: item.excluded_ingredients.filter(ing => ing !== action.payload.ingredient)}
+        }
+        return item;
+      })
       return { items: newItems };
     }
     default:
