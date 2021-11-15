@@ -64,6 +64,8 @@ export const ChangeDishIngr = ({
     excludedIngredients = excludedIngredients.map((ingredient: any) => {
       return ingredient.title;
     });
+    excludedIngredients = excludedIngredients.join(', ');
+    console.log(excludedIngredients, ' iFan BEn mezd');
     return {title: item.title, excludedIngredients: excludedIngredients};
   };
 
