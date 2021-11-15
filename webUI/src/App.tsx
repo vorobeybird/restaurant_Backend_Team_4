@@ -7,17 +7,15 @@ import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
-import {Toaster} from "react-hot-toast";
+import Profile from "./pages/profile/Profile";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
-import "./app.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
 import {AuthStateType} from "./store/auth/auth.reducer";
 import {useEffect} from "react";
-//imports for users authentication with amplify
+import { Toaster } from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
-import Profile from "./pages/profile/Profile";
 
 
 Amplify.configure(awsconfig);
