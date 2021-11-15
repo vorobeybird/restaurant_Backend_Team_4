@@ -101,6 +101,8 @@ export const dishSlice = createSlice({
           total: 0,
           quantity: 0,
         },
+      )
+    },
         addSignInStat(state,action) {
             state.isSignedIn = action.payload
             console.log(state.isSignedIn)
@@ -144,7 +146,29 @@ export const dishSlice = createSlice({
             : {...dish, excluded_ingredients: action.payload.excludedIngredients},
         );
         },
-
+        clearCart(state){
+          state.dishes = []
+      },
+      addOrderType(state, action) {
+          state.orderType = action.payload
+          console.log(state.orderType)
+      },
+      addDate(state, action) {
+          state.date = action.payload
+          console.log(state.date)
+      },
+      addPaymentType(state,action) {
+          state.paymentType = action.payload
+          console.log(state.paymentType)
+      },
+      addEmail(state, action) {
+          state.email = action.payload
+          console.log(state.email)
+      },
+      addPassword(state, action) {
+          state.password = action.payload
+          console.log(state.password)
+      },
         
     }
 })

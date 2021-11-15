@@ -76,5 +76,5 @@ export const MenuTabNavigation = () => {
                 />
         
     </Stack.Navigator>
-  );
+
 };

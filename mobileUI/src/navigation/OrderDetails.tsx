@@ -50,7 +50,7 @@ export const OrderDetails = ({  navigation: { goBack }, route }:{navigation:any,
         order.contact_phone = "+375291234567"
         order.payment_method = cart.paymentType;
         order.comment = "Hi, I'm hardcode comment";
-
+        
         let dishesShortInfo = cart.dishes.map((item:any) => {
             let dish = {} as DishShortInfo;
             dish.dish_id = item.id;
@@ -59,7 +59,7 @@ export const OrderDetails = ({  navigation: { goBack }, route }:{navigation:any,
         });
 
         order.dish = dishesShortInfo;
-    
+        console.log(order)
         axios.post("http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order", order, {
             headers: { "Content-type": "application/json" },
           })
