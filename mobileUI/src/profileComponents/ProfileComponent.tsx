@@ -9,9 +9,9 @@ import { Links } from './Links';
 export const ProfileComponent = () => {
   return (
     <View style={styles.Wrapper}>
-      <Text style={styles.AppHeader}>
-        Профиль
-      </Text>
+      <View style={styles.PictCont}>
+        <Text style={styles.Header}>Профиль</Text>      
+      </View>
       <Profile/>
       <Links/>
     </View>
@@ -20,21 +20,32 @@ export const ProfileComponent = () => {
 };
 
 const styles = StyleSheet.create({
-  AppHeader: {
-    position: 'relative',
-    display: 'flex',
-    left: '35%',
-    top: 30,
-    fontWeight: 'normal',
-    fontSize: 24,
-    lineHeight: 33,
-    color: 'black',
-  },
+  
   Wrapper: {
+    flex:1,
     position:'relative',
     display:'flex',
     flexDirection:'column',
     width:'100%',
     height:'85%',
-  }
+    backgroundColor: 'white'
+  },
+  PictCont:{
+    height:'10%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop:10,
+    paddingLeft: 5,
+    paddingRight:5,
+    backgroundColor:'#F4F4F4'
+  },
+  Header: {
+    alignSelf:'center',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 30,
+    lineHeight: 33,
+    color: '#000000',
+  },
 });
