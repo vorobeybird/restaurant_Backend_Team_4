@@ -9,7 +9,7 @@ export type RootStackParamList = {
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
-export const ChosePaymentTypeNavigation = () => {
+export const ChangeDishIngrNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{

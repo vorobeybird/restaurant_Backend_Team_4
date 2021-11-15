@@ -42,7 +42,7 @@ export const OrderedDish = () => {
                   <Text style={styles.StyledText}>{item.title}</Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ChangeDishIngr')}>
+                  onPress={() => navigation.navigate('ChangeDishIngr', {item})}>
                   <Text style={styles.changeText}>Изменить состав</Text>
                 </TouchableOpacity>
                 <View style={styles.CountCont}>
