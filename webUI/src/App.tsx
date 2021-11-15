@@ -17,7 +17,6 @@ import {useEffect} from "react";
 import { Toaster } from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
-import Profile from "./pages/profile/Profile";
 
 Amplify.configure(awsconfig);
 
