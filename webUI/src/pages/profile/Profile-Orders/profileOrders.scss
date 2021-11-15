@@ -1,0 +1,13 @@
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    & .orders-switcher{
+        width: 80%;
+        height: 10%;
+        border-radius: 20%;
+    }
+}
