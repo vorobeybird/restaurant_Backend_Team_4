@@ -17,11 +17,13 @@ export const ChooseDate = () => {
   };
 
   return (
+      <>
+      <div className="order-header">Дата</div>
       <div className="choose_date">
-        <div>Дата</div>
         <div>
           <Calendar onChange={onChangeData} value={date} prev2Label={null} next2Label={null}/>
         </div>
       </div>
+      </>
   );
 };

@@ -1,6 +1,7 @@
 .takeaway_container {
   position: relative;
-  border: 1px black solid;
+  border: 5px orange solid;
+  border-radius: 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -9,6 +10,14 @@
   min-height: 800px;
 }
 
+.order-header{
+  position: absolute;
+  font-size: 48px;
+  color: #606060;;
+  top: 120px;
+  left: 96px;
+
+}
 .swiper_disabled {
   opacity: 0.2;
 }
