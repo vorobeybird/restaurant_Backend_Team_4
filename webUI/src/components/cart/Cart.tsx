@@ -149,6 +149,7 @@ export const Cart = () => {
   };
 
   const onChangeTab = (e: any) => {
+    console.log(e.target)
     dispatch(clearOrder());
     dispatch(changeDeliveryMethod(e.target.alt));
     setOrderType(e.target.alt);

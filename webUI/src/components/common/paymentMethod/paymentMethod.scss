@@ -4,4 +4,48 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  width: 100% ;
+  height: 100% ;
+  max-width: 350px;
+  max-height: 200px;
 }
+
+.radio{
+  font-size: 36px;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+input[type="radio"] {
+  /* ...existing styles */
+  margin-right: 20px;
+
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+// .radio label{
+//   font-size: 2rem;
+//   font-weight: bold;
+//   line-height: 1.1;
+//   -webkit-appearance: none;
+//   appearance: none;
+//   /* For iOS < 15 to remove gradient background */
+//   background-color: #fff;
+//   /* Not removed via appearance */
+//   margin: 0;
+// }
