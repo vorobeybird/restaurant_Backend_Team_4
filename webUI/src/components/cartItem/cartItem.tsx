@@ -1,9 +1,6 @@
-import Carousel from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
-import { useState } from "react";
-import Gear from "../../assets/gear.png";
+import { MouseEventHandler, useState } from "react";
 import DeleteIcon from "../../assets/delete.png";
-import { Button } from "../common/button/Button";
 import { useAppDispatch } from "../../store/hooks";
 import {
   decrementNumofDishes,
@@ -13,41 +10,21 @@ import {
 import { useAppSelector } from "../../store/hooks";
 import "./cart.scss";
 import { ICartItem } from "../../store/cart/cart.types";
-import Plus from "../../assets/plus.png";
-import Minus from "../../assets/minus.png";
+import Plus from "../../assets/plus.svg";
+import Minus from "../../assets/minus.svg";
+import edit from "../../assets/edit.svg";
 
-export const CartItem = (item: ICartItem) => {
-  const [gearState, setGearState] = useState(false);
-  const [pickedIngredients, setPickedIngredients] = useState(item.ingredient);
+interface ICartItemProps {
+  item: ICartItem;
+  toggleModal:  Function;
+  setSelectedDish: Function;
+}
+export const CartItem = ({item, toggleModal, setSelectedDish}: ICartItemProps) => {
 
-  const onGear = () => setGearState(!gearState);
-
-  // const onCheckbox = (item: number) => {
-  //   if (pickedIngredients.includes(item)) {
-  //     const array = [...pickedIngredients];
-  //     const index = array.indexOf(item);
-  //     if (index > -1) {
-  //       array.splice(index, 1);
-  //     }
-  //     setPickedIngredients(array.sort());
-  //   } else {
-  //     setPickedIngredients([...pickedIngredients, item].sort());
-  //   }
-  // };
-
-  // const renderIngredient = (item: ICartItem) => (
-  //   <div key={item.id} className="item_ingredients_list_item">
-  //     <p>{item}</p>
-  //     {gearState && (
-  //       <input
-  //         type="checkbox"
-  //         checked={pickedIngredients.includes(item)}
-  //         onChange={() => onCheckbox(item)}
-  //       />
-  //     )}
-  //   </div>
-  // );
-
+  const handleEditMode = () => {
+    setSelectedDish(item.id);
+    toggleModal();
+  }
   const dispatch = useAppDispatch();
 
   const items = useAppSelector((state) => state.cartItems.items);
@@ -65,57 +42,42 @@ export const CartItem = (item: ICartItem) => {
   };
 
   return (
-    <div className="cart-item_container">
-      <div className="item_photos">
-        <Carousel plugins={["arrows"]}>
-          {item.photo.map((photo, index) => {
-            return <img key={index} src={photo.photo_url} alt="dish" />;
-          })}
-        </Carousel>
+    <div className="cart-item">
+      <div className="cart-item__image">
+        <img src={item.photo[0].photo_url} alt="dish" />
       </div>
-      <div className="item_info">
+      <div className="cart-item__info">
         <div>
           <h3>{item.title}</h3>
         </div>
-        <div className="item_ingredients_container">
-          <div className="item_ingredients">
-            <p>Состав: </p>
-            <p>{item.ingredient.map((ingredient) => ingredient.title)}</p>
-            <div className="item_ingredients_list">
-              {/* {gearState
-                ? item.ingredient.map((item) => renderIngredient(item))
-                : pickedIngredients.map((item) => renderIngredient(item))} */}
-            </div>
-          </div>
-          {/* <div className="button_redact_ingredients">
-            <button onClick={onGear}>
-              <img src={Gear} />
-              <span>Изменить состав</span>
-            </button>
-          </div> */}
+        <div className="dish-gear_wrapper">
+          <button className="gear-button" onClick={handleEditMode}>
+            Изменить состав
+          </button>
         </div>
-        <div className="delete-dish">
-          <Button type="button" onClick={() => deleteDish(item.id)}>
-            <img src={DeleteIcon} alt="delete" />
-          </Button>
+        <div className="cart-item__info price">{item.price} BYN</div>
+        {item.excluded_ingredients && item.excluded_ingredients.length > 0 ? <div className="cart-item__info ingredients">
+          <img className="edit__icon" src={edit} alt="edit" />
+          <div className="omited">без добавления: <span>{item.excluded_ingredients.join(', ')}</span></div>
+          </div> : null }
+      </div>
+      <div className="cart-item__actions">
+        <div className="calculate">
+          <button onClick={() => incrementNumber(item.id)} type="button">
+            <img src={Plus} alt="plus" />
+          </button>
+          <div className="quantity">{item.amount}</div>
+          <button type="button" onClick={() => decrementNumber(item.id)}>
+            <img src={Minus} alt="minus" />
+          </button>
         </div>
-
-        <div className="dish-number">
-          <div>
-            <Button onClick={() => incrementNumber(item.id)} type="button">
-              <img src={Plus} alt="plus" />
-            </Button>
-          </div>
-          <div>{item.amount}</div>
-          <div>
-            <Button type="button" onClick={() => decrementNumber(item.id)}>
-              <img src={Minus} alt="minus" />
-            </Button>
-          </div>
-        </div>
-        <div>Вес: {item.weight} г.</div>
-        <div>Калории: {item.calories}</div>
-        <div>Стоимость: {item.price} BYN</div>
+        <button
+          className="button-trash"
+          type="button"
+          onClick={() => deleteDish(item.id)}
+        >
+          <img src={DeleteIcon} alt="delete" />
+        </button>
       </div>
     </div>
   );
