@@ -1,13 +1,13 @@
 import MainPage from "./pages/mainPage/MainPage";
 import "./app.scss";
-import { Authentication } from "./pages/login/Login";
+import {Authentication} from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
 import {Cart} from "./components/cart/Cart";
 import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
-import { Toaster } from "react-hot-toast";
+import {Toaster} from "react-hot-toast";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import "./app.scss";
 import {useDispatch, useSelector} from "react-redux";
@@ -18,7 +18,6 @@ import {useEffect} from "react";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
 import Profile from "./pages/profile/Profile";
-       
 
 
 Amplify.configure(awsconfig);
@@ -34,6 +33,7 @@ const App = () => {
         checkUser();
         setAuthListener();
     }, []);
+
     async function setAuthListener() {
         Hub.listen("auth", (data: { payload: { event: any } }) => {
             switch (data.payload.event) {
@@ -68,18 +68,18 @@ const App = () => {
     return (
         <Router>
             <Navigation/>
-          <Toaster
-        position="top-right"
-        toastOptions={{
-          className: "",
-          style: {
-            border: "3px solid #212529",
-            padding: "16px",
-            color: "#FFFFFF",
-            background: "#EF752B",
-          },
-        }}
-      />
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    className: "",
+                    style: {
+                        border: "3px solid #212529",
+                        padding: "16px",
+                        color: "#FFFFFF",
+                        background: "#EF752B",
+                    },
+                }}
+            />
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route exact path="/login" component={Authentication}/>
