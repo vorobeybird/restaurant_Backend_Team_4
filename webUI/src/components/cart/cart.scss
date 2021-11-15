@@ -248,7 +248,14 @@
       width: 200px;
       height: 200px;
       margin-right: 10%;
-
+      & img {
+        padding: 10px;
+      }
+      & .actions-button__desctiption{
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
     }
     
     & .order_button_pushed {
