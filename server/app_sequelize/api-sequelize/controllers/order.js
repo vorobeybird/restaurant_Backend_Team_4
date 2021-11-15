@@ -3,6 +3,7 @@ const Dish = require("../models").Dish;
 
 module.exports = {
   list(req, res) {
+    
     return Order.findAll({
       include: [
         {
@@ -38,6 +39,30 @@ module.exports = {
         console.log(error);
         res.status(400).send(error);
       });
+  },
+
+  getByCustmerId(req, res) {
+    return Order.findAll({
+      include: [{
+        model: Dish,
+        as: "dish"
+      }],
+      where: {
+        customer_id: req.params.customerId
+      }
+    })
+    .then((orders) => {
+      if (!orders) {
+        return res.status(404).send({
+          message: "Orders Not Found",
+        });
+      }
+      return res.status(200).send(orders);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).send(error);
+    });
   },
 
   async add(req, res) {

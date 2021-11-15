@@ -1,4 +1,5 @@
 const Table = require("../models/").Table;
+const Reserve = require("../models").Reserve;
 
 module.exports = {
 
