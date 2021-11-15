@@ -29,6 +29,7 @@ export const OrderedDish = () => {
     const handleDelFromCard = (item:any) => {
         dispatch(delFromCard(item))
     }
+    console.log(card.dishes)
     return (
         <View style={styles.GreatCont}>
             <ScrollView style={styles.ScrollStyle}>

@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { MarketMain } from "../marketComponents/MarketMain";
-import { ProfileComponent } from "../profileComponents/ProfileComponent"
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MenuTabNavigation } from './menuNav';
-
+import { ProfileNavigation } from './profileNav'
 export type RootStackParamList = {
-    ProfileComponent: undefined;
+    ProfileNavigation: undefined;
     MarketMain: undefined;
     Menu: undefined;
     MenuTabNavigation: undefined;
@@ -57,8 +57,8 @@ export const BottomTabNavigation = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="ProfileComponent"
-                    component={ProfileComponent}
+                    name="ProfileNavigation"
+                    component={ProfileNavigation}
                     options={{
                         title: 'MarketMain',
                         tabBarIcon: ({ focused }) => {

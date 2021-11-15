@@ -46,7 +46,7 @@ export const MarketMain = () => {
     useEffect(() => {
         dispatch(getTotals());
       }, [cart, dispatch]);
-      console.log()
+      console.log(cart, 'lkasdjfklasdjklasd')
   return (
     <View style ={styles.mainCont}>
          <View style={styles.PictCont}>

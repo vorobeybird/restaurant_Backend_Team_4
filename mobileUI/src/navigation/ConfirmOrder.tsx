@@ -19,9 +19,17 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
 
+    const onChange  = async (event:any, selectedDate:any) => {
+        const currentDate = selectedDate || date;
+        await setDate(currentDate);
+        hideDatePicker()
+
+      };
+
     const showMode = (currentMode:any) => {
         setShow(true);
         setMode(currentMode);
+        
     };
     const showDatepicker = () => {
         showMode('date');
@@ -32,7 +40,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const hideDatePicker = () => {
         setShow(false);
     };
-    const handleConfirm = () => {
+    const handleConfirm = (val:any) => {
         
         hideDatePicker();
     };
@@ -65,12 +73,13 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                         mode={mode}
                         is24Hour={true}
                         display="default"
-                        onChange={ ()=> {handleConfirm()} }
+                        onChange={onChange}
                         
                     />
                 )}
             </View>
             <TouchableOpacity style={styles.Button} onPress={() => {
+                console.log(date)
                 handleAddDate(date.toString())
                 if(cart.orderType == 'Навынос'){
                     navigation.navigate('ChosePaymentType')

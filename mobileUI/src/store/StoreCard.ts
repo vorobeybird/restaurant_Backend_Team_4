@@ -9,14 +9,29 @@ interface CounterState {
     email:string;
     password:string;
     isSignedIn:boolean;
-    
-  }
+    adress:Adress[];
+    card:Card[]; 
+}
+interface Card {
+    num:number;
+    live:number;
+    cvv:number;
+    name:number;
+    id:number;
+    type:string;
+}
+interface Adress {
+    adress:string;
+    id: string;
+}
 interface Dish {
     id: string;
     title:string;
     photos:any[];
     price:number;
     cardQuantity:number;
+
+    
 
 }
 
@@ -30,6 +45,8 @@ export const initialState:CounterState = {
     email:"",
     password:"",
     isSignedIn:false,
+    adress:[],
+    card:[],
 }
 export const dishSlice = createSlice({
     name:"dishSlice",
@@ -113,10 +130,42 @@ export const dishSlice = createSlice({
         addSignInStat(state,action) {
             state.isSignedIn = action.payload
             console.log(state.isSignedIn)
+        },
+        addAddress(state,action) {
+            const tempProd = {... action.payload}
+            let index = Math.floor(Math.random()* 10000000)
+            console.log(index)
+            tempProd.id = state.adress.length+index
+            state.adress.push(tempProd)
+        },
+        delAdress(state,action) {
+            const nextItems = state.adress.filter(
+                adress => adress.id !== action.payload.id
+            )
+            state.adress = nextItems
+        },
+        addCard(state,action) {
+            const tempProd = {... action.payload}
+            let index = Math.floor(Math.random()* 10000000)
+            
+            tempProd.id = state.card.length+index
+            const re = new RegExp("^4");
+            if (tempProd.num.match(re) != null){
+                tempProd.type = 'visa'
+            } else {
+                tempProd.type = 'master'
+            }
+                state.card.push(tempProd)
+        },
+        delCard(state,action) {
+            const nextItems = state.card.filter(
+                card => card.id !== action.payload.id
+            )
+            state.card = nextItems
         }
 
         
     }
 })
 export default dishSlice.reducer;
-export const {reset,addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail, addSignInStat, addPassword} = dishSlice.actions;
+export const {reset,addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail, addSignInStat, addPassword, addAddress, delAdress, addCard, delCard} = dishSlice.actions;
