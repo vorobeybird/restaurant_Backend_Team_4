@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, FlatList } from 'react-native'
 import { Image } from 'react-native-elements/dist/image/Image';
 import axios from "axios"
+import { ScrollView } from 'react-native-gesture-handler';
 
 export type RootStackParamList = {
     MainMenu: undefined;
@@ -45,6 +46,7 @@ export const Menu = () => {
                 <Text style={styles.Header}>Меню</Text>
                 <Image style={styles.Pict} source={require('../../img/scop.png')}/>
             </View>
+           
             <FlatList 
             style={styles.FoodContainer}
             data={date}
@@ -52,7 +54,8 @@ export const Menu = () => {
               return (
                 <Text style={styles.FoodLinks} id={item.id} onPress={()=> navigation.navigate('Breakfast', { ...item })}>{item.title}</Text>
             )}}
-          />
+            />
+            
         </View>
     );
 };
@@ -96,7 +99,8 @@ const styles = StyleSheet.create({
         height:24
     },
     FoodContainer: {
-        top: '5%',
+        flexGrow: 1,
+        top: '2%',
         left: '10%',
     }
 });

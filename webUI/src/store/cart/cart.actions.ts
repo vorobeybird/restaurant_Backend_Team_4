@@ -8,15 +8,22 @@ export const addToCart =
     if (newItem) {
       dispatch({
         type: CartConstants.ADD_SAME_DISH,
-        payload: { ...newItem, amount: newItem.amount + 1 },
+        payload: { ...item, amount: newItem.amount + 1 },
       });
     } else {
       dispatch({
         type: CartConstants.ADD_TO_CART,
-        payload: { ...item, amount: 1 },
+        payload: { ...item, amount: 1},
       });
     }
   };
+
+export const omitIngredient = (id: number, ingredient: String) => (dispatch: AppDispatch) => {
+  dispatch({ type: CartConstants.OMIT_INGREDIENT, payload: { id, ingredient }});
+}
+export const pickIngredient = (id: number, ingredient: String) => (dispatch: AppDispatch) => {
+  dispatch({ type: CartConstants.PICK_INGREDIENT, payload: { id, ingredient }});
+}
 
 export const deleteFromCart = (id: number) => (dispatch: AppDispatch) => {
   dispatch({ type: CartConstants.REMOVE_FROM_CART, payload: id });
@@ -29,3 +36,8 @@ export const incrementNumOfDishes = (id: number) => (dispatch: AppDispatch) => {
 export const decrementNumofDishes = (id: number) => (dispatch: AppDispatch) => {
   dispatch({ type: CartConstants.DECREMENT_NUMBER_OF_DISHES, payload: id });
 };
+
+export const clearCart = () => (dispatch: AppDispatch) => {
+  dispatch({type: CartConstants.CLEAR_CART, payload: []})
+}
+
