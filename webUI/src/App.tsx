@@ -15,12 +15,9 @@ import {AppStateType} from "./store";
 import {AuthStateType} from "./store/auth/auth.reducer";
 import {useEffect} from "react";
 import { Toaster } from "react-hot-toast";
-//imports for users authentication with amplify
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
-
-
-
+import Profile from "./pages/profile/Profile";
 
 Amplify.configure(awsconfig);
 
