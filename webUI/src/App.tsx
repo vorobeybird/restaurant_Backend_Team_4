@@ -1,5 +1,4 @@
 import MainPage from "./pages/mainPage/MainPage";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./app.scss";
 import { Authentication } from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
