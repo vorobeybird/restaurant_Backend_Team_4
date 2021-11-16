@@ -14,6 +14,9 @@ const possibleTime = [
   "16:30",
   "18:00",
   "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
 ];
 
 interface ChooseTimeProps {
@@ -33,26 +36,24 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
 
   return (
     <div className="choose_time_container">
-      <div>Выберите время</div>
+      <div className="order-header" >Время</div>
       <div>
-        <div>Время</div>
         <div className="time_container">
           {possibleTime.map((timeItem) => {
             return (
-              <div className="timebox">
-                <Button
+              <div  className={
+                timeItem === props.time ? "timebox pushed_button" : "timebox"
+              }>
+                <button
+                  className="timebox__button"
                   type="button"
                   name={timeItem}
                   onClick={(e) => handleChangeTime(e, timeItem)}
                 >
-                  <span
-                    className={
-                      timeItem === props.time ? "pushed_button" : undefined
-                    }
-                  >
+                  <span>
                     {timeItem}
                   </span>
-                </Button>
+                </button>
               </div>
             );
           })}

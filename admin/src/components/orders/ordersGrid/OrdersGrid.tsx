@@ -90,7 +90,6 @@ const OrdersGrid = () => {
        let deliverAt: any = params.value;
        deliverAt = new Date(deliverAt);
         return deliverAt.toLocaleString("ru", options) 
-       //return `${deliverAt.getHours()}:${deliverAt.getMinutes()} ${deliverAt.getDate()}-${deliverAt.getMonth()}-${deliverAt.getFullYear()}`;
      },
       
     },
