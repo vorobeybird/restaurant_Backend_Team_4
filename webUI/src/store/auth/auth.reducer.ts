@@ -6,6 +6,7 @@ export type AuthStateType = {
     email: string
     password: string
     confirmCode: string
+    card_number: string
     formType: "signUp" | "signIn" | "confirmSignUp" | "signedIn" | "signOut" | "togglePassword" | "confirmForgotPassword"
     user: null | any
     //как определить тайп юзера
@@ -24,6 +25,7 @@ const initialState: AuthStateType = {
     password: "",
     confirmCode: "",
     formType: "signIn",
+    card_number: "",
     user: null
 }
 
@@ -50,7 +52,9 @@ export function authReducer(state: AuthStateType = initialState, action: actionT
         case "CHECK_USER":
             return {...state, user: action.payload, formType: "signedIn"};
         case "UPDATE_STATE" :
-            return {...state, [action.payload.name]: action.payload.value}
+            return {...state, [action.payload.name]: action.payload.value};
+        case "UPDATE_USER_ATTR" :
+            return {...state, user: action.payload};
         default:
             return state;
     }
