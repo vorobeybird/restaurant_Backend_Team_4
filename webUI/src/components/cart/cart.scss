@@ -301,6 +301,32 @@
       font-size: 24px;
     }
   }
+  .order_actions {
+  & .order_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5% -10px;
+    & > * {
+      background-color:white;
+      border: solid #979797;
+      border-radius: 15px;
+      flex: 0 0 100px;
+      height: 100px;
+      margin: 0 10px;
+      & img {
+        width: 50px;
+        height: 50px;
+      }
+      & .actions-button__desctiption{
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      
+    }
+  }
+}
   .empty-cart {
     & .empty-cart__container {
       & .cart-body {

@@ -6,7 +6,6 @@
   // min-width: 500px;
 }
 
-
 .react-calendar {
   width: 600px;
   max-width: 100%;
@@ -27,23 +26,23 @@
   box-sizing: border-box;
 }
 
-.react-calendar__navigation{
+.react-calendar__navigation {
   justify-content: right;
 }
-.react-calendar__navigation__label{
+.react-calendar__navigation__label {
   justify-content: center;
   max-width: 20%;
   font-weight: bold;
-  & ::first-letter{
+  & ::first-letter {
     text-transform: capitalize;
   }
 }
-.react-calendar__month-view__weekdays__weekday abbr{
+.react-calendar__month-view__weekdays__weekday abbr {
   text-decoration: none;
 }
 
-.react-calendar__navigation__label__labelText{
-  font-family: 'Ubuntu';
+.react-calendar__navigation__label__labelText {
+  font-family: "Ubuntu";
   display: block;
 }
 
@@ -51,7 +50,6 @@
   margin: 0;
   border: 0;
   outline: none;
-
 }
 .react-calendar button:enabled:hover {
   cursor: pointer;
@@ -65,14 +63,14 @@
   & > * {
     font-size: 24px;
   }
-  & :nth-child(1){
-    order:2;
+  & :nth-child(1) {
+    order: 2;
   }
-  & :nth-child(2){
-    order:1;
+  & :nth-child(2) {
+    order: 1;
   }
-  & :nth-child(3){
-    order:3;
+  & :nth-child(3) {
+    order: 3;
   }
 }
 .react-calendar__navigation button {
@@ -92,9 +90,8 @@
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1em;
-  
 }
-.abbr[title]{
+.abbr[title] {
   text-decoration: none;
 }
 .react-calendar__month-view__weekdays__weekday {
@@ -159,6 +156,54 @@
   background-color: #e6e6e6;
 }
 
-.abbr .aria-label{
+.abbr .aria-label {
   background-color: black;
+}
+
+@media screen and (max-width: 1023px) {
+  .react-calendar {
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    max-height: 400px;
+    background: white;
+    box-shadow: 1px 1px 3px 3px #e2e2d9;
+    border-radius: 5%;
+    line-height: 1.125em;
+  }
+  .react-calendar__tile--active {
+    background: orange;
+    border-radius: 0;
+    color: white;
+  }
+  .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+  }
+  .react-calendar__tile--now {
+    background-color: #e6e6e6;
+    border-radius: 0;
+    // background: #ffff76;
+  }
+  .react-calendar__tile {
+    max-width: 1em;
+    text-align: center;
+    padding: 1em 0.3em;
+    background: none;
+    & > * {
+      font-weight: 500;
+      font-size: 18px;
+    }
+
+  .react-calendar__navigation{
+      font-weight: 18px;
+    }
+  .react-calendar__navigation__label {
+    justify-content: center;
+    max-width: 35%;
+    & ::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+}
 }

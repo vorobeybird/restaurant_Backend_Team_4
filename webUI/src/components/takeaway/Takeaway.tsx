@@ -94,7 +94,7 @@ export const Takeaway = () => {
         <button
           className={`${
             currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_takeaway`}
+          } swiper_takeaway_left`}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -107,7 +107,7 @@ export const Takeaway = () => {
         <button
           className={`${
             currentStep === 3 ? "swiper_disabled" : undefined
-          } swiper_takeaway`}
+          } swiper_takeaway_right`}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
