@@ -79,7 +79,7 @@ export const Cart = () => {
       let dish = {} as DishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.amount;
-      dish.excluded_ingredients = item.excluded_ingredients.join(', ');
+      dish.excluded_ingredients = item.excluded_ingredients ? item.excluded_ingredients.join(', ') : '';
       return dish;
     });
 
