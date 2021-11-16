@@ -27,7 +27,7 @@
 
     return (
       <div className="enter_address_container_wrapper">
-        <div className="address_title">Адрес</div>
+        <div className="order-header">Адрес</div>
         <div className="enter_address_container">
           <Input
             type="text"
