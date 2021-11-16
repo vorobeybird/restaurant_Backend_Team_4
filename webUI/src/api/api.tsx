@@ -7,10 +7,10 @@ const instance = axios.create({
 });
 
 export const orderAPI = {
-  getOrders() {
-    axios.get(`${BASE_URL}/api/order`)
-      .then((response) => {
-        return response;
+  getOrders(customer_id: string) {
+    return axios.get(`${BASE_URL}/api/orderByCustomer/${customer_id}`)
+      .then(response => {
+        return response.data;
       })
   }
 }

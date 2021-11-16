@@ -1,13 +1,91 @@
+switch {
+  width: 100%;
+  height: 100%;
+  
+}
 .orders-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: relative;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
 
     & .orders-switcher{
         width: 80%;
-        height: 10%;
-        border-radius: 20%;
+        height: 7%;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: row;
+        background: rgba(239, 116, 47, 0.25);
+        & .orders-switcher__btn {
+          flex: 1;
+          border: none;
+          background: rgba(239, 116, 47, 0.25);
+          border-radius: 20px;
+          font-family: Ubuntu;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 1.5rem;
+          line-height: normal;
+          color: #EF742F;
+          cursor: pointer;  
+        }
+        & .orders-switcher__btn:hover {
+
+        }
+        & .active {
+          background: #FFFFFF;
+          border: 2px solid #EF742F;
+          box-sizing: border-box;
+          border-radius: 20px;
+        }
+    }
+
+    & .orders-table__container {
+      width: 95%;
+      height: 90%;
+      position: relative;
+      & table {
+        align-items: center;
+        border: none;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        position: relative;
+        & thead {
+          background: rgba(239, 116, 47, 0.25);
+          height: 10%;
+          & tr {
+            & th{
+              & .table-head {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                & .table-head__description {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: center;
+                  font-style: normal;
+                  font-weight: 600;
+                  font-size: 0.7rem;
+                  line-height: normal;
+                  letter-spacing: 0.05em;
+                  text-transform: uppercase;
+                  color: #EF742F;
+                }
+              }
+            }
+
+          }
+        }
+        & tbody {
+          height: 80%;
+        }
+      }
     }
 }
