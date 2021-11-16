@@ -1,0 +1,140 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.cardsModal {
+  box-sizing: border-box;
+  z-index: 100;
+  position: fixed;
+  top: 5vh;
+  left: 30%;
+  width: 40%;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  padding: 0 1rem 1rem;
+  color: #666;
+
+  &-header {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+
+    &__button {
+      color: rgba(96, 96, 96, 1);
+      cursor: pointer;
+      border: none;
+      outline: none;
+      background: none;
+      font-size: 2.25rem;
+      font-weight: normal;
+    }
+  }
+
+  &-content {
+    padding: 2rem;
+    border: 2px solid #EF742F;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title{
+      margin-bottom: 2rem;
+      font-size: 36px;
+      text-align: center;
+      line-height: 2rem;
+    }
+
+  }
+
+  &-form {
+    box-shadow: 0 4px 20px #DADADA;
+    border-radius: 15px;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    //align-items: center;
+
+    &__control {
+      flex: 1 1 100%;
+      &_half {
+        flex: 0 0 40%;
+      }
+    }
+
+    .button {
+      flex: 1 1 40%;
+    }
+
+    .button button {
+      max-width: 10rem;
+      height: 60px;
+      border-radius: 10px;
+      margin: 0.8rem 2rem;
+      padding: 1.5rem 0.5rem;
+      border: none;
+      background-color: rgba(239, 116, 47, 1);
+      color: white;
+      font-size: 1.2rem;
+      line-height: 1rem;
+      &:hover,
+      &:active {
+        color: rgba(239, 116, 47, 1);
+        background-color: transparent;
+        border: 2px solid rgba(239, 116, 47, 1);
+      }
+    }
+  }
+
+  }
+
+  label {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  input {
+    height: 30px;
+    width: 100%;
+    //max-width: 420px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1rem;
+    text-align: left;
+    margin: 0.8rem 0;
+    padding: 1.5rem 0.5rem;
+    border: 1px solid #d8d8d8;
+    color: rgba(0, 0, 0, 0.6);
+    background: #E2E6EE;
+    border-radius: 10px;
+  }
+
+  input:focus,
+  input:focus-visible {
+    border-color: #fff;
+    outline: #ef742f solid 2px;
+  }
+
+  .button {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+@media (min-width: 768px) {
+  .modal {
+    left: calc(50% - 20rem);
+    width: 40rem;
+  }
+}
