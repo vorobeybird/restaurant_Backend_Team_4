@@ -12,7 +12,7 @@ import {
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-
+import { getOrder } from '../store/StoreCard'
 type RootStackParamList = {
   navigate: any;
 };
@@ -44,8 +44,12 @@ export const OrderDetails = ({
   route: any;
 }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
+  const handleGetOrder = (item:any) => {
+    dispatch(getOrder(item));
+}
   const cart = useSelector(state => state.dishes);
-
+  handleGetOrder(cart)
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -88,7 +92,7 @@ export const OrderDetails = ({
       .then(response => console.log(response))
       .catch(err => console.log(err));
   };
-  console.log(cart.dishes);
+  console.log(cart);
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>

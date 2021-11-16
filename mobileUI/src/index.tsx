@@ -3,13 +3,14 @@ import Amplify from '@aws-amplify/core'
 import awsconfig from './aws-exports'
 import { Authenticator, ConfirmSignIn, ForgotPassword } from 'aws-amplify-react-native'
 import { BottomTabNavigation } from './navigation/nav'
-import { Store } from './store/index'
-
+import  store  from './store/index'
 import { Provider, useSelector, useDispatch } from 'react-redux'
 import SignUp from './authComponents/SignUp'
 import SignIn from './authComponents/SignIn'
 import { addSignInStat} from './store/StoreCard'
-
+import { persistStore } from "redux-persist"
+import { PersistGate } from "redux-persist/integration/react"
+ 
 import ConfirmSignUp from './authComponents/ConfirmSignUp'
 
 Amplify.configure({
@@ -62,10 +63,12 @@ const ShowContent = () => {
 
 
 const App = () => {
-  
+  let persistor = persistStore(store)
   return (
-      <Provider store={Store}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <ShowContent/>
+        </PersistGate>
       </Provider>
     )
   

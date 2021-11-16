@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 type RootStackParamList = {
-    ConfirmOrder: undefined;
+    ConfirmOrderTeble: undefined;
     navigate:any;
   }
 
 
-export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
@@ -64,6 +64,12 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                         <Text style={styles.dateText}>{date.getDay()}.{date.getMonth()}.{date.getFullYear()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => console.log('hyi')} style={styles.box} onPressIn={() => {
+                        
+                    }}>
+                        <Text style={styles.dateText}></Text>
+                        <Image style={styles.dateImage} source={require('../../img/vect.png')}/>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>
                         <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
     box:{
         top:'5%',
         width:'90%',
-        height:'20%',
+        height:'15%',
         alignSelf:'center',
         justifyContent:'space-between',
         borderRadius: 4,

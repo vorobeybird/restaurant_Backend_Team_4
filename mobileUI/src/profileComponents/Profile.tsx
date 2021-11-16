@@ -16,12 +16,13 @@ type RootStackParamList = {
 const Profile = () => {
   const navigation = useNavigation<RootStackParamList>();
   const cart = useSelector((state) => state.dishes);
+  console.log(cart.userInfo)
   return (
     <View style={styles.MainCont}>
         <View style={styles.Conts}>
-          <Text style={styles.Header}>Фамилия Имя</Text>
-          <Text style={styles.Email}>email@gmail.com</Text>
-          <Text style={styles.Phone}>+375(29)000-00-00</Text>
+          <Text style={styles.Header}>{cart.userInfo.name} {cart.userInfo.surName} </Text>
+          <Text style={styles.Email}> {cart.email}</Text>
+          <Text style={styles.Phone}> {cart.userInfo.phone}</Text>
           <TouchableOpacity style={styles.ButCont} onPress={() => {navigation.navigate('PersonalData')}}>
             <Text style={styles.ButText}>Изменить  {'>'}</Text>
           </TouchableOpacity>

@@ -83,6 +83,8 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Навынос");
                 } else if(checkedSecond) {
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Доставка");
+                } else if(checkedFirs) {
+                    navigation.navigate('ConfirmOrderTable');handleAddOrderType("Бронь стола"); 
                 }
             }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>

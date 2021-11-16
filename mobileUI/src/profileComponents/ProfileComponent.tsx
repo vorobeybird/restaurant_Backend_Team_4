@@ -6,7 +6,11 @@ import {
 } from 'react-native'
 import Profile from './Profile';
 import { Links } from './Links';
+import {useSelector} from 'react-redux'
 export const ProfileComponent = () => {
+
+  const cart = useSelector((state) => state.dishes);
+  console.log(cart.userInfo, 'asdf')
   return (
     <View style={styles.Wrapper}>
       <View style={styles.PictCont}>

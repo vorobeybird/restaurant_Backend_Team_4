@@ -11,6 +11,8 @@ interface CounterState {
     isSignedIn:boolean;
     adress:Adress[];
     card:Card[]; 
+    userInfo:UserInfo[];
+    order:any[];
 }
 interface Card {
     num:number;
@@ -19,6 +21,11 @@ interface Card {
     name:number;
     id:number;
     type:string;
+}
+interface UserInfo {
+  name:string;
+  surName:string;
+  phone:string;
 }
 interface Adress {
     adress:string;
@@ -48,6 +55,7 @@ export const initialState:CounterState = {
     isSignedIn:false,
     adress:[],
     card:[],
+    userInfo:[],
 }
 
 export const dishSlice = createSlice({
@@ -94,7 +102,7 @@ export const dishSlice = createSlice({
 
           cartTotal.total += itemTotal;
           cartTotal.quantity += cardQuantity;
-
+          
           return cartTotal;
         },
         {
@@ -102,6 +110,9 @@ export const dishSlice = createSlice({
           quantity: 0,
         },
       )
+      total = parseFloat(total.toFixed(2));
+            state.cardTotalQuantity = quantity;
+            state.cardTotalAmount = total;
     },
         addSignInStat(state,action) {
             state.isSignedIn = action.payload
@@ -169,9 +180,14 @@ export const dishSlice = createSlice({
           state.password = action.payload
           console.log(state.password)
       },
-        
+      addUserInfo(state,action) {
+        state.userInfo = action.payload
+      },
+      getOrder(state,action) {
+        state.order = action.payload
+      }
     }
 })
 export default dishSlice.reducer;
-export const {reset,addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail, addSignInStat, addPassword, addAddress, delAdress, addCard, delCard, addExcludedIngredients} = dishSlice.actions;
+export const {reset,addToCard,delFromCard, decreaseCartQuant, getTotals, clearCart, addOrderType, addDate, addPaymentType, addEmail, addSignInStat, addPassword, addAddress, delAdress, addCard, delCard, addExcludedIngredients, addUserInfo, getOrder} = dishSlice.actions;
 

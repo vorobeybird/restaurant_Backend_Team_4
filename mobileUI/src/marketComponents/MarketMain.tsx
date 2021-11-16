@@ -39,6 +39,7 @@ export const MarketMain = () => {
   const cart = useSelector(state => state.dishes);
   const dispatch = useDispatch();
   const navigation = useNavigation<RootStackParamList>();
+  console.log(cart.userInfo.name, 'asdf')
   const handleClear = () => {
     dispatch(clearCart());
   };
@@ -46,8 +47,9 @@ export const MarketMain = () => {
 
     useEffect(() => {
         dispatch(getTotals());
+        
       }, [cart, dispatch]);
-      console.log(cart, 'lkasdjfklasdjklasd')
+      
 
   return (
     <View style={styles.mainCont}>
