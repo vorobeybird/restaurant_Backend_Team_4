@@ -40,8 +40,9 @@ export const EnterContacts = ({ ...props }: EnterContactsProps) => {
 
   return (
     <div className="enter_contacts_container">
-      <div className="order-header">Контакты</div>
+      <div>Контакты</div>
       <div className="contact_information">
+        <div>Контактная информация</div>
         <Input
           type="text"
           onChange={handleChangeName}
@@ -51,21 +52,23 @@ export const EnterContacts = ({ ...props }: EnterContactsProps) => {
         {props.isValidName() ? (
           <div>this name is valid</div>
         ) : (
-          undefined
+          <div>
+            Это поле должно содержать 2-30 знаков, без специальных символов (#,
+            %, &, !, $, etc.) и чисел (0-9). Обязательно к заполнению.
+          </div>
         )}
         <Input
           type="text"
           onChange={handleChangePhone}
-          placeholder="Телефон"
+          placeholder="+375 (_ _) _ _ _ _ _ _ _ _"
           value={props.phone}
         />
         {props.isValidPhone() ? (
           <div>this phone is valid</div>
         ) : (
-          undefined
+          <div>Телефон должен содержать 9 цифр. Обязательно к заполнению.</div>
         )}
       </div>
-      
     </div>
   );
 };
