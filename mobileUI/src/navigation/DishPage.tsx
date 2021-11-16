@@ -43,7 +43,9 @@ export const DishPage = ({
             source={require('../../img/arrowLeft.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.TitleText}>{title}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.TitleText}>
+          {title}
+        </Text>
       </View>
       <ScrollView pagingEnabled horizontal style={styles.Pict}>
         {photos.map((image: any, index: any) => {
@@ -130,25 +132,22 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   Arrow: {
-    top: '26%',
     width: 30,
     height: 30,
-    marginRight: 15,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   TitleText: {
-    alignSelf: 'center',
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
+    marginLeft: 5,
   },
   Title: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    width: '100%',
-    height: '10%',
-    alignSelf: 'center',
+    alignItems: 'center',
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
