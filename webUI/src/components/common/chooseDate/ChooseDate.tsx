@@ -1,8 +1,10 @@
-  import "./chooseDate.scss";
-  import Calendar from "react-calendar";
-  // import "react-calendar/dist/Calendar.css";
-  import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-  import { changeDate } from "../../../store/order/order.actions";
+
+import "./chooseDate.scss";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+import { changeDate } from "../../../store/order/order.actions";
+
 
   export const ChooseDate = () => {
     const date = useAppSelector((state) => state.order.order.delivery_date);

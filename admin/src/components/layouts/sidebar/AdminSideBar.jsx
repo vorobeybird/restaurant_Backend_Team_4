@@ -19,7 +19,8 @@ import {
   Person,
   PersonAdd,
   PeopleAlt, 
-  Fastfood
+  Fastfood,
+  Event
 } from '@mui/icons-material';
 import NavItem from '../navbar/navitem/NavItem';
 
@@ -33,22 +34,22 @@ const items = [
   {
     href: '/',
     icon: BarChart,
-    title: 'Dashboard'
+    title: 'Статистика'
   },
   {
     href: '/orders',
     icon: ShoppingBasket,
-    title: 'Orders'
+    title: 'Заказы'
   },
   {
     href: '/dishes',
     icon: Fastfood,
-    title: 'Dishes'
+    title: 'Блюда'
   },
   {
-    href: '/customers',
-    icon: PeopleAlt,
-    title: 'Customers'
+    href: '/reservations',
+    icon: Event,
+    title: 'Бронирование'
   },
   {
     href: '/account',

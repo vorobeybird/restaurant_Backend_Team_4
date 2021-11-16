@@ -122,7 +122,7 @@ const OrdersGrid = () => {
   ];
 
   const setOrder = async () => {
-    apiFetch("PUT", `${process.env.REACT_APP_API}/order`, {status}, currentOrder.id)
+   await apiFetch("PUT", `${process.env.REACT_APP_API}/order`, {status}, currentOrder.id)
   .then(response => {
      setOpen(false);
   })
@@ -132,10 +132,9 @@ const OrdersGrid = () => {
   })
   }
 
- const fetchOrders = () => {
-  apiFetch("GET", `${process.env.REACT_APP_API}/order`)
+ const fetchOrders = async () => {
+ await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
   .then(response=> {
-      console.log(response.data);
       setOrders(response.data);
   })
   .catch(err=>{
