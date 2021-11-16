@@ -29,9 +29,9 @@ export function Authentication() {
     async function signUpHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            const {name, family_name, email, phone_number, password, card_number} = authState;
+            const {name, family_name, email, phone_number, password} = authState;
 
-            await Auth.signUp({username: email, password, attributes: {name, family_name, email, phone_number, "custom:card_number": card_number}});
+            await Auth.signUp({username: email, password, attributes: {name, family_name, email, phone_number}});
             dispatch({type: "SIGN_UP"});
             // можем добавить объект со свойством attributes
         } catch (err) {
@@ -147,10 +147,6 @@ export function Authentication() {
                                type="text"
                                placeholder="Телефон"
                                onChange={onChangeHandler}/>
-                        <Input name="card_number"
-                               type="text"
-                               placeholder="CCN"
-                               onChange={onChangeHandler}/>
                         <Input name="password"
                                type="password"
                                placeholder="Пароль"
@@ -209,7 +205,6 @@ export function Authentication() {
                     </form>
                 </div>}
                 {formType === "signedIn" && <Redirect to="/"/>}
-
             </section>
         </>
     )
