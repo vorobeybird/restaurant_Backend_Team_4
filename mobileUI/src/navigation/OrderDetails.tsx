@@ -12,10 +12,8 @@ import {
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import { getOrder } from '../store/StoreCard'
-type RootStackParamList = {
-  navigate: any;
-};
+import { getOrder, clearCart } from '../store/StoreCard';
+
 
 interface DishShortInfo {
   dish_id: number;
@@ -38,7 +36,7 @@ interface Order {
 
 export const OrderDetails = ({
   navigation: {goBack},
-  route,
+  route
 }: {
   navigation: any;
   route: any;
@@ -47,9 +45,15 @@ export const OrderDetails = ({
   const dispatch = useDispatch()
   const handleGetOrder = (item:any) => {
     dispatch(getOrder(item));
-}
+  }
+  const handleGetHistory = (item:any) => {
+    dispatch(getHistory(item));
+  }
+  const handleclearCart = () => {
+    dispatch(clearCart());
+  }
   const cart = useSelector(state => state.dishes);
-  handleGetOrder(cart)
+
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -78,9 +82,9 @@ export const OrderDetails = ({
         : '';
       return dish;
     });
-
+    
     order.dish = dishesShortInfo;
-    console.log(order);
+    
     axios
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
@@ -92,7 +96,6 @@ export const OrderDetails = ({
       .then(response => console.log(response))
       .catch(err => console.log(err));
   };
-  console.log(cart);
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -161,6 +164,11 @@ export const OrderDetails = ({
         onPress={() => {
           showToast();
           onMakingOrder();
+          clearCart()
+          
+          navigation.navigate('Menu')
+          
+          
         }}>
         <Text style={styles.ButText}> ГОТОВО </Text>
       </TouchableOpacity>

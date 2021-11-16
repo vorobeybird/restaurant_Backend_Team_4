@@ -43,7 +43,7 @@ export const MarketMain = () => {
   const handleClear = () => {
     dispatch(clearCart());
   };
-
+  console.log(cart)
 
     useEffect(() => {
         dispatch(getTotals());

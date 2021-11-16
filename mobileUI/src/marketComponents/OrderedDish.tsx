@@ -180,7 +180,3 @@ const styles = StyleSheet.create({
     color: '#FF4D00',
   },
 });
-
-{
-  /*item.price * item.cardQuantity*/
-}

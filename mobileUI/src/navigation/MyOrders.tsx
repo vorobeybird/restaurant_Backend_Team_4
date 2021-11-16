@@ -14,8 +14,8 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
     const navigation = useNavigation()
     
     const cart = useSelector((state) => state.dishes);
-    console.log(cart, 'MyOrders')
     
+    console.log(cart)
     const [state, setState] = useState( true )
     return (
         <View style={styles.Wrapper}>
@@ -42,12 +42,14 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                             <Text style={styles.color}> ДАТА</Text>
                                             <Text style={styles.color}> ВРЕМЯ</Text>
                                             <Text style={styles.color}> ОПЛАТА</Text>
+                                            <Text style={styles.color}>СТАТУС</Text>
                                         </View>
                                         <View>
                                             <Text style={styles.simpText}>{cart.orderType}</Text>
                                             <Text style={styles.simpText}>13 октября</Text>
                                             <Text style={styles.simpText}>15:00</Text>
                                             <Text style={styles.simpText}>{cart.paymentType}</Text>
+                                            <Text style={styles.simpText}>Принят в работу</Text>
                                         </View>
                                         </View>
                                     </View>
@@ -57,6 +59,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                         <Text style={styles.color}>ЦЕНА</Text>
                                         <Text style={styles.color}>КОЛ-ВО</Text>
                                         <Text style={styles.color}>СУММА</Text>
+                                        
                                         </View>
                                         <View
                                         style={{
@@ -73,6 +76,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                             <Text style={styles.simpText}>
                                             {item.price * item.cardQuantity} BYN
                                             </Text>
+                                            
                                         </View>
                                         ))}
                                         <View
@@ -103,7 +107,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                     (   
                         <View>
                         <View>
-                            {cart.dishes.length ? (
+                            {cart.order.dishes.length ? (
                                 <View>
                                     <View style={styles.orderType}>
                                     <View style={styles.flexWrapper}>
@@ -135,7 +139,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                         borderBottomWidth: 0.3,
                                     }}
                                     />
-                                    {cart.dishes.map((item: any) => (
+                                    {cart.order.dishes.map((item: any) => (
                                     <View style={styles.contContent} key={item.id}>
                                         <Text style={styles.simpText}>{item.title}</Text>
                                         <Text style={styles.Price}> {item.price} BYN</Text>

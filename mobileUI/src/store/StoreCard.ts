@@ -14,6 +14,7 @@ interface CounterState {
     userInfo:UserInfo[];
     order:any[];
 }
+
 interface Card {
     num:number;
     live:number;
@@ -44,18 +45,20 @@ interface Dish {
 }
 
 export const initialState:CounterState = {
-    dishes: [],
-    cardTotalQuantity: 0,
-    cardTotalAmount: 0,
-    orderType: "",
-    date: "",
-    paymentType: "",
-    email:"",
-    password:"",
-    isSignedIn:false,
-    adress:[],
-    card:[],
-    userInfo:[],
+  dishes: [],
+  cardTotalQuantity: 0,
+  cardTotalAmount: 0,
+  orderType: "",
+  date: "",
+  paymentType: "",
+  email: "",
+  password: "",
+  isSignedIn: false,
+  adress: [],
+  card: [],
+  userInfo: [],
+  order: [],
+  history: [],
 }
 
 export const dishSlice = createSlice({
@@ -159,6 +162,7 @@ export const dishSlice = createSlice({
         },
         clearCart(state){
           state.dishes = []
+          console.log(state.order)
       },
       addOrderType(state, action) {
           state.orderType = action.payload

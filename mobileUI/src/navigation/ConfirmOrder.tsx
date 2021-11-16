@@ -49,6 +49,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
         dispatch(addDate(item))
     };
     
+    
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
@@ -61,7 +62,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
                     }}>
-                        <Text style={styles.dateText}>{date.getDay()}.{date.getMonth()}.{date.getFullYear()}</Text>
+                        <Text style={styles.dateText}>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Button, Touchable} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, Dimensions} from 'react-native';
 import { useState } from "react";
 import { addDate } from '../store/StoreCard' 
 import { useDispatch, useSelector } from "react-redux";
@@ -48,7 +48,45 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
+
+
+    const [chooseTable, setChooseTable] = useState('Выберите стол')
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const changeModalVisible = (bool:any) => {
+        setIsModalVisible(bool)
+    }
+    const WIDTH = Dimensions.get('window').width
+    const HEIGHT = Dimensions.get('window').height
+    const options = [ 'На двоих',  'На четверых', 'На шестерых', 'На восьмерых', 'На десятерых']
+
     
+    const ModalPicker = () => {
+
+        const onPressItem = (option:any) => {
+            changeModalVisible(false)
+            setChooseTable(option)
+        }
+
+        const option = options.map((item, index) => {
+            return (
+                <TouchableOpacity
+                    key={index}
+                    style={styles.option}
+                    onPress={() => onPressItem(item)}
+                    >
+                        <Text style={styles.modalText}>{item}</Text>
+                </TouchableOpacity>
+            )
+        })
+        return (
+            <TouchableOpacity onPress={() => changeModalVisible(false)} style={styles.container}>
+                <View style={[styles.modal, {width: WIDTH-WIDTH*0.2, height: HEIGHT/2}]}>
+                    {option}
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
@@ -61,15 +99,20 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
                     }}>
-                        <Text style={styles.dateText}>{date.getDay()}.{date.getMonth()}.{date.getFullYear()}</Text>
+                        <Text style={styles.dateText}>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => console.log('hyi')} style={styles.box} onPressIn={() => {
+
+                    <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
                         
                     }}>
-                        <Text style={styles.dateText}></Text>
+                        <Text style={styles.dateText}>{chooseTable}</Text>
                         <Image style={styles.dateImage} source={require('../../img/vect.png')}/>
                     </TouchableOpacity>
+                    <Modal transparent={true} animationType='fade' visible={isModalVisible} onRequestClose={() => changeModalVisible(false)}>
+                        <ModalPicker/>
+                    </Modal>
+
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>
                         <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
@@ -104,6 +147,28 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
 const styles = StyleSheet.create({
     dateImage:{
         right:15, 
+    },
+    modal:{
+       
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'white',
+        borderRadius:5,
+        elevation:5,
+    },
+    option:{
+        alignItems:'center',
+    },
+    modalText:{
+
+        margin:20,
+        fontWeight:'700',
+        color:'black',
+    },
+    container:{
+        top:'20%',
+        alignItems:'center',
+        justifyContent:'center',
     },
     dateText:{
         left:10,
