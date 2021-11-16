@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import dayjs from 'dayjs';
-import { Box, Button, Container, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Typography} from '@mui/material';
+import { Button, Container, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -21,26 +21,6 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-
-/* interface IDish {
-  id: number;
-  title: string;
-  default_ingredients: Array<Number>;
-  price: number;
-  weight: number;
-  photos: Array<Object>
-  categories: Array<Number>;
-  ingredients: Array<Number>;
-  calories: number;
-}
-interface IDishDIalogProps {
-dish: IDish;
-type: string;
-handleClose: any;
-open: boolean;
-fetchDishes: Function;
-} */
 
 const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
 
