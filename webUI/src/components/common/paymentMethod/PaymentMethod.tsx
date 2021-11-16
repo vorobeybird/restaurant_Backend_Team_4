@@ -15,9 +15,9 @@ export const PaymentMethod = () => {
 
   return (
     <div className="payment_method_container">
-      <div className="order-header">Оплата</div>
+      <div>Оплата</div>
       <div>
-        <form className="payment_method__form">
+        <form>
           <div className="radio">
             <label>
               <input

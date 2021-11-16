@@ -89,12 +89,11 @@ export const Takeaway = () => {
 
   return (
     <div className="takeaway_container_wrapper">
-      <h1 style={{"padding": "20px"}}>Оформление заказа</h1>
       <div className="takeaway_container">
         <button
           className={`${
             currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_takeaway_left`}
+          } swiper_takeaway`}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -107,7 +106,7 @@ export const Takeaway = () => {
         <button
           className={`${
             currentStep === 3 ? "swiper_disabled" : undefined
-          } swiper_takeaway_right`}
+          } swiper_takeaway`}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
