@@ -1,3 +1,10 @@
+.choose_date {
+  // display: flex;
+  // flex: 1;
+  // justify-content: space-around;
+  // align-items: center;
+  // min-width: 500px;
+}
 
 .react-calendar {
   width: 600px;
@@ -187,15 +194,16 @@
       font-size: 18px;
     }
 
-    .react-calendar__navigation {
+  .react-calendar__navigation{
       font-weight: 18px;
     }
-    .react-calendar__navigation__label {
-      justify-content: center;
-      max-width: 35%;
-      & ::first-letter {
-        text-transform: capitalize;
-      }
+  .react-calendar__navigation__label {
+    justify-content: center;
+    max-width: 35%;
+    & ::first-letter {
+      text-transform: capitalize;
     }
   }
+
+}
 }
