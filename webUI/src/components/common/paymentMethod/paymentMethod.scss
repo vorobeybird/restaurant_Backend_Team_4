@@ -8,7 +8,6 @@
   height: 100% ;
   max-width: 350px;
   max-height: 200px;
-}
 
 .radio{
   font-size: 36px;
@@ -17,30 +16,28 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  label{
+    input{
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+    
+      border: 2px solid #999;
+      transition: 0.2s all linear;
+      margin-right: 5px;
+    }
+    input:checked {
+      border: 5px solid #EF742F;
+    }
+  }
+  
 }
-input[type='radio']{
-  transform: scale(1);
 }
 
-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 2px solid #999;
-  transition: 0.2s all linear;
-  margin-right: 5px;
-
-}
-
-input:checked {
-
-  border: 5px solid #EF742F;
-}
 
 @media screen and (max-width: 1023px) {
   .payment_method_container {
@@ -54,7 +51,7 @@ input:checked {
     max-width: 300px;
     max-height: 100px;
   }
-  .radio{
+  .payment_method_container .radio{
     font-size: 24px;
     font-weight: 500;
     display: flex;
