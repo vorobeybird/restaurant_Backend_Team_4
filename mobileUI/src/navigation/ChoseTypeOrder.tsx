@@ -97,6 +97,7 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
 
 const styles = StyleSheet.create({
     imgLeft:{
+        
         left:20,
     },
     prgressText:{
@@ -162,6 +163,7 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     OrderText:{
+        top:12,
         lineHeight: 24,
         color:'black',
         fontFamily: 'Roboto',

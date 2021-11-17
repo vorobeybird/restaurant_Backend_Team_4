@@ -89,12 +89,12 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         top:'6%',
         width:'90%',
-        borderWidth:1,
+        
         borderRadius:4,
         borderColor:'#C6C6C6',
         marginBottom:'2%',
-        
-        color:'black'
+        backgroundColor:'#E2E6EE',
+        color:'#666666'
 
     },
     Title: {
