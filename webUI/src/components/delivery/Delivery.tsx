@@ -150,7 +150,7 @@
           <button
             className={`${
               currentStep === 0 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_left`}
             type="button"
             onClick={handleChangeCurrentStepPrev}
           >
@@ -163,7 +163,7 @@
           <button
             className={`${
               currentStep === 4 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_right`}
             type="button"
             onClick={handleChangeCurrentStepNext}
           >

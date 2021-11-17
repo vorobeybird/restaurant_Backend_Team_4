@@ -58,33 +58,35 @@
       min-width: 300px;
       min-height: 500px;
       padding-bottom: 100px;
+      .order-header{
+        position: absolute;
+        font-size: 24px;
+        color: #606060;;
+        top: 30px;
+        left: 40px;
+      }
+      .swiper_disabled {
+        opacity: 0.2;
+      }
+      
+      .swiper_takeaway_left {
+        border: none;
+        background-color: white;
+        position: absolute;
+        bottom: 0;
+      }
+  
+      .swiper_takeaway_right {
+        border: none;
+        background-color: white;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
     }
 
       
-    .order-header{
-      position: absolute;
-      font-size: 24px;
-      color: #606060;;
-      top: 30px;
-      left: 40px;
-    }
 
-    .swiper_disabled {
-      opacity: 0.2;
-    }
-    
-    .swiper_takeaway_left {
-      border: none;
-      background-color: white;
-      position: absolute;
-      bottom: 0;
-    }
 
-    .swiper_takeaway_right {
-      border: none;
-      background-color: white;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
+
   }

@@ -41,7 +41,7 @@
     return (
       <div className="enter_contacts_container">
         <div className="order-header">Контакты</div>
-        <div className="contact_information">
+        <div className="contact_information active">
           <Input
             type="text"
             onChange={handleChangeName}
