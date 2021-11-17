@@ -17,7 +17,8 @@
     const dispatch = useAppDispatch();
 
     const order = useAppSelector((state) => state.order.order);
-
+    const user = useAppSelector(state => state.auth.user);
+    
     const handleChangeName = (e: any) => {
       props.setName(e.target.value);
     };
