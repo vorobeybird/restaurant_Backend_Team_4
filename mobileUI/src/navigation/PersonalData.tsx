@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button, TextInput} from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
-
+import { addUserInfo} from '../store/StoreCard'
+import { useDispatch } from "react-redux";
 
 type RootStackParamList = {
     
@@ -12,6 +13,17 @@ type RootStackParamList = {
 
 export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+
+    const [state, setState] = useState({
+        name:'',
+        surName:'',
+        phone:'',  
+    })
+
+    const handleAddUserInfo = (item:any) => {
+        dispatch(addUserInfo(item))
+    }
     return (
       <View style={styles.Wrapper}>
           <View style={styles.Title}>
@@ -19,51 +31,35 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                 <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
             </TouchableOpacity>
             <Text style={styles.TitleText}>Личные данные</Text>
-            
             </View>
             <View style={styles.Wrap}>
-
-            
+            <Text style={styles.simpText}> Имя </Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
                     placeholder='Имя'
-                    onChangeText={(val) => val}
+                    onChangeText={(val) => setState({...state,name:val})}
                     
                 />
+            <Text style={styles.simpText}> Фамилия </Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
                     placeholder='Фамилия'
-                    onChangeText={(val) => val}
+                    onChangeText={(val) => setState({...state,surName:val})}
                     
                 />
+            <Text style={styles.simpText}> Телефон </Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
                     placeholder='Телефон'
-                    onChangeText={(val) => val}
+                    onChangeText={(val) => setState({...state,phone:val})}
                     
                 />
             </View>
-            <View style={styles.Container}>
-                <Text style={styles.simpText}>Изменить пароль</Text>
-                <TextInput 
-                        placeholderTextColor="#C6C6C6" 
-                        style={styles.street}
-                        placeholder='Телефон'
-                        onChangeText={(val) => val}
-                        
-                    />
-                <TextInput 
-                        placeholderTextColor="#C6C6C6" 
-                        style={styles.street}
-                        placeholder='Телефон'
-                        onChangeText={(val) => val}
-                        
-                    />
-            </View>
-            <TouchableOpacity style={styles.butStyle} onPress={()=> {navigation.navigate('ProfileComponent')}}>
+            
+            <TouchableOpacity style={styles.butStyle} onPress={()=> {handleAddUserInfo(state);navigation.navigate('ProfileComponent')}}>
                     <Text style={styles.ButText}> ГОТОВО </Text>
             </TouchableOpacity>
       </View>
@@ -156,4 +152,5 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         color: '#FFFFFF',
     },
+
 })

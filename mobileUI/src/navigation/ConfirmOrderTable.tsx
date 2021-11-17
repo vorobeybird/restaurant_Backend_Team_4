@@ -172,6 +172,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                     />
                 )}
             </View>
+            <Text style={styles.prgressText}> шаг 2/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
                 
                 if(chooseTable ==='На двоих') {
@@ -251,6 +252,12 @@ const styles = StyleSheet.create({
         top:'20%',
         alignItems:'center',
         justifyContent:'center',
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
     },
     dateText:{
         left:10,

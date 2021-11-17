@@ -85,6 +85,7 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
             </View>
+            <Text style={styles.prgressText}> шаг 3/3</Text>
             <TouchableOpacity style={styles.Button} onPress={async() => { 
                     if(checkedFirs){
                         handleAddOrderType("0");
@@ -126,6 +127,12 @@ const styles = StyleSheet.create({
         height:30,
         marginRight:15,
         marginLeft:5,
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
     },
     TitleText:{
         alignSelf:'center',
