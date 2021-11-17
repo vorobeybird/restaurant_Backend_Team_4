@@ -145,11 +145,12 @@
 
     return (
       <div className="delivery_container_wrapper">
+        <h1 style={{"padding": "20px"}}>Оформление заказа</h1>
         <div className="delivery_container">
           <button
             className={`${
               currentStep === 0 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_left`}
             type="button"
             onClick={handleChangeCurrentStepPrev}
           >
@@ -162,7 +163,7 @@
           <button
             className={`${
               currentStep === 4 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_right`}
             type="button"
             onClick={handleChangeCurrentStepNext}
           >

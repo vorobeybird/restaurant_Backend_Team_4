@@ -1,33 +1,34 @@
-  import { IAddress } from "../../delivery/Delivery";
-  import Input from "../input/Input";
-  import "./enterAddress.scss";
+import { IAddress } from "../../delivery/Delivery";
+import Input from "../input/Input";
+import "./enterAddress.scss";
 
-  interface EnterAddressProps {
-    address: IAddress;
-    setAddress: (address: IAddress) => void;
-    isValidAddress: (address: IAddress) => boolean;
-  }
+interface EnterAddressProps {
+  address: IAddress;
+  setAddress: (address: IAddress) => void;
+  isValidAddress: (address: IAddress) => boolean;
+}
 
-  export const EnterAddress = ({ ...props }: EnterAddressProps) => {
-    const handleChangeStreet = (e: any) => {
-      props.setAddress({ ...props.address, street: e.target.value });
-    };
+export const EnterAddress = ({ ...props }: EnterAddressProps) => {
+  const handleChangeStreet = (e: any) => {
+    props.setAddress({ ...props.address, street: e.target.value });
+  };
 
-    const handleChangeHouseNumber = (e: any) => {
-      props.setAddress({ ...props.address, houseNumber: e.target.value });
-    };
+  const handleChangeHouseNumber = (e: any) => {
+    props.setAddress({ ...props.address, houseNumber: e.target.value });
+  };
 
-    const handleChangeHouseBuilding = (e: any) => {
-      props.setAddress({ ...props.address, houseBuilding: e.target.value });
-    };
+  const handleChangeHouseBuilding = (e: any) => {
+    props.setAddress({ ...props.address, houseBuilding: e.target.value });
+  };
 
-    const handleChangeApartment = (e: any) => {
-      props.setAddress({ ...props.address, apartment: e.target.value });
-    };
+  const handleChangeApartment = (e: any) => {
+    props.setAddress({ ...props.address, apartment: e.target.value });
+  };
 
-    return (
-      <div className="enter_address_container_wrapper">
-        <div className="order-header">Адрес</div>
+  return (
+    <div className="enter_address_container_wrapper">
+      <div className="order-header">Адрес</div>
+      <div>
         <div className="enter_address_container">
           <Input
             type="text"
@@ -60,5 +61,6 @@
           <div>Invalid Address</div>
         )}
       </div>
-    );
-  };
+    </div>
+  );
+};
