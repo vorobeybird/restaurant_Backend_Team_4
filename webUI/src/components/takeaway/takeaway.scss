@@ -8,16 +8,16 @@
     border-radius: 5%;
     min-width: 1200px;
     min-height: 800px;
+    .order-header{
+      position: absolute;
+      font-size: 48px;
+      color: #606060;;
+      top: 120px;
+      left: 96px;
+    }
   }
 
-  .order-header{
-    position: absolute;
-    font-size: 48px;
-    color: #606060;;
-    top: 120px;
-    left: 96px;
 
-  }
   .swiper_disabled {
     opacity: 0.2;
   }

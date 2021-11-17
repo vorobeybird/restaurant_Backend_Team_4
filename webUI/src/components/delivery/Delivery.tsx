@@ -145,6 +145,7 @@
 
     return (
       <div className="delivery_container_wrapper">
+        <h1 style={{"padding": "20px"}}>Оформление заказа</h1>
         <div className="delivery_container">
           <button
             className={`${

@@ -1,19 +1,31 @@
   .enter_address_container_wrapper {
-    position: relative;
     display: flex;
     flex: 1;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
-
     & input:nth-child(1) {
       margin-top: 10px;
     }
+
+    .enter_address_container{
+      background-color: aqua;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 600px;
+      height: 100%;
+      max-height: 250px;
+      :first-child{
+        width: 100%;
+      }
+      :not(:first-child) {
+        flex: 1;
+      }
+      .main_input_container{
+        margin: 25px;
+      }
+    }
   }
 
-  .address_title {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-  }
