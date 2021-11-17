@@ -3,7 +3,7 @@ import {Auth} from 'aws-amplify'
 import { View, Text,TouchableOpacity, Button, TextInput, StyleSheet, Dimensions,Alert} from 'react-native';
 import { BottomSheet } from "react-native-elements/dist/bottomSheet/BottomSheet";
 
-import {addEmail, addPassword} from '../store/StoreCard'
+import {addEmail, addPassword, addUserInfo} from '../store/StoreCard'
 import { useDispatch } from "react-redux";
 
 
@@ -13,6 +13,9 @@ const SignUp = (props: any)=> {
     const dispatch = useDispatch()
     const handleEmail = (email:any) =>{
         dispatch(addEmail(email))
+    }
+    const handleAddUserInfo = (item:any) => {
+        dispatch(addUserInfo(item))
     }
     const handlePassword = (pass:any) =>{
         dispatch(addPassword(pass))
@@ -103,6 +106,7 @@ const SignUp = (props: any)=> {
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 onSubmit()
                 handleEmail(state.email)
+                handleAddUserInfo(state)
                 handlePassword(state.password)
                 
             }}>

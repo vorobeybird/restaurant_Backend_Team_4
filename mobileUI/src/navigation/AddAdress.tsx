@@ -4,23 +4,22 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
+import { addAddress } from "../store/StoreCard";
 type RootStackParamList = {
     ConfirmOrder: undefined;
     navigate:any;
   }
 
 
-export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state) => state.dishes);
+export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+    const [adress, setAdress] = useState({str:'',house:'',corp:'',kv:'',id:1})
     const dispatch = useDispatch()
-    const navigation = useNavigation<RootStackParamList>();
-    const [street, setStreet] = useState('')
-    const [home, setHome] = useState('')
-    const [corp, setCorp] = useState('')
-    const [dep, setDep] = useState('')
+    const handleAddAdress = (item) => {
+        dispatch(addAddress(item))
+    }
     const showToast = () => {
         ToastAndroid.showWithGravity(
-          "Введите необходимые поля",
+          "Адрес добавлен",
           ToastAndroid.SHORT,
           ToastAndroid.TOP
         );
@@ -34,47 +33,35 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
                 <Text style={styles.TitleText}> Доставка</Text>
             </View>
             <View style={styles.HeadWrap}>
-                <Text style={styles.Header}> Выберите адрес доставки</Text>
+                <Text style={styles.Header}> Добавить адрес доставки </Text>
             </View>
             <View style={styles.mainWrapper}>
                 <TextInput 
                     style={styles.street}
                     placeholder='*Улица'
-                    onChangeText={(val)=> setStreet(val)}
+                    onChangeText={(val)=> setAdress({...adress,str:val, })}
                     
                 />
                 <View style={styles.container}>
                     <TextInput 
                         style={styles.home}
                         placeholder='*Дом'
-                        onChangeText={(val)=> setHome(val)}
+                        onChangeText={(val)=> setAdress({...adress,house:val})}
                     />
                     <TextInput 
                         style={styles.home}
                         placeholder='Корпус'
-                        onChangeText={(val)=> setCorp(val)}
+                        onChangeText={(val)=> setAdress({...adress,corp:val})}
                     />
                     <TextInput 
                         style={styles.home}
                         placeholder='Квартира'
-                        onChangeText={(val)=> setDep(val)}
+                        onChangeText={(val)=> setAdress({...adress,kv:val})}
                     />
                 </View>
             </View>
-            <Text style={styles.prgressText}> шаг 3/3</Text>
-            <TouchableOpacity style={styles.Button} onPress={() => {
-                    if(street !='' && home !=''){
-                        navigation.navigate('ChosePaymentType')
-                    } 
-                    else {
-                        
-                        return (
-                            showToast()
-                        )
-                    }
-                } 
-                
-                }>
+            
+            <TouchableOpacity style={styles.Button} onPress={() => {handleAddAdress(adress);goBack(); showToast()}}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>
@@ -83,7 +70,7 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
 
 const styles = StyleSheet.create({
     HeadWrap:{
-        top:'2%',
+        top:'7%',
     },
     Header: {
         alignSelf:'center',
@@ -129,15 +116,9 @@ const styles = StyleSheet.create({
         backgroundColor:'#F4F4F4',
     },
     mainWrapper:{
-        top:'12%',
+        top:'10%',
         flexDirection:'column',
         
-    },
-    prgressText:{
-        position:'absolute',
-        top:'60%',
-        alignSelf:'center',
-        color:'666666',
     },
     street:{
         alignSelf:'center',

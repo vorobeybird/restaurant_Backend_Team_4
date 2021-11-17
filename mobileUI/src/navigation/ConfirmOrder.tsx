@@ -19,9 +19,17 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
 
+    const onChange  = async (event:any, selectedDate:any) => {
+        const currentDate = selectedDate || date;
+        await setDate(currentDate);
+        hideDatePicker()
+
+      };
+
     const showMode = (currentMode:any) => {
         setShow(true);
         setMode(currentMode);
+        
     };
     const showDatepicker = () => {
         showMode('date');
@@ -32,7 +40,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const hideDatePicker = () => {
         setShow(false);
     };
-    const handleConfirm = () => {
+    const handleConfirm = (val:any) => {
         
         hideDatePicker();
     };
@@ -40,7 +48,8 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
-
+    
+    
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
@@ -50,12 +59,14 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
             <Text style={styles.TitleText}> {cart.orderType}</Text>
             </View>
             <View>
-                    <TouchableOpacity onPress={showDatepicker} style={styles.box}>
-                        <Text style={styles.dateText}>Выбрать дату</Text>
+                    <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
+                        
+                    }}>
+                        <Text style={styles.dateText}>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>Выбрать время</Text>
+                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
                     </TouchableOpacity>
                 {show && (
@@ -65,12 +76,14 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                         mode={mode}
                         is24Hour={true}
                         display="default"
-                        onChange={ ()=> {handleConfirm()} }
+                        onChange={onChange}
                         
                     />
                 )}
             </View>
+            <Text style={styles.prgressText}> шаг 2/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
+                console.log(date)
                 handleAddDate(date.toString())
                 if(cart.orderType == 'Навынос'){
                     navigation.navigate('ChosePaymentType')
@@ -114,7 +127,13 @@ const styles = StyleSheet.create({
         
         paddingBottom:'14%',
         backgroundColor:'white'
-      },
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
+    },
     Arrow:{
         top:'26%',
         width:30,
