@@ -4,14 +4,15 @@ import { MarketMain } from "../marketComponents/MarketMain";
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { MenuTabNavigation } from './menuNav';
 import { ProfileNavigation } from './profileNav'
+import { testIconNav } from './testIconNav'
 export type RootStackParamList = {
     ProfileNavigation: undefined;
     MarketMain: undefined;
     Menu: undefined;
     MenuTabNavigation: undefined;
+    testIconNav:undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -30,8 +31,8 @@ export const BottomTabNavigation = () => {
                     }
                 }}>
                 <Tab.Screen
-                    name="MenuTabNavigation"
-                    component={MenuTabNavigation}
+                    name="testIconNav"
+                    component={testIconNav}
                     options={{
                         title: 'Menu',
                         headerShown: false,
@@ -51,6 +52,26 @@ export const BottomTabNavigation = () => {
                     
                         
                       
+                />
+                <Tab.Screen
+                    name="MenuTabNavigation"
+                    component={MenuTabNavigation}
+                    options={{
+                        title: 'Menu',
+                        headerShown: false,
+                        tabBarIcon: ({ focused }) => {
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuInActive.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
+                        }
+                    }}   
                 />
                 <Tab.Screen
                     name="MarketMain"
