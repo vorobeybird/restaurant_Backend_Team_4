@@ -58,7 +58,6 @@ export const initialState:CounterState = {
   card: [],
   userInfo: [],
   order: [],
-  history: [],
 }
 
 export const dishSlice = createSlice({
