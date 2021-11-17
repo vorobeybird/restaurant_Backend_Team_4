@@ -61,7 +61,7 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
                     />
                 </View>
             </View>
-            
+            <Text style={styles.prgressText}> шаг 3/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
                     if(street !='' && home !=''){
                         navigation.navigate('ChosePaymentType')
@@ -132,6 +132,12 @@ const styles = StyleSheet.create({
         top:'10%',
         flexDirection:'column',
         
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
     },
     street:{
         alignSelf:'center',

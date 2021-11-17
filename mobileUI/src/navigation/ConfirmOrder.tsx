@@ -81,6 +81,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                     />
                 )}
             </View>
+            <Text style={styles.prgressText}> шаг 2/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
                 console.log(date)
                 handleAddDate(date.toString())
@@ -126,7 +127,13 @@ const styles = StyleSheet.create({
         
         paddingBottom:'14%',
         backgroundColor:'white'
-      },
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
+    },
     Arrow:{
         top:'26%',
         width:30,
