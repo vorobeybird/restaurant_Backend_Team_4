@@ -36,23 +36,39 @@ export const BottomTabNavigation = () => {
                         title: 'Menu',
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/leftBotTab.png')} resizeMode='contain' />
-                                
-                            </View>;
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuInActive.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
+                    
+                        
+                      
                 />
                 <Tab.Screen
                     name="MarketMain"
                     component={MarketMain}
                     options={{
-                        title: 'MarketMain',
+                        title: 'Menu',
+                        headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyleCent} source={require('../../img/centTab.png')} />
-                                
-                            </View>
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/cartActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/cartInActive.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
                 />
@@ -60,12 +76,19 @@ export const BottomTabNavigation = () => {
                     name="ProfileNavigation"
                     component={ProfileNavigation}
                     options={{
-                        title: 'MarketMain',
+                        title: 'Menu',
+                        headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View>
-                                <Image style={styles.PictStyle} source={require('../../img/rightTab.png')} resizeMode='contain' />
-                                
-                            </View>
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/profActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/profInActiv.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
                 />

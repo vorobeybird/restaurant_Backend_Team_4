@@ -50,9 +50,9 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
-            <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
-                <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
+                    <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
+                </TouchableOpacity>
             <Text style={styles.TitleText}> {cart.orderType}</Text>
             </View>
             <Text style={styles.Header}>Выберите способ оплаты</Text>
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     },
     Header: {
         alignSelf:'center',
-        top:'10%',
+        top:'2%',
         fontFamily:'Roboto',
         fontSize:20,
         fontStyle:'normal',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 
     },
     OrderWrapper:{
-        top:'20%',
+        top:'15%',
         
         flexDirection:'column',
     },

@@ -83,7 +83,7 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
 
 const styles = StyleSheet.create({
     HeadWrap:{
-        top:'7%',
+        top:'2%',
     },
     Header: {
         alignSelf:'center',
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#F4F4F4',
     },
     mainWrapper:{
-        top:'10%',
+        top:'12%',
         flexDirection:'column',
         
     },
