@@ -68,8 +68,8 @@ export const OrderDetails = ({
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
-    order.contact_name = 'EdgarAllanPoe';
-    order.contact_phone = '+375291234567';
+    order.contact_name = cart.userInfo.surName;
+    order.contact_phone = cart.userInfo.phone;
     order.payment_method = cart.paymentType;
     order.comment = "Hi, I'm hardcode comment";
 

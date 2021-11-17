@@ -1,13 +1,22 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, Dimensions} from 'react-native';
-import { useState } from "react";
+import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, Dimensions, ToastAndroid} from 'react-native';
+import { useState, useEffect } from "react";
 import { addDate } from '../store/StoreCard' 
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
+
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
+  }
+
+  interface category {
+    id: number,
+    table_number: number,
+    persons: number,
+    reserve: [],
   }
 
 
@@ -18,6 +27,40 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
+    const [getTable, setTable] = useState()
+    let devState: any[] = [];
+    const showToast = () => {
+        ToastAndroid.showWithGravity(
+          'Стол занят',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+        );
+      };
+
+      const showToastSuccs = () => {
+        ToastAndroid.showWithGravity(
+          'Стол за вами',
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+        );
+      };
+
+    const getItems = async () => {
+        const response = await axios.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
+        const res = response.data
+        return res
+      }
+      const fetchMenuItems = async () => {
+        const items = await getItems()
+        setTable(items)
+        
+      }
+    
+      
+      useEffect(() => {
+        fetchMenuItems()
+        console.log(getTable)
+      },[])
 
     const onChange  = async (event:any, selectedDate:any) => {
         const currentDate = selectedDate || date;
@@ -86,7 +129,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
             </TouchableOpacity>
         )
     }
-
+    
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
@@ -99,7 +142,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
                     }}>
-                        <Text style={styles.dateText}>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</Text>
+                        <Text style={styles.dateText}>{date.getDate()}-{date.getMonth()}-{date.getFullYear()}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
 
@@ -130,8 +173,47 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                 )}
             </View>
             <TouchableOpacity style={styles.Button} onPress={() => {
+                
+                if(chooseTable ==='На двоих') {
+                    devState = []
+
+                    console.log(getTable)
+                    handleAddDate(date.toString())
+                    getTable.map((element:any) => {
+                        if(element.persons == 2) {
+                            
+                            devState.push(element)
+                        }
+
+                    });
+                    
+                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
+                    devState.map((item:any) => {
+                        item.reserve.map((data:any) => {
+                            
+                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
+                                showToast()
+                            } else {
+                                showToastSuccs()
+                                navigation.navigate('ChosePaymentType')
+                            }
+                        })
+                    })
+                }
+                if(chooseTable ==='На четверых') {
+                    devState = []
+                    handleAddDate(date.toString())
+                    getTable.map((element:any) => {
+                        if(element.persons == 4) {
+                            
+                            devState.push(element)
+                        }
+                    });
+                    console.log(devState, 'devState')
+                }
                 console.log(date)
-                handleAddDate(date.toString())
+                
+                
                 if(cart.orderType == 'Навынос'){
                     navigation.navigate('ChosePaymentType')
                 } else if(cart.orderType == 'Доставка') {
