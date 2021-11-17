@@ -1,8 +1,6 @@
 import "@brainhubeu/react-carousel/lib/style.css";
-import { useState } from "react";
-import Gear from "../../assets/gear.png";
+import { MouseEventHandler, useState } from "react";
 import DeleteIcon from "../../assets/delete.png";
-import { Button } from "../common/button/Button";
 import { useAppDispatch } from "../../store/hooks";
 import {
   decrementNumofDishes,
@@ -14,39 +12,19 @@ import "./cart.scss";
 import { ICartItem } from "../../store/cart/cart.types";
 import Plus from "../../assets/plus.svg";
 import Minus from "../../assets/minus.svg";
-import { Interface } from "readline";
+import edit from "../../assets/edit.svg";
 
-export const CartItem = (item: ICartItem) => {
-  const [gearState, setGearState] = useState(false);
-  const [pickedIngredients, setPickedIngredients] = useState(item.ingredient);
+interface ICartItemProps {
+  item: ICartItem;
+  toggleModal:  Function;
+  setSelectedDish: Function;
+}
+export const CartItem = ({item, toggleModal, setSelectedDish}: ICartItemProps) => {
 
-  const onGear = () => setGearState(!gearState);
-  // const onCheckbox = (item: number) => {
-  //   if (pickedIngredients.includes(item)) {
-  //     const array = [...pickedIngredients];
-  //     const index = array.indexOf(item);
-  //     if (index > -1) {
-  //       array.splice(index, 1);
-  //     }
-  //     setPickedIngredients(array.sort());
-  //   } else {
-  //     setPickedIngredients([...pickedIngredients, item].sort());
-  //   }
-  // };
-
-  // const renderIngredient = (item: ICartItem) => (
-  //   <div key={item.id} className="item_ingredients_list_item">
-  //     <p>{item}</p>
-  //     {gearState && (
-  //       <input
-  //         type="checkbox"
-  //         checked={pickedIngredients.includes(item)}
-  //         onChange={() => onCheckbox(item)}
-  //       />
-  //     )}
-  //   </div>
-  // );
-
+  const handleEditMode = () => {
+    setSelectedDish(item.id);
+    toggleModal();
+  }
   const dispatch = useAppDispatch();
 
   const items = useAppSelector((state) => state.cartItems.items);
@@ -63,13 +41,6 @@ export const CartItem = (item: ICartItem) => {
     dispatch(decrementNumofDishes(id));
   };
 
-  const [x, setX] = useState(false);
-
-  // const soldCheckbox = ({ target: { checked } }) => {
-  //   console.log(x, checked);
-  //   setX(checked);
-  // };
-
   return (
     <div className="cart-item">
       <div className="cart-item__image">
@@ -80,29 +51,15 @@ export const CartItem = (item: ICartItem) => {
           <h3>{item.title}</h3>
         </div>
         <div className="dish-gear_wrapper">
-          <button className="gear-button" onClick={onGear}>
+          <button className="gear-button" onClick={handleEditMode}>
             Изменить состав
           </button>
         </div>
         <div className="cart-item__info price">{item.price} BYN</div>
-        {gearState ? (
-          <div className="ingredients">
-            {pickedIngredients.map((item) => {
-              return (
-                <div className="ingredient-wrapper">
-                  {gearState && !item.DishIngredient.is_default ? (
-                    <input
-                      type="checkbox"
-                      className="ingredient-checkbox"
-                      checked
-                    ></input>
-                  ) : null}
-                  <div className="ingredient-title"> {item.title}</div>
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
+        {item.excluded_ingredients && item.excluded_ingredients.length > 0 ? <div className="cart-item__info ingredients">
+          <img className="edit__icon" src={edit} alt="edit" />
+          <div className="omited">без добавления: <span>{item.excluded_ingredients.join(', ')}</span></div>
+          </div> : null }
       </div>
       <div className="cart-item__actions">
         <div className="calculate">

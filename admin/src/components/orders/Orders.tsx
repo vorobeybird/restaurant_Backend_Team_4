@@ -1,4 +1,4 @@
-import OrdersGrid from "./ordersgrid/OrdersGrid";
+import OrdersGrid from "./ordersGrid/OrdersGrid";
 const Orders = ()=>{
 
     return (

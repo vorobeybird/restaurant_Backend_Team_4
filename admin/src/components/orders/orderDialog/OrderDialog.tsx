@@ -40,7 +40,7 @@ fetchDishes: Function;
 
 const OrderDialog = ({order, status, setStatus, open, handleClose, saveStatus}: any) => {
 
-  const statuses = ["Получен", "Принят в работу", "Изменен", "Отменен", "Готовится", "Готов"]
+  const statuses = ["Получен", "Отменен", "Принят в работу", "Изменен", "Готовится", "Готов"]
 
   const handleChange = (event: SelectChangeEvent) => {
     setStatus(event.target.value);
