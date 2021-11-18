@@ -4,7 +4,7 @@ import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
 import {addPaymentType, clearCart } from '../store/StoreCard'
-import axios from "axios";
+
 import { useDispatch, useSelector } from "react-redux";
 
 type RootStackParamList = {
@@ -12,68 +12,18 @@ type RootStackParamList = {
     navigate:any;
   }
 
-  interface DishShortInfo {
-    dish_id: number;
-    dish_amount: number;
-  }
-
-  interface Order {
-    adress: string;
-    customer_id: string;
-    delivery_method: string;
-    total_price: number;
-    delivery_date: Date;
-    contact_name: string;
-    payment_method: boolean;
-    contact_phone:string;
-    comment: string;
-    dish: DishShortInfo[];
-  }
 
 export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const dispatch = useDispatch()
 
-    const showToast = () => {
-        ToastAndroid.showWithGravity(
-          "Заказ отправлен",
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        );
-      };
+    
 
     const cart = useSelector((state) => state.dishes);
     const navigation = useNavigation<RootStackParamList>();
     const [checkedFirs, toggleCheckedFirs] = useState(false);
     const [checkedSecond, toggleCheckedSecond] = useState(false);
     const [checkedThird, toggleCheckedThird] = useState(false);
-    const onMakingOrder = () => {
-        let order = {} as Order;
-        order.adress = "Brest";
-        order.customer_id = '89897751894yafsjkdbfkjsdaf';
-        order.delivery_method = cart.orderType;
-        order.total_price = cart.cardTotalAmount;
-        order.delivery_date = cart.date;
-        order.contact_name = "EdgarAllanPoe +375666666666";
-        order.contact_phone = "+375291234567"
-        order.payment_method = cart.paymentType;
-        order.comment = "Hi, I'm hardcode comment";
-
-        let dishesShortInfo = cart.dishes.map((item:any) => {
-            let dish = {} as DishShortInfo;
-            dish.dish_id = item.id;
-            dish.dish_amount = item.cardQuantity;
-            return dish;
-        });
-
-        order.dish = dishesShortInfo;
     
-        axios.post("http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order", order, {
-            headers: { "Content-type": "application/json" },
-          })
-          .then((response) => console.log(response))
-          .catch((err) => console.log(err));
-        console.log(order);
-      };
     const checkFuncFirst = () => {
         toggleCheckedFirs(!checkedFirs)
         toggleCheckedSecond(false)
@@ -100,9 +50,9 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
-            <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
-                <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
+                    <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
+                </TouchableOpacity>
             <Text style={styles.TitleText}> {cart.orderType}</Text>
             </View>
             <Text style={styles.Header}>Выберите способ оплаты</Text>
@@ -135,27 +85,23 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
             </View>
-            <TouchableOpacity style={styles.Button} onPress={()=> { 
+            <Text style={styles.prgressText}> шаг 3/3</Text>
+            <TouchableOpacity style={styles.Button} onPress={async() => { 
                     if(checkedFirs){
-                        handleAddOrderType("1");
-                        onMakingOrder()
-                        showToast()
-                        setTimeout(handleClear,0)
-                        navigation.navigate('Menu')
+                        handleAddOrderType("0");
+                        navigation.navigate('OrderDetails')
                     } 
                     else if(checkedSecond){
-                        handleAddOrderType("0");
-                        onMakingOrder()
-                        showToast()
-                        setTimeout(handleClear,0)
-                        navigation.navigate('Menu')
+                        handleAddOrderType("1");
+                  
+                        
+                        navigation.navigate('OrderDetails')
                         
                     }else if(checkedThird) {
                         handleAddOrderType("2");
-                        onMakingOrder()
-                        showToast()
-                        setTimeout(handleClear,0)
-                        navigation.navigate('Menu')
+                      
+                        
+                        navigation.navigate('OrderDetails')
             
                     }
             }}>
@@ -182,6 +128,12 @@ const styles = StyleSheet.create({
         marginRight:15,
         marginLeft:5,
     },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
+    },
     TitleText:{
         alignSelf:'center',
         fontFamily: 'Roboto',
@@ -203,7 +155,7 @@ const styles = StyleSheet.create({
     },
     Header: {
         alignSelf:'center',
-        top:'10%',
+        top:'2%',
         fontFamily:'Roboto',
         fontSize:20,
         fontStyle:'normal',
@@ -213,7 +165,7 @@ const styles = StyleSheet.create({
 
     },
     OrderWrapper:{
-        top:'20%',
+        top:'15%',
         
         flexDirection:'column',
     },

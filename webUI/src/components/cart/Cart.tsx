@@ -11,10 +11,14 @@ import {
   Order,
   OrderConstants,
 } from "../../store/order/order.types";
-import TakeawayIcon from "../../assets/takeaway.png";
-import DeliveryIcon from "../../assets/delivery.png";
-import BookTableIcon from "../../assets/book-table.png";
-import { clearCart, omitIngredient, pickIngredient } from "../../store/cart/cart.actions";
+import TakeawayIcon from "../../assets/take-away.svg";
+import DeliveryIcon from "../../assets/truck.svg";
+import BookTableIcon from "../../assets/table.svg";
+import {
+  clearCart,
+  omitIngredient,
+  pickIngredient,
+} from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
 import { Link } from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
@@ -24,6 +28,7 @@ import {
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
+import { useHistory } from "react-router-dom";
 
 interface OrderTemp extends Order {
   reserve_time: Date;
@@ -31,25 +36,28 @@ interface OrderTemp extends Order {
 }
 
 export const Cart = () => {
-
-
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
 
+  let history = useHistory();
+
   const [selectedDish, setSelectedDish] = useState(null);
-  const dishItem = items.find(i => i.id === selectedDish);
+  const dishItem = items.find((i) => i.id === selectedDish);
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
 
-  const editIngredients = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    !e.target.checked ? 
-    dispatch(omitIngredient(id, e.target.value)) :
-    dispatch(pickIngredient(id, e.target.value))
-}
+  const editIngredients = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: number
+  ) => {
+    !e.target.checked
+      ? dispatch(omitIngredient(id, e.target.value))
+      : dispatch(pickIngredient(id, e.target.value));
+  };
 
   const checkOrder = (order: Order) =>
     order.adress &&
@@ -79,7 +87,9 @@ export const Cart = () => {
       let dish = {} as DishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.amount;
-      dish.excluded_ingredients = item.excluded_ingredients ? item.excluded_ingredients.join(', ') : '';
+      dish.excluded_ingredients = item.excluded_ingredients
+        ? item.excluded_ingredients.join(", ")
+        : "";
       return dish;
     });
 
@@ -129,6 +139,7 @@ export const Cart = () => {
     await onMakingOrder();
     console.log("Order done");
     dispatch(clearCart());
+    history.push("/menu");
   };
 
   const [orderType, setOrderType] = useState("");
@@ -144,6 +155,7 @@ export const Cart = () => {
   };
 
   const onChangeTab = (e: any) => {
+    console.log(e.target);
     dispatch(clearOrder());
     dispatch(changeDeliveryMethod(e.target.alt));
     setOrderType(e.target.alt);
@@ -182,7 +194,12 @@ export const Cart = () => {
               Очистить корзину
             </button>
             {items.map((item: ICartItem, index) => (
-              <CartItem key={index} toggleModal={toggleModal} item={item} setSelectedDish={setSelectedDish} />
+              <CartItem
+                key={index}
+                toggleModal={toggleModal}
+                item={item}
+                setSelectedDish={setSelectedDish}
+              />
             ))}
             <div className="total-price">
               <div>Итого:</div>
@@ -191,7 +208,7 @@ export const Cart = () => {
           </div>
 
           <div className="order_actions">
-            <div>Тип заказа: </div>
+            <h1 className="actions__title">Тип заказа:</h1>
             <div className="order_buttons">
               <button
                 className={
@@ -201,6 +218,9 @@ export const Cart = () => {
                 onClick={onChangeTab}
               >
                 <img src={BookTableIcon} alt="bookTable" />
+                <p className="actions-button__desctiption">
+                  Забронировать стол
+                </p>
               </button>
               <button
                 className={
@@ -210,6 +230,7 @@ export const Cart = () => {
                 onClick={onChangeTab}
               >
                 <img src={DeliveryIcon} alt="delivery" />
+                <p className="actions-button__desctiption">Доставка</p>
               </button>
               <button
                 className={
@@ -219,35 +240,69 @@ export const Cart = () => {
                 onClick={onChangeTab}
               >
                 <img src={TakeawayIcon} alt="takeaway" />
+                <p className="actions-button__desctiption">Самовывоз</p>
               </button>
+            </div>
+            <div className="selected-actions">
+              {orderType === "bookTable" ? (
+                <BookTable />
+              ) : orderType === "delivery" ? (
+                <Delivery />
+              ) : orderType === "takeaway" ? (
+                <Takeaway />
+              ) : (
+                <div></div>
+              )}
+            </div>
+            <div className="make_order">
+              <Button type="button" onClick={handleOnMakingOrder}>
+                Оформить Заказ
+              </Button>
             </div>
           </div>
 
-          {orderType === "bookTable" ? (
-            <BookTable />
-          ) : orderType === "delivery" ? (
-            <Delivery />
-          ) : orderType === "takeaway" ? (
-            <Takeaway />
-          ) : (
-            <div></div>
-          )}
-
-          <div className="make_order">
-            <Button type="button" onClick={handleOnMakingOrder}>
-              Оформить Заказ
-            </Button>
-          </div>
-          <Modal active={showModal} setActive={toggleModal} title={"Изменить состав"}><div className="dish-modal-title">{dishItem && dishItem.title}</div>
-                    <div className="ingredients-form">
-                    <div className="ingredients-list">
-                        {dishItem && dishItem.ingredient.map(i => <div className="ingredient-item" key={i.id}><label>{i.DishIngredient.is_default 
-                    ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> 
-                    : <input type="checkbox" className="ingredient-checkbox" onChange={ (e)=> editIngredients(e, dishItem.id)} checked={!dishItem.excluded_ingredients.includes(i.title)} value={i.title} />} {i.title}</label></div>)}
-                            </div>
-                            <div className="button-container"><button onClick={toggleModal} className="ingredients-edit__btn">Готово</button></div>
-
-                    </div></Modal>
+          <Modal
+            active={showModal}
+            setActive={toggleModal}
+            title={"Изменить состав"}
+          >
+            <div className="dish-modal-title">{dishItem && dishItem.title}</div>
+            <div className="ingredients-form">
+              <div className="ingredients-list">
+                {dishItem &&
+                  dishItem.ingredient.map((i) => (
+                    <div className="ingredient-item" key={i.id}>
+                      <label>
+                        {i.DishIngredient.is_default ? (
+                          <input
+                            type="checkbox"
+                            className="ingredient-checkbox"
+                            checked
+                            disabled
+                          />
+                        ) : (
+                          <input
+                            type="checkbox"
+                            className="ingredient-checkbox"
+                            onChange={(e) => editIngredients(e, dishItem.id)}
+                            checked={
+                              !dishItem.excluded_ingredients.includes(i.title)
+                            }
+                            value={i.title}
+                          />
+                        )}{" "}
+                        {i.title}
+                      </label>
+                    </div>
+                  ))}
+              </div>
+              <div className="button-container">
+                <button onClick={toggleModal} className="ingredients-edit__btn">
+                  Готово
+                </button>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </>

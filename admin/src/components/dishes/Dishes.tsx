@@ -1,4 +1,4 @@
-import DishesGrid from "./dishesgrid/DishesGrid";
+import DishesGrid from "./dishesGrid/DishesGrid";
 
 const Dishes = ()=>{
 

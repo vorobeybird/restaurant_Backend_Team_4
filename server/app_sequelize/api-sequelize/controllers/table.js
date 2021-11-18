@@ -1,8 +1,6 @@
 const Table = require("../models/").Table;
-const Reserve = require("../models").Reserve;
-
+const Reserve = require("../models/").Reserve;
 module.exports = {
-
   add(req, res) {
     return Table.create({
       table_number: req.body.table_number,
@@ -27,9 +25,9 @@ module.exports = {
       });
   },
 
-  getSortedTables(req, res, date) {
-    if(date) {
-      module.exports.getTablesByDate(req, res, date);
+  getSortedTables(req, res) {
+    if (req.params.date) {
+      module.exports.getTablesByDate(req, res, req.params.date);
     }
   },
 
@@ -40,21 +38,19 @@ module.exports = {
           model: Reserve,
           as: "reserve",
           where: {
-            reserve_date: date
-          }
-        }
-      ]
+            reserve_date: date,
+          },
+        },
+      ],
     })
       .then((table) => {
-        if(!table) {
+        if (!table) {
           return res.status(404).send({
-            message: "No tables found!"
+            message: "No tables found!",
           });
         }
         return res.status(200).send(table);
       })
       .catch((err) => res.status(400).send(error));
-  }
-}
-
-
+  },
+};

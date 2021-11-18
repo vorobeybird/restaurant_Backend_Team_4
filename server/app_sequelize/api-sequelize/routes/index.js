@@ -54,9 +54,8 @@ router.delete("/api/image/:publicId", dishPhotoController.delete);
 
 router.get("/api/tables", tableController.getTables);
 router.post("/api/tables", tableController.add);
-router.get("/api/tables:date", tableController.getSortedTables);
+router.get("/api/tables/:date", tableController.getSortedTables);
 
 router.post("/api/reserve", reserveController.add);
-
 
 module.exports = router;
