@@ -84,7 +84,7 @@ const OrdersGrid = () => {
       field: 'delivery_date',
       headerName: 'Дата доставки',
       sortable: true,
-      width: 160,
+      width: 200,
       renderCell: (params: GridRenderCellParams) => { 
          const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}; 
        let deliverAt: any = params.value;
@@ -97,7 +97,7 @@ const OrdersGrid = () => {
       field: 'updatedAt',
       headerName: 'Дата изменения',
       sortable: true,
-      width: 160,
+      width: 200,
       renderCell: (params: GridRenderCellParams) => { 
         const options = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'}; 
        let updated: any = params.value;
@@ -105,10 +105,9 @@ const OrdersGrid = () => {
         return updated.toLocaleString("ru", options) 
      },
     },
-    { field: 'contact_name', headerName: 'Имя', width: 150 },
-    { field: 'contact_phone', headerName: 'Телефон', width: 120 },
-    { field: 'adress', headerName: 'Адрес', width: 150 },
-    { field: 'comment', headerName: 'Комментарий', width: 150 },
+    { field: 'contact_name', headerName: 'Имя', width: 200 },
+    { field: 'contact_phone', headerName: 'Телефон', width: 150 },
+    { field: 'adress', headerName: 'Адрес', width: 250 },
     { field: 'total_price', headerName: 'Цена', width: 100, align: 'center' },
     { field:'status', headerName: 'Статус заказа', width: 200, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {

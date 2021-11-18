@@ -47,6 +47,8 @@ router.get("/api/order/:id", orderController.getById);
 router.put("/api/order/:id", orderController.update);
 router.delete("/api/order/:id", orderController.delete);
 
+router.get("/api/orderByCustomer/:customerId", orderController.getByCustmerId);
+
 router.post("/api/image", upload.single("image"), dishPhotoController.add);
 router.delete("/api/image/:publicId", dishPhotoController.delete);
 
