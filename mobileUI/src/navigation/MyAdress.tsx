@@ -13,6 +13,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {delAdress} from '../store/StoreCard';
+import {Card} from 'react-native-elements';
 
 type RootStackParamList = {
   AddAdress: undefined;
@@ -32,6 +33,7 @@ export const MyAdress = ({
   const handleDelAdress = (item: string) => {
     dispatch(delAdress(item));
   };
+
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -69,11 +71,15 @@ export const MyAdress = ({
           })}
         </View>
       )}
-      <TouchableOpacity
-        style={styles.Button}
-        onPress={() => navigation.navigate('AddAdress')}>
-        <Text style={styles.ButText}> Добавить адрес</Text>
-      </TouchableOpacity>
+      {cart.adress.length === 0 ? (
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => navigation.navigate('AddAdress')}>
+          <Text style={styles.ButText}> Добавить адрес</Text>
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
