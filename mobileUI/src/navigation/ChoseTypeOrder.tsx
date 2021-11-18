@@ -97,7 +97,6 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
 
 const styles = StyleSheet.create({
     imgLeft:{
-        
         left:20,
     },
     prgressText:{
