@@ -18,6 +18,7 @@ export interface Reservation {
 
 export enum TableConstants {
   GET_TABLE_POOL = "GET_TABLE_POOL",
+  GET_TABLE_RESERVATIONS = "GET_TABLE_RESERVATIONS",
 }
 
 export interface TableActions {
