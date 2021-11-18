@@ -1,20 +1,102 @@
 import "./bookTableWithoutDish.scss";
 import { BookTable } from "../bookTable/BookTable";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { changeDeliveryMethod } from "../../store/order/order.actions";
+import { useHistory } from "react-router-dom";
+import { OrderTemp } from "../cart/Cart";
+import { DishShortInfo } from "../../store/order/order.types";
+import axios, { AxiosResponse } from 'axios';
+import { useEffect, useState } from "react";
+import Modal from "../common/modal/Modal";
 
 export const BookTableWithoutDish = () => {
   const dispatch = useAppDispatch();
-  dispatch(changeDeliveryMethod("bookTable"))
+  const order = useAppSelector((state) => state.order.order);
+  const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
+  const items = useAppSelector((state) => state.cartItems.items);
+  const [showModal, setShowModal] = useState(false);
+  const [resposeResult, setResponseResult] = useState([]);
+
+  useEffect(() => {
+    dispatch(changeDeliveryMethod("bookTable"))
+  }, []);
+
+  const history = useHistory();
+
+  const routeChange = () => {
+    let path = `/`;
+    history.push(path);
+  }
+
+  const toggleModal = () => setShowModal(!showModal);
+
+  const reserveTable = async () => {
+    const reserveResult = await onMakingOrder();
+    // setResponseResult(reserveResult);
+    toggleModal();
+
+  }
+
+  const onMakingOrder = () => {
+    let currentOrder = {} as OrderTemp;
+
+    currentOrder.delivery_method = order.delivery_method;
+    currentOrder.payment_method = order.payment_method;
+    currentOrder.customer_id = userId;
+    currentOrder.total_price = 0;
+    currentOrder.delivery_date = order.delivery_date;
+    currentOrder.comment = "Hi, I'm hardcode comment :)";
+
+    let dishesShortInfo = items.map((item) => {
+      let dish = {} as DishShortInfo;
+      dish.dish_id = item.id;
+      dish.dish_amount = item.amount;
+      dish.excluded_ingredients = item.excluded_ingredients
+        ? item.excluded_ingredients.join(", ")
+        : "";
+      return dish;
+    });
+
+    currentOrder.dish = dishesShortInfo;
+    currentOrder.contact_name = order.contact_name;
+    currentOrder.contact_phone = order.contact_phone;
+
+    if (currentOrder.delivery_method === "takeaway") {
+      currentOrder.adress = "takeaway";
+    }
+
+    if (currentOrder.delivery_method === "bookTable") {
+      currentOrder.adress = "bookTable";
+      currentOrder.num_of_persons = order.num_of_persons;
+      currentOrder.reserve_date = order.delivery_date;
+      currentOrder.reserve_time = order.delivery_date;
+
+      return axios
+        .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
+          headers: {
+            "Content-type": "application/json",
+            "cross-domain": "true",
+          },
+        })
+        .then((response) => response)
+        .catch((err) => console.log(err));
+    }
+  }
 
   return (
     <div className="booking-wrapper">
-      <div className="booking-title">Забронировать стол</div>
-      <BookTable />
-      <div className="booking__button-wrapper">
-        <button>Отмена</button>
-        <button>Забронировать</button>
+      <div className="booking-container">
+        <div className="booking-title">Забронировать стол</div>
+        <BookTable />
+        <div className="booking__button-wrapper">
+          <button className="boocking-btn" onClick={routeChange}>Отмена</button>
+          <button className="boocking-btn" onClick={toggleModal}>Забронировать</button>
+        </div>
       </div>
+      <Modal active={showModal} setActive={reserveTable} title={""}>
+        <div className="dish-modal-title"></div>
+
+        </Modal>
     </div>
   )
 };

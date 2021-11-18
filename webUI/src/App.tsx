@@ -89,7 +89,7 @@ const App = () => {
                     <Profile></Profile>
                     <Redirect to={"/profile/orders"}/>
                 </Route>
-                <Route path="/booktable" component={BookTableWithoutDish}/>
+                <Route exact path="/booktable" component={BookTableWithoutDish}/>
             </Switch>
             <Contacts/>
             <Footer/>
