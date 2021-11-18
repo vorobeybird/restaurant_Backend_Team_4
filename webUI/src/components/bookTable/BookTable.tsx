@@ -108,7 +108,7 @@ export const BookTable = () => {
         <button
           className={`${
             currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_booktable`}
+          } swiper_booktable_left`}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -121,7 +121,7 @@ export const BookTable = () => {
         <button
           className={`${
             currentStep === 4 ? "swiper_disabled" : undefined
-          } swiper_booktable`}
+          } swiper_booktable_right`}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
