@@ -16,6 +16,7 @@ import {useEffect} from "react";
 import { Toaster } from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
+import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
 
 
 Amplify.configure(awsconfig);
@@ -88,7 +89,7 @@ const App = () => {
                     <Profile></Profile>
                     <Redirect to={"/profile/orders"}/>
                 </Route>
-
+                <Route path="/booktable" component={BookTableWithoutDish}/>
             </Switch>
             <Contacts/>
             <Footer/>
