@@ -19,9 +19,13 @@
 
   export const Delivery = () => {
     const dispatch = useAppDispatch();
-
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const user = useAppSelector(state => state.auth.user);
+    const [name, setName] = useState(user.attributes.name);
+    const [phone, setPhone] = useState(user.attributes.phone_number);
+    // let address = "Ваш текущий адрес не указан";
+    let ustreet = user.attributes.address.split(" ")[1],
+        uhouse = user.attributes.address.split(" ")[3],
+        uflat = user.attributes.address.split(" ")[5];
 
     const isValidName = () => {
       const reg = /[-|a-z|а-я]{2,30}/i;
@@ -36,10 +40,10 @@
     const [time, setTime] = useState("");
 
     const [address, setAddress] = useState<IAddress>({
-      street: "",
-      houseNumber: "",
+      street: ustreet,
+      houseNumber: uhouse,
       houseBuilding: "",
-      apartment: "",
+      apartment: uflat,
     });
 
     const isValidAddress = (address: IAddress) => {
@@ -145,11 +149,12 @@
 
     return (
       <div className="delivery_container_wrapper">
+        <h1 style={{"padding": "20px"}}>Оформление заказа</h1>
         <div className="delivery_container">
           <button
             className={`${
               currentStep === 0 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_left`}
             type="button"
             onClick={handleChangeCurrentStepPrev}
           >
@@ -162,7 +167,7 @@
           <button
             className={`${
               currentStep === 4 ? "swiper_disabled" : undefined
-            } swiper_delivery`}
+            } swiper_delivery_right`}
             type="button"
             onClick={handleChangeCurrentStepNext}
           >

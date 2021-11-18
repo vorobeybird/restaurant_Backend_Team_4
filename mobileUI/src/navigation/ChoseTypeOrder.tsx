@@ -43,10 +43,10 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
-            <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
-                <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
-            </TouchableOpacity>
-            <Text style={styles.TitleText}> Корзина</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
+                    <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
+                </TouchableOpacity>
+                <Text style={styles.TitleText}> Корзина</Text>
             </View>
             <Text style={styles.Header}>Выберите тип заказа</Text>
             <View style={styles.OrderWrapper}>
@@ -77,12 +77,16 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
                         checkedIcon={<Image source={require('../../img/checked.png')} />}
                         uncheckedIcon={<Image source={require('../../img/unChecked.png')} />}/>
                 </View>
+                
             </View>
+            <Text style={styles.prgressText}> шаг 1/3</Text>
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 if(checkedThird) {
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Навынос");
                 } else if(checkedSecond) {
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Доставка");
+                } else if(checkedFirs) {
+                    navigation.navigate('ConfirmOrderTable');handleAddOrderType("Бронь стола"); 
                 }
             }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>
@@ -93,7 +97,14 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
 
 const styles = StyleSheet.create({
     imgLeft:{
+        
         left:20,
+    },
+    prgressText:{
+        position:'absolute',
+        top:'60%',
+        alignSelf:'center',
+        color:'666666',
     },
     Wrapper:{
         flex:1,
@@ -116,6 +127,7 @@ const styles = StyleSheet.create({
         color:'black',
     },
     Title: {
+        
         flexDirection:'row',
         justifyContent:'flex-start',
         width:'100%',
@@ -128,8 +140,10 @@ const styles = StyleSheet.create({
         backgroundColor:'#F4F4F4',
     },
     Header: {
+        position:'absolute',
+        top:'15%',
         alignSelf:'center',
-        top:'10%',
+        
         fontFamily:'Roboto',
         fontSize:20,
         fontStyle:'normal',
@@ -139,7 +153,8 @@ const styles = StyleSheet.create({
 
     },
     OrderWrapper:{
-        top:'20%',
+        
+        top:'15%',
         
         flexDirection:'column',
     },
@@ -148,6 +163,7 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     OrderText:{
+        top:12,
         lineHeight: 24,
         color:'black',
         fontFamily: 'Roboto',

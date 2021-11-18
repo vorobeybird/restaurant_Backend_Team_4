@@ -9,8 +9,9 @@
   import NextStepIcon from "../../assets/next.png";
 
   export const Takeaway = () => {
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+    const user = useAppSelector(state => state.auth.user);
+    const [name, setName] = useState(user.attributes.name);
+    const [phone, setPhone] = useState(user.attributes.phone_number);
 
     const isValidName = () => {
       const reg = /[-|a-z|а-я]{2,30}/i;

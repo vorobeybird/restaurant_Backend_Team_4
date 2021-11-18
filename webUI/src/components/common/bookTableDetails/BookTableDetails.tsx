@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { dispatch } from "react-hot-toast/dist/core/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { chooseNumOfPeople } from "../../../store/order/order.actions";
+import "./bookTableDetails.scss";
 
 const tableForSomePeople = [
   {
@@ -43,8 +44,9 @@ export const BookTableDetails = () => {
   console.log(numberOfPeople);
 
   return (
-    <div>
-      <div>Стол на</div>
+    <div className="table-selector">
+      <div className="order-header" >Количество гостей</div>
+      <div className='table-selector__header'>Стол на</div>
       <select onChange={(e) => handleChangeTableForN(e)}>
         {tableForSomePeople.map((table) => {
           if (order.num_of_persons === table.num)

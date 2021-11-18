@@ -17,7 +17,8 @@
     const dispatch = useAppDispatch();
 
     const order = useAppSelector((state) => state.order.order);
-
+    const user = useAppSelector(state => state.auth.user);
+    
     const handleChangeName = (e: any) => {
       props.setName(e.target.value);
     };
@@ -41,7 +42,7 @@
     return (
       <div className="enter_contacts_container">
         <div className="order-header">Контакты</div>
-        <div className="contact_information">
+        <div className="contact_information active">
           <Input
             type="text"
             onChange={handleChangeName}

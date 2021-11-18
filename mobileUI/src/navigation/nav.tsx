@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { MarketMain } from "../marketComponents/MarketMain";
-import { ProfileComponent } from "../profileComponents/ProfileComponent"
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MenuTabNavigation } from './menuNav';
-
+import { ProfileNavigation } from './profileNav'
 export type RootStackParamList = {
-    ProfileComponent: undefined;
+    ProfileNavigation: undefined;
     MarketMain: undefined;
     Menu: undefined;
     MenuTabNavigation: undefined;
@@ -36,36 +36,59 @@ export const BottomTabNavigation = () => {
                         title: 'Menu',
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyle} source={require('../../img/leftBotTab.png')} resizeMode='contain' />
-                                
-                            </View>;
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/menuInActive.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
+                    
+                        
+                      
                 />
                 <Tab.Screen
                     name="MarketMain"
                     component={MarketMain}
                     options={{
-                        title: 'MarketMain',
+                        title: 'Menu',
+                        headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View style={styles.SmWrapper}>
-                                <Image style={styles.PictStyleCent} source={require('../../img/centTab.png')} />
-                                
-                            </View>
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/cartActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/cartInActive.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
                 />
                 <Tab.Screen
-                    name="ProfileComponent"
-                    component={ProfileComponent}
+                    name="ProfileNavigation"
+                    component={ProfileNavigation}
                     options={{
-                        title: 'MarketMain',
+                        title: 'Menu',
+                        headerShown: false,
                         tabBarIcon: ({ focused }) => {
-                            return <View>
-                                <Image style={styles.PictStyle} source={require('../../img/rightTab.png')} resizeMode='contain' />
-                                
-                            </View>
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/profActive.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyle} source={require('../../img/profInActiv.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
                         }
                     }}
                 />

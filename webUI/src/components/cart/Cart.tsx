@@ -28,6 +28,7 @@ import {
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
+import { useHistory } from "react-router-dom";
 
 interface OrderTemp extends Order {
   reserve_time: Date;
@@ -40,6 +41,8 @@ export const Cart = () => {
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
+
+  let history = useHistory();
 
   const [selectedDish, setSelectedDish] = useState(null);
   const dishItem = items.find((i) => i.id === selectedDish);
@@ -84,7 +87,9 @@ export const Cart = () => {
       let dish = {} as DishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.amount;
-      dish.excluded_ingredients = item.excluded_ingredients.join(", ");
+      dish.excluded_ingredients = item.excluded_ingredients
+        ? item.excluded_ingredients.join(", ")
+        : "";
       return dish;
     });
 
@@ -134,6 +139,7 @@ export const Cart = () => {
     await onMakingOrder();
     console.log("Order done");
     dispatch(clearCart());
+    history.push("/menu");
   };
 
   const [orderType, setOrderType] = useState("");
