@@ -87,7 +87,11 @@ export const ProfileOrders = () => {
         console.log(i, tableData);
         tableRows.push(
           <tr className="table-row">
-            <td>{tableData[i].dish.map(item => item.title)}</td>
+            <td>{
+              tableData[i].dish.map(el => {
+                return (<div>{el.title}</div>)
+              })
+              }</td>
             <td>{tableData[i].delivery_method === "takeaway" ? "Навынос" :
               tableData[i].delivery_method === "bookTable" ? "Бронирование стола" :
                 tableData[i].delivery_method === "delivery" ? "Доставка" : null
@@ -105,7 +109,12 @@ export const ProfileOrders = () => {
                 &#8226;{tableData[i].status}
               </div>
             </td>
-            <td>{tableData[i].total_price} BYN</td>
+            <td>
+              <span className="td-total-price">
+                {tableData[i].total_price}  
+              </span>
+              &#8194;BYN
+              </td>
             <td>{paymentMethod[tableData[i].payment_method]}</td>
           </tr>
         );

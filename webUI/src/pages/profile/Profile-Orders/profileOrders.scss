@@ -78,6 +78,24 @@ switch {
                 }
               }
             }
+            & th:nth-child(1){
+              width: 30%;
+            }
+            & th:nth-child(2){
+              width: 15%;
+            }
+            & th:nth-child(3){
+              width: 15%;
+            }
+            & th:nth-child(4){
+              width: 15%;
+            }
+            & th:nth-child(5){
+              width: 10%;
+            }
+            & th:nth-child(6){
+              width: 15%;
+            }
           }
         }
         & tbody {
@@ -90,6 +108,9 @@ switch {
               font-size: 0.8rem;
               line-height: normal;
               color: #25213B;
+              & .td-total-price {
+                font-weight: bold;
+              }
             }
           }
         }
@@ -178,10 +199,6 @@ switch {
       line-height: normal;
       color: #007F00;
       background: #CDFFCD;
-    }
-
-    .status-submitted{
-      
     }
 
     .status-in-progress {
