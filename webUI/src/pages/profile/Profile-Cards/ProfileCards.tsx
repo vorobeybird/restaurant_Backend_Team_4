@@ -16,8 +16,6 @@ type cardType = {
 }
 
 function ProfileCards() {
-    //добавить сокрытие номера карты
-    // добавить логотипы карты (VISA/MASTER)
     const user = useAppSelector(state => state.auth.user);
     let cardData: any;
     try {
@@ -25,9 +23,8 @@ function ProfileCards() {
     } catch (err) {
         cardData = {};
     }
+    // const cardData = JSON.parse(user.attributes["custom:card_number"]);
     const cardDataArray: Array<cardType> = Object.values(cardData);
-    console.log(cardData);
-    console.log(Object.values({}))
     const dispatch = useAppDispatch();
 
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -73,13 +70,13 @@ function ProfileCards() {
         <>
             {showModal && <CardsModal onHideModal={hideModalHandler}/>}
             <div className={"profileCards"}>
-                {cardDataArray.length ?
+                {cardDataArray.length > 0?
                     <ul className={"profileCards__list"}>
                         {cardDataArray.map(card => {
                             return <li className={"profileCards__item"} key={card.cardNumber}>
                                 {editMode && <div className={"profileCards__image"}>
-                                    <img src={+card.cardNumber[0] < 5 ? visaImg : mastercardImg}
-                                         alt={+card.cardNumber[0] < 5 ? "VISA" : "MASTERCARD"}/>
+                                    <img src={+card.cardNumber[0] === 4 ? visaImg : mastercardImg}
+                                         alt={+card.cardNumber[0] === 4 ? "VISA" : "MASTERCARD"}/>
                                 </div>}
                                 <div className="profileCards__info">
                                     <div>**** **** **** {card.cardNumber.slice(-4)}</div>

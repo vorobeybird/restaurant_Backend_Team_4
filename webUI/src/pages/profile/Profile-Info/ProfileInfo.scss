@@ -27,7 +27,6 @@
   input {
     height: 30px;
     max-width: 420px;
-    /*/ / styleName: Body 1 (16 24);*/
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -44,7 +43,6 @@
   input:focus-visible {
     border-color: #fff;
     outline: #ef742f solid 2px;
-    /*/ / outline: none;*/
   }
   .button button {
     height: 60px;
