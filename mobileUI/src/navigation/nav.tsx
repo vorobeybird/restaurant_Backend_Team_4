@@ -39,11 +39,11 @@ export const BottomTabNavigation = () => {
                         tabBarIcon: ({ focused }) => {
                             if(focused){
                                 return  <View style={styles.SmWrapper}>
-                                            <Image style={styles.PictStyle} source={require('../../img/menuActive.png')} resizeMode='contain' />
+                                            <Image style={styles.PictStyleHome} source={require('../../img/activeHome.png')} resizeMode='contain' />
                                         </View>;
                             } else {
                                 return  <View style={styles.SmWrapper}>
-                                            <Image style={styles.PictStyle} source={require('../../img/menuInActive.png')} resizeMode='contain' />
+                                            <Image style={styles.PictStyleHome} source={require('../../img/inActiveHome.png')} resizeMode='contain' />
                                         </View>;
                             }
 
@@ -129,6 +129,10 @@ const styles = StyleSheet.create({
         width: 120,
         height: '100%',
     },
+    PictStyleHome:{
+        width: 80,
+        height: '100%',
+    },
     SimpText: {
         bottom: 5,
         color: '#000000',
@@ -138,4 +142,5 @@ const styles = StyleSheet.create({
         height: '80%',
         top:'10%',
     },
+
 })
