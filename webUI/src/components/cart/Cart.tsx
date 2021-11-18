@@ -108,7 +108,7 @@ export const Cart = () => {
       currentOrder.reserve_time = order.delivery_date;
 
       return axios
-        .post(`http://localhost:5000/api/reserve`, currentOrder, {
+        .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
           headers: {
             "Content-type": "application/json",
             "cross-domain": "true",

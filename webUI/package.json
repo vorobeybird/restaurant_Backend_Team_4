@@ -14,6 +14,7 @@
     "@types/react-lazy-load-image-component": "^1.5.2",
     "aws-amplify": "^4.3.2",
     "axios": "^0.23.0",
+    "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-calendar": "^3.5.0",
