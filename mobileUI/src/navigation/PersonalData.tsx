@@ -6,10 +6,8 @@ import { addUserInfo} from '../store/StoreCard'
 import { useDispatch } from "react-redux";
 
 type RootStackParamList = {
-    
     navigate:any;
 }
-
 
 export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const navigation = useNavigation()
