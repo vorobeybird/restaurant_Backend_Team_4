@@ -18,9 +18,36 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
         surName:'',
         phone:'',  
     })
+    const [error, setError] = useState({
+        name:'',
+        surName:'',
+        phone:'',
+    })
 
     const handleAddUserInfo = (item:any) => {
         dispatch(addUserInfo(item))
+    }
+    const required = () => {
+        let nameErr,surNameErr,emailErr,phoneErr,passwordErr
+        if (!state.name){
+            nameErr = 'Введите имя'
+        } else {
+            nameErr = ''
+        }
+        if (!state.surName){
+            surNameErr = 'Введите фамилию'
+        } else {
+            surNameErr = ''
+        }
+        if (!state.phone){
+            phoneErr = 'Введите телефон'
+        } else {
+            phoneErr = ''
+        }
+        
+        setError({name:nameErr,surName:surNameErr,phone:phoneErr})
+
+       
     }
     return (
       <View style={styles.Wrapper}>
@@ -39,6 +66,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                     onChangeText={(val) => setState({...state,name:val})}
                     
                 />
+                <Text style={styles.error}> {error.name} </Text>
             <Text style={styles.simpText}> Фамилия </Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
@@ -47,6 +75,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                     onChangeText={(val) => setState({...state,surName:val})}
                     
                 />
+                <Text style={styles.error}> {error.surName} </Text>
             <Text style={styles.simpText}> Телефон </Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
@@ -56,8 +85,14 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                     
                 />
             </View>
-            
-            <TouchableOpacity style={styles.butStyle} onPress={()=> {handleAddUserInfo(state);navigation.navigate('ProfileComponent')}}>
+            <Text style={styles.error}> {error.phone} </Text>
+            <TouchableOpacity style={styles.butStyle} onPress={()=> {required();
+                    if(state.name && state.surName && state.phone){
+                        handleAddUserInfo(state);navigation.navigate('ProfileComponent')
+                    }else {
+                        required()
+                        
+                    }}}>
                     <Text style={styles.ButText}> ГОТОВО </Text>
             </TouchableOpacity>
       </View>
@@ -122,6 +157,11 @@ const styles = StyleSheet.create({
         top:'5%',
         color:'black',
 
+    },
+    error:{
+        left:15,
+        color:'red',
+        top:'4%',
     },
     TitleText:{
         alignSelf:'center',

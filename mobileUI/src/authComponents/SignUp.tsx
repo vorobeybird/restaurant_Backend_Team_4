@@ -31,9 +31,40 @@ const SignUp = (props: any)=> {
         name:'',
         surName:'',
         email:'',
+        phone:'',
         password:'',
-        
     })
+    const required = () => {
+        let nameErr,surNameErr,emailErr,phoneErr,passwordErr
+        if (!state.name){
+            nameErr = 'Введите имя'
+        } else {
+            nameErr = ''
+        }
+        if (!state.surName){
+            surNameErr = 'Введите фамилию'
+        } else {
+            surNameErr = ''
+        }
+        if (!state.email){
+            emailErr = 'Введите емэйл'
+        } else {
+            emailErr = ''
+        }
+        if (!state.phone){
+            phoneErr = 'Введите телефон'
+        } else {
+            phoneErr = ''
+        }
+        if (!state.password){
+            passwordErr = 'Введите пароль'
+        } else {
+            passwordErr = ''
+        }
+        setError({name:nameErr,surName:surNameErr,email:emailErr,phone:phoneErr,password:passwordErr})
+
+        console.log(error)
+    }
     
     const onSubmit = async () => {
             try {
@@ -59,38 +90,39 @@ const SignUp = (props: any)=> {
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Имя'
-                    onChangeText={(val) => setState({...state,name:val})}
+                    placeholder='*Имя'
+                    onChangeText={(val) => {setState({...state,name:val})}}
                     
                 />
-            
+            <Text style={styles.error}>{error.name}</Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Фамилия'
-                    onChangeText={(val) => setState({...state,surName:val})}
+                    placeholder='*Фамилия'
+                    onChangeText={(val) => {setState({...state,surName:val})}}
                     
                 />
-                
+            <Text style={styles.error}>{error.surName}</Text>    
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Емэйл'
-                    onChangeText={(val) => setState({...state,email:val.toLowerCase()})}
+                    placeholder='*Емэйл'
+                    onChangeText={(val) => {setState({...state,email:val.toLowerCase()})}}
                     value={state.email}
                 />
             <Text style={styles.error}>{error.email}</Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Телефон'
+                    placeholder='*Телефон'
                     onChangeText={(val) => setState({...state,phone:val})}
                     
                 />
+            <Text style={styles.error}>{error.phone}</Text>
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='Пароль'
+                    placeholder='*Пароль'
                     onChangeText={(val) => {setState({...state,password:val})}}
                     secureTextEntry={true}
                 />
@@ -104,6 +136,7 @@ const SignUp = (props: any)=> {
                 
             </View>
             <TouchableOpacity style={styles.Button} onPress={()=> { 
+                required()
                 onSubmit()
                 handleEmail(state.email)
                 handleAddUserInfo(state)

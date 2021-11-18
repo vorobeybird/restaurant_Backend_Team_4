@@ -136,7 +136,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
             <TouchableOpacity onPress={() => goBack()}>
                 <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
             </TouchableOpacity>
-            <Text style={styles.TitleText}> {cart.orderType}</Text>
+            <Text style={styles.TitleText}> Забронировать стол</Text>
             </View>
             <View>
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     TitleText:{
         alignSelf:'center',
         fontFamily: 'Roboto',
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'normal',
         color:'black',
     },
