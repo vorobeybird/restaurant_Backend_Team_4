@@ -3,9 +3,14 @@ import React from "react";
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
-
+type RootStackParamList = {
+    MenuTabNavigation: undefined;
+    MarketMain:undefined;
+    ProfileNavigation:undefined;
+    navigate:any;
+  }
 export const Home = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<RootStackParamList>()
     return (
         <View style={styles.MainWrapper}>
             <View style={styles.Title}>

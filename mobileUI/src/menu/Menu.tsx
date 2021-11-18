@@ -67,12 +67,13 @@ const styles = StyleSheet.create({
     },
     Header: {
         
-        fontFamily: 'Roboto',
-        fontStyle: 'normal',
-        fontWeight: '600',
-        fontSize: 24,
-        lineHeight: 33,
-        color: '#000000',
+        alignSelf: 'center',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 30,
+    lineHeight: 33,
+    color: '#000000',
     },
     HedWrap:{
         width:'100%',
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems:'center',
         backgroundColor:'#F4F4F4',
+        
     },
     FoodLinks: {
         paddingBottom: 10,

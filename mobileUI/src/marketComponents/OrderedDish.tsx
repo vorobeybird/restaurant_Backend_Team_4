@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     left: 30,
   },
   Pict: {
-    resizeMode: 'contain',
+    
     width: 160,
     height: 150,
     backgroundColor: 'white',

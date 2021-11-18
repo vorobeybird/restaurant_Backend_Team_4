@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     },
     Pict:{
       borderRadius: 8,
-      resizeMode:'contain',
       width:324,
       height:200,
       

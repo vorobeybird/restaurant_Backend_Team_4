@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   Title: {
+    height: '10%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
   Pict: {
     top: '1%',
     alignSelf: 'center',
-    resizeMode: 'contain',
+    
     width: 325,
     height: 265,
     backgroundColor: 'white',
