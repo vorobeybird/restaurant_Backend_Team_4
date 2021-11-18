@@ -11,7 +11,7 @@ export const Home = () => {
             <View style={styles.Title}>
                 <Text style={styles.TitleText}> Ocean Bar </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Menu')} style={styles.contenWrapper}>
+            <TouchableOpacity onPress={() => navigation.navigate('MenuTabNavigation')} style={styles.contenWrapper}>
                 <Image style={styles.leftPict} source={require('../../img/menuCard.png')}/>
                 <Text style={styles.TextStyle}>МЕНЮ</Text>
                 <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>

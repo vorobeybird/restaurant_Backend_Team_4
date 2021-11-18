@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import axios, {AxiosResponse}  from 'axios';
 import {Container, IconButton } from '@mui/material';
 import { useTheme } from '@mui/styles';
-import { Edit } from '@mui/icons-material';
+import { Edit, Pageview } from '@mui/icons-material';
 import apiFetch from '../../common/apifetch/apifetch';
+import OrderCard from '../orderCard/OrderCard';
 
 interface IOrder {
   id: number;
@@ -50,6 +51,7 @@ const OrdersGrid = () => {
 
   const initialOrder: any = {};
   const [open, setOpen] = useState(false);
+  const [openCard, setOpenCard] = useState(false);
   const [orders, setOrders]: [IOrder[], (orders: IOrder[])=> void] = useState<IOrder[]>([]);
   const [currentOrder, setCurrentOrder] = useState(initialOrder);
   const [status, setStatus] = useState(currentOrder.status);
@@ -62,13 +64,22 @@ const OrdersGrid = () => {
     setOpen(false);
     currentOrder.id && setCurrentOrder(initialOrder);
   };
+
+  const handleOpenCard = () => {
+    setOpenCard(true);
+  }
+  const handleCloseCard = () => {
+    setOpenCard(false)
+  }
    const saveStatus = () => {
     const newOrders = orders.map(order=> (order.id === currentOrder.id) ? {...currentOrder, status} : order);      
         setOrders(newOrders);
        setOrder();
   }
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', align: 'center', filterable: false, },
+    { field: 'id', headerName: 'ID', width: 80, headerAlign: 'center', align: 'right', filterable: false, renderCell: (params: GridRenderCellParams)=> {
+      return <>{params.id} <IconButton onClick={()=> {setCurrentOrder(params.row); handleOpenCard()}}><Pageview color='warning'/></IconButton></>
+    } },
     {
       field: 'delivery_date',
       headerName: 'Дата доставки',
@@ -79,7 +90,6 @@ const OrdersGrid = () => {
        let deliverAt: any = params.value;
        deliverAt = new Date(deliverAt);
         return deliverAt.toLocaleString("ru", options) 
-       //return `${deliverAt.getHours()}:${deliverAt.getMinutes()} ${deliverAt.getDate()}-${deliverAt.getMonth()}-${deliverAt.getFullYear()}`;
      },
       
     },
@@ -151,7 +161,8 @@ useEffect(() => {
       />
       </Container>
       </div>
-<OrderDialog handleClose={handleClose} open={open} setStatus={setStatus} status={status} saveStatus={saveStatus} /* fetchOrders={fetchOrders} */ />
+<OrderDialog handleClose={handleClose} open={open} setStatus={setStatus} status={status} saveStatus={saveStatus} />
+<OrderCard currentOrder={currentOrder} openCard={openCard} handleCloseCard={handleCloseCard} />
     </>
   );
 }
