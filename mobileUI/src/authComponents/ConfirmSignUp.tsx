@@ -58,10 +58,10 @@ const ConfirmSignUp = (props: any) => {
 
         <View style={styles.ButCont}>
           <TouchableOpacity onPress={() => props.onStateChange('signIn', {})}>
-            <Text style={styles.SimpText}>back to signIn</Text>
+            <Text style={styles.SimpText}>Вернуться, чтобы войти</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => props.onStateChange('signUp', {})}>
-            <Text style={styles.SimpText}>back to signUp</Text>
+            <Text style={styles.SimpText}>Вернуться к регистрации</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
