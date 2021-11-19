@@ -4,9 +4,9 @@ import { TableConstants, ReducerState, Table } from "./table.types";
 
 const initialState: ReducerState = {
   tablePool: [{
-  id: null,
-  table_number: null,
-  persons: null,
+  id: undefined,
+  table_number: undefined,
+  persons: undefined,
   reserve: [],
   },]
 };

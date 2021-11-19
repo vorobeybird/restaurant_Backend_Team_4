@@ -14,7 +14,6 @@ export const ChooseDate = () => {
     value.setMinutes(date.getMinutes());
     value.setHours(date.getHours());
     dispatch(changeDate(value));
-    //dispatch(getTablePool());
     dispatch(getTableReservations(value));
 
   };

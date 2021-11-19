@@ -3,17 +3,17 @@ export interface ReducerState {
 }
 
 export interface Table {
-  id: number | null,
-  table_number: number | null;
-  persons: number | null;
+  id: number | undefined,
+  table_number: number | undefined;
+  persons: number | undefined;
   reserve: Reservation[];
 }
 
 export interface Reservation {
-  id: number | null;
-  table_id: number | null;
-  reserve_date: string | null;
-  reserve_time: string | null;
+  id: number | undefined;
+  table_id: number | undefined;
+  reserve_date: string | undefined;
+  reserve_time: string | undefined;
 }
 
 export enum TableConstants {
