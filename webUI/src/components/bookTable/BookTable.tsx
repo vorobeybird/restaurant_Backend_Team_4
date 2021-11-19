@@ -12,7 +12,7 @@ import "./bookTable.scss";
 export const BookTable = () => {
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(state => state.auth.user);
+  const user = useAppSelector((state) => state.auth.user);
   const [name, setName] = useState(user.attributes.name);
   const [phone, setPhone] = useState(user.attributes.phone_number);
 
@@ -104,6 +104,7 @@ export const BookTable = () => {
 
   return (
     <div className="booktable_container_wrapper">
+      <h1 style={{ padding: "20px" }}>Оформление заказа</h1>
       <div className="booktable_container">
         <button
           className={`${

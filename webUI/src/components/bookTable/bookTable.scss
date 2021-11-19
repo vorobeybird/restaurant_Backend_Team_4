@@ -8,13 +8,28 @@
   border-radius: 5%;
   min-width: 1200px;
   min-height: 800px;
-  
+  .order-header{
+    position: absolute;
+    font-size: 48px;
+    color: #606060;;
+    top: 120px;
+    left: 96px;
+  }
 }
 
 .swiper_disabled {
   opacity: 0.2;
 }
 
+.swiper_booktable_right {
+  border: none;
+  background-color: white;
+}
+
+.swiper_booktable_left {
+  border: none;
+  background-color: white;
+}
 .swiper_booktable {
   border: none;
   background-color: white;
