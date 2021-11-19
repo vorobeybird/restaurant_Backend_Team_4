@@ -68,17 +68,27 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                             borderBottomWidth: 0.3,
                                         }}
                                         />
-                                        {cart.dishes.map((item: any) => (
-                                        <View style={styles.contContent} key={item.id}>
-                                            <Text style={styles.simpText}>{item.title}</Text>
-                                            <Text style={styles.Price}> {item.price} BYN</Text>
-                                            <Text style={styles.Qan}> {item.cardQuantity}</Text>
-                                            <Text style={styles.simpText}>
-                                            {item.price * item.cardQuantity} BYN
-                                            </Text>
+                                        {cart.dishes.map((item: any) => {
+                                            let newTitle
+                                            if(item.title.length >7){
+                                              let name = item.title.substr(0,6)
+                                               newTitle = name+'...'
+                                              console.log(newTitle)
+                                            } else {
+                                              newTitle = item.title
+                                            }
+                                            
+                                            return(
+                                                <View style={styles.contContent} key={item.id}>
+                                                    <Text style={styles.simpText}>{newTitle}</Text>
+                                                    <Text style={styles.Price}> {item.price} BYN</Text>
+                                                    <Text style={styles.Qan}> {item.cardQuantity}</Text>
+                                                    <Text style={styles.simpText}>
+                                                    {item.price * item.cardQuantity} BYN
+                                                </Text>
                                             
                                         </View>
-                                        ))}
+                                        )})}
                                         <View
                                         style={{
                                             paddingTop: 15,
@@ -282,7 +292,7 @@ const styles = StyleSheet.create({
   },
   Price: {
     color: 'black',
-    right: '70%',
+    right: '75%',
   },
   TotalCounter: {
     flexDirection: 'row',

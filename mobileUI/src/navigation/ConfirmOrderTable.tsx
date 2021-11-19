@@ -50,13 +50,12 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
         const res = response.data
         return res
       }
-      const fetchMenuItems = async () => {
+    const fetchMenuItems = async () => {
         const items = await getItems()
         setTable(items)
-        
-      }
+    }
     
-      
+    
       useEffect(() => {
         fetchMenuItems()
         console.log(getTable)
@@ -187,7 +186,6 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                         }
 
                     });
-                    
                     console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
                     devState.map((item:any) => {
                         item.reserve.map((data:any) => {
@@ -197,22 +195,124 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                             } else {
                                 showToastSuccs()
                                 navigation.navigate('ChosePaymentType')
+                                devState = []
                             }
                         })
                     })
                 }
+                
+
                 if(chooseTable ==='На четверых') {
                     devState = []
+
+                    console.log(getTable)
                     handleAddDate(date.toString())
                     getTable.map((element:any) => {
                         if(element.persons == 4) {
                             
                             devState.push(element)
                         }
+
                     });
-                    console.log(devState, 'devState')
+                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
+                    devState.map((item:any) => {
+                        item.reserve.map((data:any) => {
+                            
+                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
+                                showToast()
+                            } else {
+                                showToastSuccs()
+                                navigation.navigate('ChosePaymentType')
+                                devState = []
+                            }
+                        })
+                    })
                 }
-                console.log(date)
+
+                
+
+                if(chooseTable ==='На шестерых') {
+                    devState = []
+
+                    console.log(getTable)
+                    handleAddDate(date.toString())
+                    getTable.map((element:any) => {
+                        if(element.persons == 6) {
+                            
+                            devState.push(element)
+                        }
+
+                    });
+                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
+                    devState.map((item:any) => {
+                        item.reserve.map((data:any) => {
+                            
+                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
+                                showToast()
+                            } else {
+                                showToastSuccs()
+                                navigation.navigate('ChosePaymentType')
+                                
+                            }
+                        })
+                    })
+                }
+                
+
+                if(chooseTable ==='На восьмерых') {
+                    devState = []
+
+                    console.log(getTable)
+                    handleAddDate(date.toString())
+                    getTable.map((element:any) => {
+                        if(element.persons == 8) {
+                            
+                            devState.push(element)
+                        }
+
+                    });
+                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
+                    devState.map((item:any) => {
+                        item.reserve.map((data:any) => {
+                            
+                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
+                                showToast()
+                            } else {
+                                showToastSuccs()
+                                navigation.navigate('ChosePaymentType')
+                                devState = []
+                            }
+                        })
+                    })
+                }
+
+                
+                if(chooseTable ==='На десятерых') {
+                    devState = []
+
+                    console.log(getTable)
+                    handleAddDate(date.toString())
+                    getTable.map((element:any) => {
+                        if(element.persons == 10) {
+                            
+                            devState.push(element)
+                        }
+
+                    });
+                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
+                    devState.map((item:any) => {
+                        item.reserve.map((data:any) => {
+                            
+                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
+                                showToast()
+                            } else {
+                                showToastSuccs()
+                                navigation.navigate('ChosePaymentType')
+                                devState = []
+                            }
+                        })
+                    })
+                }
                 
                 
                 if(cart.orderType == 'Навынос'){
@@ -257,7 +357,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:'60%',
         alignSelf:'center',
-        color:'666666',
+        color:'#666666',
     },
     dateText:{
         left:10,

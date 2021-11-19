@@ -137,16 +137,27 @@ export const OrderDetails = ({
             borderBottomWidth: 0.3,
           }}
         />
-        {cart.dishes.map((item: any) => (
-          <View style={styles.contContent} key={item.id}>
-            <Text style={styles.simpText}>{item.title}</Text>
-            <Text style={styles.Price}> {item.price} BYN</Text>
-            <Text style={styles.Qan}> {item.cardQuantity}</Text>
-            <Text style={styles.simpText}>
-              {item.price * item.cardQuantity} BYN
-            </Text>
-          </View>
-        ))}
+        {cart.dishes.map((item: any) => {
+          let newTitle
+          if(item.title.length >7){
+            let name = item.title.substr(0,7)
+             newTitle = name+'...'
+            console.log(newTitle)
+          } else {
+            newTitle = item.title
+          }
+          
+      
+          return (
+            <View style={styles.contContent} key={item.id}>
+              <Text style={styles.simpText}>{newTitle}</Text>
+              <Text style={styles.Price}> {item.price} BYN</Text>
+              <Text style={styles.Qan}> {item.cardQuantity}</Text>
+              <Text style={styles.simpText}>
+                {item.price * item.cardQuantity} BYN
+              </Text>
+            </View>
+      )} )}
         <View
           style={{
             paddingTop: 15,
@@ -162,6 +173,7 @@ export const OrderDetails = ({
       <TouchableOpacity
         style={styles.butStyle}
         onPress={() => {
+          console.log()
           showToast();
           onMakingOrder();
           clearCart()

@@ -63,7 +63,7 @@ const SignUp = (props: any)=> {
         }
         setError({name:nameErr,surName:surNameErr,email:emailErr,phone:phoneErr,password:passwordErr})
 
-        console.log(error)
+        
     }
     
     const onSubmit = async () => {

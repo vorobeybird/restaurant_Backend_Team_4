@@ -70,7 +70,7 @@ export const MarketMain = () => {
           <Text style={styles.emptyText}> добавили в корзину </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Menu');
+              navigation.navigate('MenuTabNavigation');
             }}>
             <View style={styles.ButtonWrapper}>
               <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
@@ -87,7 +87,7 @@ export const MarketMain = () => {
             <View style={styles.ButWrapp}>
               <Text
                 style={styles.But}
-                onPress={() => navigation.navigate('ChoseTypeOrder')}>
+                onPress={() => navigation.navigate('MenuTabNavigation', {screen: 'ChoseTypeOrder'})}>
                 ДАЛЕЕ
               </Text>
             </View>
