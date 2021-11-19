@@ -1,13 +1,14 @@
 import "./bookTableWithoutDish.scss";
 import { BookTable } from "../bookTable/BookTable";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { changeDeliveryMethod } from "../../store/order/order.actions";
+import { changeDeliveryMethod, clearOrder } from "../../store/order/order.actions";
 import { useHistory } from "react-router-dom";
 import { OrderTemp } from "../cart/Cart";
 import { DishShortInfo } from "../../store/order/order.types";
-import axios, { AxiosResponse } from 'axios';
+import axios, { Axios, AxiosResponse } from 'axios';
 import { useEffect, useState } from "react";
 import Modal from "../common/modal/Modal";
+import moment from "moment";
 
 export const BookTableWithoutDish = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ export const BookTableWithoutDish = () => {
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const items = useAppSelector((state) => state.cartItems.items);
   const [showModal, setShowModal] = useState(false);
-  const [resposeResult, setResponseResult] = useState([]);
+  const [reservationResult, setReservationResult] = useState<AxiosResponse>();
 
   useEffect(() => {
     dispatch(changeDeliveryMethod("bookTable"))
@@ -24,18 +25,23 @@ export const BookTableWithoutDish = () => {
   const history = useHistory();
 
   const routeChange = () => {
+    dispatch(clearOrder());
     let path = `/`;
     history.push(path);
   }
 
   const toggleModal = () => setShowModal(!showModal);
 
-  const reserveTable = async () => {
-    const reserveResult = await onMakingOrder();
-    // setResponseResult(reserveResult);
-    toggleModal();
-
+  const tryReserve = async () => {
+    const result = await onMakingOrder() as AxiosResponse;
+    setReservationResult(result);
   }
+
+  const reserveTable = async () => {
+    await tryReserve();
+    toggleModal();
+  }
+
 
   const onMakingOrder = () => {
     let currentOrder = {} as OrderTemp;
@@ -94,9 +100,16 @@ export const BookTableWithoutDish = () => {
         </div>
       </div>
       <Modal active={showModal} setActive={reserveTable} title={""}>
-        <div className="dish-modal-title"></div>
-
-        </Modal>
+        {!reservationResult
+          ? <div className="booking-message">К сожалению на выбранные дату - {moment(order.delivery_date).format("DD.MM.YYYY")}<br />
+            время - {moment(order.delivery_date).format("hh.mm")} свободных столов на
+            указанное количество человек - {order.num_of_persons} не нашлось. <br />
+            Попробуйте выбрать другую дату, время или другой стол!
+          </div>
+          : <div className="booking-message">Вы забронировали стол на {moment(order.delivery_date).format("DD.MM.YYYY")}
+            в {moment(order.delivery_date).format("hh.mm")}. Будем рады видеть Вас в Ocean Bar!</div>
+        }
+      </Modal>
     </div>
   )
 };
