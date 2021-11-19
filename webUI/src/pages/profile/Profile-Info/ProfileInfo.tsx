@@ -14,7 +14,7 @@ function ProfileInfo() {
     let name;
     let familyName;
     let phoneNumber;
-    if (user ) {
+    if (user) {
         email = user.attributes.email;
         name = user.attributes.name;
         familyName = user.attributes.family_name;
