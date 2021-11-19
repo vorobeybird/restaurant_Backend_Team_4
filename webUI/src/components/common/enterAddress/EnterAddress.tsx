@@ -27,38 +27,40 @@ export const EnterAddress = ({ ...props }: EnterAddressProps) => {
 
   return (
     <div className="enter_address_container_wrapper">
-      <div className="address_title">Адрес</div>
-      <div className="enter_address_container">
-        <Input
-          type="text"
-          value={props.address.street}
-          placeholder="Улица"
-          onChange={handleChangeStreet}
-        />
-        <Input
-          type="text"
-          value={props.address.houseNumber}
-          placeholder="Дом"
-          onChange={handleChangeHouseNumber}
-        />
-        <Input
-          type="text"
-          value={props.address.houseBuilding}
-          placeholder="Корпус"
-          onChange={handleChangeHouseBuilding}
-        />
-        <Input
-          type="text"
-          value={props.address.apartment}
-          placeholder="Квартира"
-          onChange={handleChangeApartment}
-        />
+      <div className="order-header">Адрес</div>
+      <div>
+        <div className="enter_address_container">
+          <Input
+            type="text"
+            value={props.address.street}
+            placeholder="Улица"
+            onChange={handleChangeStreet}
+          />
+          <Input
+            type="text"
+            value={props.address.houseNumber}
+            placeholder="Дом"
+            onChange={handleChangeHouseNumber}
+          />
+          <Input
+            type="text"
+            value={props.address.houseBuilding}
+            placeholder="Корпус"
+            onChange={handleChangeHouseBuilding}
+          />
+          <Input
+            type="text"
+            value={props.address.apartment}
+            placeholder="Квартира"
+            onChange={handleChangeApartment}
+          />
+        </div>
+        {props.isValidAddress(props.address) ? (
+          <div>it's OK</div>
+        ) : (
+          <div>Invalid Address</div>
+        )}
       </div>
-      {props.isValidAddress(props.address) ? (
-        <div>it's OK</div>
-      ) : (
-        <div>Invalid Address</div>
-      )}
     </div>
   );
 };

@@ -1,0 +1,67 @@
+.profile {
+    font-family: Ubuntu, Roboto, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 24px;
+    color: #000000;
+
+    box-sizing: border-box;
+    padding: 60px 80px 140px;
+
+    &__title {
+        font-size: 48px;
+        line-height: 55px;
+        margin-bottom: 60px;
+    }
+    &__body {
+        display: flex;
+        //надо добавить свойства для большей адаптивност
+    }
+
+}
+
+.profile-navigation {
+    flex: 0 0 30%;
+    display: flex;
+    align-items: center;
+
+    &__list{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    &__item{
+        padding-bottom: 25px;
+        a {
+            font: inherit;
+            text-decoration: none;
+            color: #000;
+        }
+        a.active,
+        a:hover,
+        a:active {
+            text-decoration: underline;
+            color: #EF742F;
+            //переделать на border-bottom
+        }
+    }
+    &__item:last-child{
+        padding-bottom: 0;
+    }
+
+}
+
+
+.profile-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 830px;
+    min-height: 490px;
+
+    border: 2px solid #EF742F;
+    box-sizing: border-box;
+    border-radius: 15px;
+}

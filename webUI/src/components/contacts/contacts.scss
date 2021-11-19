@@ -1,217 +1,112 @@
-.contacts_container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 736px;
-  background: #FAF8F8;
-  justify-content: center;
-  align-items: center;
-  & .contacts {
-    width: 100%;
-    height: 40%;
+  .contacts_container {
     display: flex;
-    flex-direction: row;
-    padding: 5px;
-    & .our-contacts {
+    flex-direction: column;
+    width: 100%;
+    height: 736px;
+    background: #FAF8F8;
+    justify-content: center;
+    align-items: center;
+    & .contacts {
+      width: 100%;
+      height: 40%;
       display: flex;
-      flex: 1;
-      flex-direction: column;
-      justify-content: space-evenly;
-      & .our-contacts_title {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 2.5rem;
-        line-height: normal;
-        color: #000000;
-        margin-left: 5%;
-      }
-
-      & .our-contacts_list {
+      flex-direction: row;
+      padding: 5px;
+      & .our-contacts {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding-left: 5%;
-        & li {
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-evenly;
+        & .our-contacts_title {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 2.5rem;
+          line-height: normal;
+          color: #000000;
+          margin-left: 5%;
+        }
+
+        & .our-contacts_list {
           display: flex;
           flex-direction: row;
-          flex: 1;
-          align-items: center;
-          list-style-type: none;
-          margin-right: 2%;
-          & img {
-            width: 30px;
-            height: 30px;
-          }
-
-          & div {
+          justify-content: space-between;
+          padding-left: 5%;
+          & li {
             display: flex;
             flex-direction: row;
+            flex: 1;
             align-items: center;
-            height: 28px;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 1rem;
-            line-height: normal;
-            color: #000000;
-            margin-left: 10px;
-            white-space: nowrap;
-          }
-        }
-      }
-
-      & .our-contacts_social {
-        display: flex;
-        flex-direction: row;
-        float: left;
-        padding-left: 5%;
-        & li {
-          list-style-type: none;
-          margin-right: 12px;
-          & a {
+            list-style-type: none;
+            margin-right: 2%;
             & img {
-              width: 36px;
-              height: 36px;
+              width: 30px;
+              height: 30px;
+            }
+
+            & div {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              height: 28px;
+              font-style: normal;
+              font-weight: 300;
+              font-size: 1rem;
+              line-height: normal;
+              color: #000000;
+              margin-left: 10px;
+              white-space: nowrap;
             }
           }
         }
-      }
-    }
 
-    & .our-app {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      justify-content: space-evenly;
-      padding-left: 5%;
-      & .our-app_title {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 2.5rem;
-        line-height: normal;
-        color: #000000;
-      }
-
-      & .our-app_sub-title {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1rem;
-        line-height: normal;
-        color: #000000;
-      }
-
-      & .our-app_markets {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 0;
-        & li {
-          list-style-type: none;
-          margin-right: 12px;
-          & a {
-            & img {
-              width: 146px;
-              height: 56px;           
-            }
-          }
-        }
-      }
-    }
-  }
-
-  & .map {
-    width: 100%;
-    height: 60%;
-    background: url('../../assets/background/map.png') center no-repeat;
-  }
-}
-
-@media screen and (max-width: 1599px) {
-  .contacts_container {
-    & .contacts {
-      & .our-contacts {
-         & .our-contacts_list {
-          flex-direction: column;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1439px) {
-  .contacts_container {
-    & .contacts {
-      & .our-contacts {
-        align-items: center;
-        & .our-contacts_list {
-          flex-direction: column;
-        }
-      }
-
-      & .our-app {
-        align-items: center;
-        padding: 0;
-        & .our-app_sub-title {
+        & .our-contacts_social {
           display: flex;
-          justify-content: center;
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 1023px) {
-  .contacts_container {
-    & .contacts {
-      & .our-contacts {
-        align-items: center;
-        & .our-contacts_title {
-          font-size: 2rem;
-        }
-
-        & .our-contacts_list {
-          flex-direction: column;
-        }
-      }
-
-      & .our-app {
-        align-items: center;
-        padding: 0;
-        & .our-app_title {
-          font-size: 2rem;
-        }
-
-        & .our-app_sub-title {
-          display: flex;
-          justify-content: center;
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .contacts_container {
-    height: 800px;
-    & .contacts {
-      height: 60%;
-      flex-direction: column;
-      & .our-contacts {
-        align-content: center;
-        & .our-contacts_title {
-          font-size: 2rem;
-        }
-  
-        & .our-contacts_list {
-          flex-direction: column;
-          justify-content: space-between;
-        }
-      }
-  
-      & .our-app {
-        & .our-app_markets {
+          flex-direction: row;
+          float: left;
+          padding-left: 5%;
           & li {
+            list-style-type: none;
+            margin-right: 12px;
+            & a {
+              & img {
+                width: 36px;
+                height: 36px;
+              }
+            }
+          }
+        }
+      }
+
+      & .our-app {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-left: 5%;
+        & .our-app_title {
+          font-style: normal;
+          font-weight: normal;
+          font-size: 2.5rem;
+          line-height: normal;
+          color: #000000;
+        }
+
+        & .our-app_sub-title {
+          font-style: normal;
+          font-weight: 300;
+          font-size: 1rem;
+          line-height: normal;
+          color: #000000;
+        }
+
+        & .our-app_markets {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 0;
+          & li {
+            list-style-type: none;
+            margin-right: 12px;
             & a {
               & img {
                 width: 146px;
@@ -222,73 +117,178 @@
         }
       }
     }
-  
-    & .map {
-      height: 40%;
-    }
-  }
-}
 
-@media screen and (max-width: 639px) {
-  .contacts_container {
-    height: 700px;
-    & .contacts {
-      height: 50%;
-      & .our-contacts {
-        & .our-contacts_title {
-          font-size: 1.5rem;
-        }
-  
-        & .our-contacts_list {
-          & li {
-            margin: 0;
-            & img {
-              width: 20px;
-              height: 20px;
-            }
-          }
-        }
-  
-        & .our-contacts_social {
-          & li {
-            list-style-type: none;
-            margin-right: 12px;
-            & a {
-              & img {
-                width: 25px;
-                height: 25px;
-              }
-            }
-          }
-        }
-      }
-  
-      & .our-app {
-        & .our-app_title {
-          font-size: 1.5rem;
-          text-align: center;
-        }
-  
-        & .our-app_sub-title {
-          font-size: 1rem;
-          white-space: pre-wrap;
-        }
-  
-        & .our-app_markets {
-          & li {
-            & a {
-              & img {
-                width: 120px;
-                height: 50px;           
-              }
-            }
-          }
-        }
-      }
-    }
-  
     & .map {
-      height: 50%;
+      width: 100%;
+      height: 60%;
+      background: url('../../assets/background/map.png') center no-repeat;
     }
   }
-}
+
+  @media screen and (max-width: 1599px) {
+    .contacts_container {
+      & .contacts {
+        & .our-contacts {
+          & .our-contacts_list {
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1439px) {
+    .contacts_container {
+      & .contacts {
+        & .our-contacts {
+          align-items: center;
+          & .our-contacts_list {
+            flex-direction: column;
+          }
+        }
+
+        & .our-app {
+          align-items: center;
+          padding: 0;
+          & .our-app_sub-title {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    .contacts_container {
+      & .contacts {
+        & .our-contacts {
+          align-items: center;
+          & .our-contacts_title {
+            font-size: 2rem;
+          }
+
+          & .our-contacts_list {
+            flex-direction: column;
+          }
+        }
+
+        & .our-app {
+          align-items: center;
+          padding: 0;
+          & .our-app_title {
+            font-size: 2rem;
+          }
+
+          & .our-app_sub-title {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .contacts_container {
+      height: 800px;
+      & .contacts {
+        height: 60%;
+        flex-direction: column;
+        & .our-contacts {
+          align-content: center;
+          & .our-contacts_title {
+            font-size: 2rem;
+          }
+    
+          & .our-contacts_list {
+            flex-direction: column;
+            justify-content: space-between;
+          }
+        }
+    
+        & .our-app {
+          & .our-app_markets {
+            & li {
+              & a {
+                & img {
+                  width: 146px;
+                  height: 56px;           
+                }
+              }
+            }
+          }
+        }
+      }
+    
+      & .map {
+        height: 40%;
+      }
+    }
+  }
+
+  @media screen and (max-width: 639px) {
+    .contacts_container {
+      height: 700px;
+      & .contacts {
+        height: 50%;
+        & .our-contacts {
+          & .our-contacts_title {
+            font-size: 1.5rem;
+          }
+    
+          & .our-contacts_list {
+            & li {
+              margin: 0;
+              & img {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+    
+          & .our-contacts_social {
+            & li {
+              list-style-type: none;
+              margin-right: 12px;
+              & a {
+                & img {
+                  width: 25px;
+                  height: 25px;
+                }
+              }
+            }
+          }
+        }
+    
+        & .our-app {
+          & .our-app_title {
+            font-size: 1.5rem;
+            text-align: center;
+          }
+    
+          & .our-app_sub-title {
+            font-size: 1rem;
+            white-space: pre-wrap;
+          }
+    
+          & .our-app_markets {
+            & li {
+              & a {
+                & img {
+                  width: 120px;
+                  height: 50px;           
+                }
+              }
+            }
+          }
+        }
+      }
+    
+      & .map {
+        height: 50%;
+      }
+    }
+  }

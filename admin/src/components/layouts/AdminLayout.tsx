@@ -6,7 +6,7 @@ import AdminNavBar from "./navbar/AdminNavBar";
 import AdminSideBar from "./sidebar/AdminSideBar";
 import Orders from "../orders/Orders";
 import Users from "../users/Users";
-import Customers from "../customers/Customers";
+import Reservations from "../reservations/Reservations";
 
 const AdminLayoutRoot = styled('div')(
     ({ theme }) => ({
@@ -59,7 +59,7 @@ const AdminLayout = ()=>{
         <Switch>
         <Route path="/dishes"><Dishes/></Route>
         <Route path="/orders"><Orders/></Route>
-        <Route path="/customers"><Customers/></Route>
+        <Route path="/reservations"><Reservations/></Route>
         <Route path="/users"><Users/></Route>
         </Switch>
           </AdminLayoutContent>

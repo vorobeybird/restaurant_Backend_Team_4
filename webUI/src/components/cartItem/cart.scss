@@ -17,7 +17,7 @@
       height: 100%;
     }
   }
-  & .cart-item__info{
+  & .cart-item__info {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -25,55 +25,63 @@
       margin-right: 10%;
       padding-bottom: 5%;
     }
-    & .price{
+    & .price {
       font-weight: bold;
       font-size: 1.5rem;
     }
-    & .ingredients{
+    & .ingredients {
       display: flex;
-      flex-wrap: wrap;
       flex-direction: row;
-      & .ingredient-wrapper{
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
+      justify-content: flex-start;
+      color: #959595;
+      text-transform: lowercase;
+      font-size: 1rem;
+      flex-wrap: nowrap;
+      & .edit__icon {
+        margin-right: 0.8rem;
+        width: 2rem;
+        height: 2.8rem;
       }
-      & > * {
-        width: 50%;
+      & span {
+        font-weight: 600;
+      }
+      & .omited {
+        padding-top: 0.3rem;
+        margin: 0;
       }
     }
   }
-  & .cart-item__actions{
+  & .cart-item__actions {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
-    & .calculate{
+    & .calculate {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      justify-content:center;
+      justify-content: center;
       align-items: center;
       padding-right: 60px;
       & > * {
         padding-left: 30px;
       }
-    & .quantity{
-      font-size: 30px;
-    }
+      & .quantity {
+        font-size: 30px;
+      }
     }
     & button {
       all: unset;
       max-height: 50px;
       max-width: 50px;
-      & .button-trash{
-
+      cursor: pointer;
+      & .button-trash {
       }
     }
-    & img{
+    & img {
       max-width: 100%;
       max-height: 100%;
-     }
+    }
   }
 }
 
@@ -81,15 +89,16 @@
   cursor: pointer;
   font-style: normal;
   font-weight: normal;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: normal;
   text-align: center;
   color: #ef742f;
   background: none;
   border: none;
   transition: 0.1s;
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 }
 
@@ -120,7 +129,7 @@
   .cart-item {
     display: flex;
     flex-wrap: wrap;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: space-between;
     & .cart-item__image {
       width: 100%;
@@ -132,7 +141,7 @@
         height: 100%;
       }
     }
-    & .cart-item__info{
+    & .cart-item__info {
       padding-top: 1em;
       display: flex;
       justify-content: space-around;
@@ -144,46 +153,42 @@
         margin: 0 auto;
       }
       & > * {
-        // margin-right: 10%;
+        margin-right: 10%;
         padding-bottom: 5%;
       }
-      & .price{
+      & .price {
         font-weight: bold;
         font-size: 1em;
       }
-
     }
-    & .cart-item__actions{
+    & .cart-item__actions {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      & .calculate{
+      & .calculate {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        justify-content:center;
+        justify-content: center;
         align-items: center;
-      & .quantity{
-        font-size: 30px;
-      }
+        & .quantity {
+          font-size: 30px;
+        }
       }
       & button {
         all: unset;
         max-height: 30px;
         max-width: 30px;
-        & .button-trash{
-  
+        & .button-trash {
         }
       }
-      & img{
+      & img {
         max-width: 100%;
         max-height: 100%;
-       }
+      }
     }
-      
   }
-
 
   .gear-button {
     cursor: pointer;
@@ -198,28 +203,39 @@
     border: none;
     transition: 0.1s;
   }
-  
+
   .delete-dish {
     width: 70px;
     height: 60px;
     margin-bottom: 10px;
-  
+
     & img {
       width: 100%;
       height: 100%;
     }
   }
-  
+
   .dish-number {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-  
+
     & img {
       width: 30px;
       height: 30px;
     }
   }
+}
 
+@media screen and (max-width: 639px) {
+  .cart-item {
+    & .cart-item__info {
+      & .ingredients {
+        & .edit__icon {
+          display: none;
+        }
+      }
+    }
+  }
 }

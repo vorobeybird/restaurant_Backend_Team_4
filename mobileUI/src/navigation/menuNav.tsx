@@ -8,7 +8,10 @@ import { ChoseTypeOrder} from "./ChoseTypeOrder";
 import { ConfirmOrder} from "./ConfirmOrder";
 import { ChosePaymentType } from './ChosePaymentType';
 import { writeAdress } from './writeAdress'
-
+import { PersonalData } from './PersonalData'
+import { OrderDetails } from './OrderDetails'
+import {ChangeDishIngr} from './ChangeDishIngr';
+import { ConfirmOrderTable } from './ConfirmOrderTable'
 export type RootStackParamList = {
     MenuTabNavigation: undefined;
     MainMenu: undefined;
@@ -21,6 +24,10 @@ export type RootStackParamList = {
     ConfirmOrder:undefined;
     ChosePaymentType:undefined;
     writeAdress:undefined;
+    PersonalData:undefined;
+    OrderDetails:undefined;
+    ChangeDishIngr: undefined;
+    ConfirmOrderTable: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -57,6 +64,23 @@ export const MenuTabNavigation = () => {
                     name="writeAdress"
                     component={writeAdress}
                 />
+        <Stack.Screen
+                    name="PersonalData"
+                    component={PersonalData}
+                />
+        <Stack.Screen
+                    name="OrderDetails"
+                    component={OrderDetails}
+                />
+        <Stack.Screen 
+                     name="ChangeDishIngr"
+                     component={ChangeDishIngr} 
+                />
+        <Stack.Screen 
+                     name="ConfirmOrderTable"
+                     component={ConfirmOrderTable} 
+                />
         
     </Stack.Navigator>
-}
+
+};
