@@ -10,15 +10,26 @@ import NextStepIcon from "../../assets/next.png";
 import { ICartItem } from "../../store/cart/cart.types";
 import edit from "../../assets/edit.svg";
 import { DishItem } from "./dishItem";
+import {OrderInformationRow} from "./OrderInformationRow"
+
+interface orderCase {
+  orderIndex: keyof orderCase,
+  takeway : string,
+  delivery: string,
+  bookTable: string
+}
+
+const orderCase = {
+  takeway: "Самовывоз",
+  delivery: "Доставка",
+  bookTable: "Бронирование стола"
+}
 
 export const OrderConfirmation = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const order = useAppSelector((state) => state.order.order);
-  console.log(
-    "🚀 ~ file: orderConfirmation.tsx ~ line 16 ~ OrderConfirmation ~ order",
-    order
-  );
-
+  const orderIndex = order.delivery_method;
+ 
   return (
     <div className="order-confirmation">
       <h1 className="order-confirmation__header">Детали заказа</h1>
