@@ -5,9 +5,9 @@ type InformationRow = {
 
 export const OrderInformationRow = ({ label, value }: InformationRow) => {
   return (
-    <div>
-      <span>{label}</span>
-      <span>{value}</span>
+    <div className="order-type__fields">
+      <div className="order-type__fields__label">{label}</div>
+      <div className="order-type__fields__value">{value}</div>
     </div>
   );
 };
