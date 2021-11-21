@@ -59,7 +59,7 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
     table.reserve.forEach((slot: any) => {
       if (slot.reserve_date === date) {
       let hours = +slot.reserve_time.substring(0,2);
-      hours += 3;
+      hours += 3; // adjust to timezone
       let minutes = +slot.reserve_time.substring(3,5);
       if (minutes < 30) {
         hours = hours * 100;
@@ -76,11 +76,10 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
       )
       
   }
-  return {id: table.id, persons: table.persons, ...tempres}
+  return {id: table.id, persons: table.persons, ...tempres};
 })
 
-const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD'));
-console.log(reservations)
+const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')).sort((a, b) => a.persons - b.persons);
   
   const cellViewButton =  (params: GridRenderCellParams) => {
       const onClick = (e: any) => {
@@ -119,13 +118,11 @@ console.log(reservations)
   ];
   return(<><div style={{height: '85vh'}}>
   <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
-  {/* <Container > */}
         <Grid container spacing={0} >
         
       <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid><Grid item md={9} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', mt: theme.spacing(4) }}><Typography variant="h2">Резервирование столиков на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
       
       </Grid>
-      {/* </Container> */}
       <DataGrid
       autoHeight
         rows={reservations}

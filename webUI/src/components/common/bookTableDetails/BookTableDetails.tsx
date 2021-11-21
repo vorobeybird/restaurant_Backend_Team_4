@@ -39,19 +39,22 @@ export const BookTableDetails = () => {
     }
   }
 
-  const [numberOfPeople, setNumberOfPeople] = useState(2);
+  const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [available, setAvaliable] = useState<any>([]);
-  const [allTables, setAllTables] = useState<any>([]);
+  const [allTables, setAllTables] = useState<number[]>([]);
 
   const findAvailableTables = (tables: Table[]) => {
-    let tempAvailable: any[]= [];
-    let tempAllTables: any[]= [];
+    let tempAvailable: number[] = [];
+    let tempAllTables: number[] = [];
 
     tables.forEach(table => {
+      if (table.persons) {
       if (checkAvailableTable(table) && !tempAvailable.includes(table.persons))  tempAvailable.push(table.persons); // push table to available tables pool if it is not added there yet
       if (!tempAllTables.includes(table.persons)) tempAllTables.push(table.persons);
+      }
   })
   setAvaliable(tempAvailable);
+  tempAllTables.sort((a: number, b: number) => a - b);
   setAllTables(tempAllTables);
   }
   
