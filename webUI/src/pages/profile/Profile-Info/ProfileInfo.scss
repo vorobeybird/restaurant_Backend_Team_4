@@ -20,7 +20,6 @@
   }
 
   &__username {
-    margin: 0 2rem;
     padding: 1.5rem 0.5rem;
   }
 
@@ -32,7 +31,6 @@
     font-weight: 400;
     line-height: 1rem;
     text-align: left;
-    margin: 0.8rem 2rem;
     padding: 1.5rem 0.5rem;
     border-radius: 4px;
     border: 1px solid #d8d8d8;
@@ -54,6 +52,19 @@
     color: white;
     font-size: 1.2rem;
     line-height: 1rem;
+
+    &:hover,
+    &:active {
+      background-color: transparent;
+      color: #ef742f;
+      border: 2px solid #ef742f;
+    }
+
+    &:disabled {
+      background-color: #606060;
+      border: none;
+      color: #FFFFFF;
+    }
   }
 }
 

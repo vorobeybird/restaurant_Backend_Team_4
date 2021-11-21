@@ -1,11 +1,22 @@
-    .main_input_container {
-      display: flex;
+.main_input_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-      & input {
-        flex: 1;
-        border: 1px solid #c6c5c5;
-      }
-    }
+  & input {
+    flex: 1;
+    border: 1px solid #c6c5c5;
+  }
+
+  & input.invalid {
+    border: 1px solid #b40e0e;
+    background-color: #fddddd;
+  }
+  & .error-text {
+    color: #b40e0e;
+    font-size: 1rem;
+  }
+}
 
     .main_inputCTA_container {
       position: relative;

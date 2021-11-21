@@ -7,14 +7,16 @@ interface ButtonProps {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   type: "button" | "submit" | "reset";
   name?: string;
+  disabled?: boolean
 }
 
-export const Button = ({ children, onClick, name, type }: ButtonProps) => {
+export const Button = ({ children, onClick, name, type, disabled }: ButtonProps) => {
   return (
     <div className="button">
       <button
         type={type}
         name={name}
+        disabled={disabled}
         onClick={onClick ? (elem) => onClick(elem) : undefined}
       >
         {children}
