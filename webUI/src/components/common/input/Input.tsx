@@ -1,5 +1,5 @@
 import "./input.scss";
-import {ChangeEvent, useCallback, useMemo, useState} from "react";
+import {ChangeEvent, useCallback, useMemo} from "react";
 import debounce from "lodash.debounce";
 
 export interface InputProps {

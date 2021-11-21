@@ -5,7 +5,6 @@ import Input from "../../../components/common/input/Input";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {Redirect} from "react-router-dom";
 import {Auth} from "aws-amplify";
-import {log} from "util";
 
 function ProfileAddress() {
     const user = useAppSelector(state => state.auth.user);

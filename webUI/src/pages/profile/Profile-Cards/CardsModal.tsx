@@ -11,7 +11,6 @@ type CardsModalType = {
 }
 
 function CardsModal(props: CardsModalType) {
-    //добавить валидацию инпутов
     const user = useAppSelector(state => state.auth.user);
     let cardData: any;
     try {
@@ -23,9 +22,21 @@ function CardsModal(props: CardsModalType) {
     const dispatch = useAppDispatch();
 
     const [cardName, setCardName] = useState<string>("");
+    const [cardNameError, setCardNameError] = useState<string>("");
     const [cardValidity, setCardValidity] = useState<string>("");
+    const [cardValidityError, setCardValidityError] = useState<string>("");
     const [cardCVV, setCardCVV] = useState<string>("");
+    const [cardCvvError, setCardCvvError] = useState<string>("");
     const [cardNumber, setCardNumber] = useState<string>("");
+    const [cardNumberError, setCardNumberError] = useState<string>("");
+
+    let formIsInvalid: boolean;
+
+    if (cardNameError.trim() || cardValidityError.trim() || cardCvvError.trim() || cardNumberError.trim()) {
+        formIsInvalid = true;
+    } else {
+        formIsInvalid = false;
+    }
 
     const cardNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setCardName(e.target.value);
@@ -69,6 +80,11 @@ function CardsModal(props: CardsModalType) {
         }
     }
 
+    const cardNameRegEx = new RegExp("^((?:[A-Z]+ ?){2})$");
+    const cardValidityRegEx = new RegExp(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/);
+    const cardCvvRegEx = new RegExp(/\d{3}$/);
+    const cardNumberRegEx = new RegExp(/(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})/);
+
     return <>
         <div className="backdrop" onClick={props.onHideModal}></div>
         <div className="cardsModal">
@@ -85,6 +101,10 @@ function CardsModal(props: CardsModalType) {
                                type="text"
                                placeholder="IVAN IVANOV"
                                value={cardName}
+                               error={cardNameError}
+                               errorMessage="Недопустимое имя владельца карты"
+                               validationSchema={cardNameRegEx}
+                               onError={setCardNameError}
                                onChange={cardNameChangeHandler}
                         />
                     </div>
@@ -95,6 +115,10 @@ function CardsModal(props: CardsModalType) {
                                type="text"
                                placeholder="MM/YY"
                                value={cardValidity}
+                               error={cardValidityError}
+                               errorMessage="Недопустимое значения срока действия карты (MM/YY)"
+                               validationSchema={cardValidityRegEx}
+                               onError={setCardValidityError}
                                onChange={cardValidityChangeHandler}
                         />
                     </div>
@@ -105,6 +129,10 @@ function CardsModal(props: CardsModalType) {
                                type="password"
                                placeholder="###"
                                value={cardCVV}
+                               error={cardCvvError}
+                               errorMessage="Недопустимое значения CVV-кода банковской карты (###)"
+                               validationSchema={cardCvvRegEx}
+                               onError={setCardCvvError}
                                onChange={cardCVVChangeHandler}
                         />
                     </div>
@@ -115,10 +143,14 @@ function CardsModal(props: CardsModalType) {
                                type="text"
                                placeholder="1234 1234 1234 1234"
                                value={cardNumber}
+                               error={cardNumberError}
+                               errorMessage="Недопустимое значения номера банковской карты"
+                               validationSchema={cardNumberRegEx}
+                               onError={setCardNumberError}
                                onChange={cardNumberChangeHandler}
                         />
                     </div>
-                    <Button type="submit">Готово</Button>
+                    <Button disabled={formIsInvalid} type="submit">Готово</Button>
                 </form>
             </div>
         </div>
