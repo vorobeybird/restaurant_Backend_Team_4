@@ -5,6 +5,7 @@ import Input from "../../../components/common/input/Input";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {Redirect} from "react-router-dom";
 import {Auth} from "aws-amplify";
+import {log} from "util";
 
 function ProfileAddress() {
     const user = useAppSelector(state => state.auth.user);
@@ -22,9 +23,20 @@ function ProfileAddress() {
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [userStreet, setUserStreet] = useState<string>(userAddress.street);
+    const [userStreetError, setUserStreetError] = useState<string>("");
     const [userHouse, setUserHouse] = useState<string>(userAddress.house);
+    const [userHouseError, setUserHouseError] = useState<string>("");
     const [userHousing, setUserHousing] = useState<string>(userAddress.housing);
+    const [userHousingError, setUserHousingError] = useState<string>("");
     const [userFlat, setUserFlat] = useState<string>(userAddress.flat);
+    const [userFlatError, setUserFlatError] = useState<string>("");
+
+    let formIsInvalid;
+    if (userStreetError.trim() || userHouseError.trim() || userHousingError.trim() || userFlatError.trim()) {
+        formIsInvalid = true;
+    } else {
+        formIsInvalid = false;
+    }
 
     if (!user) {
         return <Redirect to="/login"/>
@@ -49,9 +61,6 @@ function ProfileAddress() {
 
     async function updateUserAttributesHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        if (!userStreet.trim() || !userHouse.trim() || !userFlat.trim()) {
-            return;
-        }
         try {
             if (user) {
                 const updatedUserAddress = {
@@ -75,6 +84,12 @@ function ProfileAddress() {
         }
     }
 
+    const streetRegEx = new RegExp("^([а-яА-Я0-9-s]+)");
+    const houseRegEx = new RegExp(/\d{1,3}/);
+    const housingRegEx = new RegExp(/\d?/);
+    const flatRegEx = new RegExp(/\d?/);
+
+
     return <>
         {!editMode && <div className={"profileAddress"}>
             {hasAddress ?
@@ -82,7 +97,7 @@ function ProfileAddress() {
                     <div>ул. {userAddress.street}</div>
                     <div>д. {userAddress.house}</div>
                     <div>корп. {userAddress.housing ? userAddress.housing : ""}</div>
-                    <div>кв. {userAddress.flat}</div>
+                    <div>кв. {userAddress.flat ? userAddress.flat : ""}</div>
                 </div> :
                 <p className={"profileAddress__text"}>Ваш адрес не указан</p>
             }
@@ -98,8 +113,12 @@ function ProfileAddress() {
                            type="text"
                            placeholder="Улица"
                            value={userStreet}
-                           onChange={onUserStreetChangeHandler}
+                           validationSchema={streetRegEx}
+                           errorMessage="Недопустимое название улицы"
+                           error={userStreetError}
                            isRequired={true}
+                           onError={setUserStreetError}
+                           onChange={onUserStreetChangeHandler}
                     />
                     <label htmlFor="house">Дом</label>
                     <Input name="house"
@@ -107,8 +126,12 @@ function ProfileAddress() {
                            type="number"
                            placeholder="Дом"
                            value={userHouse}
-                           onChange={onUserHouseChangeHandler}
+                           errorMessage="Недопустимый номер дома"
+                           error={userHouseError}
+                           validationSchema={houseRegEx}
                            isRequired={true}
+                           onError={setUserHouseError}
+                           onChange={onUserHouseChangeHandler}
                     />
                     <label htmlFor="housing">Корпус</label>
                     <Input name="housing"
@@ -116,6 +139,10 @@ function ProfileAddress() {
                            type="number"
                            placeholder="Корпус"
                            value={userHousing}
+                           errorMessage="Недопустимый номер корпуса"
+                           error={userHousingError}
+                           validationSchema={housingRegEx}
+                           onError={setUserHousingError}
                            onChange={onUserHousingChangeHandler}
                     />
                     <label htmlFor="flat">Квартира</label>
@@ -124,11 +151,14 @@ function ProfileAddress() {
                            type="number"
                            placeholder="Квартира"
                            value={userFlat}
+                           errorMessage="Недопустимый номер квартиры"
+                           error={userFlatError}
+                           validationSchema={flatRegEx}
+                           onError={setUserFlatError}
                            onChange={onUserFlatChangeHandler}
-                           isRequired={true}
                     />
                 </div>
-                <Button type="submit">Готово</Button>
+                <Button disabled={formIsInvalid} type="submit">Готово</Button>
             </form>
         </div>}
     </>

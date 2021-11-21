@@ -56,6 +56,19 @@
     color: white;
     font-size: 1.2rem;
     line-height: 1rem;
+
+    &:hover,
+    &:active {
+      background-color: transparent;
+      color: #ef742f;
+      border: 2px solid #ef742f;
+    }
+
+    &:disabled {
+      background-color: #606060;
+      border: none;
+      color: #FFFFFF;
+    }
   }
 }
 
