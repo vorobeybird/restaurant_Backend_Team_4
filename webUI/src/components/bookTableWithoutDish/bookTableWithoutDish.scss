@@ -13,7 +13,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;;
+    position: relative;
+
     & .booking-title {
       display: flex;
       align-items: center;
@@ -23,8 +24,64 @@
       font-weight: normal;
       font-size: 2.8rem;
       line-height: normal;
-
       color: #000000;
+    }
+
+    & .booking-steps-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+
+      .booktable_container_wrapper {
+        height: 90%;
+        width: 90%;
+        position: relative;
+        
+        .booktable_container {
+          height: 100%;
+          width: 100%;
+          min-width: 800px;
+          min-height: 600px;
+          border: 3px #EF742F solid;
+          border-radius: 15px;
+
+          .order-header {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            font-family: Ubuntu;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 2.5rem;
+            line-height: normal;
+            color: #606060;
+          }
+
+          .table-selector {
+            .table-selector__header {
+              font-family: Roboto;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 1.5rem;
+              line-height: normal;
+              color: rgba(0, 0, 0, 0.6);
+            }
+          }
+        }
+
+        .step_progress {
+          font-family: Ubuntu;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 1.5rem;
+          line-height: normal;
+          color: #939393;
+        }
+      }
+
     }
   
     & .booking__button-wrapper{
@@ -51,4 +108,115 @@
     }
   }
 
+  .booking-message {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .booking-wrapper {
+    height: 1000px;
+    & .booking-container {
+
+      & .booking-title {
+        font-size: 2rem;
+      }
+
+      & .booking-steps-container {
+        .booktable_container_wrapper {
+          height: 90%;
+          width: 90%;
+          position: relative;
+          
+          .booktable_container {
+            min-width: 800px;
+            min-height: 600px;
+            .order-header {
+              font-size: 2rem;
+            }
+
+            .table-selector {
+              .table-selector__header {
+                font-family: Roboto;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 1.5rem;
+                line-height: normal;
+                color: rgba(0, 0, 0, 0.6);
+              }
+  
+              select {
+                width: 400px;
+              }
+            }
+
+            .choose_date {
+              div {
+                .react-calendar {
+                  width: 500px;
+                  max-width: 100%;
+                  height: 460px;
+                  max-height: 100%;
+
+                  .react-calendar__navigation {
+                    min-height: 70px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    
+      & .booking__button-wrapper{
+        & .boocking-btn {
+          width: 25%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .booking-wrapper {
+    height: 800px;
+    & .booking-container {
+      & .booking-steps-container {
+        .booktable_container_wrapper {
+          height: 90%;
+          width: 90%;
+          position: relative;
+          
+          .booktable_container {
+            min-width: 600px;
+            min-height: 400px;
+            .order-header {
+              font-size: 2rem;
+              top: 10%
+            }
+
+            .choose_date {
+              div {
+                .react-calendar {
+                  width: 400px;
+                  height: 400px;
+                }
+              }
+            }
+          }
+        }
+      }
+    
+      & .booking__button-wrapper{
+        & .boocking-btn {
+          width: 25%;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
 }
