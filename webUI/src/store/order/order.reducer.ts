@@ -67,6 +67,8 @@ export function orderReducer(
       return { order: { ...state.order, num_of_persons: action.payload } };
     case OrderConstants.CHANGE_DELIVERY_METHOD:
       return { order: { ...state.order, delivery_method: action.payload } };
+    case OrderConstants.CHANGE_TOTAL_PRICE:
+        return { order: { ...state.order, total_price: action.payload } };
     default:
       return state;
   }

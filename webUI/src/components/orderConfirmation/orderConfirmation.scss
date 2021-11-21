@@ -52,33 +52,45 @@
       }
     }
     &__info-container {
-
         flex: 1;
-        // background-color: turquoise;
-        .order-type{
+        display: flex;
+        flex-direction: column;
+
+        .order-info{
             // background-color: red;
-            width: 600px;
-            height: 200px;
+            width: 550px;
             max-height: 100%;
             max-width: 100%;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 10px auto;
+            text-align: right;
+            border-radius: 8px;
             &__fields{
                 display: flex;
                 align-items: center;
-                // background-color: yellow;
-                // text-align: right;
                 font-size: 28px;
                 &__label{
-                    width: 300px;
+                    width: 250px;
+                    max-width: 100%;
                     margin-right: 20px;
                     color: #EF742F;
                 }
                 &__value{
-
+                  text-align: left;
+                  width: 250px;
                 }
             }
+          .payment-card{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            border: 1px solid black;
+          }
         }
-
     }
   }
 }

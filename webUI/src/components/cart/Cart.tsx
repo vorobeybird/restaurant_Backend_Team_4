@@ -24,6 +24,7 @@ import {Link, Redirect} from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
 import {
   changeDeliveryMethod,
+  changeTotalPrice,
   clearOrder,
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
@@ -39,6 +40,8 @@ export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
+
+
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
 
@@ -149,6 +152,9 @@ export const Cart = () => {
     dispatch(clearOrder());
   }, []);
 
+  const combineOrder = async ()=>{
+    dispatch(changeTotalPrice(totalPrice))
+  }
   const clearFullCart = async () => {
     console.log("Order done");
     dispatch(clearCart());
@@ -258,7 +264,7 @@ export const Cart = () => {
               <Button type="button" onClick={handleOnMakingOrder}>
                 Оформить Заказ
               </Button>
-              <Link to="/cart/confirm" className="empty-cart__menu-link">
+              <Link onClick={combineOrder} to="/cart/confirm" className="empty-cart__menu-link">
                 Перейти к подтверждению
               </Link>
             </div>
