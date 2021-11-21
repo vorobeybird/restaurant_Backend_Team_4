@@ -82,8 +82,6 @@ export const BookTable = () => {
       setCurrentStep((step) => step + 1);
   };
 
-  console.log(order);
-
   const isChoosenNumOfPeople = () => order.num_of_persons;
 
   const stepsController = () => {
@@ -106,9 +104,9 @@ export const BookTable = () => {
     <div className="booktable_container_wrapper">
       <div className="booktable_container">
         <button
-          className={`${
-            currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_booktable_left`}
+          className={
+            currentStep === 0 ? "swiper_disabled" : 
+           "swiper_booktable_left"}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -119,9 +117,9 @@ export const BookTable = () => {
           {...(ADD_BOOKTABLE_STEPS[currentStep]?.props as any)}
         />
         <button
-          className={`${
-            currentStep === 4 ? "swiper_disabled" : undefined
-          } swiper_booktable_right`}
+          className={
+            currentStep === 4 ? "swiper_disabled" : 
+           "swiper_booktable_left"}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >

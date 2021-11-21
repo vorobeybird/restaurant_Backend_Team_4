@@ -31,9 +31,10 @@ const Reservations = () => {
   } 
   const fetchAllOrders = async () => {
    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
-    .then(response=> {
-        console.log(response.data);
-        setAllOrders(response.data);
+    .then(response => {
+      const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
+        console.log(ordersWithReservations);
+        setAllOrders(ordersWithReservations);
     })
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
@@ -58,6 +59,7 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
     table.reserve.forEach((slot: any) => {
       if (slot.reserve_date === date) {
       let hours = +slot.reserve_time.substring(0,2);
+      hours += 3;
       let minutes = +slot.reserve_time.substring(3,5);
       if (minutes < 30) {
         hours = hours * 100;
@@ -76,7 +78,9 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
   }
   return {id: table.id, persons: table.persons, ...tempres}
 })
-const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD') );
+
+const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD'));
+console.log(reservations)
   
   const cellViewButton =  (params: GridRenderCellParams) => {
       const onClick = (e: any) => {

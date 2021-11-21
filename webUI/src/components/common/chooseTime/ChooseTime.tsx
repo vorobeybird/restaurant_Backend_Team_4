@@ -10,22 +10,17 @@ dayjs.extend(customParseFormat);
 
 const possibleTime = [
   "10:00",
-  "10:30",
   "11:00",
-  "11:30",
   "12:00",
-  "12:30",
   "13:00",
-  "13:30",
   "14:00",
-  "15:30",
+  "15:00",
   "16:00",
-  "16:30",
+  "17:00",
   "18:00",
-  "20:30",
+  "19:00",
+  "20:00",
   "21:00",
-  "21:30",
-  "22:00",
 ];
 
 interface ChooseTimeProps {
@@ -35,9 +30,10 @@ interface ChooseTimeProps {
 
 export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
   const dispatch = useAppDispatch();
-  const date = useAppSelector((state) => state.order.order.delivery_date);
-  const tablesData = useAppSelector((state) => state.table.tablePool);
- const order = useAppSelector((state) => state.order.order);
+  const persons = useAppSelector((state) => state.order.order.num_of_persons);
+  const filteredTablesData = useAppSelector((state) => state.table.tablePool.filter(item => item.persons === persons));
+
+
 
   const handleChangeTime = (e: any, time: string) => {
     const [hours, minutes] = time.split(":");
@@ -45,35 +41,47 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
     props.setTime(time);
   };
 
-  const checkAvailableTime = (tablesData: Table[], persons: number, time: string) => {
-    
-    const result = tablesData.some((table => (table.persons === persons) && table.reserve && table.reserve.forEach(reserve => { 
-     /*  console.log("time + 4 h", dayjs(`${reserve.reserve_date} ${time}:00`, 'YYYY-MM-DD HH:mm:ss').add(4, 'h') >= dayjs(`${reserve.reserve_date} ${reserve.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'))
-      const endTime = dayjs(`${reserve.reserve_date} ${time}:00`, 'YYYY-MM-DD HH:mm:ss').add(4, 'h'); */
-      const startTime = time.split(':');
-      const endTime = Number(startTime[0]) + 4; 
-      const reservedTime = reserve.reserve_time?.split(':');
-      console.log('Reserved time', reservedTime && reservedTime[0])
-      console.log('End time', endTime)
-      if ((reservedTime) && endTime > Number(reservedTime[0])) {
-        return true
-      } else {
-        return false
+  const checkAvailableTime = (tablesData: Table[], time: string) => {
+
+    const result = tablesData.some((table) => {
+
+      if (table.reserve) {
+        const conflictingReservation = table.reserve.findIndex((item) => {          
+      /*     if ((Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour'),'minute')) < 240)) 
+         {
+           console.log(Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')))
+           console.log('Time we choose: ', dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm'));
+
+           console.log(`Table ${table.id} has no free reservations slot on this time: ${time}. `, (Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')) < 240))
+         } else {
+           console.log(Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')))
+           console.log(`Table ${table.id} has free reservation slot on this time: ${time}`, (Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')) < 240))
+         } */
+
+         /* console.log('Time we chose: ', dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm'));
+         console.log('Time we found in reservations array: ', dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss')); */
+          const toBeBooked = dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm');
+          const alreadyBooked = dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour');
+          const timeDifference = toBeBooked.diff(alreadyBooked,'minute');
+          return (Math.abs(timeDifference) < 240);
+        }
+     )
+          console.log('Conflicting reservation:', conflictingReservation)
+      return conflictingReservation === -1 ? true : false;
       }
-      // if (endTime <= dayjs(`${reserve.reserve_date} ${reserve.reserve_time}`, 'YYYY-MM-DD HH:mm:ss')) {
-      //   return false
-      // } else {
-      //   return true
-      // }
-      // return dayjs(`${reserve.reserve_date} ${time}:00`, 'YYYY-MM-DD HH:mm:ss').add(4, 'h') >= dayjs(`${reserve.reserve_date} ${reserve.reserve_time}`, 'YYYY-MM-DD HH:mm:ss')
-    })))
-    return result
+      else {
+          console.log(`Table reservations for table ${table.id} is ${table.reserve} and has a lot of slots for ${table.persons} persons on: ${time}`)
+          return true;
+      }
+  }
+    )
+    return !result;
 
   }
 
   return (
     <div className="choose_time_container">
-      <div className="order-header" >Время</div>
+      <div className="order-header">Время</div>
       <div>
         <div className="time_container">
           {possibleTime.map((timeItem) => {
@@ -85,7 +93,7 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
                   className="timebox__button"
                   type="button"
                   name={timeItem}
-                  disabled = {checkAvailableTime(tablesData, order.num_of_persons, timeItem)}
+                  disabled={checkAvailableTime(filteredTablesData, timeItem)}
                   onClick={(e) => handleChangeTime(e, timeItem)}
                 >
                   <span>

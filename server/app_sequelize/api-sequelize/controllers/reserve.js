@@ -32,13 +32,15 @@ module.exports = {
     const startTime = new Date(req.body.reserve_time);
     const endTime = new Date(startTime);
     endTime.setHours(endTime.getHours() + 4);
-    console.log(typeof startTime);
+    console.log(startTime);
+    console.log(endTime);
 
     const tables = await module.exports.getTables(
       startTime,
       endTime,
       req.body.num_of_persons,
       reserveDate
+      //13.00
     );
     if (!tables.length) {
       res.status(400).send({ message: "No tables found!" });
@@ -102,7 +104,7 @@ module.exports = {
         },
         [Op.where]: literal("reserve.id IS NULL"),
       },
-      order: persons,
+      oder: persons,
     });
   },
 };

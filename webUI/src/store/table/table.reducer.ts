@@ -25,9 +25,7 @@ export function tableReducer(
           return {id: table.id, table_number: table.table_number, persons: table.persons};
         } else {
           return action.payload[tableIndex];
-        }
-
-        
+        }        
       });
      // const poolWithoutReservations = state.tablePool.filter(table => action.payload.findIndex((el: any)=> table.id === el.id) === -1 );
      // return { ...state, tablePool: [ ...poolWithoutReservations, ...action.payload as Table[]]};

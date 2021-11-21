@@ -7,9 +7,12 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0);
     font-size: 1.5rem;
     padding: 1em 0.5em;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.9);
     border-radius: 8px;
     outline: 0px;
+  }
+  &:disabled {
+    color: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -25,13 +28,16 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0);
       font-size: 1rem;
       // padding: 1em 0.5em;
-      color: rgba(0, 0, 0, 0.6);
+      color: rgba(0, 0, 0, 0.9);
       border-radius: 8px;
       outline: 0px;
-      option{
+      option {
         max-width: 300px;
         overflow: hidden;
       }
+    }
+    &:disabled {
+      color: rgba(0, 0, 0, 0.5);
     }
   }
 }

@@ -8,7 +8,7 @@ const getTablesReservations = async (date?: Date) => {
   const strToDate = dayjs(date).format('YYYY-MM-DD');
   const GET_TABLES_URL: string = date 
   ? `${process.env.REACT_APP_GET_DISHES}/api/tables/${strToDate}` 
-  : `${process.env.REACT_APP_GET_DISHES}/api/table`;
+  : `${process.env.REACT_APP_GET_DISHES}/api/tablepool`;
 
    return await axios.get<AxiosResponse>(GET_TABLES_URL)
   .then(response => response.data)

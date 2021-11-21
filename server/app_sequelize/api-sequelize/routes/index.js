@@ -54,7 +54,7 @@ router.delete("/api/image/:publicId", dishPhotoController.delete);
 
 router.post("/api/tables", tableController.add);
 router.get("/api/tables", tableController.getTablesReservatons);
-router.get("/api/table", tableController.getTables);
+router.get("/api/tablepool", tableController.getTables);
 router.get("/api/tables/:date", tableController.getSortedTables);
 
 router.post("/api/reserve", reserveController.add);
