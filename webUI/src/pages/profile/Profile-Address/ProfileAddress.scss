@@ -1,13 +1,18 @@
 .profileAddress {
   font-family: Roboto, sans-serif;
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 400;
   font-style: normal;
   line-height: 24px;
   color: rgba(0,0,0,0.6);
 
+  &__info {
+    div {
+      padding-bottom: 2rem;
+    }
+  }
   &__text {
-    padding-bottom: 80px;
+    line-height: 4rem;
   }
 
   &__city {

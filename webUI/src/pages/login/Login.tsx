@@ -31,9 +31,19 @@ export function Authentication() {
         try {
             const {name, family_name, email, phone_number, password} = authState;
 
-            await Auth.signUp({username: email, password, attributes: {name, family_name, email, phone_number}});
+            await Auth.signUp({
+                username: email,
+                password,
+                attributes: {
+                    name,
+                    family_name,
+                    email,
+                    phone_number,
+                    address: "{}",
+                    "custom:card_number": JSON.stringify({})
+                }
+            });
             dispatch({type: "SIGN_UP"});
-            // можем добавить объект со свойством attributes
         } catch (err) {
             console.log(err);
         }
@@ -111,7 +121,6 @@ export function Authentication() {
                 {formType === "signIn" && <div className="register_container">
                     <form onSubmit={signInHandler}>
                         <h2>Вход</h2>
-
                         <Input name="username"
                                type="email"
                                placeholder="Введите адрес электронной почты"

@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
 import {AuthStateType} from "./store/auth/auth.reducer";
 import {useEffect} from "react";
-import { Toaster } from "react-hot-toast";
+import {Toaster} from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
 
@@ -21,11 +21,7 @@ import {Amplify, Auth, Hub} from "aws-amplify";
 Amplify.configure(awsconfig);
 
 const App = () => {
-    const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
-    const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
     console.log("App rendering")
-    // console.log(state)
-    console.log(user)
     const dispatch = useDispatch();
     useEffect(() => {
         checkUser();

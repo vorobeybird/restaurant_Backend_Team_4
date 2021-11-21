@@ -6,12 +6,12 @@ export interface InputProps {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     type?: string;
     name?: string;
-    // value?: string | number;
     value?: any;
     id?: string;
+    isRequired?: boolean
 }
 
-const Input = ({placeholder, onChange, type, name, value, id}: InputProps) => {
+const Input = ({placeholder, onChange, type, name, value, id, isRequired}: InputProps) => {
     return (
         <div className="main_input_container">
             <input
@@ -21,6 +21,7 @@ const Input = ({placeholder, onChange, type, name, value, id}: InputProps) => {
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
+                required={isRequired}
             />
         </div>
     );

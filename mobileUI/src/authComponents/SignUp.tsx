@@ -97,7 +97,7 @@ const SignUp = (props: any) => {
         <Text style={styles.error}>{error.password}</Text>
         <View style={styles.ButCont}>
           <TouchableOpacity onPress={() => props.onStateChange('signIn', {})}>
-            <Text style={styles.SimpText}>back to signIn</Text>
+            <Text style={styles.SimpText}>Вернуться, чтобы войти</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity

@@ -23,10 +23,11 @@
     const [name, setName] = useState(user.attributes.name);
     const [phone, setPhone] = useState(user.attributes.phone_number);
     // let address = "Ваш текущий адрес не указан";
-    let ustreet = user.attributes.address.split(" ")[1],
-        uhouse = user.attributes.address.split(" ")[3],
-        uflat = user.attributes.address.split(" ")[5];
-
+    const addr = JSON.parse(user.attributes.address);
+    let ustreet = addr.street,
+        uhouse = addr.house,
+        uflat = addr.flat,
+        uhousing = addr.housing;
     const isValidName = () => {
       const reg = /[-|a-z|а-я]{2,30}/i;
       return reg.test(name);
@@ -42,7 +43,7 @@
     const [address, setAddress] = useState<IAddress>({
       street: ustreet,
       houseNumber: uhouse,
-      houseBuilding: "",
+      houseBuilding: uhousing,
       apartment: uflat,
     });
 
