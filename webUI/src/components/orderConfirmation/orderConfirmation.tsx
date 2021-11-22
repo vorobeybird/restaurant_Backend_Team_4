@@ -11,26 +11,18 @@ import edit from "../../assets/edit.svg";
 import { DishItem } from "./dishItem";
 import { OrderInformationRow } from "./OrderInformationRow";
 import moment from "moment";
-import { NavItem } from "./NavItem";
 import "./orderConfirmation.scss";
 import visaImg from "../../assets/visa.svg";
 import mastercardImg from "../../assets/mastercard.svg";
-import { ReactComponent as VisaIcon} from "../../assets/visa.svg";
-interface orderCase {
-  orderIndex: keyof orderCase;
-  takeway: string;
-  delivery: string;
-  bookTable: string;
-}
+import Select from "react-select";
+import {DELIVERY_METHOD} from '../../store/order/order.types';
 
-let card: string;
+const paymentType = ["Картой на месте", "Картой онлайн", "Наличные"];
 
-const testList = ["Картой на месте", "Картой онлайн", "Наличные"];
-
-const orderCase = {
-  takeway: "Самовывоз",
-  delivery: "Доставка",
-  bookTable: "Бронирование стола",
+const deliveryDisplayNames = {
+  [DELIVERY_METHOD.takeaway]: "Самовывоз",
+  [DELIVERY_METHOD.delivery]: "Доставка",
+  [DELIVERY_METHOD.bookTable]:"Бронирование стола",
 };
 
 export const OrderConfirmation = () => {
@@ -42,14 +34,11 @@ export const OrderConfirmation = () => {
   try {
     cardData = JSON.parse(user.attributes["custom:card_number"]);
     userCards = Object.keys(cardData);
-    console.log(
-      "🚀 ~ file: orderConfirmation.tsx ~ line 41 ~ OrderConfirmation ~ userCards",
-      userCards
-    );
   } catch (err) {
     cardData = {};
   }
-  const orderIndex = order.delivery_method;
+  const deliveryType = deliveryDisplayNames[order.delivery_method];
+  
 
   return (
     <div className="order-confirmation">
@@ -62,7 +51,7 @@ export const OrderConfirmation = () => {
         </div>
         <div className="order-confirmation__details__info-container">
           <div className="order-info">
-            <OrderInformationRow label="ТИП ЗАКАЗА" value={orderIndex} />
+            <OrderInformationRow label="ТИП ЗАКАЗА" value={deliveryType} />
             <OrderInformationRow
               label="ДАТА"
               value={moment(order.delivery_date).format("DD.MM.YYYY")}
@@ -76,7 +65,7 @@ export const OrderConfirmation = () => {
               value={`${order.contact_name}, ${order.contact_phone}`}
             />
           </div>
-          {orderIndex == "delivery" ? (
+          {deliveryType == "Доставка" ? (
             <div className="order-info">
               <OrderInformationRow label="АДРЕС" value={`${order.adress}`} />
             </div>
@@ -85,16 +74,15 @@ export const OrderConfirmation = () => {
             <OrderInformationRow label="ИТОГО" value={`${order.total_price}`} />
             <OrderInformationRow
               label="СПОСОБ ОПЛАТЫ"
-              value={`${testList[order.payment_method]}`}
+              value={`${paymentType[order.payment_method]}`}
             />
             {order.payment_method === 1 ? (
               <div className="payment-card">
-                <NavItem icon={VisaIcon}/>
-                  {/* {userCards.map((card: string) => {
-                    return (
-                      <NavItem icon={VisaIcon}/>
-                    );
-                  })} */}
+                <img
+                  src={+userCards[0][0] === 4 ? visaImg : mastercardImg}
+                  alt={+userCards[0][0] === 4 ? "VISA" : "MASTERCARD"}
+                />
+                <div>{'**** **** ****'}{userCards[0].slice(userCards[0].length - 4)}</div>
               </div>
             ) : undefined}
           </div>

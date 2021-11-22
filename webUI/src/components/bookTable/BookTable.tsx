@@ -7,7 +7,9 @@ import { PaymentMethod } from "../common/paymentMethod/PaymentMethod";
 import PrevStepIcon from "../../assets/prev.png";
 import NextStepIcon from "../../assets/next.png";
 import { BookTableDetails } from "../common/bookTableDetails/BookTableDetails";
+import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import "./bookTable.scss";
+import { useHistory } from "react-router-dom";
 
 export const BookTable = () => {
   const dispatch = useAppDispatch();
@@ -77,9 +79,18 @@ export const BookTable = () => {
     if (currentStep > 0) setCurrentStep((step) => step - 1);
   };
 
+  let history = useHistory();
   const handleChangeCurrentStepNext = () => {
-    if (currentStep < 4 && stepsController())
+    if (currentStep < 4 && stepsController()) {
       setCurrentStep((step) => step + 1);
+    }
+  };
+
+  const pushToConfirmation = () => {
+    handleChangeCurrentStepNext();
+    if (currentStep == 4) {
+      history.push("/cart/confirm");
+    }
   };
 
   console.log(order);
@@ -132,6 +143,17 @@ export const BookTable = () => {
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_BOOKTABLE_STEPS.length}
       </div>
+      <SwitchButtons
+        border="none"
+        color="pink"
+        height="50px"
+        onClickNext={pushToConfirmation}
+        onClickPrev={handleChangeCurrentStepPrev}
+        radius="0%"
+        width="200px"
+        children="I'm a pink circle!"
+      />
+      <button onClick={pushToConfirmation}>Check next button</button>
     </div>
   );
 };

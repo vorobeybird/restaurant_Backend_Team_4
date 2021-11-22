@@ -5,7 +5,7 @@ export interface DishShortInfo {
 }
 
 export interface Order {
-  delivery_method: string;
+  delivery_method: DELIVERY_METHOD;
   payment_method: number;
   customer_id: string;
   total_price: number;
@@ -21,6 +21,12 @@ export interface Order {
 export interface ReducerState {
   order: Order;
 }
+
+export enum DELIVERY_METHOD {
+  takeaway = "takeaway",
+  delivery = "delivery",
+  bookTable = "bookTable",
+};
 
 export enum OrderConstants {
   CHANGE_DATE = "CHANGE_DATE",
