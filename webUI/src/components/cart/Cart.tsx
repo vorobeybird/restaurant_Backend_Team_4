@@ -20,7 +20,7 @@ import {
   pickIngredient,
 } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
-import { Link } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
 import {
   changeDeliveryMethod,
@@ -258,6 +258,9 @@ export const Cart = () => {
               <Button type="button" onClick={handleOnMakingOrder}>
                 Оформить Заказ
               </Button>
+              <Link to="/cart/confirm" className="empty-cart__menu-link">
+                Перейти к подтверждению
+              </Link>
             </div>
           </div>
 
