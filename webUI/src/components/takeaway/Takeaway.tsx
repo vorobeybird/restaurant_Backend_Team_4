@@ -7,8 +7,15 @@
   import "./takeaway.scss";
   import PrevStepIcon from "../../assets/prev.png";
   import NextStepIcon from "../../assets/next.png";
+  import { useHistory } from "react-router-dom";
+  import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
+  interface OrderProps {
+    total?: number,
+    combineOrder?: any;
+  }
 
-  export const Takeaway = () => {
+
+  export const Takeaway = ({total,combineOrder}:OrderProps) => {
     const user = useAppSelector(state => state.auth.user);
     const [name, setName] = useState(user.attributes.name);
     const [phone, setPhone] = useState(user.attributes.phone_number);
@@ -71,8 +78,14 @@
       if (currentStep < 3 && stepsController())
         setCurrentStep((step) => step + 1);
     };
-
-    console.log(order);
+    let history = useHistory();
+    const pushToConfirmation = () => {
+      handleChangeCurrentStepNext();
+      if (currentStep === 3) {
+        history.push("/cart/confirm");
+        combineOrder(total)
+      }
+    };
 
     const stepsController = () => {
       switch (currentStep) {
@@ -118,6 +131,11 @@
         <div className="step_progress">
           Шаг {currentStep + 1}/{ADD_TAKEAWAY_STEPS.length}
         </div>
+        <SwitchButtons
+                onClickNext={pushToConfirmation}
+                onClickPrev={handleChangeCurrentStepPrev}
+                children="I'm a pink circle!"
+              />
       </div>
     );
   };

@@ -9,7 +9,8 @@ import NextStepIcon from "../../assets/next.png";
 import "./delivery.scss";
 import { EnterAddress } from "../common/enterAddress/EnterAddress";
 import { chooseAddress } from "../../store/order/order.actions";
-
+import { useHistory } from "react-router-dom";
+import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 export interface IAddress {
   street: string;
   houseNumber: string;
@@ -17,11 +18,19 @@ export interface IAddress {
   apartment: string;
 }
 
-export const Delivery = () => {
+interface OrderProps {
+  total?: number,
+  combineOrder?: any;
+}
+
+
+export const Delivery = ({total,combineOrder}:OrderProps) => {
+
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const [name, setName] = useState(user.attributes.name);
   const [phone, setPhone] = useState(user.attributes.phone_number);
+  let history = useHistory();
   // let address = "Ваш текущий адрес не указан";
 
   let ustreet,uhouse,uflat,uhousing = "";
@@ -136,6 +145,14 @@ export const Delivery = () => {
       setCurrentStep((step) => step + 1);
   };
 
+  const pushToConfirmation = () => {
+    handleChangeCurrentStepNext();
+    if (currentStep === 4) {
+      history.push("/cart/confirm");
+      combineOrder(total)
+    }
+  };
+
   console.log(order);
 
   const stepsController = () => {
@@ -184,6 +201,11 @@ export const Delivery = () => {
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_DELIVERY_STEPS.length}
       </div>
+      <SwitchButtons
+                onClickNext={pushToConfirmation}
+                onClickPrev={handleChangeCurrentStepPrev}
+                children="I'm a pink circle!"
+              />
     </div>
   );
 };

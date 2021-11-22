@@ -16,7 +16,7 @@ import visaImg from "../../assets/visa.svg";
 import mastercardImg from "../../assets/mastercard.svg";
 import Select from "react-select";
 import {DELIVERY_METHOD} from '../../store/order/order.types';
-
+import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 const paymentType = ["Картой на месте", "Картой онлайн", "Наличные"];
 
 const deliveryDisplayNames = {
@@ -88,6 +88,11 @@ export const OrderConfirmation = () => {
           </div>
         </div>
       </div>
+      <SwitchButtons
+                onClickNext={()=>console.log('The order was made')}
+                onClickPrev={()=>console.log('please go fuck yourself')}
+                children="I'm a pink circle!"
+              />
     </div>
   );
 };

@@ -11,15 +11,17 @@ import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import "./bookTable.scss";
 import { useHistory } from "react-router-dom";
 
-interface BookTableProps {
+interface OrderProps {
   total?: number,
   combineOrder?: any;
 }
 
-export const BookTable = ({total,combineOrder}:BookTableProps) => {
+export const BookTable = ({total,combineOrder}:OrderProps) => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
+  const cartItems = useAppSelector((state) => state.cartItems.items);
+
   const [name, setName] = useState(user.attributes.name);
   const [phone, setPhone] = useState(user.attributes.phone_number);
 
@@ -93,7 +95,7 @@ export const BookTable = ({total,combineOrder}:BookTableProps) => {
 
   const pushToConfirmation = () => {
     handleChangeCurrentStepNext();
-    if (currentStep === 4) {
+    if (currentStep === 3) {
       history.push("/cart/confirm");
       combineOrder(total)
     }
@@ -150,11 +152,13 @@ export const BookTable = ({total,combineOrder}:BookTableProps) => {
         Шаг {currentStep + 1}/{ADD_BOOKTABLE_STEPS.length}
       </div>
       <div className="switch-buttons-component">
-        <SwitchButtons
-          onClickNext={pushToConfirmation}
-          onClickPrev={handleChangeCurrentStepPrev}
-          children="I'm a pink circle!"
-        />
+        { cartItems.length === 0 ? undefined :
+                <SwitchButtons
+                onClickNext={pushToConfirmation}
+                onClickPrev={handleChangeCurrentStepPrev}
+                children="I'm a pink circle!"
+              />
+        }
       </div>
     </div>
   );

@@ -254,9 +254,9 @@ export const Cart = () => {
               {orderType === "bookTable" ? (
                 <BookTable total={totalPrice} combineOrder={combineOrder} />
               ) : orderType === "delivery" ? (
-                <Delivery />
+                <Delivery total={totalPrice} combineOrder={combineOrder}/>
               ) : orderType === "takeaway" ? (
-                <Takeaway />
+                <Takeaway total={totalPrice} combineOrder={combineOrder} />
               ) : (
                 <div></div>
               )}
