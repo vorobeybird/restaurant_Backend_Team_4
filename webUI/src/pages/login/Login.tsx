@@ -1,16 +1,15 @@
 import "./login.scss";
-import Logo from "../../assets/header_logo.png";
 import Input from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {v4 as uuidv4} from 'uuid';
 
 // imports for aws authentication
 import {Auth} from "aws-amplify";
 import {AppStateType} from "../../store";
 import {AuthStateType} from "../../store/auth/auth.reducer";
 import {Link, Redirect} from "react-router-dom";
+import InputMask from "react-input-mask";
 
 export function Authentication() {
     const dispatch = useDispatch();
@@ -18,13 +17,13 @@ export function Authentication() {
         (state) => state.auth
     );
     const {formType} = authState;
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
-            type: "UPDATE_STATE",
-            payload: {name: e.target.name, value: e.target.value},
-        });
-    };
+    //
+    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    //     dispatch({
+    //         type: "UPDATE_STATE",
+    //         payload: {name: e.target.name, value: e.target.value},
+    //     });
+    // };
 
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
@@ -37,9 +36,12 @@ export function Authentication() {
     const [userPasswordError, setUserPasswordError] = useState("");
     const [userFirstNameError, setUserFirstNameError] = useState("");
     const [userSecondNameError, setUserSecondNameError] = useState("");
-    const [userPhoneError, setUserPhoneError] = useState("");
     const [confirmationCodeError, setConfirmationCodeError] = useState("");
 
+    const updatedPhone = userPhone.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").replaceAll("_", "")
+
+    console.log(updatedPhone);
+    console.log(updatedPhone.length)
     let signInFormIsInvalid: boolean = false;
     let signUpFormIsInvalid: boolean = false;
     let confirmFormIsInvalid: boolean = false;
@@ -48,7 +50,7 @@ export function Authentication() {
     if (userEmailError || userPasswordError) {
         signInFormIsInvalid = true;
     }
-    if (userEmailError || userPasswordError || userFirstNameError || userSecondNameError || userPhoneError) {
+    if (userEmailError || userPasswordError || userFirstNameError || userSecondNameError || updatedPhone.length < 13) {
         signUpFormIsInvalid = true;
     }
     if (confirmationCodeError) {
@@ -59,7 +61,6 @@ export function Authentication() {
     }    if (confirmationCodeError || userPasswordError) {
         confirmForgotPasswordFormIsInvalid = true;
     }
-    const updatedPhone = userPhone.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", "").replaceAll("-", "")
 
     const userEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserEmail(e.target.value);
@@ -163,12 +164,11 @@ export function Authentication() {
     const passwordErrorMessage = "Пароль должен содержать 8-15 символов, без пробелов и специальных знаков (#, %, &, !, $, etc.). Обязательно к заполнению.";
     const emailErrorMessage = "Электронная почта должна быть в формате xxx@yyy.zzz, без специальных символов (#, %, &, !, $, etc.). Обязательно к заполнению.";
     const userNameErrorMessage = "Это поле должно содержать 8-30 знаков, без специальных символов (#, %, &, !, $, etc.) и чисел (0-9). Обязательно к заполнению.";
-    const userPhoneErrorMessage = "Телефон должен содержать 9 цифр. Обязательно к заполнению.";
 
     const passwordRegEx = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/);
     const emailRegEx = new RegExp(/(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/);
     const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
-    const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$");
+    // const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$");
     const confirmationCodeRegEX = new RegExp(/\d{3}$/);
 
     return (
@@ -236,19 +236,22 @@ export function Authentication() {
                                validationSchema={emailRegEx}
                                onError={setUserEmailError}
                                onChange={userEmailChangeHandler}/>
-                        {/*<Input name="email"*/}
-                        {/*       type="email"*/}
-                        {/*       placeholder="E-mail"*/}
-                        {/*       onChange={onChangeHandler}/>*/}
-                        <Input name="phone_number"
-                               type="text"
-                               placeholder="Телефон"
-                               value={userPhone}
-                               error={userPhoneError}
-                               errorMessage={userPhoneErrorMessage}
-                               validationSchema={phoneNumberRegEx}
-                               onError={setUserPhoneError}
-                               onChange={userPhoneChangeHandler}/>
+                        {/*<Input name="phone_number"*/}
+                        {/*       type="text"*/}
+                        {/*       placeholder="Телефон"*/}
+                        {/*       value={userPhone}*/}
+                        {/*       error={userPhoneError}*/}
+                        {/*       errorMessage={userPhoneErrorMessage}*/}
+                        {/*       validationSchema={phoneNumberRegEx}*/}
+                        {/*       onError={setUserPhoneError}*/}
+                        {/*       onChange={userPhoneChangeHandler}/>*/}
+                        <InputMask
+                            className="masked_input"
+                            mask='+375 (99) 999-99-99'
+                            value={userPhone}
+                            alwaysShowMask={true}
+                            onChange={userPhoneChangeHandler}>
+                        </InputMask>
                         <Input name="password"
                                type="password"
                                placeholder="Введите пароль"
@@ -258,10 +261,6 @@ export function Authentication() {
                                validationSchema={passwordRegEx}
                                onError={setUserPasswordError}
                                onChange={userPasswordChangeHandler}/>
-                        {/*<Input name="password"*/}
-                        {/*       type="password"*/}
-                        {/*       placeholder="Пароль"*/}
-                        {/*       onChange={onChangeHandler}/>*/}
                         <Button disabled={signUpFormIsInvalid} type="submit">Зарегистрироваться</Button>
                         <div className="auth_links">
                             <Link to="#" onClick={toggleSignInHandler}>Вход</Link>

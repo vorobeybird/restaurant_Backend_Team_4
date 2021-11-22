@@ -1,13 +1,13 @@
 import "./ProfilePassword.scss";
 import {Button} from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useCallback, useState} from "react";
 import {Auth} from "aws-amplify";
 import {useAppSelector} from "../../../store/hooks";
 import {Redirect} from "react-router-dom";
+import toast from "react-hot-toast";
 
 function ProfilePassword() {
-    //вывести уведомление об успешном изменении пароля
     const user = useAppSelector(state => state.auth.user);
 
     const [oldPassword, setOldPassword] = useState<string>("");
@@ -18,7 +18,7 @@ function ProfilePassword() {
     const [confirmedNewPasswordError, setConfirmedNewPasswordError] = useState<string>("");
 
     let formIsInvalid: boolean;
-    if (!oldPasswordError.trim() && !newPasswordError.trim() && !confirmedNewPasswordError.trim() )  {
+    if (!oldPasswordError.trim() && !newPasswordError.trim() && !confirmedNewPasswordError.trim()) {
         formIsInvalid = false;
     } else {
         formIsInvalid = true;
@@ -28,6 +28,10 @@ function ProfilePassword() {
         isPasswordConfirmed = "Неверный пароль";
     }
 
+    const validateConfirmedPassword = useCallback((confirmedPassword: string) => {
+        return newPassword === confirmedPassword;
+    }, [newPassword])
+
     if (!user) {
         return <Redirect to="/login"/>
     }
@@ -35,11 +39,13 @@ function ProfilePassword() {
     async function updateUserPasswordHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         if (newPassword !== confirmedNewPassword) {
+            toast.error(`Повторный пароль введен неверно`);
             return;
         }
         try {
             if (user) {
                 await Auth.changePassword(user, oldPassword, newPassword);
+                toast.success(`Пароль успешно изменен`);
                 // const updatedUser = await Auth.currentAuthenticatedUser();
                 // dispatch(
                 //     {
@@ -47,9 +53,9 @@ function ProfilePassword() {
                 //         payload: updatedUser,
                 //     }
                 // )
-                setOldPassword("");
-                setNewPassword("");
-                setConfirmedNewPassword("");
+                // setOldPassword("");
+                // setNewPassword("");
+                // setConfirmedNewPassword("");
             }
         } catch (err) {
             setOldPasswordError("Неверный пароль")
@@ -66,6 +72,7 @@ function ProfilePassword() {
     const onConfirmNewPasswordChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setConfirmedNewPassword(e.target.value);
     }
+
 
     let passwordErrorMessage = "Пароль должен содержать 8-15 символов, без пробелов и специальных знаков (#, %, &, !, $, etc.). Обязательно к заполнению.";
     const passwordRegEx = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/)
@@ -105,6 +112,7 @@ function ProfilePassword() {
                        validationSchema={passwordRegEx}
                        onError={setConfirmedNewPasswordError}
                        onChange={onConfirmNewPasswordChangeHandler}
+                       validate={validateConfirmedPassword}
                 />
             </div>
             <Button disabled={formIsInvalid} type="submit">Готово</Button>

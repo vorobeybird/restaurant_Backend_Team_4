@@ -64,7 +64,7 @@ const App = () => {
         <Router>
             <Navigation/>
             <Toaster
-                position="top-right"
+                position="bottom-right"
                 toastOptions={{
                     className: "",
                     style: {
