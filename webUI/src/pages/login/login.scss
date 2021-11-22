@@ -3,10 +3,16 @@
   flex-direction: column;
   justify-content: space-around;
 
+  & .masked_input {
+    margin-bottom: 32px;
+    width: 100%;
+    font: inherit;
+  }
+
   & input {
-    height: 30px;
     font-size: 16px;
     font-style: normal;
+    color: #606060;
     font-weight: 400;
     line-height: 1rem;
     text-align: left;
