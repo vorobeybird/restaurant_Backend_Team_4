@@ -81,7 +81,7 @@ function ProfileInfo() {
     const familyNameRegEx = new RegExp("^([а-яА-Я]{2,30})");
     // const phoneNumberRegEx = new RegExp("^\\+375 \\((17|29|33|44)\\) [0-9]{3}-[0-9]{2}-[0-9]{2}$")
     // const phoneNumberRegEx = new RegExp("^\\+375\\(17|29|33|44\\)\\[0-9]{7}\\$")
-    const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$")
+    const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$");
     //+375 29|33|44|17 111-11-11
     //убрать пробелы - добавить после (\\(s+)?)
     // const phoneNumberRegEx = new RegExp("^\\+375\\(17|29|33|44\\)[0-9]{3}[0-9]{3}[0-9]{3}$")

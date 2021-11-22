@@ -52,17 +52,17 @@
     color: white;
     font-size: 1.2rem;
     line-height: 1rem;
-
+    outline: none;
     &:hover,
-    &:active {
+    &:active,
+    &:focus{
       background-color: transparent;
       color: #ef742f;
-      border: 2px solid #ef742f;
+      box-shadow: inset 0 0 0 3px #ef742f;
     }
-
     &:disabled {
       background-color: #606060;
-      border: none;
+      box-shadow: none;
       color: #FFFFFF;
     }
   }
