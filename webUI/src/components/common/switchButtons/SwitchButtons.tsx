@@ -3,52 +3,35 @@ import "./SwitchButtons.scss";
 import { MouseEvent } from "react";
 
 interface ButtonProps {
-    border: string;
-    color: string;
-    children?: React.ReactNode;
-    height: string;
-    onClickNext: () => void;
-    onClickPrev: () => void;
-    radius: string
-    width: string;
+  children?: React.ReactNode;
+  onClickNext: () => void;
+  onClickPrev: () => void;
+  firstValue?: string;
+  secondValue?: string;
+  buttonClass?: string;
 }
 
-export const SwitchButtons: React.FC<ButtonProps> = ({ 
-    border,
-    color,
-    children,
-    height,
-    onClickNext,
-    onClickPrev,
-    radius,
-    width
-  }) => { 
+export const SwitchButtons: React.FC<ButtonProps> = ({
+  onClickNext,
+  onClickPrev,
+  firstValue,
+  secondValue,
+  buttonClass,
+}) => {
   return (
-      <>
-    <button 
-      onClick={onClickNext}
-      style={{
-         backgroundColor: color,
-         border,
-         borderRadius: radius,
-         height,
-         width
-      }}
-    >
-    {children}
-    </button>
-    <button 
-      onClick={onClickPrev}
-      style={{
-         backgroundColor: color,
-         border,
-         borderRadius: radius,
-         height,
-         width
-      }}
-    >
-    {children}
-    </button>
-    </>
+    <div className="switch-button-container">
+      <button
+        className={buttonClass ? buttonClass : "switch-button"}
+        onClick={onClickPrev}
+      >
+        {secondValue ? secondValue : "Отмена"}
+      </button>
+      <button
+        className={buttonClass ? buttonClass : "switch-button"}
+        onClick={onClickNext}
+      >
+        {firstValue ? firstValue : "Далее"}
+      </button>
+    </div>
   );
-}
+};

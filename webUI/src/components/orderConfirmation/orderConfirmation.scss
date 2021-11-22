@@ -90,8 +90,9 @@
             border-radius: 8px;
             &__fields{
                 display: flex;
-                align-items: center;
+                // align-items: center;
                 font-size: 28px;
+                align-items: top;
                 &__label{
                     width: 250px;
                     max-width: 100%;

@@ -152,8 +152,9 @@ export const Cart = () => {
     dispatch(clearOrder());
   }, []);
 
-  const combineOrder = async ()=>{
-    dispatch(changeTotalPrice(totalPrice))
+  const combineOrder = async (total:number)=>{
+    dispatch(changeTotalPrice(total))
+    console.log('The order was updated')
   }
   const clearFullCart = async () => {
     console.log("Order done");
@@ -251,7 +252,7 @@ export const Cart = () => {
             </div>
             <div className="selected-actions">
               {orderType === "bookTable" ? (
-                <BookTable />
+                <BookTable total={totalPrice} combineOrder={combineOrder} />
               ) : orderType === "delivery" ? (
                 <Delivery />
               ) : orderType === "takeaway" ? (
@@ -264,7 +265,7 @@ export const Cart = () => {
               <Button type="button" onClick={handleOnMakingOrder}>
                 Оформить Заказ
               </Button>
-              <Link onClick={combineOrder} to="/cart/confirm" className="empty-cart__menu-link">
+              <Link onClick={()=>combineOrder(totalPrice)} to="/cart/confirm" className="empty-cart__menu-link">
                 Перейти к подтверждению
               </Link>
             </div>

@@ -22,7 +22,7 @@ const paymentType = ["Картой на месте", "Картой онлайн"
 const deliveryDisplayNames = {
   [DELIVERY_METHOD.takeaway]: "Самовывоз",
   [DELIVERY_METHOD.delivery]: "Доставка",
-  [DELIVERY_METHOD.bookTable]:"Бронирование стола",
+  [DELIVERY_METHOD.bookTable]:"Бронирование",
 };
 
 export const OrderConfirmation = () => {
