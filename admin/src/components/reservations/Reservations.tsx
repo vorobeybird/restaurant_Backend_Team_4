@@ -7,13 +7,16 @@ import dayjs from 'dayjs';
 import { Timer } from '@mui/icons-material';
 import apiFetch from '../../components/common/apifetch/apifetch';
 import OrderCard from '../orders/orderCard/OrderCard';
+import TableDialog from './tableDialog/TableDialog';
 
 
 const Reservations = () => {
   const [date, setDate] = useState<Date | null>(new Date());
   const [reservationData, setReservationData] = useState<any[]>([]);
   const [allOrders, setAllOrders] = useState<any[]>([]);
-  const [openCard, setOpenCard] = useState(false);
+  const [cardOpen, setCardOpen] = useState(false);
+  const [tableOpen, setTableOpen] = useState(false);
+  const [currentTable, setCurrentTable] = useState<number | null>(null)
   const [currentOrder, setCurrentOrder] = useState<any>({});
   const theme = useTheme();
 
@@ -40,12 +43,12 @@ const Reservations = () => {
         console.error(error);
     })
   }
-  const handleOpenCard = () => {
-    setOpenCard(true);
+
+  const handleOpenNewTable = () => {
+    setTableOpen(true);
+    setCurrentTable(reservationData.length + 1);
   }
-  const handleCloseCard = () => {
-    setOpenCard(false)
-  }
+
   useEffect(()=> {
     fetchReservationData();
     fetchAllOrders();
@@ -82,7 +85,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
       const onClick = (e: any) => {
         const orderFound = allOrders.filter((el=> el.reserve_id === params.value));
         setCurrentOrder(orderFound[0]); 
-        handleOpenCard();
+        setCardOpen(true);
       };
       if (params.value) return <IconButton onClick={onClick} color="warning" aria-label="change status" component="div"><Timer />
       </IconButton> }
@@ -115,13 +118,11 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   ];
   return(<><div style={{height: '85vh'}}>
   <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
-  {/* <Container > */}
-        <Grid container spacing={0} >
-        
-      <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid><Grid item md={9} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', mt: theme.spacing(4) }}><Typography variant="h2">Резервирование столиков на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
-      
+        <Grid container spacing={0}>
+      <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid>
+      <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'center', mt: theme.spacing(4) }}><Typography variant="h2">Резервирование столов на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
+      <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', mt: theme.spacing(4) }}><div><Button color="warning" variant="contained" onClick={handleOpenNewTable}>Создать стол</Button></div></Grid>
       </Grid>
-      {/* </Container> */}
       <DataGrid
       autoHeight
         rows={reservations}
@@ -132,7 +133,8 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
       />
   </Container>
   </div>
-  <OrderCard currentOrder={currentOrder} openCard={openCard} handleCloseCard={handleCloseCard} />
+  <OrderCard currentOrder={currentOrder} open={cardOpen} setOpen={setCardOpen} />
+  <TableDialog currentTable={currentTable} tableOpen={tableOpen} setTableOpen={setTableOpen} />
   </>
 );
 }

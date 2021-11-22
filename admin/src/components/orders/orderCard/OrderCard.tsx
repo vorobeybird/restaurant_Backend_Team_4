@@ -22,14 +22,14 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
+const OrderCard = ({currentOrder, open, setOpen}: any) => {
 
   const {id, adress, contact_phone, contact_name, createdAt, delivery_date, delivery_method, dish, payment_method, status, total_price, reserve_id} = currentOrder;
   
   const payment = ['Наличными', 'Картой онлайн', 'Картой на месте']
   return (
     <div>
-      <Dialog open={openCard} onClose={handleCloseCard} TransitionComponent={Transition} fullWidth maxWidth={"lg"}>
+      <Dialog open={open} onClose={()=>setOpen(false)} TransitionComponent={Transition} fullWidth maxWidth={"lg"}>
         <DialogTitle><Container sx={{textAlign: "center"}}>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h3">
           Заказ номер: {id}
@@ -38,14 +38,16 @@ const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <div>Дата заказа: <span>{dayjs(createdAt).format('HH:mm DD-MM-YYYY') }</span></div>
-          <div>Дата готовности: <span>{dayjs(delivery_date).format('HH:mm DD-MM-YYYY') }</span></div>
+          Дата заказа: <span>{dayjs(createdAt).format('HH:mm DD-MM-YYYY') }</span>
+          </DialogContentText>
+          <DialogContentText>
+          Дата готовности: <span>{dayjs(delivery_date).format('HH:mm DD-MM-YYYY') }</span>
           </DialogContentText>
           <div>{delivery_method === 'delivery' && <span> Доставка по адресу: {adress}</span>}{delivery_method === 'bookTable' ? <span> Заказ столика: {reserve_id}</span> : <span>Самовывоз</span>}</div>
           <div><span>Клиент: {contact_name}</span>. Тел.:<span>{contact_phone}</span></div>
           <h3>Блюда в заказе:</h3>
           <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label="Детали заказа">
         <TableHead>
           <TableRow>
             <TableCell>Название блюда</TableCell>
@@ -77,7 +79,7 @@ const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
       <h4>Оплата: {payment[payment_method]}</h4>
       </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseCard}>Закрыть</Button>
+          <Button onClick={()=> setOpen(false)}>Закрыть</Button>
         </DialogActions>
       </Dialog>
     </div>
