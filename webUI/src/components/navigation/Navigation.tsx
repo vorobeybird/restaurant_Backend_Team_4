@@ -18,14 +18,12 @@ interface LinkType {
 const links: LinkType[] = [
   { title: "Меню", link: "/menu" },
   { title: "Оформить заказ", link: "/#" },
-  { title: "Забронировать стол", link: "/#" },
+  { title: "Забронировать стол", link: "/booktable" },
 ];
 
 const Navigation = () => {
   const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
   const dispatch = useDispatch();
-
-
 
   return (
     <div className="navigation">
