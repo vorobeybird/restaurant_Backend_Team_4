@@ -49,6 +49,78 @@ export const Menu = () => {
     setSearchInputValue('');
   };
 
+  const includesSuchDish = () => {
+    let unicDishes = [] as any;
+
+    date.forEach((item: any) => {
+      item.dish.forEach((dish: any) => {
+        if (!unicDishes.includes(dish)) unicDishes.push(dish);
+      });
+    });
+
+    unicDishes = uniqueProps(unicDishes);
+
+    let itHas = false;
+    unicDishes.forEach((dish: any) => {
+      //   console.log(dish.title);
+      if (
+        dish.title.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
+        searchInputValue !== ''
+      )
+        itHas = true;
+    });
+    console.log(itHas);
+    return itHas;
+  };
+
+  //   const a = useSelector(state => state);
+  //   console.log(a);
+
+  const showDishes = () => {
+    let unicDishes = [] as any;
+
+    date.forEach((item: any) => {
+      item.dish.forEach((dish: any) => {
+        if (!unicDishes.includes(dish)) unicDishes.push(dish);
+      });
+    });
+
+    unicDishes = uniqueProps(unicDishes);
+
+    return unicDishes
+      .filter((dish: any) => {
+        console.log(
+          dish.title.toUpperCase(),
+          searchInputValue.toUpperCase(),
+          'hi',
+        );
+        return dish.title
+          .toUpperCase()
+          .startsWith(searchInputValue.toUpperCase());
+      })
+      .map((dish: any) => {
+        console.log(dish.title, 'cum');
+
+        const newDish = {
+          id: dish.id,
+          title: dish.title,
+          photos: dish.photo,
+          descr: dish.ingredient,
+          price: dish.price,
+          calories: dish.calories,
+          weight: dish.weight,
+        };
+
+        return (
+          <Text
+            style={styles.CategoryFromList}
+            onPress={() => navigation.navigate('DishPage', {...newDish})}>
+            {dish.title}
+          </Text>
+        );
+      });
+  };
+
   const includesSuchCategory = () => {
     let categories = date.map((item: any) => item.title);
     let itHas = false;
@@ -82,25 +154,31 @@ export const Menu = () => {
       });
   };
 
+  const uniqueProps = (a: any) => {
+    if (!a) return [];
+    let seen = {} as any;
+    return a.filter((x: any) => {
+      var key = JSON.stringify(x);
+      return !(key in seen) && (seen[key] = x);
+    });
+  };
+
   const navigation = useNavigation<RootStackParamList>();
   return (
     <View style={styles.Wrapper}>
       <View style={styles.HedWrap}>
         <Text style={styles.Header}>Меню</Text>
         <View style={styles.SearchInput}>
-          {searchIsPressed ? (
+          {searchIsPressed && (
             <>
               <Input
                 onChangeText={setSearchInputValue}
                 value={searchInputValue}></Input>
-              {includesSuchCategory() ? (
+              {includesSuchCategory() && (
                 <View style={styles.CategoriesList}>{showCategories()}</View>
-              ) : (
-                <></>
               )}
+              {includesSuchDish() && <View>{showDishes()}</View>}
             </>
-          ) : (
-            <></>
           )}
         </View>
         <TouchableOpacity onPress={handleSearch}>
@@ -128,8 +206,6 @@ export const Menu = () => {
 
 const styles = StyleSheet.create({
   Wrapper: {
-    position: 'relative',
-    zIndex: -1,
     flex: 1,
     backgroundColor: 'white',
   },
@@ -193,10 +269,9 @@ const styles = StyleSheet.create({
     height: 24,
   },
   FoodContainer: {
-    position: 'relative',
     flexGrow: 1,
     top: '2%',
     left: '10%',
-    zIndex: 1,
+    zIndex: -1,
   },
 });
