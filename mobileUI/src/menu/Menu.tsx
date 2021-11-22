@@ -62,19 +62,14 @@ export const Menu = () => {
 
     let itHas = false;
     unicDishes.forEach((dish: any) => {
-      //   console.log(dish.title);
       if (
         dish.title.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
         searchInputValue !== ''
       )
         itHas = true;
     });
-    console.log(itHas);
     return itHas;
   };
-
-  //   const a = useSelector(state => state);
-  //   console.log(a);
 
   const showDishes = () => {
     let unicDishes = [] as any;
@@ -89,27 +84,27 @@ export const Menu = () => {
 
     return unicDishes
       .filter((dish: any) => {
-        console.log(
-          dish.title.toUpperCase(),
-          searchInputValue.toUpperCase(),
-          'hi',
-        );
         return dish.title
           .toUpperCase()
           .startsWith(searchInputValue.toUpperCase());
       })
       .map((dish: any) => {
-        console.log(dish.title, 'cum');
+        const photos = dish.photo;
+        const urlArr = photos.map((item: any) => item.photo_url);
+
+        console.log(urlArr, 'penis');
 
         const newDish = {
           id: dish.id,
           title: dish.title,
-          photos: dish.photo,
+          photos: urlArr,
           descr: dish.ingredient,
           price: dish.price,
-          calories: dish.calories,
+          cal: dish.calories,
           weight: dish.weight,
         };
+
+        console.log('zalupa', newDish);
 
         return (
           <Text
@@ -121,38 +116,38 @@ export const Menu = () => {
       });
   };
 
-  const includesSuchCategory = () => {
-    let categories = date.map((item: any) => item.title);
-    let itHas = false;
-    categories.forEach((category: string) => {
-      if (
-        category.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
-        searchInputValue !== ''
-      )
-        itHas = true;
-    });
-    return itHas;
-  };
+  //   const includesSuchCategory = () => {
+  //     let categories = date.map((item: any) => item.title);
+  //     let itHas = false;
+  //     categories.forEach((category: string) => {
+  //       if (
+  //         category.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
+  //         searchInputValue !== ''
+  //       )
+  //         itHas = true;
+  //     });
+  //     return itHas;
+  //   };
 
-  const showCategories = () => {
-    let categories = date.map((item: any) => item.title);
-    return categories
-      .filter((category: string) =>
-        category.toUpperCase().startsWith(searchInputValue.toUpperCase()),
-      )
-      .map((category: string) => {
-        let currentItem = date.filter((item: any) => item.title === category);
-        return (
-          <Text
-            style={styles.CategoryFromList}
-            onPress={() =>
-              navigation.navigate('Breakfast', {...currentItem[0]})
-            }>
-            {category}
-          </Text>
-        );
-      });
-  };
+  //   const showCategories = () => {
+  //     let categories = date.map((item: any) => item.title);
+  //     return categories
+  //       .filter((category: string) =>
+  //         category.toUpperCase().startsWith(searchInputValue.toUpperCase()),
+  //       )
+  //       .map((category: string) => {
+  //         let currentItem = date.filter((item: any) => item.title === category);
+  //         return (
+  //           <Text
+  //             style={styles.CategoryFromList}
+  //             onPress={() =>
+  //               navigation.navigate('Breakfast', {...currentItem[0]})
+  //             }>
+  //             {category}
+  //           </Text>
+  //         );
+  //       });
+  //   };
 
   const uniqueProps = (a: any) => {
     if (!a) return [];
@@ -174,10 +169,12 @@ export const Menu = () => {
               <Input
                 onChangeText={setSearchInputValue}
                 value={searchInputValue}></Input>
-              {includesSuchCategory() && (
+              {/* {includesSuchCategory() && (
                 <View style={styles.CategoriesList}>{showCategories()}</View>
+              )} */}
+              {includesSuchDish() && (
+                <View style={styles.CategoriesList}>{showDishes()}</View>
               )}
-              {includesSuchDish() && <View>{showDishes()}</View>}
             </>
           )}
         </View>
