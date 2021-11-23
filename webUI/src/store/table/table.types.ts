@@ -13,7 +13,7 @@ export interface Reservation {
   id: number | undefined;
   table_id: number | undefined;
   reserve_date: string | undefined;
-  reserve_time: string | undefined;
+  reserve_start_time: string | undefined;
 }
 
 export enum TableConstants {
