@@ -61,8 +61,9 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
          /* console.log('Time we chose: ', dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm'));
          console.log('Time we found in reservations array: ', dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss')); */
           const toBeBooked = dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm');
-          const alreadyBooked = dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour');
+          const alreadyBooked = dayjs(`${item.reserve_date} ${item.reserve_start_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour');
           const timeDifference = toBeBooked.diff(alreadyBooked,'minute');
+          console.log(timeDifference)
           return (Math.abs(timeDifference) < 240);
         }
      )
