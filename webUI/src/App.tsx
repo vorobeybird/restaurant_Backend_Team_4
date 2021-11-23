@@ -3,6 +3,7 @@ import "./app.scss";
 import {Authentication} from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
 import {Cart} from "./components/cart/Cart";
+import {OrderConfirmation} from "./components/orderConfirmation/orderConfirmation"
 import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
@@ -86,6 +87,8 @@ const App = () => {
                     <Redirect to={"/profile/orders"}/>
                 </Route>
                 <Route exact path="/booktable" component={BookTableWithoutDish}/>
+                <Route path="/cart/confirm" component={OrderConfirmation}/>
+
             </Switch>
             <Contacts/>
             <Footer/>

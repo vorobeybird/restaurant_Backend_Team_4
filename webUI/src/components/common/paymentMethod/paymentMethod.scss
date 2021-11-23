@@ -34,8 +34,12 @@
         border: 5px solid #ef742f;
       }
       input:disabled {
-        border: 5px solid #f51111;
+        border: 5px solid #939393;
       }
+    }
+    .label-disabled{
+        text-decoration: line-through;
+        color:#939393;
     }
   }
 }

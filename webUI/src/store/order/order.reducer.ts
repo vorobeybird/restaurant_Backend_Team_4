@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { OrderActions, OrderConstants, ReducerState } from "./order.types";
+import { OrderActions, OrderConstants, ReducerState, DELIVERY_METHOD } from "./order.types";
 
 let currentDate = new Date();
 currentDate.setSeconds(0);
@@ -10,7 +10,7 @@ const initialState: ReducerState = {
   order: {
     adress: "",
     customer_id: "",
-    delivery_method: "",
+    delivery_method: DELIVERY_METHOD.takeaway,
     total_price: 0,
     delivery_date: currentDate,
     contact_name: "",
@@ -67,6 +67,8 @@ export function orderReducer(
       return { order: { ...state.order, num_of_persons: action.payload } };
     case OrderConstants.CHANGE_DELIVERY_METHOD:
       return { order: { ...state.order, delivery_method: action.payload } };
+    case OrderConstants.CHANGE_TOTAL_PRICE:
+        return { order: { ...state.order, total_price: action.payload } };
     default:
       return state;
   }
