@@ -30,7 +30,7 @@ import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
 import { useHistory } from "react-router-dom";
 
-interface OrderTemp extends Order {
+export interface OrderTemp extends Order {
   reserve_time: Date;
   reserve_date: Date;
 }

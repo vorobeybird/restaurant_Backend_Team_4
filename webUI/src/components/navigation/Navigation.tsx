@@ -18,7 +18,7 @@ interface LinkType {
 const links: LinkType[] = [
   { title: "Меню", link: "/menu" },
   { title: "Оформить заказ", link: "/#" },
-  { title: "Забронировать стол", link: "/#" },
+  { title: "Забронировать стол", link: "/booktable" },
 ];
 
 const Navigation = () => {
@@ -29,7 +29,6 @@ const Navigation = () => {
   const changeRoute = (path: string) => {
     history.push(path);
   }
-
 
   return (
     <div className="navigation">
