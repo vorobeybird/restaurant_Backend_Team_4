@@ -97,11 +97,7 @@ module.exports = {
         },
         [Op.where]: literal("reserve.id IS NULL"),
       },
-<<<<<<< HEAD
-      oder: persons,
-=======
       order: ["persons"],
->>>>>>> dev
     });
   },
 };
