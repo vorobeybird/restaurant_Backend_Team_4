@@ -25,6 +25,7 @@ function ProfileCards() {
     }
     // const cardData = JSON.parse(user.attributes["custom:card_number"]);
     const cardDataArray: Array<cardType> = Object.values(cardData);
+    console.log(cardDataArray);
     const dispatch = useAppDispatch();
 
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -73,6 +74,7 @@ function ProfileCards() {
                 {cardDataArray.length > 0?
                     <ul className={"profileCards__list"}>
                         {cardDataArray.map(card => {
+                            console.log(card.cardNumber)
                             return <li className={"profileCards__item"} key={card.cardNumber}>
                                 {editMode && <div className={"profileCards__image"}>
                                     <img src={+card.cardNumber[0] === 4 ? visaImg : mastercardImg}

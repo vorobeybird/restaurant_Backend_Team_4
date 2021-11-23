@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { dispatch } from "react-hot-toast/dist/core/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { chooseNumOfPeople } from "../../../store/order/order.actions";
+import { changeTotalPrice, chooseNumOfPeople } from "../../../store/order/order.actions";
 import "./bookTableDetails.scss";
 
 const tableForSomePeople = [

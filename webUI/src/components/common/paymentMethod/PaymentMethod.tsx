@@ -36,10 +36,11 @@ export const PaymentMethod = () => {
             </label>
           </div>
           <div className="radio">
-            <label>
+            <label className={Object.keys(JSON.parse(cardNumber)).length === 0 ? 'label-disabled':undefined}>
               <input
                 type="radio"
                 value="1"
+                title='Для разблокировки данной функции нужно привязать карту в личном кабинете'
                 disabled={
                   Object.keys(JSON.parse(cardNumber)).length === 0
                     ? true
