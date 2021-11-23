@@ -20,6 +20,7 @@ export const DishPage = ({
   route: any;
 }) => {
   const {id, title, photos, descr, price, cal, weight} = route.params;
+  console.log(route.params);
   const item = {id, title, photos, price, descr};
   const dispatch = useDispatch();
 
