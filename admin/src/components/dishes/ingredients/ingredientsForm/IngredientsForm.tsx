@@ -33,10 +33,11 @@ export default function IngredientsForm({type}: ICIFormProps) {
   }
 
   const deleteIngredient = () => {
-    const apiUrl = inDishes.length > 0 ? `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}/delete` : `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}`;
+    const apiUrl = inDishes.length > 0 
+    ? `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}/delete` 
+    : `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}`;
     fetchIngredients('DELETE', apiUrl)
     .then((response) => {
-      console.log(response.data)
         if (response.data.dishes) {
           setInDishes(response.data.dishes);
         } else {
@@ -51,8 +52,8 @@ export default function IngredientsForm({type}: ICIFormProps) {
         console.error(error);
     })
   }
+  
   const saveIngredient = ()=>{
-
    if (value?.id) {
     fetchIngredients('PUT', `${process.env.REACT_APP_API}/ingredient`, currentValue, value?.id)
     .then((response) =>  {

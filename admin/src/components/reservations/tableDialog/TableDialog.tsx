@@ -12,27 +12,27 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const TableDialog = ({currentTable, tableOpen, setTableOpen}: any) => {
+const TableDialog = ({currentTable, setCurrentTable, tableOpen, handleCloseTable, fetchReservationData}: any) => {
 
     return (
         <Dialog
         fullWidth
         open={tableOpen}
-        onClose={(e)=> {setTableOpen(false)}}
+        onClose={handleCloseTable}
         aria-labelledby="create-table"
         TransitionComponent={Transition}
       >
         <DialogTitle id="create-table">
         <Container sx={{textAlign: "center"}}><Typography sx={{ my: 2, flex: 1 }} variant="h3">
-         Создать новый стол
+         {currentTable.id ? `Редактировать стол № ${currentTable.table_number}` : "Создать новый стол"}
         </Typography>
         </Container>
         </DialogTitle>
         <DialogContent>
-        <TableForm currentTable={currentTable} />
+      <TableForm currentTable={currentTable} setCurrentTable={setCurrentTable} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData}/>
         </DialogContent>
         <DialogActions>
-        <Button onClick={()=> setTableOpen(false)}>Закрыть</Button>
+        <Button onClick={handleCloseTable}>Закрыть</Button>
         </DialogActions>
       </Dialog>
     )

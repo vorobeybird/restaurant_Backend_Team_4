@@ -4,11 +4,35 @@ import {useTheme} from '@mui/styles';
 import DateSelector from '../common/dateselector/DateSelector';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
-import { Timer } from '@mui/icons-material';
+import { AddCircleOutline, Timer } from '@mui/icons-material';
 import apiFetch from '../../components/common/apifetch/apifetch';
 import OrderCard from '../orders/orderCard/OrderCard';
 import TableDialog from './tableDialog/TableDialog';
+import { makeStyles } from '@mui/styles';
 
+interface ITable {
+id?: number;
+table_number?: number;
+persons?: number;
+is_available?: boolean;
+
+}
+const initialTable = {
+  id: undefined,
+  table_number: undefined,
+  persons: 2,
+  is_available: true
+}
+const useClasses = makeStyles(theme => ({
+  iconContainer: {
+      "&:hover $icon": {
+          opacity: 1,
+      }
+  },
+  icon: {
+    opacity: 0.4,
+  },
+}));
 
 const Reservations = () => {
   const [date, setDate] = useState<Date | null>(new Date());
@@ -16,9 +40,10 @@ const Reservations = () => {
   const [allOrders, setAllOrders] = useState<any[]>([]);
   const [cardOpen, setCardOpen] = useState(false);
   const [tableOpen, setTableOpen] = useState(false);
-  const [currentTable, setCurrentTable] = useState<number | null>(null)
+  const [currentTable, setCurrentTable] = useState<ITable>(initialTable)
   const [currentOrder, setCurrentOrder] = useState<any>({});
   const theme = useTheme();
+  const classes = useClasses();
 
 
   const fetchReservationData = async () => {
@@ -45,8 +70,19 @@ const Reservations = () => {
   }
 
   const handleOpenNewTable = () => {
+    setCurrentTable({...currentTable, table_number: reservationData.length + 1});
     setTableOpen(true);
-    setCurrentTable(reservationData.length + 1);
+  }
+  const handleCloseTable = () => {
+    setCurrentTable(initialTable);
+    setTableOpen(false);
+  }
+  const handleEditTable = (rowData: any) => {
+    const {id, table_number, persons, is_available} = rowData;
+    setCurrentTable({...currentTable, id, table_number, persons, is_available});
+  }
+  const handleCloseCard = () => {
+    setCardOpen(false)
   }
 
   useEffect(()=> {
@@ -60,67 +96,74 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
   if (table.reserve.length) {
     table.reserve.forEach((slot: any) => {
       if (slot.reserve_date === date) {
-      let hours = +slot.reserve_time.substring(0,2);
-      let minutes = +slot.reserve_time.substring(3,5);
-      if (minutes < 30) {
+      let hours = +slot.reserve_start_time.substring(0,2);
+      hours += 3;
+     // let minutes = +slot.reserve_time.substring(3,5);
+     // if (minutes < 30) {
         hours = hours * 100;
-      } else {
-        hours = hours * 100 + 50;
-      }
-      for (let i = 0; i < 8; i++) {
+     // } else {
+     //   hours = hours * 100 + 50;
+     // }
+      for (let i = 0; i < 4; i++) {
 
       tempres['timeSlot' + hours.toString()] = slot.id;
-      hours += 50;
+      hours += 100;
       }
     }
   }
       )
       
   }
-  return {id: table.id, persons: table.persons, ...tempres}
+  return {id: table.id, table_number: table.table_number, persons: table.persons, is_available: table.is_available,...tempres}
 })
-const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD') );
+const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')).sort((a, b) => a.persons-b.persons);
   
   const cellViewButton =  (params: GridRenderCellParams) => {
       const onClick = (e: any) => {
+        if (params.value) {
         const orderFound = allOrders.filter((el=> el.reserve_id === params.value));
         setCurrentOrder(orderFound[0]); 
         setCardOpen(true);
+        } else {
+          alert('Well gonna reserve a tabel')
+        }
       };
-      if (params.value) return <IconButton onClick={onClick} color="warning" aria-label="change status" component="div"><Timer />
-      </IconButton> }
+      if (params.value) {
+        return <IconButton onClick={onClick} color="warning" aria-label="change status" component="div"><Timer />        
+      </IconButton> 
+      } else {
+        return <IconButton classes={{root: classes.iconContainer}} onClick={onClick} color="primary" aria-label="change status" component="div"><AddCircleOutline className={classes.icon}/>        
+        </IconButton>
+      }}
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Стол', width: 60, align: 'center' },
-    { field: 'persons', headerName: 'Чел.', width: 60, align: 'center' }, 
-    { field: 'timeSlot1000', headerName: '10:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1050', headerName: '10:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1100', headerName: '11:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1150', headerName: '11:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1200', headerName: '12:00', width: 62, renderCell: cellViewButton, filterable: false },
-    { field: 'timeSlot1250', headerName: '12:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1300', headerName: '13:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1350', headerName: '13:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1400', headerName: '14:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1450', headerName: '14:30', width: 62, renderCell: cellViewButton, filterable: false },
-    { field: 'timeSlot1500', headerName: '15:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1550', headerName: '15:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1600', headerName: '16:00', width: 62, renderCell: cellViewButton, filterable: false },  
-    { field: 'timeSlot1650', headerName: '16:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1700', headerName: '17:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1750', headerName: '17:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1800', headerName: '18:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1850', headerName: '18:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1900', headerName: '19:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot1950', headerName: '19:30', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot2000', headerName: '20:00', width: 62, renderCell: cellViewButton, filterable: false }, 
-    { field: 'timeSlot2050', headerName: '20:30', width: 62, renderCell: cellViewButton, filterable: false }, 
+    { field: 'table_number', headerName: 'Номер стола', width: 115, align: 'center' },
+    { field: 'persons', headerName: 'Вместимость', width: 115, align: 'center' }, 
+    { field: 'timeSlot1000', headerName: '10:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1100', headerName: '11:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1200', headerName: '12:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true },
+    { field: 'timeSlot1300', headerName: '13:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1400', headerName: '14:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1500', headerName: '15:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1600', headerName: '16:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true },  
+    { field: 'timeSlot1700', headerName: '17:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1800', headerName: '18:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot1900', headerName: '19:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot2000', headerName: '20:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'timeSlot2100', headerName: '21:00', width: 90, headerAlign: 'center', align:'center', renderCell: cellViewButton, filterable: false, disableColumnMenu: true }, 
+    { field: 'edit', headerName: 'Управление столом', width: 170, align: 'center', filterable: false, sortable: false, disableColumnMenu: true, renderCell: (params: GridRenderCellParams)=> {
+      const onClick = (e: any) => {
+      handleEditTable(params.row);
+      setTableOpen(true);
+      };
+      return <Button onClick={onClick} aria-label="edit-table" variant="contained">Правка
+      </Button> } }, 
   ];
   return(<><div style={{height: '85vh'}}>
   <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
         <Grid container spacing={0}>
       <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid>
-      <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'center', mt: theme.spacing(4) }}><Typography variant="h2">Резервирование столов на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
+      <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'center', mt: theme.spacing(4) }}><Typography variant="h2">Бронирование столов на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
       <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', mt: theme.spacing(4) }}><div><Button color="warning" variant="contained" onClick={handleOpenNewTable}>Создать стол</Button></div></Grid>
       </Grid>
       <DataGrid
@@ -133,8 +176,8 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
       />
   </Container>
   </div>
-  <OrderCard currentOrder={currentOrder} open={cardOpen} setOpen={setCardOpen} />
-  <TableDialog currentTable={currentTable} tableOpen={tableOpen} setTableOpen={setTableOpen} />
+  <OrderCard currentOrder={currentOrder} openCard={cardOpen} handleCloseCard={handleCloseCard} />
+  <TableDialog currentTable={currentTable} setCurrentTable={setCurrentTable} tableOpen={tableOpen} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData} />
   </>
 );
 }

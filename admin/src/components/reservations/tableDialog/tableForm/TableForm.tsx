@@ -1,35 +1,93 @@
-import {useState} from "react";
-import { Box, Button, Container, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, SelectChangeEvent, Switch } from "@mui/material";
-import apiFetch from "../../../common/apifetch/apifetch";
+import { Box, Button, Container, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, Typography } from "@mui/material";
+import { useState } from "react";
+import fetchTables from "../../../common/apifetch/apifetch";
+import dayjs from 'dayjs';
 
+const TableForm = ({currentTable, setCurrentTable, handleCloseTable, fetchReservationData}: any) => {
 
-
-const TableForm = ({currentTable}: any) => {
-
-    const [persons, setPersons] = useState('2');
-    const [checked, setChecked] = useState(true);
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setPersons(event.target.value as string);
+    const [reservations, setReservations] = useState<any>([]);
+    const {table_number, persons, is_available} = currentTable;
+    const handlePersonsChange = (event: SelectChangeEvent) => {
+      setCurrentTable({...currentTable, persons: event.target.value as string});
       };
-    const handleChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
+    const handleAvailableChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setCurrentTable({...currentTable, is_available: event.target.checked});
       };
     const handleCreateTable = () => {
+      if (currentTable.id) {
+        const url = reservations.length > 0
+        ? `${process.env.REACT_APP_API}/tables/${currentTable.id}/update` 
+        : `${process.env.REACT_APP_API}/tables/${currentTable.id}`
+        fetchTables('PUT', url, {table_number, persons, is_available })
+        .then(response => {
+          if (response.status === 200) {
+            if (response.data.reservations) {
+              setReservations(response.data.reservations);
+            } else {
+            setReservations([]);
+            fetchReservationData();
+            handleCloseTable();
+            console.log('table updated')
+            }
+          }
+        })
+        .catch(err=>{
+          const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+          console.error(error);
+      })
+
+      } else {
+        fetchTables('POST', `${process.env.REACT_APP_API}/tables`, {table_number, persons, is_available })
+        .then(response => {
+          if (response.status === 201) {
+            fetchReservationData();
+            handleCloseTable();
+            console.log('table created')
+          }
+        })
+        .catch(err=>{
+          const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
+          console.error(error);
+      })
+      }
 
     }
 
-    //if (!currentTable) 
-    return  <Container sx={{p: 2, height: 230, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start"}}>
+    const handleDeleteTable = () => {
+      const url = reservations.length > 0
+      ? `${process.env.REACT_APP_API}/tables/${currentTable.id}/delete` 
+      : `${process.env.REACT_APP_API}/tables/${currentTable.id}`
+      fetchTables('DELETE', url)
+      .then(response => {
+        if (response.status === 200) {
+          if (response.data.reservations) {
+            setReservations(response.data.reservations);
+          } else {
+          setReservations([]);
+          fetchReservationData();
+          handleCloseTable();
+          console.log('table deleted')
+          }
+
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    }
+
+    return  <Container sx={{height: 270, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start"}}>
+      <Box sx={{height:30, mb: 4}}>{reservations.length > 0 && <><Typography color="error">Не завершенные бронирования стола: {reservations.length}.</Typography>
+         <Typography color="error"> Ближайшее бронирование: {dayjs(reservations[0].reserve_start_time+ ' ' + reservations[0].reserve_date).add(3, 'h').format('DD-MM-YYYY в HH:mm')}. </Typography></>}</Box>
         <Box sx={{ width: 330}}>
       <FormControl fullWidth>
-        <InputLabel id="persons">Количество человек</InputLabel>
+        <InputLabel id="persons">Вместимость (чел.)</InputLabel>
         <Select
           labelId="persons"
           id="persons"
-          value={persons}
+          value={currentTable.persons}
           label="Количество человек"
-          onChange={handleChange}
+          onChange={handlePersonsChange}
         >
           <MenuItem value={2}>Два</MenuItem>
           <MenuItem value={4}>Четыре</MenuItem>
@@ -40,10 +98,15 @@ const TableForm = ({currentTable}: any) => {
       </FormControl>
       <Box sx={{ m: 3,  width: 330}}>
       <FormGroup>
-      <FormControlLabel control={<Switch checked={checked} onChange={handleChecked} />} label={checked ? "Доступен для бронирования": "Недоступен для бронирования" } />
+      <FormControlLabel control={<Switch checked={currentTable.is_available} onChange={handleAvailableChecked} />} label={currentTable.is_available ? "Доступен для бронирования": "Недоступен для бронирования" } />
     </FormGroup>
     </Box>
-    <Box sx={{m: 4, textAlign: "center"}}><Button variant="contained" color="warning" onClick={handleCreateTable}>Создать</Button></Box>
+    <Box sx={{my: 4, display: "flex", justifyContent: "space-between"}}>
+      <Button variant="contained" color={reservations.length ? "warning" : "primary"} onClick={handleCreateTable}>
+        {currentTable.id ? "Сохранить" : "Создать"}
+        </Button>
+      {currentTable.id ? <Button variant="contained" color="error" onClick={handleDeleteTable}>Удалить</Button> : null}
+    </Box>
     </Box>
     </Container>
 }

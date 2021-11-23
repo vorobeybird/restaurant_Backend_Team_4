@@ -22,17 +22,17 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const OrderCard = ({currentOrder, open, setOpen}: any) => {
+const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
 
   const {id, adress, contact_phone, contact_name, createdAt, delivery_date, delivery_method, dish, payment_method, status, total_price, reserve_id} = currentOrder;
   
   const payment = ['Наличными', 'Картой онлайн', 'Картой на месте']
   return (
     <div>
-      <Dialog open={open} onClose={()=>setOpen(false)} TransitionComponent={Transition} fullWidth maxWidth={"lg"}>
+      <Dialog open={openCard} onClose={handleCloseCard} TransitionComponent={Transition} fullWidth maxWidth={"lg"}>
         <DialogTitle><Container sx={{textAlign: "center"}}>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h3">
-          Заказ номер: {id}
+          Заказ № {id}
         </Typography>
         </Container>
         </DialogTitle>
@@ -79,7 +79,7 @@ const OrderCard = ({currentOrder, open, setOpen}: any) => {
       <h4>Оплата: {payment[payment_method]}</h4>
       </DialogContent>
         <DialogActions>
-          <Button onClick={()=> setOpen(false)}>Закрыть</Button>
+          <Button onClick={handleCloseCard}>Закрыть</Button>
         </DialogActions>
       </Dialog>
     </div>
