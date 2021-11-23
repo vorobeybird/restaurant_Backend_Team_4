@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { useAppSelector, useAppDispatch,} from "../../store/hooks";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { ChooseDate } from "../common/chooseDate/ChooseDate";
 import { ChooseTime } from "../common/chooseTime/ChooseTime";
 import { EnterContacts } from "../common/enterContacts/EnterContacts";
@@ -20,16 +20,13 @@ import Select from "react-select";
 import { DELIVERY_METHOD } from "../../store/order/order.types";
 import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import { OrderTemp } from "../cart/Cart";
-import {
-  clearCart,
-} from "../../store/cart/cart.actions";
+import { clearCart } from "../../store/cart/cart.actions";
 import {
   DishShortInfo,
   Order,
   OrderConstants,
 } from "../../store/order/order.types";
 import { useHistory } from "react-router-dom";
-
 
 const paymentType = ["Картой на месте", "Картой онлайн", "Наличные"];
 
@@ -47,9 +44,10 @@ export const OrderConfirmation = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     window.scrollTo({
-      top:80,
-      behavior: "smooth"})
-  }, [])
+      top: 80,
+      behavior: "smooth",
+    });
+  }, []);
   let dishesShortInfo = items.map((item) => {
     let dish = {} as DishShortInfo;
     dish.dish_id = item.id;
@@ -195,11 +193,16 @@ export const OrderConfirmation = () => {
           </div>
         </div>
       </div>
-      <SwitchButtons
-        onClickNext={handleOnMakingOrder}
-        onClickPrev={() => {history.push("/cart");}}
-        children="I'm a pink circle!"
-      />
+      <div className="order-confirmation__buttons">
+        <SwitchButtons
+        firstValue={'Готово'}
+          onClickNext={handleOnMakingOrder}
+          onClickPrev={() => {
+            history.push("/cart");
+          }}
+          children="I'm a pink circle!"
+        />
+    </div>
     </div>
   );
 };
