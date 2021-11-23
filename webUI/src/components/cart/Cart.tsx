@@ -262,12 +262,12 @@ export const Cart = () => {
               )}
             </div>
             <div className="make_order">
-              <Button type="button" onClick={handleOnMakingOrder}>
+              {/* <Button type="button" onClick={handleOnMakingOrder}>
                 Оформить Заказ
               </Button>
               <Link onClick={()=>combineOrder(totalPrice)} to="/cart/confirm" className="empty-cart__menu-link">
                 Перейти к подтверждению
-              </Link>
+              </Link> */}
             </div>
           </div>
 

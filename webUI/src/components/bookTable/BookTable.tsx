@@ -95,7 +95,7 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
 
   const pushToConfirmation = () => {
     handleChangeCurrentStepNext();
-    if (currentStep === 3) {
+    if (currentStep === 4) {
       history.push("/cart/confirm");
       combineOrder(total)
     }
