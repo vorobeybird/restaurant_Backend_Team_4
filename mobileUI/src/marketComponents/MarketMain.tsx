@@ -39,11 +39,11 @@ export const MarketMain = () => {
   const cart = useSelector(state => state.dishes);
   const dispatch = useDispatch();
   const navigation = useNavigation<RootStackParamList>();
-  console.log(cart.userInfo.name, 'asdf')
+
+  
   const handleClear = () => {
     dispatch(clearCart());
   };
-  console.log(cart)
 
     useEffect(() => {
         dispatch(getTotals());
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '800',
-    fontSize: 18,
+    fontSize: 15,
     lineHeight: 15,
     color: '#000000',
   },

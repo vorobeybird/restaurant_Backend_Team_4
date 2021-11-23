@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:'60%',
         alignSelf:'center',
-        color:'666666',
+        color:'#66666',
     },
     Wrapper:{
         flex:1,

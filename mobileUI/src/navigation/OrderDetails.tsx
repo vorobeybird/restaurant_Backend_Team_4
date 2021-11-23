@@ -12,7 +12,7 @@ import {
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import { getOrder, clearCart } from '../store/StoreCard';
+import { addOrderHistoryItem, clearCart } from '../store/StoreCard';
 
 
 interface DishShortInfo {
@@ -43,15 +43,7 @@ export const OrderDetails = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  const handleGetOrder = (item:any) => {
-    dispatch(getOrder(item));
-  }
-  const handleGetHistory = (item:any) => {
-    dispatch(getHistory(item));
-  }
-  const handleclearCart = () => {
-    dispatch(clearCart());
-  }
+
   const cart = useSelector(state => state.dishes);
 
   const showToast = () => {
@@ -61,6 +53,16 @@ export const OrderDetails = ({
       ToastAndroid.TOP,
     );
   };
+  const handleAddOrderHistoryItem = (item:any) => {
+    dispatch(addOrderHistoryItem(item))
+  }
+  const historyOrder = {
+    id:cart.date,
+    type:cart.orderType,
+    date:cart.date,
+    paymentType: cart.paymentType,
+    orderStatus: 'Завершен'
+  }
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
@@ -173,9 +175,10 @@ export const OrderDetails = ({
       <TouchableOpacity
         style={styles.butStyle}
         onPress={() => {
-          console.log()
           showToast();
           onMakingOrder();
+          
+          handleAddOrderHistoryItem(historyOrder)
           clearCart()
           
           navigation.navigate('Menu')

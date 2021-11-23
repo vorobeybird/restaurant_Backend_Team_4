@@ -12,6 +12,7 @@ import { PersonalData } from './PersonalData'
 import { OrderDetails } from './OrderDetails'
 import {ChangeDishIngr} from './ChangeDishIngr';
 import { ConfirmOrderTable } from './ConfirmOrderTable'
+import { OrderTable } from './OrderTable'
 export type RootStackParamList = {
     MenuTabNavigation: undefined;
     MainMenu: undefined;
@@ -28,6 +29,7 @@ export type RootStackParamList = {
     OrderDetails:undefined;
     ChangeDishIngr: undefined;
     ConfirmOrderTable: undefined;
+    OrderTable:undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -79,6 +81,10 @@ export const MenuTabNavigation = () => {
         <Stack.Screen 
                      name="ConfirmOrderTable"
                      component={ConfirmOrderTable} 
+                />
+        <Stack.Screen 
+                     name="OrderTable"
+                     component={OrderTable} 
                 />
         
     </Stack.Navigator>

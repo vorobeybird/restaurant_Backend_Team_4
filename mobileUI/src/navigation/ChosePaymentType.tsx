@@ -89,6 +89,7 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
             <TouchableOpacity style={styles.Button} onPress={async() => { 
                     if(checkedFirs){
                         handleAddOrderType("0");
+                        
                         navigation.navigate('OrderDetails')
                     } 
                     else if(checkedSecond){
