@@ -3,7 +3,7 @@ import SearchIcon from "../../assets/search.png";
 import Cart from "../../assets/cart.png";
 import Profile from "../../assets/profile.png";
 import "./navigation.scss";
-import {Link, Redirect} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import { Auth } from "aws-amplify";
 import {useDispatch, useSelector} from "react-redux";
 import { AppStateType } from "../../store";
@@ -18,14 +18,17 @@ interface LinkType {
 const links: LinkType[] = [
   { title: "Меню", link: "/menu" },
   { title: "Оформить заказ", link: "/#" },
-  { title: "Забронировать стол", link: "/#" },
+  { title: "Забронировать стол", link: "/booktable" },
 ];
 
 const Navigation = () => {
   const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-
+  const changeRoute = (path: string) => {
+    history.push(path);
+  }
 
   return (
     <div className="navigation">
@@ -43,7 +46,7 @@ const Navigation = () => {
         <div className="input">
           <div className="input_label">Search</div>
         </div>
-        <img className="search_icon" src={SearchIcon} alt="search icon"></img>
+        <img className="search_icon" src={SearchIcon} alt="search icon" onClick={() => changeRoute('/search')}></img>
       </div>
       <div className="navigation_icons_container">
         <Link to="/cart">
@@ -68,7 +71,7 @@ const Navigation = () => {
         <ul className="menu__box">
           <div className="menu__item">
             <div>
-            < img className="search_icon" src={SearchIcon} alt="search icon"></img>
+            < img className="search_icon" src={SearchIcon} alt="search icon" onClick={() => changeRoute('/search')}></img>
             </div>
             <Link to="/#">
               <img className="cart_icon" src={Cart} alt="cart icon"></img>
@@ -86,7 +89,6 @@ const Navigation = () => {
           })}
         </ul>
       </div>
-
     </div>
   );
 };

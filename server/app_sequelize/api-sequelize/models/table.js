@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    toJSON(){
-      return { ...this.get(), reserve_id: undefined }
+    toJSON() {
+      return { ...this.get(), reserve_id: undefined };
     }
   }
   Table.init(
@@ -22,7 +22,12 @@ module.exports = (sequelize, DataTypes) => {
       persons: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      }
+      },
+      is_available: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
     {
       sequelize,

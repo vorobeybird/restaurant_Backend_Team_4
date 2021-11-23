@@ -23,7 +23,7 @@ export const ChooseDate = () => {
       <div className="order-header">Дата</div>
       <div className="choose_date">
         <div>
-          <Calendar onChange={onChangeData} value={date} prev2Label={null} next2Label={null}/>
+          <Calendar minDate={new Date()} onChange={onChangeData} value={date} prev2Label={null} next2Label={null}/>
         </div>
       </div>
       </>

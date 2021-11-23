@@ -5,13 +5,13 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {Redirect} from "react-router-dom";
 import {Auth} from "aws-amplify";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import InputMask from "react-input-mask";
 
 type CardsModalType = {
     onHideModal: () => void
 }
 
 function CardsModal(props: CardsModalType) {
-    //добавить валидацию инпутов
     const user = useAppSelector(state => state.auth.user);
     let cardData: any;
     try {
@@ -26,6 +26,27 @@ function CardsModal(props: CardsModalType) {
     const [cardValidity, setCardValidity] = useState<string>("");
     const [cardCVV, setCardCVV] = useState<string>("");
     const [cardNumber, setCardNumber] = useState<string>("");
+
+    const formatChars = {
+        "A": "[45]",
+        "9": "[0-9]"
+    }
+
+    const [cardNameError, setCardNameError] = useState<string>("");
+    const [cardValidityError, setCardValidityError] = useState<string>("");
+    const [cardCvvError, setCardCvvError] = useState<string>("");
+    const [cardNumberError, setCardNumberError] = useState<string>("");
+
+    let formIsInvalid: boolean;
+    const updatedCardNumber = cardNumber.replaceAll(" ", "").replaceAll("_", "");
+    console.log(updatedCardNumber)
+
+    if (cardNameError.trim() || cardValidityError.trim() || cardCvvError.trim() || updatedCardNumber.length < 16) {
+        formIsInvalid = true;
+    } else {
+        formIsInvalid = false;
+    }
+    console.log(formIsInvalid);
 
     const cardNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setCardName(e.target.value);
@@ -49,7 +70,7 @@ function CardsModal(props: CardsModalType) {
         // const cardData = user.attributes["custom:card_number"] ? JSON.parse(user.attributes["custom:card_number"]) : {};
         cardData[cardNumber] = {cardNumber, cardCVV, cardValidity, cardName};
         try {
-            if (user && cardNumber.trim() && cardCVV.trim() && cardValidity.trim() && cardName.trim()) {
+            if (user && updatedCardNumber.trim() && cardCVV.trim() && cardValidity.trim() && cardName.trim()) {
                 await Auth.updateUserAttributes(user, {["custom:card_number"]: JSON.stringify(cardData)});
                 const updatedUser = await Auth.currentAuthenticatedUser();
                 dispatch(
@@ -69,6 +90,11 @@ function CardsModal(props: CardsModalType) {
         }
     }
 
+    const cardNameRegEx = new RegExp("^((?:[A-Z]+ ?){2})$");
+    const cardValidityRegEx = new RegExp(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/);
+    const cardCvvRegEx = new RegExp(/\d{3}$/);
+    // const cardNumberRegEx = new RegExp(/(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})/);
+
     return <>
         <div className="backdrop" onClick={props.onHideModal}></div>
         <div className="cardsModal">
@@ -85,6 +111,10 @@ function CardsModal(props: CardsModalType) {
                                type="text"
                                placeholder="IVAN IVANOV"
                                value={cardName}
+                               error={cardNameError}
+                               errorMessage="Недопустимое имя владельца карты"
+                               validationSchema={cardNameRegEx}
+                               onError={setCardNameError}
                                onChange={cardNameChangeHandler}
                         />
                     </div>
@@ -95,6 +125,10 @@ function CardsModal(props: CardsModalType) {
                                type="text"
                                placeholder="MM/YY"
                                value={cardValidity}
+                               error={cardValidityError}
+                               errorMessage="Недопустимое значения срока действия карты (MM/YY)"
+                               validationSchema={cardValidityRegEx}
+                               onError={setCardValidityError}
                                onChange={cardValidityChangeHandler}
                         />
                     </div>
@@ -105,20 +139,37 @@ function CardsModal(props: CardsModalType) {
                                type="password"
                                placeholder="###"
                                value={cardCVV}
+                               error={cardCvvError}
+                               errorMessage="Недопустимое значения CVV-кода банковской карты (###)"
+                               validationSchema={cardCvvRegEx}
+                               onError={setCardCvvError}
                                onChange={cardCVVChangeHandler}
                         />
                     </div>
                     <div className="cardsModal-form__control">
                         <label htmlFor="cardNumber">Номер карты</label>
-                        <Input name="cardNumber"
-                               id="cardNumber"
-                               type="text"
-                               placeholder="1234 1234 1234 1234"
-                               value={cardNumber}
-                               onChange={cardNumberChangeHandler}
-                        />
+                        <InputMask
+                            id={cardNumber}
+                            className="masked_input"
+                            mask='A999 9999 9999 9999'
+                            formatChars={formatChars}
+                            value={cardNumber}
+                            alwaysShowMask={true}
+                            onChange={cardNumberChangeHandler}>
+                        </InputMask>
+                        {/*<Input name="cardNumber"*/}
+                        {/*       id="cardNumber"*/}
+                        {/*       type="text"*/}
+                        {/*       placeholder="1234 1234 1234 1234"*/}
+                        {/*       value={cardNumber}*/}
+                        {/*       error={cardNumberError}*/}
+                        {/*       errorMessage="Недопустимое значения номера банковской карты"*/}
+                        {/*       validationSchema={cardNumberRegEx}*/}
+                        {/*       onError={setCardNumberError}*/}
+                        {/*       onChange={cardNumberChangeHandler}*/}
+                        {/*/>*/}
                     </div>
-                    <Button type="submit">Готово</Button>
+                    <Button disabled={formIsInvalid} type="submit">Готово</Button>
                 </form>
             </div>
         </div>

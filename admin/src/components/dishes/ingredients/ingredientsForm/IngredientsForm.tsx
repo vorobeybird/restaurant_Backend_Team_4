@@ -33,10 +33,11 @@ export default function IngredientsForm({type}: ICIFormProps) {
   }
 
   const deleteIngredient = () => {
-    const apiUrl = inDishes.length > 0 ? `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}/delete` : `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}`;
+    const apiUrl = inDishes.length > 0 
+    ? `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}/delete` 
+    : `${process.env.REACT_APP_API}/ingredient/${currentValue?.id}`;
     fetchIngredients('DELETE', apiUrl)
     .then((response) => {
-      console.log(response.data)
         if (response.data.dishes) {
           setInDishes(response.data.dishes);
         } else {
@@ -51,8 +52,8 @@ export default function IngredientsForm({type}: ICIFormProps) {
         console.error(error);
     })
   }
+  
   const saveIngredient = ()=>{
-
    if (value?.id) {
     fetchIngredients('PUT', `${process.env.REACT_APP_API}/ingredient`, currentValue, value?.id)
     .then((response) =>  {
@@ -94,11 +95,9 @@ export default function IngredientsForm({type}: ICIFormProps) {
             title: newValue,
           });
         } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input
           setValue({
             title: newValue.inputValue,
           });
-
           setCurrentValue({
             title: newValue.inputValue,
         })
@@ -132,21 +131,17 @@ export default function IngredientsForm({type}: ICIFormProps) {
       id="ic-form"
       options={iList}
       getOptionLabel={(option) => {
-        // Value selected with enter, right from the input
         if (typeof option === 'string') {
           return option;
         }
-        // Add "xxx" option created dynamically
         if (option.inputValue) {
           return option.inputValue;
         }
-        // Regular option
         return option.title;
       }}
       renderOption={(props, option) => <li {...props}>{option.title}
     </li>}
       sx={{ width: 400, m: theme.spacing(3)}}
-      /* freeSolo */
       renderInput={(params) => (
         <TextField {...params} fullWidth variant="filled" label={`Поиск ингредиентов`}/>
       )}
@@ -155,12 +150,12 @@ export default function IngredientsForm({type}: ICIFormProps) {
      <><TextField required 
      fullWidth
      id="title"
-     label={currentValue?.inputValue ? ` Добавить ${type}` : `Редактировать ${type}` }
+     label={currentValue?.inputValue ? ` Добавить ингредиент` : `Редактировать ингредиент` }
      name="title"
      focused
      autoComplete="title" value={currentValue?.inputValue || currentValue?.title || ''} sx={{ width: 400, m: theme.spacing(3)}} onChange={handleChangeValue}></TextField>
      <Container sx={{width: 400, display: "flex", justifyContent: "space-evenly", p: 0}}>
-       <Button sx={{m: theme.spacing(3), width: 100}} onClick={saveIngredient} color="primary" variant="contained">Save</Button>
+       <Button sx={{m: theme.spacing(3), width: 100}} onClick={saveIngredient} color="primary" variant="contained">Сохранить</Button>
        <Button sx={{m: theme.spacing(3),  width: 100}} color={inDishes.length ? "error" : "warning"} variant="contained" onClick={deleteIngredient}>{inDishes.length ? "Удалить?" : "Удалить"}</Button>
      </Container></>
     }

@@ -56,6 +56,9 @@ router.post("/api/tables", tableController.add);
 router.get("/api/tables", tableController.getTablesReservatons);
 router.get("/api/tablepool", tableController.getTables);
 router.get("/api/tables/:date", tableController.getSortedTables);
+router.post("/api/tables", tableController.add);
+router.put("/api/tables/:id/:hard?", tableController.update);
+router.delete("/api/tables/:id/:hard?", tableController.delete);
 
 router.post("/api/reserve", reserveController.add);
 

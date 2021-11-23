@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { chooseNumOfPeople } from "../../../store/order/order.actions";
+import {  changeTotalPrice, chooseNumOfPeople } from "../../../store/order/order.actions";
 import { Table } from "../../../store/table/table.types";
 import "./bookTableDetails.scss";
 import dayjs from 'dayjs';
