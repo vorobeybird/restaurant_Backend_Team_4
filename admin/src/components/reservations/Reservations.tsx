@@ -24,10 +24,7 @@ const initialTable = {
   persons: 2,
   is_available: true
 }
-const initialSelectedData = {
-  num_of_persons: undefined,
-  reserve_date: "bookTable",
-}
+
 
 const useClasses = makeStyles(theme => ({
   iconContainer: {
@@ -53,7 +50,12 @@ const Reservations = () => {
 
   const theme = useTheme();
   const classes = useClasses();
-   const [selectedCellData, setSelectedCellData] = useState<any>(initialSelectedData);
+
+ /*  const initialSelectedData = {
+    num_of_persons: undefined,
+    reserve_date: "bookTable",
+  } */
+   const [selectedCellData, setSelectedCellData] = useState<any>({});
 
   const fetchReservationData = async () => {
     await apiFetch("GET", `${process.env.REACT_APP_API}/tables`)
@@ -136,10 +138,10 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
         } else {
           let timeParsed = params.field.substring(8);
           timeParsed = timeParsed.substring(0,2);
-          console.log(timeParsed)
           setSelectedCellData({
+            ...selectedCellData,
             num_of_persons: params.row.persons,
-            reserve_date: dayjs().hour(+timeParsed).minute(0).second(0).toDate(),
+            reserve_date: dayjs().hour(+timeParsed).toISOString(),
           })
          setOpenRForm(true);
         }
