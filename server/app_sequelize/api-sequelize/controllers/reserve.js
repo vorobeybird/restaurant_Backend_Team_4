@@ -22,6 +22,7 @@ module.exports = {
       endTime,
       req.body.num_of_persons,
       reserveDate
+      //13.00
     );
     if (!tables.length) {
       res.status(400).send({ message: "No tables found!" });

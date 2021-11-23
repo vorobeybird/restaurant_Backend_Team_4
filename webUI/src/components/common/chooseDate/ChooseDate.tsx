@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 // import "react-calendar/dist/Calendar.css";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeDate } from "../../../store/order/order.actions";
+import { getTablePool, getTableReservations } from "../../../store/table/table.actions";
 
 export const ChooseDate = () => {
   const date = useAppSelector((state) => state.order.order.delivery_date);
@@ -12,8 +13,9 @@ export const ChooseDate = () => {
   const onChangeData = (value: Date) => {
     value.setMinutes(date.getMinutes());
     value.setHours(date.getHours());
-    console.log(value, "value");
     dispatch(changeDate(value));
+    dispatch(getTableReservations(value));
+
   };
 
   return (
