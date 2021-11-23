@@ -59,9 +59,10 @@ const Reservations = () => {
   } 
   const fetchAllOrders = async () => {
    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
-    .then(response=> {
-        console.log(response.data);
-        setAllOrders(response.data);
+    .then(response => {
+      const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
+        console.log(ordersWithReservations);
+        setAllOrders(ordersWithReservations);
     })
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";
@@ -114,9 +115,16 @@ const createFilteredReservations = (date: string) => reservationData.map((table)
       )
       
   }
+<<<<<<< HEAD
+  return {id: table.id, persons: table.persons, ...tempres};
+})
+
+const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')).sort((a, b) => a.persons - b.persons);
+=======
   return {id: table.id, table_number: table.table_number, persons: table.persons, is_available: table.is_available,...tempres}
 })
 const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')).sort((a, b) => a.persons-b.persons);
+>>>>>>> dev
   
   const cellViewButton =  (params: GridRenderCellParams) => {
       const onClick = (e: any) => {
@@ -161,10 +169,17 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   ];
   return(<><div style={{height: '85vh'}}>
   <Container maxWidth="xl" sx={{mt: theme.spacing(3), height: '80%'}}>
+<<<<<<< HEAD
+        <Grid container spacing={0} >
+        
+      <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid><Grid item md={9} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', mt: theme.spacing(4) }}><Typography variant="h2">Резервирование столиков на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
+      
+=======
         <Grid container spacing={0}>
       <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-start', my: theme.spacing(3)}}><DateSelector date={date} setDate={setDate} /></Grid>
       <Grid item md={6} xs={12} sx={{display: 'flex', justifyContent: 'center', mt: theme.spacing(4) }}><Typography variant="h2">Бронирование столов на {dayjs(date).format('DD MMMM YYYY г.') }</Typography></Grid>
       <Grid item md={3} xs={12} sx={{display: 'flex', justifyContent: 'flex-end', mt: theme.spacing(4) }}><div><Button color="warning" variant="contained" onClick={handleOpenNewTable}>Создать стол</Button></div></Grid>
+>>>>>>> dev
       </Grid>
       <DataGrid
       autoHeight

@@ -22,6 +22,7 @@ module.exports = {
       endTime,
       req.body.num_of_persons,
       reserveDate
+      //13.00
     );
     if (!tables.length) {
       res.status(400).send({ message: "No tables found!" });
@@ -96,7 +97,11 @@ module.exports = {
         },
         [Op.where]: literal("reserve.id IS NULL"),
       },
+<<<<<<< HEAD
+      oder: persons,
+=======
       order: ["persons"],
+>>>>>>> dev
     });
   },
 };

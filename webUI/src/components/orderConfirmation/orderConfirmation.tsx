@@ -16,7 +16,6 @@ import axios, { Axios, AxiosResponse } from "axios";
 import Modal from "../common/modal/Modal";
 import visaImg from "../../assets/visa.svg";
 import mastercardImg from "../../assets/mastercard.svg";
-import Select from "react-select";
 import { DELIVERY_METHOD } from "../../store/order/order.types";
 import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import { OrderTemp } from "../cart/Cart";
