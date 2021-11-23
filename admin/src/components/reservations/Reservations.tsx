@@ -9,6 +9,7 @@ import apiFetch from '../../components/common/apifetch/apifetch';
 import OrderCard from '../orders/orderCard/OrderCard';
 import TableDialog from './tableDialog/TableDialog';
 import { makeStyles } from '@mui/styles';
+import ReservationDialog from './reservationDialog/ReservationDialog';
 
 interface ITable {
 id?: number;
@@ -40,8 +41,10 @@ const Reservations = () => {
   const [allOrders, setAllOrders] = useState<any[]>([]);
   const [cardOpen, setCardOpen] = useState(false);
   const [tableOpen, setTableOpen] = useState(false);
+  const [openRForm, setOpenRForm] = useState(false);
   const [currentTable, setCurrentTable] = useState<ITable>(initialTable)
   const [currentOrder, setCurrentOrder] = useState<any>({});
+
   const theme = useTheme();
   const classes = useClasses();
 
@@ -178,6 +181,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   </div>
   <OrderCard currentOrder={currentOrder} openCard={cardOpen} handleCloseCard={handleCloseCard} />
   <TableDialog currentTable={currentTable} setCurrentTable={setCurrentTable} tableOpen={tableOpen} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData} />
+  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} />
   </>
 );
 }
