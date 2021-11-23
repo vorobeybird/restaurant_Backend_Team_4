@@ -47,10 +47,11 @@ services:
       dockerfile: Dockerfile
     environment:
       CHOKIDAR_USEPOLLING: "true"
+      REACT_APP_GET_DISHES: ${REACT_APP_GET_DISHES}
     ports:
-      - 3000:3000
+      - 80:80
     volumes:
-    - ./webUI/src:/app/src
+    - ./webUI/build:/app/build
 
   admin:
     container_name: admin
