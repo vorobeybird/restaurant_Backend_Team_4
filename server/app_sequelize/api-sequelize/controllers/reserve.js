@@ -7,7 +7,7 @@ const { Op, literal } = require("sequelize");
 const parseDateToUTC = (date) => {
   const parsed = new Date(date);
   return new Date(parsed.toUTCString());
-}
+};
 
 module.exports = {
   async add(req, res) {
@@ -77,24 +77,26 @@ module.exports = {
             [Op.or]: [
               {
                 reserve_start_time: {
-                  [Op.between]: [startTime, endTime]
-                }
+                  [Op.between]: [startTime, endTime],
+                },
               },
               {
                 reserve_end_time: {
-                  [Op.between]: [startTime, endTime]
-                }
-              }]
+                  [Op.between]: [startTime, endTime],
+                },
+              },
+            ],
           },
         },
       ],
       where: {
+        is_available: true,
         persons: {
           [Op.gte]: persons,
         },
         [Op.where]: literal("reserve.id IS NULL"),
       },
-      order: ['persons'],
+      order: ["persons"],
     });
   },
 };
