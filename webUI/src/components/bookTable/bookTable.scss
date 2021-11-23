@@ -1,20 +1,44 @@
+.booktable_container_wrapper {
+  .switch-buttons-component {
+    margin-top: 1em;
+    width: 80%;
+    display: flex;
+    justify-content: right;
+  }
+}
+
 .booktable_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   position: relative;
   align-items: center;
-  border: 5px #EF742F solid;
+  border: 5px #ef742f solid;
   border-radius: 5%;
   min-width: 1200px;
   min-height: 800px;
-  
+  .order-header {
+    position: absolute;
+    font-size: 48px;
+    color: #606060;
+    top: 120px;
+    left: 96px;
+  }
 }
 
 .swiper_disabled {
   opacity: 0.2;
 }
 
+.swiper_booktable_right {
+  border: none;
+  background-color: white;
+}
+
+.swiper_booktable_left {
+  border: none;
+  background-color: white;
+}
 .swiper_booktable {
   border: none;
   background-color: white;
@@ -32,7 +56,15 @@
 }
 
 .step_progress {
-  margin-top: 10px;
+  margin-top: 1em;
+}
+
+.swiper_booktable_left {
+  cursor: pointer;
+}
+
+.swiper_booktable_right {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1023px) {
@@ -41,17 +73,17 @@
     flex-wrap: wrap;
     position: relative;
     align-items: center;
-    border: 5px #EF742F solid;
+    border: 5px #ef742f solid;
     border-radius: 5%;
     min-width: 300px;
     min-height: 500px;
     padding-bottom: 100px;
   }
 
-  .order-header{
+  .order-header {
     position: absolute;
     font-size: 24px;
-    color: #606060;;
+    color: #606060;
     top: 30px;
     left: 40px;
   }
@@ -59,7 +91,7 @@
   .swiper_disabled {
     opacity: 0.2;
   }
-  
+
   .swiper_booktable_left {
     border: none;
     background-color: white;

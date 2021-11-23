@@ -46,7 +46,7 @@ export function authReducer(state: AuthStateType = initialState, action: actionT
         case "TOGGLE_PASSWORD":
             return {...state, formType: "togglePassword"};
         case "FORGOT_PASSWORD":
-            return {...state, formType: "confirmForgotPassword", username: action.payload};
+            return {...state, formType: "confirmForgotPassword"};
         case "CONFIRM_FORGOT_PASSWORD":
             return {...state, formType: "signIn", username: "", password: "", confirmCode: ""}
         case "CHECK_USER":

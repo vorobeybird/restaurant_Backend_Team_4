@@ -70,9 +70,10 @@ const Reservations = () => {
   } 
   const fetchAllOrders = async () => {
    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
-    .then(response=> {
-        console.log(response.data);
-        setAllOrders(response.data);
+    .then(response => {
+      const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
+        console.log(ordersWithReservations);
+        setAllOrders(ordersWithReservations);
     })
     .catch(err=>{
         const error = err.response.status === 404 ? "Resource Not found" : "An unexpected error ocurred";

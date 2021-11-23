@@ -12,6 +12,14 @@ module.exports = {
   },
 
   async getTables(req, res) {
+    return Table.findAll({})
+      .then((table) => res.status(200).send(table))
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
+
+  async getTablesReservatons(req, res) {
     return Table.findAll({
       include: [
         {

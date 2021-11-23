@@ -5,6 +5,8 @@ import Input from "../../../components/common/input/Input";
 import {Auth} from "aws-amplify";
 import {Redirect} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+// import MaskedInput from "react-text-mask";
+import InputMask from "react-input-mask";
 
 function ProfileInfo() {
     const user = useAppSelector(state => state.auth.user);
@@ -22,19 +24,38 @@ function ProfileInfo() {
     }
 
     const [editMode, setEditMode] = useState<boolean>(false);
+
     const [firstName, setFirstName] = useState<string>(name);
     const [lastName, setLastName] = useState<string>(familyName);
-    const [number, setNumber] = useState<string>(phoneNumber);
+    const [userNumber, setUserNumber] = useState<string>(phoneNumber);
 
+    const [firstNameError, setFirstNameError] = useState<string>("");
+    const [lastNameError, setLastNameError] = useState<string>("");
+    const formChars = {
+    }
+
+    const updatedNumber = userNumber.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").replaceAll("_", "")
+
+    let formIsInvalid;
+    if (firstNameError.trim() || lastNameError.trim() || updatedNumber.length < 13) {
+        formIsInvalid = true;
+    } else {
+        formIsInvalid = false;
+    }
     if (!user) {
         return <Redirect to="/login"/>
     }
+
 
     async function updateUserAttributesHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
             if (user) {
-                await Auth.updateUserAttributes(user, {name: firstName, family_name: lastName, phone_number: number});
+                await Auth.updateUserAttributes(user, {
+                    name: firstName,
+                    family_name: lastName,
+                    phone_number: updatedNumber
+                });
                 const updatedUser = await Auth.currentAuthenticatedUser();
                 dispatch(
                     {
@@ -58,10 +79,18 @@ function ProfileInfo() {
     const onLastNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setLastName(e.target.value);
     }
-    const onNumberChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNumber(e.target.value);
+    const userNumberChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setUserNumber(e.target.value);
     }
 
+    const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+    const familyNameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+    // const phoneNumberRegEx = new RegExp("^\\+375 \\((17|29|33|44)\\) [0-9]{3}-[0-9]{2}-[0-9]{2}$")
+    // const phoneNumberRegEx = new RegExp("^\\+375\\(17|29|33|44\\)\\[0-9]{7}\\$")
+    // const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$");
+    //+375 29|33|44|17 111-11-11
+    //убрать пробелы - добавить после (\\(s+)?)
+    // const phoneNumberRegEx = new RegExp("^\\+375\\(17|29|33|44\\)[0-9]{3}[0-9]{3}[0-9]{3}$")
 
     return <>
         {!editMode && <div className={"profileInfo"}>
@@ -81,22 +110,41 @@ function ProfileInfo() {
                            type="text"
                            placeholder="Имя"
                            value={firstName}
+                           validationSchema={nameRegEx}
+                           errorMessage="Недопустимое имя пользователя"
+                           error={firstNameError}
+                           onError={setFirstNameError}
                            onChange={onFirstNameChangeHandler}
                     />
                     <Input name="family_name"
                            type="text"
                            placeholder="Фамилия"
                            value={lastName}
+                           validationSchema={familyNameRegEx}
+                           errorMessage="Недопустимая фамилия пользователя"
+                           error={lastNameError}
+                           onError={setLastNameError}
                            onChange={onLastNameChangeHandler}
                     />
-                    <Input name="phone_number"
-                           type="text"
-                           placeholder="Номер телефона"
-                           value={number}
-                           onChange={onNumberChangeHandler}
-                    />
+                    {/*<Input name="phone_number"*/}
+                    {/*       type="text"*/}
+                    {/*       placeholder="Номер телефона"*/}
+                    {/*       value={number}*/}
+                    {/*       validationSchema={phoneNumberRegEx}*/}
+                    {/*       error={numberError}*/}
+                    {/*       onError={setNumberError}*/}
+                    {/*       errorMessage="Недопустимый номер телефона"*/}
+                    {/*       onChange={onNumberChangeHandler}*/}
+                    {/*/>*/}
+                    <InputMask
+                        className="masked_input"
+                        mask='+375 (99) 999-99-99'
+                        value={userNumber}
+                        alwaysShowMask={true}
+                        onChange={userNumberChangeHandler}>
+                    </InputMask>
                 </div>
-                <Button type="submit">Готово</Button>
+                <Button type="submit" disabled={formIsInvalid}>Готово</Button>
             </form>
         </div>}
     </>
