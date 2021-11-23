@@ -64,4 +64,10 @@
     border: 2px solid #EF742F;
     box-sizing: border-box;
     border-radius: 15px;
+
+    & switch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
