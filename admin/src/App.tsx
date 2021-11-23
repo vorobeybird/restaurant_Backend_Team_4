@@ -16,7 +16,6 @@ import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import React, { useState } from "react";
-import ts from "typescript";
 
 Amplify.configure(awsconfig);
 

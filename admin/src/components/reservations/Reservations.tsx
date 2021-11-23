@@ -24,6 +24,11 @@ const initialTable = {
   persons: 2,
   is_available: true
 }
+const initialSelectedData = {
+  num_of_persons: undefined,
+  reserve_date: "bookTable",
+}
+
 const useClasses = makeStyles(theme => ({
   iconContainer: {
       "&:hover $icon": {
@@ -42,12 +47,13 @@ const Reservations = () => {
   const [cardOpen, setCardOpen] = useState(false);
   const [tableOpen, setTableOpen] = useState(false);
   const [openRForm, setOpenRForm] = useState(false);
-  const [currentTable, setCurrentTable] = useState<ITable>(initialTable)
+  const [currentTable, setCurrentTable] = useState<ITable>(initialTable);
   const [currentOrder, setCurrentOrder] = useState<any>({});
+ 
 
   const theme = useTheme();
   const classes = useClasses();
-
+   const [selectedCellData, setSelectedCellData] = useState<any>(initialSelectedData);
 
   const fetchReservationData = async () => {
     await apiFetch("GET", `${process.env.REACT_APP_API}/tables`)
@@ -85,7 +91,7 @@ const Reservations = () => {
     setCurrentTable({...currentTable, id, table_number, persons, is_available});
   }
   const handleCloseCard = () => {
-    setCardOpen(false)
+    setCardOpen(false);
   }
 
   useEffect(()=> {
@@ -128,7 +134,14 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
         setCurrentOrder(orderFound[0]); 
         setCardOpen(true);
         } else {
-          alert('Well gonna reserve a tabel')
+          let timeParsed = params.field.substring(8);
+          timeParsed = timeParsed.substring(0,2);
+          console.log(timeParsed)
+          setSelectedCellData({
+            num_of_persons: params.row.persons,
+            reserve_date: dayjs().hour(+timeParsed).minute(0).second(0).toDate(),
+          })
+         setOpenRForm(true);
         }
       };
       if (params.value) {
@@ -181,7 +194,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   </div>
   <OrderCard currentOrder={currentOrder} openCard={cardOpen} handleCloseCard={handleCloseCard} />
   <TableDialog currentTable={currentTable} setCurrentTable={setCurrentTable} tableOpen={tableOpen} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData} />
-  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} />
+  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} selectedCellData={selectedCellData} setSelectedCellData={setSelectedCellData} fetchReservationData={fetchReservationData} />
   </>
 );
 }
