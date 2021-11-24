@@ -142,7 +142,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
           setSelectedCellData({
             ...selectedCellData,
             num_of_persons: params.row.persons,
-            reserve_date: dayjs().hour(+timeParsed).toISOString(),
+            reserve_date: dayjs().hour(+timeParsed).minute(0).second(0).toISOString(),
           })
          setOpenRForm(true);
         }
