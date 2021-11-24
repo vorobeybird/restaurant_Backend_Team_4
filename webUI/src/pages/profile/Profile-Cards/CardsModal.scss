@@ -61,6 +61,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
+    & .masked_input {
+      margin-bottom: 2rem;
+    }
+
     &__control {
       flex: 1 1 100%;
 

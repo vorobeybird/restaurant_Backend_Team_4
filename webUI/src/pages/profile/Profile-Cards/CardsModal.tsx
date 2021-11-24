@@ -35,18 +35,16 @@ function CardsModal(props: CardsModalType) {
     const [cardNameError, setCardNameError] = useState<string>("");
     const [cardValidityError, setCardValidityError] = useState<string>("");
     const [cardCvvError, setCardCvvError] = useState<string>("");
-    const [cardNumberError, setCardNumberError] = useState<string>("");
 
-    let formIsInvalid: boolean;
+    let formIsInvalid = true;
     const updatedCardNumber = cardNumber.replaceAll(" ", "").replaceAll("_", "");
-    console.log(updatedCardNumber)
 
-    if (cardNameError.trim() || cardValidityError.trim() || cardCvvError.trim() || updatedCardNumber.length < 16) {
-        formIsInvalid = true;
-    } else {
+    if (!cardNameError && !!cardName.length &&
+        !cardValidityError && !!cardValidity.length &&
+        !cardCvvError && !!cardCVV.length &&
+        updatedCardNumber.length === 16) {
         formIsInvalid = false;
     }
-    console.log(formIsInvalid);
 
     const cardNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setCardName(e.target.value);
@@ -105,49 +103,7 @@ function CardsModal(props: CardsModalType) {
                 <h2 className="cardsModal-content__title">Добавить карту</h2>
                 <form className="cardsModal-form" action="#" onSubmit={updateUserAttributesHandler}>
                     <div className="cardsModal-form__control">
-                        <label htmlFor="cardName">Имя владельца карты</label>
-                        <Input name="cardName"
-                               id="cardName"
-                               type="text"
-                               placeholder="*IVAN IVANOV"
-                               value={cardName}
-                               error={cardNameError}
-                               errorMessage="Недопустимое имя владельца карты"
-                               validationSchema={cardNameRegEx}
-                               onError={setCardNameError}
-                               onChange={cardNameChangeHandler}
-                        />
-                    </div>
-                    <div className="cardsModal-form__control_half">
-                        <label htmlFor="cardValidity">Срок действия</label>
-                        <Input name="cardValidity"
-                               id="cardValidity"
-                               type="text"
-                               placeholder="*MM/YY"
-                               value={cardValidity}
-                               error={cardValidityError}
-                               errorMessage="Недопустимое значения срока действия карты (MM/YY)"
-                               validationSchema={cardValidityRegEx}
-                               onError={setCardValidityError}
-                               onChange={cardValidityChangeHandler}
-                        />
-                    </div>
-                    <div className="cardsModal-form__control_half">
-                        <label htmlFor="cvc">CVC/CVV</label>
-                        <Input name="cvc"
-                               id="cvc"
-                               type="password"
-                               placeholder="*###"
-                               value={cardCVV}
-                               error={cardCvvError}
-                               errorMessage="Недопустимое значения CVV-кода банковской карты (###)"
-                               validationSchema={cardCvvRegEx}
-                               onError={setCardCvvError}
-                               onChange={cardCVVChangeHandler}
-                        />
-                    </div>
-                    <div className="cardsModal-form__control">
-                        <label htmlFor="cardNumber">Номер карты</label>
+                        <label htmlFor="cardNumber">*Номер карты</label>
                         <InputMask
                             id={cardNumber}
                             className="masked_input"
@@ -157,17 +113,48 @@ function CardsModal(props: CardsModalType) {
                             alwaysShowMask={true}
                             onChange={cardNumberChangeHandler}>
                         </InputMask>
-                        {/*<Input name="cardNumber"*/}
-                        {/*       id="cardNumber"*/}
-                        {/*       type="text"*/}
-                        {/*       placeholder="1234 1234 1234 1234"*/}
-                        {/*       value={cardNumber}*/}
-                        {/*       error={cardNumberError}*/}
-                        {/*       errorMessage="Недопустимое значения номера банковской карты"*/}
-                        {/*       validationSchema={cardNumberRegEx}*/}
-                        {/*       onError={setCardNumberError}*/}
-                        {/*       onChange={cardNumberChangeHandler}*/}
-                        {/*/>*/}
+                    </div>
+                    <div className="cardsModal-form__control_half">
+                        <label htmlFor="cardValidity">*Срок действия</label>
+                        <Input name="cardValidity"
+                               id="cardValidity"
+                               type="text"
+                               placeholder="MM/YY"
+                               value={cardValidity}
+                               error={cardValidityError}
+                               errorMessage="Недопустимое значения срока действия карты (MM/YY)"
+                               validationSchema={cardValidityRegEx}
+                               onError={setCardValidityError}
+                               onChange={cardValidityChangeHandler}
+                        />
+                    </div>
+                    <div className="cardsModal-form__control_half">
+                        <label htmlFor="cvc">*CVC/CVV</label>
+                        <Input name="cvc"
+                               id="cvc"
+                               type="password"
+                               placeholder="###"
+                               value={cardCVV}
+                               error={cardCvvError}
+                               errorMessage="Недопустимое значения CVV-кода банковской карты (###)"
+                               validationSchema={cardCvvRegEx}
+                               onError={setCardCvvError}
+                               onChange={cardCVVChangeHandler}
+                        />
+                    </div>
+                    <div className="cardsModal-form__control">
+                        <label htmlFor="cardName">*Имя владельца карты</label>
+                        <Input name="cardName"
+                               id="cardName"
+                               type="text"
+                               placeholder="IVAN IVANOV"
+                               value={cardName}
+                               error={cardNameError}
+                               errorMessage="Недопустимое имя владельца карты"
+                               validationSchema={cardNameRegEx}
+                               onError={setCardNameError}
+                               onChange={cardNameChangeHandler}
+                        />
                     </div>
                     <Button disabled={formIsInvalid} type="submit">Готово</Button>
                 </form>
