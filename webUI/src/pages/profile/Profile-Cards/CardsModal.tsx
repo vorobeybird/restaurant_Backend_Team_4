@@ -109,7 +109,7 @@ function CardsModal(props: CardsModalType) {
                         <Input name="cardName"
                                id="cardName"
                                type="text"
-                               placeholder="IVAN IVANOV"
+                               placeholder="*IVAN IVANOV"
                                value={cardName}
                                error={cardNameError}
                                errorMessage="Недопустимое имя владельца карты"
@@ -123,7 +123,7 @@ function CardsModal(props: CardsModalType) {
                         <Input name="cardValidity"
                                id="cardValidity"
                                type="text"
-                               placeholder="MM/YY"
+                               placeholder="*MM/YY"
                                value={cardValidity}
                                error={cardValidityError}
                                errorMessage="Недопустимое значения срока действия карты (MM/YY)"
@@ -137,7 +137,7 @@ function CardsModal(props: CardsModalType) {
                         <Input name="cvc"
                                id="cvc"
                                type="password"
-                               placeholder="###"
+                               placeholder="*###"
                                value={cardCVV}
                                error={cardCvvError}
                                errorMessage="Недопустимое значения CVV-кода банковской карты (###)"

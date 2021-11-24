@@ -80,7 +80,7 @@ function ProfilePassword() {
     return <div className={"profilePassword"}>
         <form onSubmit={updateUserPasswordHandler}>
             <div>
-                <label htmlFor="oldPassword">Старый пароль</label>
+                <label htmlFor="oldPassword">*Старый пароль</label>
                 <Input name="oldPassword"
                        id="oldPassword"
                        type="password"
@@ -91,7 +91,7 @@ function ProfilePassword() {
                        onError={setOldPasswordError}
                        onChange={onOldPasswordChangeHandler}
                 />
-                <label htmlFor="newPassword">Новый пароль</label>
+                <label htmlFor="newPassword">*Новый пароль</label>
                 <Input name="newPassword"
                        id="newPassword"
                        type="password"
@@ -102,7 +102,7 @@ function ProfilePassword() {
                        onError={setNewPasswordError}
                        onChange={onNewPasswordChangeHandler}
                 />
-                <label htmlFor="confirmNewPassword">Повторите новый пароль</label>
+                <label htmlFor="confirmNewPassword">*Повторите новый пароль</label>
                 <Input name="confirmNewPassword"
                        id="confirmNewPassword"
                        type="password"
