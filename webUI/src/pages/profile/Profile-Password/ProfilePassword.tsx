@@ -74,7 +74,8 @@ function ProfilePassword() {
     }
 
 
-    let passwordErrorMessage = "Пароль должен содержать 8-15 символов, без пробелов и специальных знаков (#, %, &, !, $, etc.). Обязательно к заполнению.";
+    let passwordErrorMessage = "Пароль должен содержать 8-15 символов с минимум одной цифрой, одной \n" +
+        "заглавной и одной строчной буквой, без (#, %, &, !, $, etc.). Обязательно к заполнению."
     const passwordRegEx = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/)
 
     return <div className={"profilePassword"}>
@@ -86,7 +87,7 @@ function ProfilePassword() {
                        type="password"
                        value={oldPassword}
                        error={oldPasswordError}
-                       errorMessage="Неверный пароль"
+                       errorMessage={passwordErrorMessage}
                        validationSchema={passwordRegEx}
                        onError={setOldPasswordError}
                        onChange={onOldPasswordChangeHandler}

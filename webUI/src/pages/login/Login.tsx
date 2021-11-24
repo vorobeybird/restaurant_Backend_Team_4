@@ -135,6 +135,12 @@ export function Authentication() {
         setUserSecondName("");
         setUserPhone("");
         setConfirmationCode("");
+        setUserEmailError("");
+        setUserPasswordError("");
+        setUserFirstNameError("");
+        setUserSecondNameError("");
+        setUserPhone("");
+        setConfirmationCodeError("");
     }
 
     function toggleSignInHandler() {
