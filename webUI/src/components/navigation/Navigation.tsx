@@ -51,7 +51,7 @@ const Navigation = () => {
         <Link to={user && user.username.length > 0 ? "/cart" : "/"}>
           <img className="cart_icon" src={Cart} alt="cart icon"></img>
         </Link>
-        <Link to={user && user.username.length > 0 ? "/profile" : "/"} onClick={() => {}}>
+        <Link to={user && user.username.length > 0 ? "/profile" : "/login"} onClick={() => {}}>
           <img
             className="profile_icon"
             src={Profile}

@@ -1,5 +1,8 @@
 import "./footer.scss";
 import Logo from "../../assets/nav_logo.png";
+import {useDispatch, useSelector} from "react-redux";
+import { AppStateType } from "../../store";
+import { AuthStateType } from "../../store/auth/auth.reducer";
 
 const NAV_LINKS = [
   {
@@ -25,6 +28,8 @@ const NAV_LINKS = [
 ];
 
 const Footer = () => {
+  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+
   return (
     <footer>
       <div className="footer-logo"><a style={{textDecoration:'none', color:'white'}} href="#" >Ocean bar</a></div>
@@ -32,7 +37,7 @@ const Footer = () => {
       <ul className="nav_links">
         {NAV_LINKS.map(({ title, link }, index) => (
           <li key={index}>
-            <a href={link}>{title}</a>
+            <a href={ user || link==="/menu"? link : '/login'}>{title}</a>
           </li>
         ))}
       </ul>
