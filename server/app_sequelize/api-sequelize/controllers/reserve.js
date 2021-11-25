@@ -35,11 +35,7 @@ module.exports = {
         reserve_end_time: endTime,
         table_id: tables[0].id,
       });
-    } catch(error){
-      res.status(400).send(error);
-    }
-
-    try {
+      console.log(reserve);
       const order = await Order.create({
         customer_id: req.body.customer_id,
         delivery_method: req.body.delivery_method,
@@ -66,7 +62,7 @@ module.exports = {
       res.status(200).send(tables[0]);
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(400).send({ message: `Витя, ну ёб твою мать, вот твоя ошибка: ${error}`});
     }
   },
 
