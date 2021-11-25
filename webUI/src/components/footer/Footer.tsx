@@ -7,10 +7,6 @@ const NAV_LINKS = [
     link: "#",
   },
   {
-    title: "Оформить заказ",
-    link: "#",
-  },
-  {
     title: "Забронировать стол",
     link: "#",
   },
@@ -23,15 +19,7 @@ const NAV_LINKS = [
     link: "#",
   },
   {
-    title: "Условия пользвания",
-    link: "#",
-  },
-  {
-    title: "Политика Конфиденциальности",
-    link: "#",
-  },
-  {
-    title: "Политика cookies",
+    title: "Контакты",
     link: "#",
   },
 ];
@@ -39,7 +27,7 @@ const NAV_LINKS = [
 const Footer = () => {
   return (
     <footer>
-      <div className="footer-logo">Ocean bar</div>
+      <div className="footer-logo"><a style={{textDecoration:'none', color:'white'}} href="#" >Ocean bar</a></div>
 
       <ul className="nav_links">
         {NAV_LINKS.map(({ title, link }, index) => (
