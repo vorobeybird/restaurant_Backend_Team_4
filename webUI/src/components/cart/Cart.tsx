@@ -146,12 +146,12 @@ export const Cart = () => {
     history.push("/menu");
   };
 
-  const [orderType, setOrderType] = useState("");
+  const [orderType, setOrderType] = useState(order.delivery_method);
 
-  useEffect(() => {
-    dispatch(changeDeliveryMethod(""));
-    dispatch(clearOrder());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(changeDeliveryMethod(""));
+  //   dispatch(clearOrder());
+  // }, []);
 
   const combineOrder = async (total:number)=>{
     dispatch(changeTotalPrice(total))
@@ -164,7 +164,7 @@ export const Cart = () => {
 
   const onChangeTab = (e: any) => {
     console.log(e.target);
-    dispatch(clearOrder());
+    // dispatch(clearOrder());
     dispatch(changeDeliveryMethod(e.target.alt));
     dispatch(getTablePool());
     setOrderType(e.target.alt);
