@@ -16,7 +16,7 @@ module.exports = {
     const endTime = parseDateToUTC(startTime);
     endTime.setUTCHours(Math.min(23, startTime.getUTCHours() + 3));
     endTime.setUTCMinutes(endTime.getUTCMinutes() + 59);
-
+    try{
     const tables = await module.exports.getTables(
       startTime,
       endTime,
@@ -28,12 +28,17 @@ module.exports = {
       res.status(400).send({ message: "No tables found!" });
       return;
     }
-    const reserve = await Reserve.create({
-      reserve_date: reserveDate,
-      reserve_start_time: startTime,
-      reserve_end_time: endTime,
-      table_id: tables[0].id,
-    });
+
+      const reserve = await Reserve.create({
+        reserve_date: reserveDate,
+        reserve_start_time: startTime,
+        reserve_end_time: endTime,
+        table_id: tables[0].id,
+      });
+    } catch(error){
+      res.status(400).send(error);
+    }
+
     try {
       const order = await Order.create({
         customer_id: req.body.customer_id,
