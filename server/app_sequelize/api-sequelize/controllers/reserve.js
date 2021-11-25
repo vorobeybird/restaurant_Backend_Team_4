@@ -49,14 +49,28 @@ module.exports = {
         reserve_id: reserve.id,
       });
       const dish = req.body.dish;
-      for (const elem of dish) {
+      for (let elem of dish) {
+        console.log(elem);
         const dish_item = await Dish.findByPk(elem.dish_id);
-        await order.addDish(dish_item, {
-          through: {
-            quantity: elem.dish_amount,
-            excluded_ingredients: elem.excluded_ingredients,
-          },
-        });
+        await order.addDish(dish_item);
+        await sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          {
+            replacements: [
+              elem.dish_id,
+              order.id,
+              elem.dish_amount,
+              elem.excluded_ingredients,
+            ],
+            type: QueryTypes.INSERT,
+          }
+        );
+        // await order.addDish(dish_item, {
+        //   through: {
+        //     quantity: elem.dish_amount,
+        //     excluded_ingredients: elem.excluded_ingredients,
+        //   },
+        // });
       }
       res.status(200).send(tables[0]);
     } catch (error) {

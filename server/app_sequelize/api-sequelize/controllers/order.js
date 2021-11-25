@@ -3,7 +3,6 @@ const Dish = require("../models").Dish;
 
 module.exports = {
   list(req, res) {
-    
     return Order.findAll({
       include: [
         {
@@ -43,26 +42,28 @@ module.exports = {
 
   getByCustmerId(req, res) {
     return Order.findAll({
-      include: [{
-        model: Dish,
-        as: "dish"
-      }],
+      include: [
+        {
+          model: Dish,
+          as: "dish",
+        },
+      ],
       where: {
-        customer_id: req.params.customerId
-      }
+        customer_id: req.params.customerId,
+      },
     })
-    .then((orders) => {
-      if (!orders) {
-        return res.status(404).send({
-          message: "Orders Not Found",
-        });
-      }
-      return res.status(200).send(orders);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).send(error);
-    });
+      .then((orders) => {
+        if (!orders) {
+          return res.status(404).send({
+            message: "Orders Not Found",
+          });
+        }
+        return res.status(200).send(orders);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
+      });
   },
 
   async add(req, res) {
@@ -84,9 +85,24 @@ module.exports = {
       });
       for (const elem of dish) {
         const dish_item = await Dish.findByPk(elem.dish_id);
-        await order.addDish(dish_item, {
-          through: { quantity: elem.dish_amount, excluded_ingredients: elem.excluded_ingredients},
-        });
+        // await order.addDish(dish_item, {
+        //   through: {
+        //     quantity: elem.dish_amount,
+        //     excluded_ingredients: elem.excluded_ingredients,
+        //   },
+        // });
+        await sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          {
+            replacements: [
+              elem.dish_id,
+              order.id,
+              elem.quantity,
+              elem.excluded_ingredients,
+            ],
+            type: QueryTypes.INSERT,
+          }
+        );
       }
       res.status(200).send(order);
     } catch (error) {
