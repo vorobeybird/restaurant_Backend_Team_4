@@ -212,7 +212,7 @@ const SignUp = (props: any) => {
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}
-          placeholder="Емэйл"
+          placeholder="Email"
           onChangeText={val => setState({...state, email: val.toLowerCase()})}
           value={state.email}
         />
