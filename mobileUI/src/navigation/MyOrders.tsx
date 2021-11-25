@@ -12,7 +12,35 @@ type RootStackParamList = {
 
 export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const navigation = useNavigation()
-    
+    const [pay, setPay] = useState('а мне похуй')
+    const [histPay, setHistPay] = useState('а мне похуй')
+    const payWordFuncHist = (item:any) => {
+        let payWord
+        if (item.paymentType == 0){
+          payWord = 'Наличными'
+        }else if (item.paymentType == 1){
+          payWord = 'Картой онлайн'
+        } else if (item.paymentType == 2){
+          payWord = 'Картой'
+        } 
+        
+        setHistPay(payWord)
+    }
+    const payWordFunc = () => {
+        let payWord
+        if (cart.paymentType == 0){
+          payWord = 'Наличными'
+        }else if (cart.paymentType == 1){
+          payWord = 'Картой онлайн'
+        } else if (cart.paymentType == 2){
+          payWord = 'Картой'
+        } 
+        
+        setPay(payWord)
+    }
+      useEffect(() => {
+        payWordFunc();
+      }, []);
    
     const cart = useSelector((state) => state.dishes);
     console.log(cart)
@@ -49,7 +77,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                             <Text style={styles.simpText}>{cart.orderType}</Text>
                                             <Text style={styles.simpText}>13 октября</Text>
                                             <Text style={styles.simpText}>15:00</Text>
-                                            <Text style={styles.simpText}>{cart.paymentType}</Text>
+                                            <Text style={styles.simpText}>{pay}</Text>
                                             <Text style={styles.simpText}>Принят в работу</Text>
                                         </View>
                                         </View>
@@ -123,6 +151,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                     style={styles.size}
                                     data={cart.orderHistory}
                                     renderItem={({ item }) => { 
+                                        payWordFuncHist(item)
                                         return (
                                                 <View style={styles.orderType} key={item.id}>
                                                     <View style={styles.flexWrapper}>
@@ -136,7 +165,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                                             <Text style={styles.simpText}>{item.type}</Text>
                                                             <Text style={styles.simpText}>{dayjs(item.date).format('YYYY-MM-DD')}</Text>
                                                             <Text style={styles.simpText}>{dayjs(item.date).format('HH:mm')}</Text>
-                                                            <Text style={styles.simpText}>{item.paymentType}</Text>
+                                                            <Text style={styles.simpText}>{histPay}</Text>
                                                         </View>
                                                     </View>
                                                 </View>
