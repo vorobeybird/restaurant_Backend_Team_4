@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -49,7 +49,7 @@ export const OrderDetails = ({
   const dispatch = useDispatch()
   const [id, setId] = useState();
   const cart = useSelector(state => state.dishes);
-
+  const [pay, setPay] = useState('а мне похуй')
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -142,9 +142,26 @@ export const OrderDetails = ({
       )
       const res = servResp;
       console.log({...res}.data.id,'res')
-      
+    
     
   };
+
+  const payWordFunc = () => {
+    let payWord
+    if (cart.paymentType == 0){
+      payWord = 'Наличными'
+    }else if (cart.paymentType == 1){
+      payWord = 'Картой онлайн'
+    } else if (cart.paymentType == 2){
+      payWord = 'Картой'
+    } 
+    
+    setPay(payWord)
+  }
+  useEffect(() => {
+    payWordFunc();
+  }, []);
+  
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -168,7 +185,7 @@ export const OrderDetails = ({
             <Text style={styles.simpText}>{cart.orderType}</Text>
             <Text style={styles.simpText}>13 октября</Text>
             <Text style={styles.simpText}>15:00</Text>
-            <Text style={styles.simpText}>{cart.paymentType}</Text>
+            <Text style={styles.simpText}>{pay}</Text>
           </View>
         </View>
       </View>
