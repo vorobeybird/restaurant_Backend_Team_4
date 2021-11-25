@@ -21,7 +21,7 @@ export const Home = () => {
                 <Text style={styles.TextStyle}>МЕНЮ</Text>
                 <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('MenuTabNavigation', {screen: 'OrderTable'})} style={styles.contenWrapper}>
+            <TouchableOpacity onPress={() => navigation.navigate('MenuTabNavigation', {screen: 'ConfirmOrderTable'})} style={styles.contenWrapper}>
                 <Image style={styles.leftPict} source={require('../../img/menuCard.png')}/>
                 <View style={styles.simpWrapper}>
                     <Text style={styles.TextStyle}>ЗАБРОНИРОВАТЬ</Text>

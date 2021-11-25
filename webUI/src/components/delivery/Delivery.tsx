@@ -9,7 +9,8 @@ import NextStepIcon from "../../assets/next.png";
 import "./delivery.scss";
 import { EnterAddress } from "../common/enterAddress/EnterAddress";
 import { chooseAddress } from "../../store/order/order.actions";
-
+import { useHistory } from "react-router-dom";
+import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 export interface IAddress {
   street: string;
   houseNumber: string;
@@ -17,11 +18,30 @@ export interface IAddress {
   apartment: string;
 }
 
-export const Delivery = () => {
-  const dispatch = useAppDispatch();
+interface OrderProps {
+  total?: number,
+  combineOrder?: any;
+}
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+
+export const Delivery = ({total,combineOrder}:OrderProps) => {
+
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const [name, setName] = useState(user.attributes.name);
+  const [phone, setPhone] = useState(user.attributes.phone_number);
+  let history = useHistory();
+  // let address = "Ваш текущий адрес не указан";
+
+  let ustreet,uhouse,uflat,uhousing = "";
+
+  if (user.attributes.address) {
+    const addr = JSON.parse(user.attributes.address);
+      ustreet = addr.street;
+      uhouse = addr.house;
+      uflat = addr.flat;
+      uhousing = addr.housing;
+  }
 
   const isValidName = () => {
     const reg = /[-|a-z|а-я]{2,30}/i;
@@ -36,10 +56,10 @@ export const Delivery = () => {
   const [time, setTime] = useState("");
 
   const [address, setAddress] = useState<IAddress>({
-    street: "",
-    houseNumber: "",
-    houseBuilding: "",
-    apartment: "",
+    street: ustreet,
+    houseNumber: uhouse,
+    houseBuilding: uhousing,
+    apartment: uflat,
   });
 
   const isValidAddress = (address: IAddress) => {
@@ -125,6 +145,14 @@ export const Delivery = () => {
       setCurrentStep((step) => step + 1);
   };
 
+  const pushToConfirmation = () => {
+    handleChangeCurrentStepNext();
+    if (currentStep === 4) {
+      history.push("/cart/confirm");
+      combineOrder(total)
+    }
+  };
+
   console.log(order);
 
   const stepsController = () => {
@@ -145,11 +173,12 @@ export const Delivery = () => {
 
   return (
     <div className="delivery_container_wrapper">
+      <h1 style={{ padding: "20px" }}>Оформление заказа</h1>
       <div className="delivery_container">
         <button
           className={`${
             currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_delivery`}
+          } swiper_delivery_left`}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -162,7 +191,7 @@ export const Delivery = () => {
         <button
           className={`${
             currentStep === 4 ? "swiper_disabled" : undefined
-          } swiper_delivery`}
+          } swiper_delivery_right`}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
@@ -172,6 +201,11 @@ export const Delivery = () => {
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_DELIVERY_STEPS.length}
       </div>
+      <SwitchButtons
+                onClickNext={pushToConfirmation}
+                onClickPrev={handleChangeCurrentStepPrev}
+                children="I'm a pink circle!"
+              />
     </div>
   );
 };

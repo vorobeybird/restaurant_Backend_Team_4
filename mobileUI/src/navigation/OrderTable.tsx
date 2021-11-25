@@ -30,6 +30,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
     const [show, setShow] = useState(false);
     const [getTable, setTable] = useState([])
     let devState: any[] = [];
+
     const showToast = () => {
         ToastAndroid.showWithGravity(
           'Стол занят',
@@ -38,13 +39,74 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
         );
       };
 
-      const showToastSuccs = () => {
+    const showToastSuccs = () => {
         ToastAndroid.showWithGravity(
-          'Стол за вами',
+          'Стол забронирован',
           ToastAndroid.SHORT,
           ToastAndroid.TOP,
         );
-      };
+    };
+    interface Order {
+        delivery_method: string;
+        payment_method: number;
+        customer_id: string;
+        total_price: number;
+        delivery_date: string;
+        comment: string;
+        dish: DishShortInfo[];
+        adress: string;
+        contact_name: string;
+        contact_phone: string;
+        num_of_persons: number;
+    }
+
+    interface OrderTemp extends Order {
+        reserve_time: string;
+        reserve_date: string;
+      }
+    interface DishShortInfo {
+        dish_id: number;
+        dish_amount: number;
+        excluded_ingredients: string;
+      }
+    /////////////////////////
+
+    const onMakingOrder = () => {
+        let dishesShortInfo = cart.dishes.map((item:any) => {
+            let dish = {} as DishShortInfo;
+            dish.dish_id = item.id;
+            dish.dish_amount = item.cardQuantity;
+            
+            return dish;
+        });
+        let currentOrder = {} as OrderTemp;
+        currentOrder.delivery_method = cart.orderType;
+        currentOrder.payment_method = cart.paymentType *1;
+        currentOrder.customer_id = 'asdfasdf';
+        currentOrder.contact_name = cart.userInfo.name +" "+cart.userInfo.surName;
+        currentOrder.contact_phone = cart.userInfo.phone;
+        currentOrder.total_price = cart.cardTotalAmount;
+        currentOrder.delivery_date = cart.date;
+        currentOrder.comment = "Hi, I'm hardcode comment :)";
+        currentOrder.num_of_persons = cart.num;
+        currentOrder.reserve_date = "2021-11-29T";
+        currentOrder.reserve_time = cart.date;
+        currentOrder.dish = dishesShortInfo;
+        console.log(currentOrder)
+        return axios
+
+        .post('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve', currentOrder, {
+        headers: {
+            "Content-type": "application/json",
+            "cross-domain": "true",
+        },
+        })
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+    };
+
+
+    //////////////////
 
     const getItems = async () => {
         const response = await axios.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
@@ -88,11 +150,9 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
         dispatch(getNumOfPersons(item))
         
     };
-
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
-
 
     const [chooseTable, setChooseTable] = useState('Выберите стол')
     const [isModalVisible, setIsModalVisible] = useState(false)
@@ -130,98 +190,48 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
             </TouchableOpacity>
         )
     }
-
-    const onMakingOrder = () => {
-        let order = {} as OrderTemp;
-        order.total_price = 0;
-        order.delivery_date = cart.date;
-        order.comment = "Hi, I'm hardcode comment :)";
-        order.dish = [];
-        order.contact_name = cart.userInfo.name;
-        order.contact_phone = cart.userInfo.phone;
-        order.adress = "bookTable";
-        order.num_of_persons = cart.num;
-        order.reserve_date = cart.date;
-        order.reserve_time = cart.date;
-    console.log(order)
-        return axios
-          .post(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve`, order, {
-            headers: {
-              "Content-type": "application/json",
-              "cross-domain": "true",
-            },
-          })
-          .then((response) => response)
-          .catch((err) => {console.log(err);console.log(order)});
-        } 
-        devState = []   
-        const getTableByNum = () => {
+    const getTableByNum = () => {
+        if(chooseTable === "На двоих") {
             handleGetNumOfPersons(2)
             handleAddDate(date.toString())
             getTable.map((element:any) => {
                 if(element.persons === 2) {
                     devState.push(element)
                 }
-
             });
-            
-
         }
-
-        getTableByNum()
-        let arr = []
-        const tableMakeOrder = () => {
-            getTableByNum()
-            console.log(devState, 'devState')
-            
-            devState.map((item:any) => {
-                item.reserve.map((data:any) => {
-                    
-                    if(data.reserve_date == dayjs(date).format('YYYY-MM-DD') && data.reserve_time == dayjs(date).format('HH:mm:00')){
-                        showToast()
-                    } else {
-                        showToastSuccs()
-                        onMakingOrder()
-                        navigation.navigate('Menu')
-                        devState = []
-                        
-                    }
-                })
-                
-            })
-            
-        }
-    
+        
+        
+    }
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
-            <TouchableOpacity onPress={() => goBack()}>
-                <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
-            </TouchableOpacity>
-            <Text style={styles.TitleText}> Забронировать стол</Text>
+                <TouchableOpacity onPress={() => goBack()}>
+                    <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
+                </TouchableOpacity>
+                <Text style={styles.TitleText}> Забронировать стол</Text>
             </View>
             <View>
-                    <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
+                <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
-                    }}>
-                        <Text style={styles.dateText}>{date.getDate()}-{date.getMonth()}-{date.getFullYear()}</Text>
-                        <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
+                }}>
+                    <Text style={styles.dateText}>{dayjs(date).format('YYYY-MM-DD')}</Text>
+                    <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
                         
-                    }}>
-                        <Text style={styles.dateText}>{chooseTable}</Text>
-                        <Image style={styles.dateImage} source={require('../../img/vect.png')}/>
-                    </TouchableOpacity>
-                    <Modal transparent={true} animationType='fade' visible={isModalVisible} onRequestClose={() => changeModalVisible(false)}>
-                        <ModalPicker/>
-                    </Modal>
+                }}>
+                    <Text style={styles.dateText}>{chooseTable}</Text>
+                    <Image style={styles.dateImage} source={require('../../img/vect.png')}/>
+                </TouchableOpacity>
+                <Modal transparent={true} animationType='fade' visible={isModalVisible} onRequestClose={() => changeModalVisible(false)}>
+                    <ModalPicker/>
+                </Modal>
 
-                    <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
-                        <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={showTimepicker} style={styles.box}>
+                    <Text style={styles.dateText}>{dayjs(date).format('HH:mm')}</Text>
+                    <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
+                </TouchableOpacity>
                 {show && (
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -234,11 +244,11 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
                     />
                 )}
             </View>
-            
             <TouchableOpacity style={styles.Button} onPress={() => {
-                tableMakeOrder()
+                getTableByNum()
+                onMakingOrder()
                 
-                }}>
+            }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>

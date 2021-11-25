@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, Dimensions, ToastAndroid} from 'react-native';
 import { useState, useEffect } from "react";
-import { addDate } from '../store/StoreCard' 
+import { addDate,getNumOfPersons } from '../store/StoreCard' 
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
-
+import dayjs from 'dayjs';
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
@@ -45,29 +45,13 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
         );
       };
 
-    const getItems = async () => {
-        const response = await axios.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
-        const res = response.data
-        return res
-      }
-    const fetchMenuItems = async () => {
-        const items = await getItems()
-        setTable(items)
-    }
-    
-    
-      useEffect(() => {
-        fetchMenuItems()
-        console.log(getTable)
-      },[])
-
     const onChange  = async (event:any, selectedDate:any) => {
         const currentDate = selectedDate || date;
         await setDate(currentDate);
         hideDatePicker()
 
       };
-
+    
     const showMode = (currentMode:any) => {
         setShow(true);
         setMode(currentMode);
@@ -82,11 +66,27 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     const hideDatePicker = () => {
         setShow(false);
     };
-    const handleConfirm = (val:any) => {
-        
-        hideDatePicker();
-    };
-
+    const handleGetNumOfPersons = (item:any) => {
+        dispatch(getNumOfPersons(item))
+    }
+    const checkNum = () => {
+        if(chooseTable ==='На двоих') {
+            handleGetNumOfPersons(2)
+            console.log(2)
+        }else if(chooseTable ==='На четверых') {
+            handleGetNumOfPersons(4)
+            console.log(4)
+        }else if(chooseTable ==='На шестерых') {
+            handleGetNumOfPersons(6)
+            console.log(6)
+        }else if(chooseTable ==='На восьмерых') {
+            handleGetNumOfPersons(8)
+            console.log(8)
+        }else if(chooseTable ==='На десятерых') {
+            handleGetNumOfPersons(10)
+            console.log(10)
+        }
+    }
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
@@ -172,155 +172,11 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                 )}
             </View>
             <Text style={styles.prgressText}> шаг 2/3</Text>
-            <TouchableOpacity style={styles.Button} onPress={() => {
-                
-                if(chooseTable ==='На двоих') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 2) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                                devState = []
-                            }
-                        })
-                    })
-                }
-                
-
-                if(chooseTable ==='На четверых') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 4) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                                devState = []
-                            }
-                        })
-                    })
-                }
-
-                
-
-                if(chooseTable ==='На шестерых') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 6) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                                
-                            }
-                        })
-                    })
-                }
-                
-
-                if(chooseTable ==='На восьмерых') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 8) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                                devState = []
-                            }
-                        })
-                    })
-                }
-
-                
-                if(chooseTable ==='На десятерых') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 10) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                                devState = []
-                            }
-                        })
-                    })
-                }
-                
-                
-                if(cart.orderType == 'Навынос'){
-                    navigation.navigate('ChosePaymentType')
-                } else if(cart.orderType == 'Доставка') {
-                    navigation.navigate('writeAdress')
-                }
-                }}>
+            <TouchableOpacity style={styles.Button} onPress={() => {      
+                handleAddDate(dayjs(date).toISOString())   
+                checkNum()
+                navigation.navigate('ChosePaymentType')
+            }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>

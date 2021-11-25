@@ -8,22 +8,34 @@ import {Auth} from "aws-amplify";
 
 function ProfileAddress() {
     const user = useAppSelector(state => state.auth.user);
-    let address = "Ваш текущий адрес не указан";
-    let street = "";
-    let house = "";
-    let flat = "";
-    if (user.attributes.address) {
-        address = user.attributes.address;
-        street = user.attributes.address.split(" ")[1];
-        house = user.attributes.address.split(" ")[3];
-        flat = user.attributes.address.split(" ")[5];
+    let userAddress: any;
+    try {
+        userAddress = JSON.parse(user.attributes.address);
+    } catch (err) {
+        userAddress = {};
+        console.log(err)
     }
+    const hasAddress = Object.keys(userAddress).length > 0;
+    console.log(userAddress);
+    console.log(hasAddress);
     const dispatch = useAppDispatch();
 
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [userStreet, setUserStreet] = useState<string>(street);
-    const [userHouse, setUserHouse] = useState<string>(house);
-    const [userFlat, setUserFlat] = useState<string>(flat);
+    const [userStreet, setUserStreet] = useState<string>(userAddress.street);
+    const [userStreetError, setUserStreetError] = useState<string>("");
+    const [userHouse, setUserHouse] = useState<string>(userAddress.house);
+    const [userHouseError, setUserHouseError] = useState<string>("");
+    const [userHousing, setUserHousing] = useState<string>(userAddress.housing);
+    const [userHousingError, setUserHousingError] = useState<string>("");
+    const [userFlat, setUserFlat] = useState<string>(userAddress.flat);
+    const [userFlatError, setUserFlatError] = useState<string>("");
+
+    let formIsInvalid;
+    if (userStreetError.trim() || userHouseError.trim() || userHousingError.trim() || userFlatError.trim()) {
+        formIsInvalid = true;
+    } else {
+        formIsInvalid = false;
+    }
 
     if (!user) {
         return <Redirect to="/login"/>
@@ -39,6 +51,9 @@ function ProfileAddress() {
     const onUserHouseChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserHouse(e.target.value);
     }
+    const onUserHousingChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setUserHousing(e.target.value);
+    }
     const onUserFlatChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserFlat(e.target.value);
     }
@@ -47,7 +62,13 @@ function ProfileAddress() {
         e.preventDefault()
         try {
             if (user) {
-                await Auth.updateUserAttributes(user, {address: `ул. ${userStreet} д. ${userHouse} кв. ${userFlat}`});
+                const updatedUserAddress = {
+                    street: userStreet,
+                    house: userHouse,
+                    housing: userHousing,
+                    flat: userFlat,
+                }
+                await Auth.updateUserAttributes(user, {address: JSON.stringify(updatedUserAddress)});
                 const updatedUser = await Auth.currentAuthenticatedUser();
                 dispatch(
                     {
@@ -62,9 +83,23 @@ function ProfileAddress() {
         }
     }
 
+    const streetRegEx = new RegExp("^([а-яА-Я0-9-s]+)");
+    const houseRegEx = new RegExp(/\d{1,3}/);
+    const housingRegEx = new RegExp(/\d?/);
+    const flatRegEx = new RegExp(/\d?/);
+
+
     return <>
         {!editMode && <div className={"profileAddress"}>
-            <p className={"profileAddress__text"}>{address}</p>
+            {hasAddress ?
+                <div className={"profileAddress__info"}>
+                    <div>ул. {userAddress.street}</div>
+                    <div>д. {userAddress.house}</div>
+                    <div>корп. {userAddress.housing ? userAddress.housing : ""}</div>
+                    <div>кв. {userAddress.flat ? userAddress.flat : ""}</div>
+                </div> :
+                <p className={"profileAddress__text"}>Ваш адрес не указан</p>
+            }
             <Button type={"button"} onClick={onToggleHandler}>Изменить</Button>
         </div>}
         {editMode && <div className={"profileAddress"}>
@@ -77,6 +112,11 @@ function ProfileAddress() {
                            type="text"
                            placeholder="Улица"
                            value={userStreet}
+                           validationSchema={streetRegEx}
+                           errorMessage="Недопустимое название улицы"
+                           error={userStreetError}
+                           isRequired={true}
+                           onError={setUserStreetError}
                            onChange={onUserStreetChangeHandler}
                     />
                     <label htmlFor="house">Дом</label>
@@ -85,7 +125,24 @@ function ProfileAddress() {
                            type="number"
                            placeholder="Дом"
                            value={userHouse}
+                           errorMessage="Недопустимый номер дома"
+                           error={userHouseError}
+                           validationSchema={houseRegEx}
+                           isRequired={true}
+                           onError={setUserHouseError}
                            onChange={onUserHouseChangeHandler}
+                    />
+                    <label htmlFor="housing">Корпус</label>
+                    <Input name="housing"
+                           id="housing"
+                           type="number"
+                           placeholder="Корпус"
+                           value={userHousing}
+                           errorMessage="Недопустимый номер корпуса"
+                           error={userHousingError}
+                           validationSchema={housingRegEx}
+                           onError={setUserHousingError}
+                           onChange={onUserHousingChangeHandler}
                     />
                     <label htmlFor="flat">Квартира</label>
                     <Input name="flat"
@@ -93,10 +150,14 @@ function ProfileAddress() {
                            type="number"
                            placeholder="Квартира"
                            value={userFlat}
+                           errorMessage="Недопустимый номер квартиры"
+                           error={userFlatError}
+                           validationSchema={flatRegEx}
+                           onError={setUserFlatError}
                            onChange={onUserFlatChangeHandler}
                     />
                 </div>
-                <Button type="submit">Готово</Button>
+                <Button disabled={formIsInvalid} type="submit">Готово</Button>
             </form>
         </div>}
     </>

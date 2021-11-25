@@ -13,8 +13,8 @@ import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import { addOrderHistoryItem, clearCart } from '../store/StoreCard';
-
-
+import dayjs from 'dayjs';
+ 
 interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
@@ -26,11 +26,15 @@ interface Order {
   customer_id: string;
   delivery_method: string;
   total_price: number;
-  delivery_date: Date;
+  delivery_date: string;
   contact_name: string;
-  payment_method: boolean;
+  payment_method: number;
   contact_phone: string;
   comment: string;
+  reserve_time:string;
+  status:string;
+  reserve_date:string;
+  num_of_persons: number;
   dish: DishShortInfo[];
 }
 
@@ -66,7 +70,7 @@ export const OrderDetails = ({
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
-    order.customer_id = '89897751894yafsjkdbfkjsdaf';
+    order.customer_id = cart.userInfo.surName;
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
@@ -86,10 +90,50 @@ export const OrderDetails = ({
     });
     
     order.dish = dishesShortInfo;
-    
+    console.log(order)
     axios
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
+        order,
+        {
+          headers: {'Content-type': 'application/json'},
+        },
+      )
+      .then(response => console.log(response))
+      .catch(err => console.log(err));
+  };
+
+  const onMakingOrderTable = () => {
+      
+    let order = {} as Order;
+    order.num_of_persons = cart.num;
+    order.customer_id = "889993242341";
+    order.contact_name = cart.userInfo.name +" "+cart.userInfo.surName;
+    order.contact_phone = "1111111";
+    order.payment_method = 1;
+    order.adress = 'bookTable';
+    order.status = "bla";
+    order.comment = "bla";
+    order.delivery_method = cart.orderType;
+    order.total_price = cart.cardTotalAmount;
+    order.delivery_date = cart.date;
+    order.reserve_time = cart.date;
+    order.reserve_date = cart.date;
+    let dishesShortInfo = cart.dishes.map((item: any) => {
+      let dish = {} as DishShortInfo;
+      dish.dish_id = item.id;
+      dish.dish_amount = item.cardQuantity;
+      dish.excluded_ingredients = item.excluded_ingredients
+        ? item.excluded_ingredients
+        : '';
+      return dish;
+    });
+    
+    order.dish = dishesShortInfo;
+    console.log(order)
+    axios
+      .post(
+        'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
         order,
         {
           headers: {'Content-type': 'application/json'},
@@ -176,7 +220,13 @@ export const OrderDetails = ({
         style={styles.butStyle}
         onPress={() => {
           showToast();
-          onMakingOrder();
+          if(cart.orderType == "Бронь стола") {
+            onMakingOrderTable()
+            console.log(cart.date, 'datahyiata')
+          } else {
+            onMakingOrder();
+          }
+          
           
           handleAddOrderHistoryItem(historyOrder)
           clearCart()

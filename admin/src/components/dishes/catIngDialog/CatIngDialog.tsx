@@ -18,7 +18,6 @@ export default function CatIngDialog({type, handleClose}: any ) {
   const initialItems: any = [];
   const theme = useTheme();
   return (
-    <div>
       <Dialog
         fullWidth
         open={type && true}
@@ -41,6 +40,5 @@ export default function CatIngDialog({type, handleClose}: any ) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
   );
 }

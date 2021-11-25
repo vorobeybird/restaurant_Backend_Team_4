@@ -47,14 +47,19 @@ router.get("/api/order/:id", orderController.getById);
 router.put("/api/order/:id", orderController.update);
 router.delete("/api/order/:id", orderController.delete);
 
+router.get("/api/orderByCustomer/:customerId", orderController.getByCustmerId);
+
 router.post("/api/image", upload.single("image"), dishPhotoController.add);
 router.delete("/api/image/:publicId", dishPhotoController.delete);
 
-router.get("/api/tables", tableController.getTables);
 router.post("/api/tables", tableController.add);
-router.get("/api/tables:date", tableController.getSortedTables);
+router.get("/api/tables", tableController.getTablesReservatons);
+router.get("/api/tablepool", tableController.getTables);
+router.get("/api/tables/:date", tableController.getSortedTables);
+router.post("/api/tables", tableController.add);
+router.put("/api/tables/:id/:hard?", tableController.update);
+router.delete("/api/tables/:id/:hard?", tableController.delete);
 
 router.post("/api/reserve", reserveController.add);
-
 
 module.exports = router;

@@ -23,7 +23,6 @@
 
 .profile-navigation {
     flex: 0 0 30%;
-    //padding-right: 200px;
     display: flex;
     align-items: center;
 
@@ -60,9 +59,15 @@
     align-items: center;
 
     width: 830px;
-    height: 490px;
+    min-height: 490px;
 
     border: 2px solid #EF742F;
     box-sizing: border-box;
     border-radius: 15px;
+
+    & switch {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

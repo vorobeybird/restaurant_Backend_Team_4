@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import dayjs from 'dayjs';
-import { Box, Button, Container, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, InputLabel, MenuItem, Typography} from '@mui/material';
+import { Button, Container, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -22,50 +22,32 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
-/* interface IDish {
-  id: number;
-  title: string;
-  default_ingredients: Array<Number>;
-  price: number;
-  weight: number;
-  photos: Array<Object>
-  categories: Array<Number>;
-  ingredients: Array<Number>;
-  calories: number;
-}
-interface IDishDIalogProps {
-dish: IDish;
-type: string;
-handleClose: any;
-open: boolean;
-fetchDishes: Function;
-} */
-
 const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
 
-  const {id, adress, contact_phone, contact_name, createdAt, delivery_date, delivery_method, dish, payment_method, status, total_price } = currentOrder;
+  const {id, adress, contact_phone, contact_name, createdAt, delivery_date, delivery_method, dish, payment_method, status, total_price, reserve_id} = currentOrder;
   
-
+  const payment = ['Наличными', 'Картой онлайн', 'Картой на месте']
   return (
     <div>
       <Dialog open={openCard} onClose={handleCloseCard} TransitionComponent={Transition} fullWidth maxWidth={"lg"}>
         <DialogTitle><Container sx={{textAlign: "center"}}>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h3">
-          Заказ номер: {id}
+          Заказ № {id}
         </Typography>
         </Container>
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            <div>Дата заказа: <span>{dayjs(createdAt).format('HH:mm DD-MM-YYYY') }</span></div>
-          <div>Дата готовности: <span>{dayjs(delivery_date).format('HH:mm DD-MM-YYYY') }</span></div>
+          Дата заказа: <span>{dayjs(createdAt).format('HH:mm DD-MM-YYYY') }</span>
           </DialogContentText>
-          <div>{delivery_method === 'delivery' ? <span> Доставка по адресу: {adress}</span> : <span>{delivery_method}</span>}</div>
+          <DialogContentText>
+          Дата готовности: <span>{dayjs(delivery_date).format('HH:mm DD-MM-YYYY') }</span>
+          </DialogContentText>
+          <div>{delivery_method === 'delivery' && <span> Доставка по адресу: {adress}</span>}{delivery_method === 'bookTable' ? <span> Заказ столика: {reserve_id}</span> : <span>Самовывоз</span>}</div>
           <div><span>Клиент: {contact_name}</span>. Тел.:<span>{contact_phone}</span></div>
           <h3>Блюда в заказе:</h3>
           <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650 }} aria-label="Детали заказа">
         <TableHead>
           <TableRow>
             <TableCell>Название блюда</TableCell>
@@ -94,7 +76,7 @@ const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
       </Table>
       </TableContainer>
       <h4>Итого: {total_price} руб.</h4>
-      <h4>Оплата: {payment_method}</h4>
+      <h4>Оплата: {payment[payment_method]}</h4>
       </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseCard}>Закрыть</Button>
@@ -103,5 +85,4 @@ const OrderCard = ({currentOrder, openCard, handleCloseCard}: any) => {
     </div>
   );
 }
-
 export default OrderCard;

@@ -46,3 +46,12 @@ export const chooseNumOfPeople =
       payload: numOfPeople,
     });
   };
+
+export const changeTotalPrice = 
+  (totalPrice: number) => (dispatch: AppDispatch) => {
+    console.log('I was changed');
+    dispatch({
+      type: OrderConstants.CHANGE_TOTAL_PRICE,
+      payload: totalPrice
+    })
+  }

@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     {
         table_id: DataTypes.INTEGER,
         reserve_date: DataTypes.DATEONLY,
-        reserve_time: DataTypes.TIME
+        reserve_start_time: DataTypes.TIME,
+        reserve_end_time: DataTypes.TIME,
     },
     {
       sequelize,

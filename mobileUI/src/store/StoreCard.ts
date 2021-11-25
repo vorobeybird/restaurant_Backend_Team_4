@@ -16,7 +16,6 @@ interface CounterState {
   order: any[];
   num: string;
   orderHistory: History[];
-
 }
 interface History {
     id: string;

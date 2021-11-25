@@ -1,31 +1,29 @@
 import MainPage from "./pages/mainPage/MainPage";
 import "./app.scss";
-import { Authentication } from "./pages/login/Login";
+import {Authentication} from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
 import {Cart} from "./components/cart/Cart";
+import {OrderConfirmation} from "./components/orderConfirmation/orderConfirmation"
 import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
 import Profile from "./pages/profile/Profile";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
-import "./app.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
 import {AuthStateType} from "./store/auth/auth.reducer";
 import {useEffect} from "react";
-import { Toaster } from "react-hot-toast";
+import {Toaster} from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
+import { Search } from "./components/search/search";
+import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
 
 Amplify.configure(awsconfig);
 
 const App = () => {
-    const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
-    const state = useSelector<AppStateType, AuthStateType>(state => state.auth);
     console.log("App rendering")
-    // console.log(state)
-    console.log(user)
     const dispatch = useDispatch();
     useEffect(() => {
         checkUser();
@@ -66,18 +64,18 @@ const App = () => {
     return (
         <Router>
             <Navigation/>
-          <Toaster
-        position="top-right"
-        toastOptions={{
-          className: "",
-          style: {
-            border: "3px solid #212529",
-            padding: "16px",
-            color: "#FFFFFF",
-            background: "#EF752B",
-          },
-        }}
-      />
+            <Toaster
+                position="bottom-right"
+                toastOptions={{
+                    className: "",
+                    style: {
+                        border: "3px solid #212529",
+                        padding: "16px",
+                        color: "#FFFFFF",
+                        background: "#EF752B",
+                    },
+                }}
+            />
             <Switch>
                 <Route exact path="/" component={MainPage}/>
                 <Route exact path="/login" component={Authentication}/>
@@ -88,6 +86,9 @@ const App = () => {
                     <Profile></Profile>
                     <Redirect to={"/profile/orders"}/>
                 </Route>
+                <Route path="/search" component={Search}/>
+                <Route exact path="/booktable" component={BookTableWithoutDish}/>
+                <Route path="/cart/confirm" component={OrderConfirmation}/>
 
             </Switch>
             <Contacts/>
