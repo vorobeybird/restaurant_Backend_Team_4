@@ -27,8 +27,6 @@ export const CartItem = ({item, toggleModal, setSelectedDish}: ICartItemProps) =
   }
   const dispatch = useAppDispatch();
 
-  const items = useAppSelector((state) => state.cartItems.items);
-
   const deleteDish = (id: number) => {
     dispatch(deleteFromCart(id));
   };

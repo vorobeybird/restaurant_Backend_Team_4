@@ -20,15 +20,17 @@ import {
   pickIngredient,
 } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
-import { Link } from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
 import {
   changeDeliveryMethod,
+  changeTotalPrice,
   clearOrder,
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
 import { useHistory } from "react-router-dom";
+import { getTablePool } from "../../store/table/table.actions";
 
 export interface OrderTemp extends Order {
   reserve_time: Date;
@@ -39,6 +41,8 @@ export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
+
+
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
 
@@ -142,13 +146,17 @@ export const Cart = () => {
     history.push("/menu");
   };
 
-  const [orderType, setOrderType] = useState("");
+  const [orderType, setOrderType] = useState(order.delivery_method);
 
-  useEffect(() => {
-    dispatch(changeDeliveryMethod(""));
-    dispatch(clearOrder());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(changeDeliveryMethod(""));
+  //   dispatch(clearOrder());
+  // }, []);
 
+  const combineOrder = async (total:number)=>{
+    dispatch(changeTotalPrice(total))
+    console.log('The order was updated')
+  }
   const clearFullCart = async () => {
     console.log("Order done");
     dispatch(clearCart());
@@ -156,8 +164,9 @@ export const Cart = () => {
 
   const onChangeTab = (e: any) => {
     console.log(e.target);
-    dispatch(clearOrder());
+    // dispatch(clearOrder());
     dispatch(changeDeliveryMethod(e.target.alt));
+    dispatch(getTablePool());
     setOrderType(e.target.alt);
   };
 
@@ -245,19 +254,22 @@ export const Cart = () => {
             </div>
             <div className="selected-actions">
               {orderType === "bookTable" ? (
-                <BookTable />
+                <BookTable total={totalPrice} combineOrder={combineOrder} />
               ) : orderType === "delivery" ? (
-                <Delivery />
+                <Delivery total={totalPrice} combineOrder={combineOrder}/>
               ) : orderType === "takeaway" ? (
-                <Takeaway />
+                <Takeaway total={totalPrice} combineOrder={combineOrder} />
               ) : (
                 <div></div>
               )}
             </div>
             <div className="make_order">
-              <Button type="button" onClick={handleOnMakingOrder}>
+              {/* <Button type="button" onClick={handleOnMakingOrder}>
                 Оформить Заказ
               </Button>
+              <Link onClick={()=>combineOrder(totalPrice)} to="/cart/confirm" className="empty-cart__menu-link">
+                Перейти к подтверждению
+              </Link> */}
             </div>
           </div>
 

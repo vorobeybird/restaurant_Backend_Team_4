@@ -7,12 +7,21 @@ import { PaymentMethod } from "../common/paymentMethod/PaymentMethod";
 import PrevStepIcon from "../../assets/prev.png";
 import NextStepIcon from "../../assets/next.png";
 import { BookTableDetails } from "../common/bookTableDetails/BookTableDetails";
+import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import "./bookTable.scss";
+import { useHistory } from "react-router-dom";
 
-export const BookTable = () => {
+interface OrderProps {
+  total?: number,
+  combineOrder?: any;
+}
+
+export const BookTable = ({total,combineOrder}:OrderProps) => {
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(state => state.auth.user);
+  const user = useAppSelector((state) => state.auth.user);
+  const cartItems = useAppSelector((state) => state.cartItems.items);
+
   const [name, setName] = useState(user.attributes.name);
   const [phone, setPhone] = useState(user.attributes.phone_number);
 
@@ -77,12 +86,20 @@ export const BookTable = () => {
     if (currentStep > 0) setCurrentStep((step) => step - 1);
   };
 
+  let history = useHistory();
   const handleChangeCurrentStepNext = () => {
-    if (currentStep < 4 && stepsController())
+    if (currentStep < 4 && stepsController()) {
       setCurrentStep((step) => step + 1);
+    }
   };
 
-  console.log(order);
+  const pushToConfirmation = () => {
+    handleChangeCurrentStepNext();
+    if (currentStep === 4) {
+      history.push("/cart/confirm");
+      combineOrder(total)
+    }
+  };
 
   const isChoosenNumOfPeople = () => order.num_of_persons;
 
@@ -104,11 +121,12 @@ export const BookTable = () => {
 
   return (
     <div className="booktable_container_wrapper">
+      <h1 style={{ padding: "20px" }}>Оформление заказа</h1>
       <div className="booktable_container">
         <button
-          className={`${
-            currentStep === 0 ? "swiper_disabled" : undefined
-          } swiper_booktable_left`}
+          className={
+            currentStep === 0 ? "swiper_disabled" : 
+           "swiper_booktable_left"}
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -119,9 +137,9 @@ export const BookTable = () => {
           {...(ADD_BOOKTABLE_STEPS[currentStep]?.props as any)}
         />
         <button
-          className={`${
-            currentStep === 4 ? "swiper_disabled" : undefined
-          } swiper_booktable_right`}
+          className={
+            currentStep === 4 ? "swiper_disabled" : 
+           "swiper_booktable_left"}
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
@@ -130,6 +148,15 @@ export const BookTable = () => {
       </div>
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_BOOKTABLE_STEPS.length}
+      </div>
+      <div className="switch-buttons-component">
+        { cartItems.length === 0 ? undefined :
+                <SwitchButtons
+                onClickNext={pushToConfirmation}
+                onClickPrev={handleChangeCurrentStepPrev}
+                children="I'm a pink circle!"
+              />
+        }
       </div>
     </div>
   );

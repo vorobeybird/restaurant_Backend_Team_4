@@ -97,7 +97,6 @@ export default function CategoriesForm({type}: ICIFormProps) {
     getCategories();
   }, [])
   return (<Container sx={{p: theme.spacing(3), height: 330, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start"}}>
-    {/* <Box sx={{height:30}}><Typography color="error">{inDishes.length > 0 && `Ингредиент содержится в блюдах: ${inDishes.join(", ")}.` }</Typography></Box> */}
     <Autocomplete
       value={value}
       onChange={(event, newValue) => {
