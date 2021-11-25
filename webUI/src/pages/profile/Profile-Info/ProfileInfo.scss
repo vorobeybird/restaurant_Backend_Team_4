@@ -1,13 +1,9 @@
 .profileInfo {
-  max-width: 400px;
-  font-family: Roboto, sans-serif;
-  font-size: 24px;
-  line-height: 24px;
   color: rgba(0, 0, 0, 0.6);
 
   &__list {
     list-style: none;
-    padding: 0 0 100px 0;
+    padding: 0 0 5rem 0;
     margin: 0;
   }
 
@@ -20,41 +16,12 @@
   }
 
   &__username {
-    margin: 0 2rem;
     padding: 1.5rem 0.5rem;
+  }
+  &__actions {
+    margin: 0 0 5rem 0;
   }
 
-  input {
-    height: 30px;
-    max-width: 420px;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1rem;
-    text-align: left;
-    margin: 0.8rem 2rem;
-    padding: 1.5rem 0.5rem;
-    border-radius: 4px;
-    border: 1px solid #d8d8d8;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  input:focus,
-  input:focus-visible {
-    border-color: #fff;
-    outline: #ef742f solid 2px;
-  }
-  .button button {
-    height: 60px;
-    border-radius: 10px;
-    margin: 0.8rem 2rem;
-    padding: 1.5rem 0.5rem;
-    border: none;
-    background-color: #ef742f;
-    color: white;
-    font-size: 1.2rem;
-    line-height: 1rem;
-  }
 }
 
 

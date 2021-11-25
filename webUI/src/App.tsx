@@ -3,6 +3,7 @@ import "./app.scss";
 import {Authentication} from "./pages/login/Login";
 import Menu from "./pages/menu/Menu";
 import {Cart} from "./components/cart/Cart";
+import {OrderConfirmation} from "./components/orderConfirmation/orderConfirmation"
 import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
@@ -16,7 +17,9 @@ import {useEffect} from "react";
 import {Toaster} from "react-hot-toast";
 import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
-
+import { Search } from "./components/search/search";
+import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
+import { FaRegIdBadge } from "react-icons/fa";
 
 Amplify.configure(awsconfig);
 
@@ -63,14 +66,16 @@ const App = () => {
         <Router>
             <Navigation/>
             <Toaster
-                position="top-right"
+                position="bottom-right"
                 toastOptions={{
                     className: "",
                     style: {
-                        border: "3px solid #212529",
+                        border: "none",
+                        borderRadius: "15px",
                         padding: "16px",
                         color: "#FFFFFF",
-                        background: "#EF752B",
+                        backgroundColor: "rgba(239, 117, 43, 0.7)",
+                        
                     },
                 }}
             />
@@ -84,6 +89,9 @@ const App = () => {
                     <Profile></Profile>
                     <Redirect to={"/profile/orders"}/>
                 </Route>
+                <Route path="/search" component={Search}/>
+                <Route exact path="/booktable" component={BookTableWithoutDish}/>
+                <Route path="/cart/confirm" component={OrderConfirmation}/>
 
             </Switch>
             <Contacts/>

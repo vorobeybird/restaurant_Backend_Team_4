@@ -30,10 +30,6 @@ function ProfileCards() {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false)
 
-    if (!user) {
-        return <Redirect to="/login"/>
-    }
-
     const onToggleHandler = () => {
         if (editMode) {
             setEditMode(false);
@@ -41,6 +37,7 @@ function ProfileCards() {
             setEditMode(true);
         }
     }
+    console.log(editMode)
     const showModalHandler = () => {
         setShowModal(true);
     }
@@ -66,6 +63,10 @@ function ProfileCards() {
         }
     }
 
+    if (!user) {
+        return <Redirect to="/login"/>
+    }
+
     return <>
         <>
             {showModal && <CardsModal onHideModal={hideModalHandler}/>}
@@ -73,11 +74,12 @@ function ProfileCards() {
                 {cardDataArray.length > 0?
                     <ul className={"profileCards__list"}>
                         {cardDataArray.map(card => {
+                            console.log(card.cardNumber)
                             return <li className={"profileCards__item"} key={card.cardNumber}>
-                                {editMode && <div className={"profileCards__image"}>
+                                <div className={"profileCards__image"}>
                                     <img src={+card.cardNumber[0] === 4 ? visaImg : mastercardImg}
                                          alt={+card.cardNumber[0] === 4 ? "VISA" : "MASTERCARD"}/>
-                                </div>}
+                                </div>
                                 <div className="profileCards__info">
                                     <div>**** **** **** {card.cardNumber.slice(-4)}</div>
                                     <div>{card.cardValidity}</div>
@@ -89,8 +91,7 @@ function ProfileCards() {
                             </li>;
                         })}
                     </ul> :
-                    <p className="profileCards__text">Хотите добавить банковскую карту для онлайн оплаты в Ocean
-                        Bar?</p>
+                    <p className="profileCards__text">Похоже, вы пока не добавили карту</p>
                 }
                 <div className="profileCards__controls">
                     <Button type={"button"} onClick={onToggleHandler}>{editMode ? "Готово" : "Изменить"}</Button>

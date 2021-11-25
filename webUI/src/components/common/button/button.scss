@@ -1,8 +1,9 @@
 .button {
   display: flex;
+  justify-content: center;
 
   & button {
-    flex: 1;
+    flex: 0 1 auto;
     width: auto;
     width: 100%;
     height: 100%;

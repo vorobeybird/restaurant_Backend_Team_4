@@ -1,7 +1,7 @@
 FROM node:latest
-WORKDIR /src
+WORKDIR /build
 COPY package.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
 EXPOSE 3000
