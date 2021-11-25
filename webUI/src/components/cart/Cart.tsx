@@ -30,7 +30,6 @@ import {
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
 import { useHistory } from "react-router-dom";
-import { getTablePool } from "../../store/table/table.actions";
 
 export interface OrderTemp extends Order {
   reserve_time: Date;
@@ -166,7 +165,6 @@ export const Cart = () => {
     console.log(e.target);
     dispatch(clearOrder());
     dispatch(changeDeliveryMethod(e.target.alt));
-    dispatch(getTablePool());
     setOrderType(e.target.alt);
   };
 
