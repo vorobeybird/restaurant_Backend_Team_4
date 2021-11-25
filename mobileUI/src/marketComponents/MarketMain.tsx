@@ -76,7 +76,7 @@ export const MarketMain = () => {
           <TouchableOpacity
             style={styles.ButtonWrapper}
             onPress={() => {
-              navigation.navigate('MenuTabNavigation');
+              navigation.navigate('Menu');
             }}>
             
               <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
