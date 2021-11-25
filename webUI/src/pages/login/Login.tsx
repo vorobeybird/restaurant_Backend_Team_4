@@ -190,6 +190,16 @@ export function Authentication() {
     // const phoneNumberRegEx = new RegExp("^\\+375(\\s+)\\(?(17|29|33|44)\\)?(\\s+)[0-9]{3}-[0-9]{2}-[0-9]{2}$");
     const confirmationCodeRegEX = new RegExp(/\d{3}$/);
 
+    const formatChar = {
+        "A": "[234]",
+        "B": "[3459]",
+        "9": "[0-9]",
+        // "1": "+",
+        // "3": "3",
+        // "5": "5",
+        // "7": "7",
+    }
+
     return (
         <>
             {/* <div className="login_logo">
@@ -216,7 +226,8 @@ export function Authentication() {
                                errorMessage={passwordErrorMessage}
                                validationSchema={passwordRegEx}
                                onError={setUserPasswordError}
-                               onChange={userPasswordChangeHandler}/>
+                               onChange={userPasswordChangeHandler}
+                               isToggled={true}/>
                         <Button disabled={signInFormIsInvalid} type="submit">Войти</Button>
                         <div className="auth_links">
                             <Link to="#" onClick={toggleSignUpHandler}>Регистрация</Link>
@@ -257,8 +268,9 @@ export function Authentication() {
                                onChange={userEmailChangeHandler}/>
                         <InputMask
                             className="masked_input"
-                            mask='+375 (99) 999-99-99'
+                            mask='+375 (AB) 999-99-99'
                             value={userPhone}
+                            formatChars={formatChar}
                             alwaysShowMask={true}
                             onChange={userPhoneChangeHandler}>
                         </InputMask>
@@ -270,7 +282,8 @@ export function Authentication() {
                                errorMessage={passwordErrorMessage}
                                validationSchema={passwordRegEx}
                                onError={setUserPasswordError}
-                               onChange={userPasswordChangeHandler}/>
+                               onChange={userPasswordChangeHandler}
+                               isToggled={true}/>
                         <Button disabled={signUpFormIsInvalid} type="submit">Зарегистрироваться</Button>
                         <div className="auth_links">
                             <Link to="#" onClick={toggleSignInHandler}>Вход</Link>
