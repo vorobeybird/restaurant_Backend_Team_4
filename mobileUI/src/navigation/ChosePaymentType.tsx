@@ -114,6 +114,10 @@ export const ChosePaymentType = ({  navigation: { goBack }, route }:{navigation:
 
 const styles = StyleSheet.create({
     imgLeft:{
+        top:5,
+        resizeMode: "contain",
+        width:40,
+        height:40,
         left:20,
     },
     Wrapper:{
@@ -175,6 +179,7 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     OrderText:{
+        top:14,
         lineHeight: 24,
         color:'black',
         fontFamily: 'Roboto',
