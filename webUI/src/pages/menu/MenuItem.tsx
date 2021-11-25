@@ -6,15 +6,19 @@ import { addToCart } from "../../store/cart/cart.actions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { ICartItem } from "../../store/cart/cart.types";
 import toast from "react-hot-toast";
+import { Redirect, useHistory } from "react-router";
 
 const MenuItemComponent = (item: MenuItem) => {
   const dispatch = useAppDispatch();
 
   const items = useAppSelector((state) => state.cartItems.items);
+  const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
 
   const onOrder = (item: MenuItem) => {
-    toast.success(`Блюдо "${item.title}" добавлено в корзину`);
-    dispatch(addToCart(item, items));
+    if(userId) {
+      toast.success(`Блюдо "${item.title}" добавлено в корзину`);
+      dispatch(addToCart(item, items));
+    }
   };
 
   return (

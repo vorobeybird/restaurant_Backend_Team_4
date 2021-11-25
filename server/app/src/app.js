@@ -6,8 +6,11 @@ const imageRouter = require("./resources/image/imageRouter");
 const app = express();
 require("dotenv").config();
 
+const cors = require("cors");
+
 const PORT = process.env.NODE_PORT || 5000;
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/", (req, res, next) => {
