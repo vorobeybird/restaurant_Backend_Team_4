@@ -39,7 +39,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
 
       const showToastSuccs = () => {
         ToastAndroid.showWithGravity(
-          'Стол за вами',
+          'Стол забронирован',
           ToastAndroid.SHORT,
           ToastAndroid.TOP,
         );
@@ -175,6 +175,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
             <TouchableOpacity style={styles.Button} onPress={() => {      
                 handleAddDate(dayjs(date).toISOString())   
                 checkNum()
+                showToastSuccs()
                 navigation.navigate('ChosePaymentType')
             }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
