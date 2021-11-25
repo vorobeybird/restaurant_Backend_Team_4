@@ -4,19 +4,19 @@ import Logo from "../../assets/nav_logo.png";
 const NAV_LINKS = [
   {
     title: "Меню",
-    link: "#",
+    link: "/menu",
   },
   {
     title: "Забронировать стол",
-    link: "#",
+    link: "/booktable",
   },
   {
     title: "Корзина",
-    link: "#",
+    link: "/cart",
   },
   {
     title: "Профиль",
-    link: "#",
+    link: "/profile/orders",
   },
   {
     title: "Контакты",
