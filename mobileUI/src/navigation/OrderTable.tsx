@@ -190,19 +190,6 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
             </TouchableOpacity>
         )
     }
-    const getTableByNum = () => {
-        if(chooseTable === "На двоих") {
-            handleGetNumOfPersons(2)
-            handleAddDate(date.toString())
-            getTable.map((element:any) => {
-                if(element.persons === 2) {
-                    devState.push(element)
-                }
-            });
-        }
-        
-        
-    }
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>

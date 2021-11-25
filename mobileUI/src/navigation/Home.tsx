@@ -22,7 +22,7 @@ export const Home = () => {
                 <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('MenuTabNavigation', {screen: 'ConfirmOrderTable'})} style={styles.contenWrapper}>
-                <Image style={styles.leftPict} source={require('../../img/menuCard.png')}/>
+                <Image style={styles.leftPict} source={require('../../img/tableHome.png')}/>
                 <View style={styles.simpWrapper}>
                     <Text style={styles.TextStyle}>ЗАБРОНИРОВАТЬ</Text>
                     <Text style={styles.TextStyle}>СТОЛ</Text>
@@ -30,7 +30,7 @@ export const Home = () => {
                 <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('ProfileNavigation')} style={styles.contenWrapper}>
-                <Image style={styles.leftPict} source={require('../../img/menuCard.png')}/>
+                <Image style={styles.leftPict} source={require('../../img/profHome.png')}/>
                 <Text style={styles.TextStyle}>ПРОФИЛЬ</Text>
                 <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
             </TouchableOpacity>

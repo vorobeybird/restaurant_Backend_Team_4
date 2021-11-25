@@ -47,7 +47,7 @@ export const OrderDetails = ({
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
-
+  const [id, setId] = useState();
   const cart = useSelector(state => state.dishes);
 
   const showToast = () => {
@@ -67,6 +67,7 @@ export const OrderDetails = ({
     paymentType: cart.paymentType,
     orderStatus: 'Завершен'
   }
+  
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
@@ -99,11 +100,11 @@ export const OrderDetails = ({
           headers: {'Content-type': 'application/json'},
         },
       )
-      .then(response => console.log(response))
+      .then((response:any) => setId(response))
       .catch(err => console.log(err));
   };
 
-  const onMakingOrderTable = () => {
+  const onMakingOrderTable = async () => {
       
     let order = {} as Order;
     order.num_of_persons = cart.num;
@@ -131,7 +132,7 @@ export const OrderDetails = ({
     
     order.dish = dishesShortInfo;
     console.log(order)
-    axios
+      const servResp = await axios
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
         order,
@@ -139,8 +140,10 @@ export const OrderDetails = ({
           headers: {'Content-type': 'application/json'},
         },
       )
-      .then(response => console.log(response))
-      .catch(err => console.log(err));
+      const res = servResp;
+      console.log({...res}.data.id,'res')
+      
+    
   };
   return (
     <View style={styles.Wrapper}>
@@ -222,16 +225,17 @@ export const OrderDetails = ({
           showToast();
           if(cart.orderType == "Бронь стола") {
             onMakingOrderTable()
-            console.log(cart.date, 'datahyiata')
+            console.log(onMakingOrderTable(),'return')
           } else {
             onMakingOrder();
+            console.log(id,'id')
           }
-          
+          console.log(id)
           
           handleAddOrderHistoryItem(historyOrder)
           clearCart()
           
-          navigation.navigate('Menu')
+          navigation.navigate('Home')
           
           
         }}>
