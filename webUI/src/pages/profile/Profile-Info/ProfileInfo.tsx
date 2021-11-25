@@ -105,10 +105,10 @@ function ProfileInfo() {
         {editMode && <div className={"profileInfo"}>
             <p className={"profileInfo__username"}>{email}</p>
             <form onSubmit={updateUserAttributesHandler}>
-                <div>
+                <div className={"profileInfo__actions"}>
                     <Input name="name"
                            type="text"
-                           placeholder="Имя"
+                           placeholder="*Имя"
                            value={firstName}
                            validationSchema={nameRegEx}
                            errorMessage="Недопустимое имя пользователя"
@@ -118,7 +118,7 @@ function ProfileInfo() {
                     />
                     <Input name="family_name"
                            type="text"
-                           placeholder="Фамилия"
+                           placeholder="*Фамилия"
                            value={lastName}
                            validationSchema={familyNameRegEx}
                            errorMessage="Недопустимая фамилия пользователя"

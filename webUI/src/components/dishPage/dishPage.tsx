@@ -9,6 +9,7 @@ import caloriesImg from "../../assets/calories-icon.png";
 import { addToCart } from "../../store/cart/cart.actions";
 import Modal from "../common/modal/Modal";
 import toast, { Toaster } from "react-hot-toast";
+import { Redirect } from "react-router-dom";
 
 const DishPage = () => {
   interface Iingredients {
@@ -21,6 +22,7 @@ const DishPage = () => {
     const selectedDish: ICartItem = useAppSelector((state) => state.dishPage.selectedDish)
     const [showModal, setShowModal] = useState(false);
     const [omitIngredients, setOmitIngredients] = useState<any>([]);
+    const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
 
     const editIngredients = (e: any) => {
         !e.target.checked ? 
@@ -31,11 +33,15 @@ const DishPage = () => {
 
     const dispatch = useAppDispatch();
     const items = useAppSelector((state) => state.cartItems.items);
+
     const onOrder = (item: ICartItem): void => {
+      if(userId) {
         toast.success(`Блюдо "${item.title}" добавлено в корзину`);
         //const strIngredients = omitIngredients.join(', ');
         const editedItem = {...item, excluded_ingredients: omitIngredients};
-        dispatch(addToCart(editedItem, items));
+        dispatch(addToCart(editedItem, items))
+      }
+      else toast.error(`Войдите или зарегистрируйтесь!`);
     };
 
     const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {
