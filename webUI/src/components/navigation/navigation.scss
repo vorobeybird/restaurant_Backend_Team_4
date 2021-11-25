@@ -52,6 +52,10 @@
   white-space: nowrap;
 }
 
+.link__active {
+  color: #EF742F;
+}
+
 .input_container {
   position: relative;
   display: flex;
@@ -92,6 +96,10 @@
   cursor: pointer;
 }
 
+.search_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
+}
+
 .navigation_icons_container {
   width: 100px;
   display: flex;
@@ -115,10 +123,18 @@
   margin-right: 50px;
 }
 
+.cart_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
+}
+
 .profile_icon {
   width: 24px;
   height: 24px;
   margin-right: 60px;
+}
+
+.profile_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
 }
 
 .hamburger-menu {
@@ -211,6 +227,10 @@
   transition-duration: .25s;
   border-bottom: 1px dotted #CFD8DC;
   position: relative;
+}
+
+.menu__item_active {
+  font-size: 1.5rem;
 }
 .menu__item:hover {
   background-color: #CFD8DC;
