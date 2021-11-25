@@ -74,24 +74,25 @@ function ProfilePassword() {
     }
 
 
-    let passwordErrorMessage = "Пароль должен содержать 8-15 символов, без пробелов и специальных знаков (#, %, &, !, $, etc.). Обязательно к заполнению.";
+    let passwordErrorMessage = "Пароль должен содержать 8-15 символов с минимум одной цифрой, одной \n" +
+        "заглавной и одной строчной буквой, без (#, %, &, !, $, etc.). Обязательно к заполнению."
     const passwordRegEx = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15})/)
 
     return <div className={"profilePassword"}>
         <form onSubmit={updateUserPasswordHandler}>
             <div>
-                <label htmlFor="oldPassword">Старый пароль</label>
+                <label htmlFor="oldPassword">*Старый пароль</label>
                 <Input name="oldPassword"
                        id="oldPassword"
                        type="password"
                        value={oldPassword}
                        error={oldPasswordError}
-                       errorMessage="Неверный пароль"
+                       errorMessage={passwordErrorMessage}
                        validationSchema={passwordRegEx}
                        onError={setOldPasswordError}
                        onChange={onOldPasswordChangeHandler}
                 />
-                <label htmlFor="newPassword">Новый пароль</label>
+                <label htmlFor="newPassword">*Новый пароль</label>
                 <Input name="newPassword"
                        id="newPassword"
                        type="password"
@@ -102,7 +103,7 @@ function ProfilePassword() {
                        onError={setNewPasswordError}
                        onChange={onNewPasswordChangeHandler}
                 />
-                <label htmlFor="confirmNewPassword">Повторите новый пароль</label>
+                <label htmlFor="confirmNewPassword">*Повторите новый пароль</label>
                 <Input name="confirmNewPassword"
                        id="confirmNewPassword"
                        type="password"

@@ -17,13 +17,6 @@ export function Authentication() {
         (state) => state.auth
     );
     const {formType} = authState;
-    //
-    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     dispatch({
-    //         type: "UPDATE_STATE",
-    //         payload: {name: e.target.name, value: e.target.value},
-    //     });
-    // };
 
     const [userEmail, setUserEmail] = useState("");
     const [userPassword, setUserPassword] = useState("");
@@ -40,26 +33,32 @@ export function Authentication() {
 
     const updatedPhone = userPhone.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").replaceAll("_", "")
 
-    console.log(updatedPhone);
-    console.log(updatedPhone.length)
-    let signInFormIsInvalid: boolean = false;
-    let signUpFormIsInvalid: boolean = false;
-    let confirmFormIsInvalid: boolean = false;
-    let forgotPasswordFormIsInvalid: boolean = false;
-    let confirmForgotPasswordFormIsInvalid: boolean = false;
-    if (userEmailError || userPasswordError) {
-        signInFormIsInvalid = true;
+    let signInFormIsInvalid: boolean = true;
+    let signUpFormIsInvalid: boolean = true;
+    let confirmFormIsInvalid: boolean = true;
+    let forgotPasswordFormIsInvalid: boolean = true;
+    let confirmForgotPasswordFormIsInvalid: boolean = true;
+
+    if (!userEmailError && !!userEmail.length &&
+        !userPasswordError && !!userPassword.length) {
+        signInFormIsInvalid = false;
     }
-    if (userEmailError || userPasswordError || userFirstNameError || userSecondNameError || updatedPhone.length < 13) {
-        signUpFormIsInvalid = true;
+    if (!userEmailError && !!userEmail.length &&
+        !userPasswordError && !!userPassword.length &&
+        !userFirstNameError && !!userFirstName.length &&
+        !userSecondNameError && !!userSecondName.length &&
+        updatedPhone.length === 13) {
+        signUpFormIsInvalid = false;
     }
-    if (confirmationCodeError) {
-        confirmFormIsInvalid = true;
+    if (!confirmationCodeError && !!confirmationCode.length) {
+        confirmFormIsInvalid = false;
     }
-    if (userEmailError) {
-        forgotPasswordFormIsInvalid = true;
-    }    if (confirmationCodeError || userPasswordError) {
-        confirmForgotPasswordFormIsInvalid = true;
+    if (!userEmailError && !!userEmail.length) {
+        forgotPasswordFormIsInvalid = false;
+    }
+    if (!confirmationCodeError && !!confirmationCode &&
+        !userPasswordError && !!userPassword) {
+        confirmForgotPasswordFormIsInvalid = false;
     }
 
     const userEmailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -129,16 +128,34 @@ export function Authentication() {
         }
     }
 
+    const cleanFieldsHandler = () => {
+        setUserEmail("");
+        setUserPassword("");
+        setUserFirstName("");
+        setUserSecondName("");
+        setUserPhone("");
+        setConfirmationCode("");
+        setUserEmailError("");
+        setUserPasswordError("");
+        setUserFirstNameError("");
+        setUserSecondNameError("");
+        setUserPhone("");
+        setConfirmationCodeError("");
+    }
+
     function toggleSignInHandler() {
         dispatch({type: "TOGGLE_SIGN_IN"});
+        cleanFieldsHandler();
     }
 
     function toggleSignUpHandler() {
         dispatch({type: "TOGGLE_SIGN_UP"});
+        cleanFieldsHandler();
     }
 
     function togglePasswordHandler() {
         dispatch({type: "TOGGLE_PASSWORD"})
+        cleanFieldsHandler();
     }
 
     async function forgotPasswordHandler(e: FormEvent<HTMLFormElement>) {
@@ -161,7 +178,9 @@ export function Authentication() {
             console.log(err);
         }
     }
-    const passwordErrorMessage = "Пароль должен содержать 8-15 символов, без пробелов и специальных знаков (#, %, &, !, $, etc.). Обязательно к заполнению.";
+
+    const passwordErrorMessage = "Пароль должен содержать 8-15 символов с минимум одной цифрой, одной \n" +
+        "заглавной и одной строчной буквой, без (#, %, &, !, $, etc.). Обязательно к заполнению.";
     const emailErrorMessage = "Электронная почта должна быть в формате xxx@yyy.zzz, без специальных символов (#, %, &, !, $, etc.). Обязательно к заполнению.";
     const userNameErrorMessage = "Это поле должно содержать 8-30 знаков, без специальных символов (#, %, &, !, $, etc.) и чисел (0-9). Обязательно к заполнению.";
 
@@ -236,15 +255,6 @@ export function Authentication() {
                                validationSchema={emailRegEx}
                                onError={setUserEmailError}
                                onChange={userEmailChangeHandler}/>
-                        {/*<Input name="phone_number"*/}
-                        {/*       type="text"*/}
-                        {/*       placeholder="Телефон"*/}
-                        {/*       value={userPhone}*/}
-                        {/*       error={userPhoneError}*/}
-                        {/*       errorMessage={userPhoneErrorMessage}*/}
-                        {/*       validationSchema={phoneNumberRegEx}*/}
-                        {/*       onError={setUserPhoneError}*/}
-                        {/*       onChange={userPhoneChangeHandler}/>*/}
                         <InputMask
                             className="masked_input"
                             mask='+375 (99) 999-99-99'
@@ -327,7 +337,8 @@ export function Authentication() {
                                validationSchema={passwordRegEx}
                                onError={setUserPasswordError}
                                onChange={userPasswordChangeHandler}/>
-                        <Button disabled={confirmForgotPasswordFormIsInvalid} type="submit">Установить новый пароль</Button>
+                        <Button disabled={confirmForgotPasswordFormIsInvalid} type="submit">Установить новый
+                            пароль</Button>
                         <div className="auth_links">
                             <Link to="#" onClick={toggleSignInHandler}>Вход</Link>
                             <Link to="#" onClick={toggleSignUpHandler}>Регистрация</Link>

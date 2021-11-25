@@ -41,15 +41,11 @@ const Input = ({
                 if (validate(text)) {
                     if (onError) {
                         onError("");
-                        console.log("Debounce worked with true")
-                        console.log(text)
                     }
                 } else {
                     if (errorMessage) {
                         if (onError) {
                             onError(errorMessage);
-                            console.log("Debounce worked with false")
-                            console.log(text)
                         }
                     }
                 }
@@ -57,15 +53,11 @@ const Input = ({
                 if (validationSchema.test(text)) {
                     if (onError) {
                         onError("");
-                        console.log("Debounce worked with true")
-                        console.log(text)
                     }
                 } else {
                     if (errorMessage) {
                         if (onError) {
                             onError(errorMessage);
-                            console.log("Debounce worked with false")
-                            console.log(text)
                         }
                     }
                 }
