@@ -50,7 +50,8 @@ export const Delivery = ({ total, combineOrder }: OrderProps) => {
   };
 
   const isValidPhone = () => {
-    const reg = /^\+375[0-9]{9}$/;
+    const reg = /./;
+    // const reg = /^\+375() [0-9]{9}-$/;
     return reg.test(phone);
   };
 
