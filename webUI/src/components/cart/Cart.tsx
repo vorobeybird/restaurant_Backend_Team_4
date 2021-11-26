@@ -3,13 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { CartItem } from "../cartItem/cartItem";
 import { useEffect, useState, MouseEvent } from "react";
 import { ICartItem } from "../../store/cart/cart.types";
-import { Button } from "../common/button/Button";
 import axios, { AxiosResponse } from "axios";
 import { Takeaway } from "../takeaway/Takeaway";
 import {
   DishShortInfo,
   Order,
-  OrderConstants,
+  DELIVERY_METHOD,
 } from "../../store/order/order.types";
 import TakeawayIcon from "../../assets/take-away.svg";
 import DeliveryIcon from "../../assets/truck.svg";
@@ -20,12 +19,11 @@ import {
   pickIngredient,
 } from "../../store/cart/cart.actions";
 import emptyCart from "../../assets/empty-cart.png";
-import {Link, Redirect} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Delivery } from "../delivery/Delivery";
 import {
   changeDeliveryMethod,
   changeTotalPrice,
-  clearOrder,
 } from "../../store/order/order.actions";
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
@@ -40,7 +38,6 @@ export const Cart = () => {
   const items = useAppSelector((state) => state.cartItems.items);
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const totalPrice = items.reduce((acc, el) => acc + el.price * el.amount, 0);
-
 
   const order = useAppSelector((state) => state.order.order);
   const dispatch = useAppDispatch();
@@ -125,8 +122,6 @@ export const Cart = () => {
       currentOrder.adress = order.adress;
     }
 
-    console.log(currentOrder);
-
     return axios
       .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
         headers: {
@@ -138,13 +133,6 @@ export const Cart = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleOnMakingOrder = async () => {
-    await onMakingOrder();
-    console.log("Order done");
-    dispatch(clearCart());
-    history.push("/menu");
-  };
-
   const [orderType, setOrderType] = useState(order.delivery_method);
 
   // useEffect(() => {
@@ -152,20 +140,18 @@ export const Cart = () => {
   //   dispatch(clearOrder());
   // }, []);
 
-  const combineOrder = async (total:number)=>{
-    dispatch(changeTotalPrice(total))
-    console.log('The order was updated')
-  }
+  const combineOrder = async (total: number) => {
+    dispatch(changeTotalPrice(total));
+    console.log("The order was updated");
+  };
   const clearFullCart = async () => {
     console.log("Order done");
     dispatch(clearCart());
   };
 
-  const onChangeTab = (e: any) => {
-    console.log(e.target);
-    // dispatch(clearOrder());
-    dispatch(changeDeliveryMethod(e.target.alt));
-    setOrderType(e.target.alt);
+  const onChangeTab = (orderType: DELIVERY_METHOD) => {
+    dispatch(changeDeliveryMethod(orderType));
+    setOrderType(orderType);
   };
 
   return (
@@ -222,7 +208,7 @@ export const Cart = () => {
                   orderType === "bookTable" ? "order_button_pushed" : undefined
                 }
                 type="button"
-                onClick={onChangeTab}
+                onClick={() => onChangeTab(DELIVERY_METHOD.bookTable)}
               >
                 <img src={BookTableIcon} alt="bookTable" />
                 <p className="actions-button__desctiption">
@@ -234,7 +220,7 @@ export const Cart = () => {
                   orderType === "delivery" ? "order_button_pushed" : undefined
                 }
                 type="button"
-                onClick={onChangeTab}
+                onClick={() => onChangeTab(DELIVERY_METHOD.delivery)}
               >
                 <img src={DeliveryIcon} alt="delivery" />
                 <p className="actions-button__desctiption">Доставка</p>
@@ -244,7 +230,7 @@ export const Cart = () => {
                   orderType === "takeaway" ? "order_button_pushed" : undefined
                 }
                 type="button"
-                onClick={onChangeTab}
+                onClick={() => onChangeTab(DELIVERY_METHOD.takeaway)}
               >
                 <img src={TakeawayIcon} alt="takeaway" />
                 <p className="actions-button__desctiption">Самовывоз</p>
@@ -254,21 +240,14 @@ export const Cart = () => {
               {orderType === "bookTable" ? (
                 <BookTable total={totalPrice} combineOrder={combineOrder} />
               ) : orderType === "delivery" ? (
-                <Delivery total={totalPrice} combineOrder={combineOrder}/>
+                <Delivery total={totalPrice} combineOrder={combineOrder} />
               ) : orderType === "takeaway" ? (
                 <Takeaway total={totalPrice} combineOrder={combineOrder} />
               ) : (
                 <div></div>
               )}
             </div>
-            <div className="make_order">
-              {/* <Button type="button" onClick={handleOnMakingOrder}>
-                Оформить Заказ
-              </Button>
-              <Link onClick={()=>combineOrder(totalPrice)} to="/cart/confirm" className="empty-cart__menu-link">
-                Перейти к подтверждению
-              </Link> */}
-            </div>
+            <div className="make_order"></div>
           </div>
 
           <Modal
