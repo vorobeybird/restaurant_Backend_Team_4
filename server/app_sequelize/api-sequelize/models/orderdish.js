@@ -16,16 +16,24 @@ module.exports = (sequelize, DataTypes) => {
   }
   OrderDish.init(
     {
-      dish_id: DataTypes.INTEGER,
-      order_id: DataTypes.INTEGER,
-      quantity: DataTypes.INTEGER,
-      excluded_ingredients: DataTypes.STRING
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      DishId: DataTypes.INTEGER,
+      OrderId: DataTypes.INTEGER,
+      quantity: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+      },
+      excluded_ingredients: DataTypes.STRING,
     },
     {
       timestamps: false,
       sequelize,
       tableName: "OrderDish",
-      modelName: "OrderDish",
     }
   );
   return OrderDish;

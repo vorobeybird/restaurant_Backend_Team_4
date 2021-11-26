@@ -19,14 +19,18 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Dish.belongsToMany(models.Order, {
-        through: "OrderDish",
-        as: "order",
-        foreignKey: "dish_id",
+        through: { model: models.OrderDish, unique: false },
+        /*         as: "order",
+        foreignKey: "dish_id", */
       });
     }
 
-    toJSON(){
-      return { ...this.get(), DishCategory: undefined, DishIngredient: undefined }
+    toJSON() {
+      return {
+        ...this.get(),
+        DishCategory: undefined,
+        DishIngredient: undefined,
+      };
     }
   }
   Dish.init(
@@ -34,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique:true
+        unique: true,
       },
       price: {
         type: DataTypes.INTEGER,

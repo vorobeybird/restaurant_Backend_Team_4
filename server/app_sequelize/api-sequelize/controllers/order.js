@@ -7,7 +7,7 @@ module.exports = {
       include: [
         {
           model: Dish,
-          as: "dish",
+          unique: false,
         },
       ],
     })
@@ -22,7 +22,7 @@ module.exports = {
       include: [
         {
           model: Dish,
-          as: "dish",
+          unique: false,
         },
       ],
     })
@@ -45,7 +45,6 @@ module.exports = {
       include: [
         {
           model: Dish,
-          as: "dish",
         },
       ],
       where: {
@@ -83,26 +82,29 @@ module.exports = {
         status: req.body.status,
         comment: req.body.comment,
       });
-      for (const elem of dish) {
-        const dish_item = await Dish.findByPk(elem.dish_id);
+      for (let elem of dish) {
+        console.log(elem);
+        console.log(order.id);
+        // const dish_item = await Dish.findByPk(elem.dish_id);
+        // await order.addDish(dish_item);
+        await sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `DishId`, `OrderId`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          {
+            replacements: [
+              elem.dish_id,
+              order.id,
+              elem.dish_amount,
+              elem.excluded_ingredients,
+            ],
+            type: QueryTypes.INSERT,
+          }
+        );
         // await order.addDish(dish_item, {
         //   through: {
         //     quantity: elem.dish_amount,
         //     excluded_ingredients: elem.excluded_ingredients,
         //   },
         // });
-        await sequelize.query(
-          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
-          {
-            replacements: [
-              elem.dish_id,
-              order.id,
-              elem.quantity,
-              elem.excluded_ingredients,
-            ],
-            type: QueryTypes.INSERT,
-          }
-        );
       }
       res.status(200).send(order);
     } catch (error) {
