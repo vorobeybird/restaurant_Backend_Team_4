@@ -1,6 +1,7 @@
 import "./input.scss";
 import {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import debounce from "lodash.debounce";
+import {AiOutlineEye, AiOutlineEyeInvisible} from "react-icons/all";
 
 export interface InputProps {
     placeholder?: string;
@@ -15,6 +16,7 @@ export interface InputProps {
     onError?: (text: string) => void;
     error?: string;
     validate?: (text: string) => boolean;
+    isToggled?: boolean;
 }
 
 const Input = ({
@@ -30,9 +32,19 @@ const Input = ({
                    onChange,
                    onError,
                    validate,
+                   isToggled,
                }: InputProps) => {
 
     const [touched, setTouched] = useState(false);
+    const [isHide, setIsHide] = useState<boolean>(true);
+
+    const toggleHideHandler = useCallback(() => {
+        if (isHide) {
+            setIsHide(false);
+        } else {
+            setIsHide(true)
+        }
+    }, [isHide]);
 
     const debouncedValidation = useMemo(() => {
 
@@ -83,18 +95,25 @@ const Input = ({
     }, [debouncedValidation]);
 
     return (
-        <div className="main_input_container">
-            <input className={error ? "invalid" : ""}
-                   id={id}
-                   name={name}
-                   type={type}
-                   placeholder={placeholder}
-                   onChange={onChangeHandler}
-                   value={value}
-                   required={isRequired}
-            />
-            <p className={"error-text"}>{error ? error : ""}</p>
-        </div>
+            <div className="main-input">
+                <div className={"main-input__content"}>
+                    <input className={error ? "invalid" : ""}
+                           id={id}
+                           name={name}
+                           type={isHide ? type : "text"}
+                           placeholder={placeholder}
+                           onChange={onChangeHandler}
+                           value={value}
+                           required={isRequired}
+                    />
+                    {isToggled && <button type="button" className={'toggle-button'} onClick={toggleHideHandler}>
+                        {isHide ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
+                    </button>}
+                </div>
+                <div className="main-input__error">
+                    {error ? error : ""}
+                </div>
+            </div>
     );
 };
 
