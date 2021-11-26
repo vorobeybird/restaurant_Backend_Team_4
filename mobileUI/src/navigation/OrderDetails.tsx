@@ -60,6 +60,9 @@ export const OrderDetails = ({
   const handleAddOrderHistoryItem = (item:any) => {
     dispatch(addOrderHistoryItem(item))
   }
+  const handleClearCart = () => {
+    dispatch(clearCart())
+  }
   const historyOrder = {
     id:cart.date,
     type:cart.orderType,
@@ -67,7 +70,6 @@ export const OrderDetails = ({
     paymentType: cart.paymentType,
     orderStatus: 'Завершен'
   }
-  
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
@@ -243,14 +245,16 @@ export const OrderDetails = ({
           if(cart.orderType == "Бронь стола") {
             onMakingOrderTable()
             console.log(onMakingOrderTable(),'return')
+          
           } else {
             onMakingOrder();
             console.log(id,'id')
+           
           }
           console.log(id)
           
           handleAddOrderHistoryItem(historyOrder)
-          clearCart()
+          handleClearCart()
           
           navigation.navigate('Home')
           

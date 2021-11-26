@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 type RootStackParamList = {
     navigate:any;
 }
+const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
 
 export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const navigation = useNavigation()
@@ -28,14 +29,18 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
         dispatch(addUserInfo(item))
     }
     const required = () => {
-        let nameErr,surNameErr,emailErr,phoneErr,passwordErr
+        let nameErr,surNameErr,phoneErr
         if (!state.name){
             nameErr = 'Введите имя'
+        } else if(nameRegEx.test(state.name) === false ) {
+            nameErr = 'Введите имя на русском'
         } else {
             nameErr = ''
         }
         if (!state.surName){
             surNameErr = 'Введите фамилию'
+        }else if(nameRegEx.test(state.surName) === false ) {
+            surNameErr = 'Введите фамилию на русском'
         } else {
             surNameErr = ''
         }
@@ -44,10 +49,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
         } else {
             phoneErr = ''
         }
-        
         setError({name:nameErr,surName:surNameErr,phone:phoneErr})
-
-       
     }
     return (
       <View style={styles.Wrapper}>
@@ -87,12 +89,11 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
             </View>
             <Text style={styles.error}> {error.phone} </Text>
             <TouchableOpacity style={styles.butStyle} onPress={()=> {required();
-                    if(state.name && state.surName && state.phone){
+                    if(nameRegEx.test(state.name) === false ||  nameRegEx.test(state.surName) === false) {
+                        required()  
+                    } else if(state.name && state.surName && state.phone ){
                         handleAddUserInfo(state);navigation.navigate('ProfileComponent')
-                    }else {
-                        required()
-                        
-                    }}}>
+                    } }}>
                     <Text style={styles.ButText}> ГОТОВО </Text>
             </TouchableOpacity>
       </View>

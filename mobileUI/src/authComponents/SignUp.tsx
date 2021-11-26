@@ -38,8 +38,47 @@ const SignUp = (props: any) => {
     name: '',
     surName: '',
     email: '',
+    phone:'',
     password: '',
   });
+  const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+
+
+const required = () => {
+    let nameErr,surNameErr,emailErr,phoneErr,passwordErr
+    if (!state.name){
+      nameErr = 'Введите имя'
+  } else if(nameRegEx.test(state.name) === false ) {
+      nameErr = 'Введите имя на русском'
+  } else {
+      nameErr = ''
+  }
+  if (!state.surName){
+      surNameErr = 'Введите фамилию'
+  }else if(nameRegEx.test(state.surName) === false ) {
+      surNameErr = 'Введите фамилию на русском'
+  } else {
+      surNameErr = ''
+  }
+    if (!state.email){
+        emailErr = 'Введите емэйл'
+    } else {
+        emailErr = ''
+    }
+    if (!state.phone){
+        phoneErr = 'Введите телефон'
+    } else {
+        phoneErr = ''
+    }
+    if (!state.password){
+        passwordErr = 'Введите пароль'
+    } else {
+        passwordErr = ''
+    }
+    setError({name:nameErr,surName:surNameErr,phone:phoneErr,email:emailErr,password:passwordErr})
+
+    
+}
 
   const onSubmit = async () => {
     try {
@@ -64,44 +103,7 @@ const SignUp = (props: any) => {
         password:'',
         phone:'',  
     })
-    const [error, setError] = useState({
-        name:'',
-        surName:'',
-        email:'',
-        phone:'',
-        password:'',
-    })
-    const required = () => {
-        let nameErr,surNameErr,emailErr,phoneErr,passwordErr
-        if (!state.name){
-            nameErr = 'Введите имя'
-        } else {
-            nameErr = ''
-        }
-        if (!state.surName){
-            surNameErr = 'Введите фамилию'
-        } else {
-            surNameErr = ''
-        }
-        if (!state.email){
-            emailErr = 'Введите емэйл'
-        } else {
-            emailErr = ''
-        }
-        if (!state.phone){
-            phoneErr = 'Введите телефон'
-        } else {
-            phoneErr = ''
-        }
-        if (!state.password){
-            passwordErr = 'Введите пароль'
-        } else {
-            passwordErr = ''
-        }
-        setError({name:nameErr,surName:surNameErr,email:emailErr,phone:phoneErr,password:passwordErr})
-
-        
-    }
+    
     
     const onSubmit = async () => {
             try {
@@ -129,16 +131,16 @@ const SignUp = (props: any) => {
                     style={styles.street}
                     placeholder='*Имя'
                     onChangeText={(val) => {setState({...state,name:val})}}
-                    
-                />
-            <Text style={styles.error}>{error.name}</Text>
+            />
+            
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
                     placeholder='*Фамилия'
                     onChangeText={(val) => {setState({...state,surName:val})}}
                     
-                />
+            />
+            
             <Text style={styles.error}>{error.surName}</Text>    
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
@@ -151,7 +153,7 @@ const SignUp = (props: any) => {
             <TextInput 
                     placeholderTextColor="#C6C6C6" 
                     style={styles.street}
-                    placeholder='*Телефон'
+                    placeholder='*Телефофвыафыан'
                     onChangeText={(val) => setState({...state,phone:val})}
                     
                 />
@@ -201,14 +203,14 @@ const SignUp = (props: any) => {
           placeholder="Имя"
           onChangeText={val => setState({...state, name: val})}
         />
-
+        <Text style={styles.error}>{error.name}</Text>
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}
           placeholder="Фамилия"
           onChangeText={val => setState({...state, surName: val})}
         />
-
+        <Text style={styles.error}>{error.surName}</Text>
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}
@@ -241,11 +243,17 @@ const SignUp = (props: any) => {
         <TouchableOpacity
           style={styles.Button}
           onPress={() => {
-            onSubmit();
-            handleEmail(state.email);
-            handleAddUserInfo(state);
-            handlePassword(state.password);
-          }}>
+            if(nameRegEx.test(state.name) === false ||  nameRegEx.test(state.surName) === false) {
+              required()  
+            } else {
+              onSubmit();
+              handleEmail(state.email);
+              handleAddUserInfo(state);
+              handlePassword(state.password);
+            }
+          }
+            
+          }>
           <Text style={styles.ButText}> ЗАРЕГИСТРИРОВАТЬСЯ</Text>
         </TouchableOpacity>
       </View>
@@ -277,7 +285,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#C6C6C6',
     marginBottom: '2%',
-    Bottom: '5%',
+
     color: 'black',
   },
   ButCont: {

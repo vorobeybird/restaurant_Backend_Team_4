@@ -23,10 +23,14 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
         home:'',
         corp:'',
     })
+
+    const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
     const required = () => {
         let streetErr,homeErr
         if (!street){
             streetErr = 'Введите улицу'
+        } else if(nameRegEx.test(street) === false ) {
+            streetErr = 'Введите улицу на русском'
         } else {
             streetErr = ''
         }
@@ -91,7 +95,7 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
             </View>
             <Text style={styles.prgressText}> шаг 3/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
-                    if(street !='' && home !=''){
+                    if(street !='' && home !='' && nameRegEx.test(street) === true){
                         navigation.navigate('ChosePaymentType')
                     } 
                     else { required()
