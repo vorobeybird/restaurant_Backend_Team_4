@@ -27,42 +27,81 @@ const Main = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchDishes());
-  }, []);
-
   // if (user === null) return <Redirect to="/login" />
 
   const [step, setStep] = useState(1);
 
-  const dishes = useAppSelector((state) => state.menu.items);
-  const dishesForWeek = dishes.filter(
+  let dishes = useAppSelector((state) => state.menu.items);
+  useEffect(() => {
+    if (localStorage.getItem(`saveDishes`)) {
+      const newDishes = JSON.parse(localStorage[`saveDishes`]);
+      dishesForWeek = newDishes.filter(
+        (value: MenuItem, index: number) => index < 12
+      );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < step * 4 && index >= step * 4 - 4;
+        })
+      );
+    } else {
+      dispatch(fetchDishes());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (dishes.length !== 0) {
+      localStorage.setItem("saveDishes", JSON.stringify(dishes));
+      dishesForWeek = dishes.filter(
+        (value: MenuItem, index: number) => index < 12
+      );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < step * 4 && index >= step * 4 - 4;
+        })
+      );
+    }
+  }, [dishes]);
+
+  let dishesForWeek = dishes.filter(
     (value: MenuItem, index: number) => index < 12
   );
-
-  console.log(dishesForWeek);
-  console.log(step, "step");
 
   const [tempDishesForWeek, setTempDishesForWeek] = useState(
     dishesForWeek.filter((dish, index) => index < 4)
   );
 
-  useEffect(() => {
-    setTempDishesForWeek(
-      dishesForWeek.filter((dish, index) => {
-        return index < step * 4 && index >= step * 4 - 4;
-      })
-    );
-    console.log(tempDishesForWeek);
-  }, [step]);
-
   const goPrevDishes = () => {
-    if (step > 1) setStep((state) => state - 1);
+    if (step > 1) {
+      setStep((state) => state - 1);
+      const newStep = step - 1;
+      const newDishes = localStorage.getItem("saveDishes");
+      if (newDishes)
+        dishesForWeek = JSON.parse(newDishes).filter(
+          (value: MenuItem, index: number) => index < 12
+        );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < newStep * 4 && index >= newStep * 4 - 4;
+        })
+      );
+    }
   };
 
   const goNextDishes = () => {
-    if (step < 3) setStep((state) => state + 1);
+    if (step < 3) {
+      setStep((state) => state + 1);
+      const newStep = step + 1;
+      const newDishes = localStorage.getItem("saveDishes");
+      if (newDishes)
+        dishesForWeek = JSON.parse(newDishes).filter(
+          (value: MenuItem, index: number) => index < 12
+        );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < newStep * 4 && index >= newStep * 4 - 4;
+        })
+      );
+    }
   };
 
   const handleDishClick = (item: ICartItem | MenuItem) => {
