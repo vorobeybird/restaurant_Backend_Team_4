@@ -17,7 +17,39 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
     const handleAddCard = (item:any) => {
         dispatch(addCard(item))
     }
-
+    const regexSixteen = new RegExp("^[0-9]{16}$");
+    const regexCvv = new RegExp("^[0-9]{3}$");
+    const regexDate = new RegExp("^(0[1-9]|1[0-2])\/[0-9]{2}");
+    const [error, setError] = useState({
+        sixTeen:'',
+        Cvv:'',
+        Date:'',
+    })
+    const required = () => {
+        let sixTeenErr,CvvErr,DateErr
+        if (!card.num){
+            sixTeenErr = 'Введите цифры'
+        } else if(regexSixteen.test(card.num) === false ) {
+            sixTeenErr = 'Вы ввыели неправильно'
+        } else {
+            sixTeenErr = ''
+        }
+        if (!card.cvv){
+            CvvErr = 'Введите цифры Cvv'
+        } else if(regexSixteen.test(card.cvv) === false ) {
+            CvvErr = 'Введите действительный Cvv'
+        } else {
+            CvvErr = ''
+        }
+        if (!card.live){
+            DateErr = 'Введите срок'
+        } else if(regexDate.test(card.live) === false ) {
+            DateErr = 'Введите действительный срок'
+        } else {
+            DateErr = ''
+        }
+        setError({sixTeen:sixTeenErr,Cvv:CvvErr,Date:DateErr})
+    }
     const showToast = () => {
         ToastAndroid.showWithGravity(
           "Карта добавлена",
@@ -45,6 +77,7 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                             
                         }}
                     />
+                <Text style={styles.errorNum}>{error.sixTeen}</Text>
                 <View style={styles.inpCont}>
                     <View style={styles.col}>
                         <Text style={styles.textLive}>Срок действия</Text>
@@ -53,6 +86,7 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                                 placeholder='MM/YY'
                                 onChangeText={(val)=> setCard({...card,live:val, })}
                             />
+                        <Text style={styles.errorStreet}>{error.Date}</Text>
                     </View>
                     <View>
                         <Text style={styles.textLiveCvv}>CVV/CVC</Text>
@@ -61,6 +95,7 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                                 placeholder='***'
                                 onChangeText={(val)=> setCard({...card,cvv:val, })}
                             />
+                        <Text style={styles.errorCvv}>{error.Cvv}</Text>
                     </View>
                 </View>
                 <Text style={styles.textName}>Имя владельца карты</Text>
@@ -71,7 +106,14 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                         />
             </View>
             
-            <TouchableOpacity style={styles.Button} onPress={() => {;handleAddCard(card);showToast(); goBack()}}>
+            <TouchableOpacity style={styles.Button} onPress={() => {
+                if(card.num !='' && card.cvv !='' && card.live !='' && regexSixteen.test(card.num) === true && regexCvv.test(card.cvv) === true && regexDate.test(card.live) === true){
+                    handleAddCard(card);showToast(); goBack()
+                } 
+                else { 
+                    required()
+                }
+            }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>
@@ -95,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
     },
     textNumber:{
-        marginTop:10,
+       
         marginLeft:'5%',
         color:'black',
     },
@@ -103,6 +145,21 @@ const styles = StyleSheet.create({
         width:130,
         borderRadius:10,
         backgroundColor:'#E2E6EE',
+    },
+    errorCvv:{
+        top:5,
+        right:10,
+        color:'red',
+    },
+    errorStreet:{
+        top:5,
+        
+        color:'red',
+    },
+    errorNum:{
+        top:5,
+        left:15,
+        color:'red',
     },
     textLive:{
         
@@ -187,7 +244,7 @@ const styles = StyleSheet.create({
         alignSelf:'center',
         justifyContent:'center',
         width:'80%',
-        height:255,
+        height:300,
         top:'10%',
         flexDirection:'column',
         elevation:5,
