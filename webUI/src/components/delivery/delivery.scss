@@ -1,3 +1,11 @@
+  .delivery_container_wrapper{
+    .switch-buttons-component {
+      margin-top: 1em;
+      width: 80%;
+      display: flex;
+      justify-content: right;
+    }
+  }
   .delivery_container {
     display: flex;
     flex-direction: row;

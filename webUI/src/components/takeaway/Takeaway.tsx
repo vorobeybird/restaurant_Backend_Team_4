@@ -131,11 +131,13 @@
         <div className="step_progress">
           Шаг {currentStep + 1}/{ADD_TAKEAWAY_STEPS.length}
         </div>
+        <div className="switch-buttons-component">
         <SwitchButtons
                 onClickNext={pushToConfirmation}
                 onClickPrev={handleChangeCurrentStepPrev}
                 children="I'm a pink circle!"
               />
+              </div>
       </div>
     );
   };
