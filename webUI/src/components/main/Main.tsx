@@ -29,14 +29,20 @@ const Main = () => {
 
   // if (user === null) return <Redirect to="/login" />
 
+  let dishesForWeek = [] as MenuItem[];
+  const [tempDishesForWeek, setTempDishesForWeek] = useState([] as MenuItem[]);
+
   const [step, setStep] = useState(1);
+
+  const numOfDishes = 12;
+  const maxStep = Math.ceil(numOfDishes / 4);
 
   let dishes = useAppSelector((state) => state.menu.items);
   useEffect(() => {
     if (localStorage.getItem(`saveDishes`)) {
       const newDishes = JSON.parse(localStorage[`saveDishes`]);
       dishesForWeek = newDishes.filter(
-        (value: MenuItem, index: number) => index < 12
+        (value: MenuItem, index: number) => index < numOfDishes
       );
       setTempDishesForWeek(
         dishesForWeek.filter((dish, index) => {
@@ -52,7 +58,7 @@ const Main = () => {
     if (dishes.length !== 0) {
       localStorage.setItem("saveDishes", JSON.stringify(dishes));
       dishesForWeek = dishes.filter(
-        (value: MenuItem, index: number) => index < 12
+        (value: MenuItem, index: number) => index < numOfDishes
       );
       setTempDishesForWeek(
         dishesForWeek.filter((dish, index) => {
@@ -62,14 +68,6 @@ const Main = () => {
     }
   }, [dishes]);
 
-  let dishesForWeek = dishes.filter(
-    (value: MenuItem, index: number) => index < 12
-  );
-
-  const [tempDishesForWeek, setTempDishesForWeek] = useState(
-    dishesForWeek.filter((dish, index) => index < 4)
-  );
-
   const goPrevDishes = () => {
     if (step > 1) {
       setStep((state) => state - 1);
@@ -77,7 +75,7 @@ const Main = () => {
       const newDishes = localStorage.getItem("saveDishes");
       if (newDishes)
         dishesForWeek = JSON.parse(newDishes).filter(
-          (value: MenuItem, index: number) => index < 12
+          (value: MenuItem, index: number) => index < numOfDishes
         );
       setTempDishesForWeek(
         dishesForWeek.filter((dish, index) => {
@@ -88,13 +86,13 @@ const Main = () => {
   };
 
   const goNextDishes = () => {
-    if (step < 3) {
+    if (step < maxStep) {
       setStep((state) => state + 1);
       const newStep = step + 1;
       const newDishes = localStorage.getItem("saveDishes");
       if (newDishes)
         dishesForWeek = JSON.parse(newDishes).filter(
-          (value: MenuItem, index: number) => index < 12
+          (value: MenuItem, index: number) => index < numOfDishes
         );
       setTempDishesForWeek(
         dishesForWeek.filter((dish, index) => {
@@ -149,7 +147,7 @@ const Main = () => {
           </div>
           <button
             className={`main_meals_container__btn ${
-              step === 3 ? "blur" : undefined
+              step === maxStep ? "blur" : undefined
             }`}
             onClick={goNextDishes}
           >
