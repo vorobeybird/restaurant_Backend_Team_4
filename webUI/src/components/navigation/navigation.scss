@@ -94,6 +94,10 @@
   width: 25px;
   height: 24px;
   cursor: pointer;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
 
 .search_icon_active {
@@ -108,6 +112,7 @@
   margin-left: 25px;
   justify-content: space-around;
   margin-right: 25px;
+
   
   & a {
     width: 24px;
@@ -121,6 +126,11 @@
   width: 24px;
   height: 24px;
   margin-right: 50px;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+
 }
 
 .cart_icon_active {
@@ -131,6 +141,10 @@
   width: 24px;
   height: 24px;
   margin-right: 60px;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
 
 .profile_icon_active {

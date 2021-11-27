@@ -19,13 +19,11 @@ export interface IAddress {
 }
 
 interface OrderProps {
-  total?: number,
+  total?: number;
   combineOrder?: any;
 }
 
-
-export const Delivery = ({total,combineOrder}:OrderProps) => {
-
+export const Delivery = ({ total, combineOrder }: OrderProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const [name, setName] = useState(user.attributes.name);
@@ -33,14 +31,17 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
   let history = useHistory();
   // let address = "Ваш текущий адрес не указан";
 
-  let ustreet,uhouse,uflat,uhousing = "";
+  let ustreet,
+    uhouse,
+    uflat,
+    uhousing = "";
 
   if (user.attributes.address) {
     const addr = JSON.parse(user.attributes.address);
-      ustreet = addr.street;
-      uhouse = addr.house;
-      uflat = addr.flat;
-      uhousing = addr.housing;
+    ustreet = addr.street;
+    uhouse = addr.house;
+    uflat = addr.flat;
+    uhousing = addr.housing;
   }
 
   const isValidName = () => {
@@ -149,7 +150,7 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
     handleChangeCurrentStepNext();
     if (currentStep === 4) {
       history.push("/cart/confirm");
-      combineOrder(total)
+      combineOrder(total);
     }
   };
 
@@ -201,11 +202,13 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_DELIVERY_STEPS.length}
       </div>
-      <SwitchButtons
-                onClickNext={pushToConfirmation}
-                onClickPrev={handleChangeCurrentStepPrev}
-                children="I'm a pink circle!"
-              />
+      <div className="switch-buttons-component">
+        <SwitchButtons
+          onClickNext={pushToConfirmation}
+          onClickPrev={handleChangeCurrentStepPrev}
+          children="I'm a pink circle!"
+        />
+      </div>
     </div>
   );
 };
