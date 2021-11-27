@@ -18,7 +18,8 @@ export const EnterContacts = ({ ...props }: EnterContactsProps) => {
   const dispatch = useAppDispatch();
   const [userStreetError, setUserStreetError] = useState<string>("");
   const [userNumber, setUserNumber] = useState<string>(props.phone);
-  const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+  // const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+  const nameRegEx = new RegExp("^([А-Я]{1}[а-яё]{1,23}|[A-Z]{1}[a-z]{1,23})$");
 
   const formatChar = {
     A: "[234]",
@@ -84,7 +85,7 @@ export const EnterContacts = ({ ...props }: EnterContactsProps) => {
           placeholder="Телефон"
           value={props.phone}
         /> */}
-        {props.isValidPhone() ? <div>this phone is valid</div> : undefined}
+        {/* {props.isValidPhone() ? <div>this phone is valid</div> : undefined} */}
       </div>
     </div>
   );

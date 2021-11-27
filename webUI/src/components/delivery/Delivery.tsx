@@ -50,8 +50,7 @@ export const Delivery = ({ total, combineOrder }: OrderProps) => {
   };
 
   const isValidPhone = () => {
-    const reg = /./;
-    // const reg = /^\+375() [0-9]{9}-$/;
+    const reg = /^[^_]*$/;
     return reg.test(phone);
   };
 
@@ -65,13 +64,14 @@ export const Delivery = ({ total, combineOrder }: OrderProps) => {
   });
 
   const isValidAddress = (address: IAddress) => {
-    const regForStreet = /[a-z]|[а-я]/i;
+    // const regForStreet = /[a-z]|[а-я]/g;
+    const regForStreet = /^([^0-9]*)$/g;
     const regForHouseNumber = /^\d{1,3}$/;
     const regForHouseBuilding = /^\d{1,3}$/;
     const regForApartment = /^\d{1,4}$/;
     const regForEmptyString = /^$/;
 
-    console.log(regForHouseBuilding.test(address.houseBuilding));
+    // console.log(regForHouseBuilding.test(address.houseBuilding));
 
     return (
       regForStreet.test(address.street) &&
