@@ -9,9 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      OrderDish.belongsTo(models.Dish, { foreignKey: "dish_id" });
+      OrderDish.belongsTo(models.Order, { foreignKey: "order_id" });
     }
     toJSON() {
-      return { ...this.get(), dish_id: undefined, order_id: undefined };
+      console.log(this.get());
+      return { ...this.get(), id: undefined, order_id: undefined };
     }
   }
   OrderDish.init(
@@ -20,10 +23,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
       },
-      DishId: DataTypes.INTEGER,
-      OrderId: DataTypes.INTEGER,
+      dish_id: {
+        type: DataTypes.INTEGER,
+        unique: false,
+      },
+      order_id: {
+        type: DataTypes.INTEGER,
+        unique: false,
+      },
       quantity: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
@@ -34,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
       sequelize,
       tableName: "OrderDish",
+      modelName: "OrderDish",
     }
   );
   return OrderDish;

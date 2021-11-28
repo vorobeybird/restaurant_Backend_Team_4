@@ -13,21 +13,22 @@ export function cartReducer(
       return { items: [...state.items, action.payload] };
     case CartConstants.ADD_SAME_DISH: {
       return {
-        items: state.items.map((item) =>
-          item.id === action.payload.id ? action.payload : item
+        items: state.items.map((item) => {
+          return (item.id === action.payload.id && item.excluded_ingredients.join() === action.payload.excluded_ingredients.join()) ? {...action.payload, amount: item.amount + 1} : item
+        }
         ),
       };
     }
     case CartConstants.REMOVE_FROM_CART: {
       const filteredItems = state.items.filter(
-        (item) => item.id !== action.payload
+        (item, i) => i !== action.payload.idx
       );
       return { items: [...filteredItems] };
     }
     case CartConstants.INCREMENT_NUMBER_OF_DISHES: {
       const newItems = [...state.items];
       const itemIndex = newItems.findIndex(
-        (item) => item.id === action.payload
+        (item, i) => item.id === action.payload.id && i === action.payload.idx
       );
       newItems[itemIndex] = {
         ...newItems[itemIndex],
@@ -38,7 +39,7 @@ export function cartReducer(
     case CartConstants.DECREMENT_NUMBER_OF_DISHES: {
       const newItems = [...state.items];
       const itemIndex = newItems.findIndex(
-        (item) => item.id === action.payload
+        (item, i) => item.id === action.payload.id && i === action.payload.idx
       );
       newItems[itemIndex] =
         newItems[itemIndex].amount > 1
@@ -56,8 +57,8 @@ export function cartReducer(
       return { ...state, items:  action.payload};
     }
     case CartConstants.OMIT_INGREDIENT: {
-      const newItems = state.items.map(item => {
-        if (item.id === action.payload.id) {
+      const newItems = state.items.map((item, i) => {
+        if (item.id === action.payload.id && i === action.payload.idx  ) {
           return {
             ...item, 
             excluded_ingredients: [...item.excluded_ingredients, action.payload.ingredient]}
@@ -67,8 +68,8 @@ export function cartReducer(
       return { items: newItems };
     }
     case CartConstants.PICK_INGREDIENT: {
-      const newItems = state.items.map(item => {
-        if (item.id === action.payload.id) {
+      const newItems = state.items.map((item, i) => {
+        if (item.id === action.payload.id && i === action.payload.idx ) {
           return {
             ...item, 
             excluded_ingredients: item.excluded_ingredients.filter(ing => ing !== action.payload.ingredient)}

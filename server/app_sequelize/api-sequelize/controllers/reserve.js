@@ -2,22 +2,8 @@ const Reserve = require("../models/").Reserve;
 const Table = require("../models/").Table;
 const Order = require("../models/").Order;
 const Dish = require("../models/").Dish;
-const { Sequelize, Op, literal, QueryTypes } = require("sequelize");
-const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.js")[env];
-const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+const { Op, literal, QueryTypes } = require("sequelize");
+const db = require("../models/index");
 
 const parseDateToUTC = (date) => {
   const parsed = new Date(date);
@@ -65,12 +51,8 @@ module.exports = {
       });
       const dish = req.body.dish;
       for (let elem of dish) {
-        console.log(elem);
-        console.log(order.id);
-        // const dish_item = await Dish.findByPk(elem.dish_id);
-        // await order.addDish(dish_item);
-        await sequelize.query(
-          "INSERT INTO `OrderDish` (`id`, `DishId`, `OrderId`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+        await db.sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
           {
             replacements: [
               elem.dish_id,
@@ -81,12 +63,6 @@ module.exports = {
             type: QueryTypes.INSERT,
           }
         );
-        // await order.addDish(dish_item, {
-        //   through: {
-        //     quantity: elem.dish_amount,
-        //     excluded_ingredients: elem.excluded_ingredients,
-        //   },
-        // });
       }
       res.status(200).send(tables[0]);
     } catch (error) {

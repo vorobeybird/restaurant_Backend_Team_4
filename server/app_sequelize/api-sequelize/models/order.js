@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Order.belongsToMany(models.Dish, {
         through: { model: models.OrderDish, unique: false },
-        /*         as: "dish",
-        foreignKey: "order_id", */
+        foreignKey: "order_id",
       });
+      Order.hasMany(models.OrderDish, { foreignKey: "order_id" });
+
       Order.belongsTo(models.Reserve, {
         as: "reserve",
         foreignKey: "reserve_id",

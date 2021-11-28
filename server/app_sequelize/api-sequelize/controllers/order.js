@@ -1,13 +1,19 @@
 const Order = require("../models").Order;
 const Dish = require("../models").Dish;
+const OrderDish = require("../models").OrderDish;
+const db = require("../models/index");
 
 module.exports = {
   list(req, res) {
     return Order.findAll({
       include: [
         {
-          model: Dish,
-          unique: false,
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
         },
       ],
     })
@@ -21,8 +27,12 @@ module.exports = {
     return Order.findByPk(req.params.id, {
       include: [
         {
-          model: Dish,
-          unique: false,
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
         },
       ],
     })
@@ -44,7 +54,12 @@ module.exports = {
     return Order.findAll({
       include: [
         {
-          model: Dish,
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
         },
       ],
       where: {
@@ -69,7 +84,6 @@ module.exports = {
     const dish = req.body.dish;
     try {
       const date = req.body.delivery_date;
-      //   const date = new Date(req.body.delivery_date)
       const order = await Order.create({
         customer_id: req.body.customer_id,
         delivery_method: req.body.delivery_method,
@@ -83,11 +97,7 @@ module.exports = {
         comment: req.body.comment,
       });
       for (let elem of dish) {
-        console.log(elem);
-        console.log(order.id);
-        // const dish_item = await Dish.findByPk(elem.dish_id);
-        // await order.addDish(dish_item);
-        await sequelize.query(
+        await db.sequelize.query(
           "INSERT INTO `OrderDish` (`id`, `DishId`, `OrderId`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
           {
             replacements: [
@@ -99,12 +109,6 @@ module.exports = {
             type: QueryTypes.INSERT,
           }
         );
-        // await order.addDish(dish_item, {
-        //   through: {
-        //     quantity: elem.dish_amount,
-        //     excluded_ingredients: elem.excluded_ingredients,
-        //   },
-        // });
       }
       res.status(200).send(order);
     } catch (error) {
