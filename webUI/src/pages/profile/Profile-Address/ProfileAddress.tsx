@@ -106,7 +106,7 @@ function ProfileAddress() {
             <p className={"profileAddress__city"}>г. Минск</p>
             <form onSubmit={updateUserAttributesHandler}>
                 <div>
-                    <label htmlFor="street">Улица</label>
+                    <label htmlFor="street">*Улица</label>
                     <Input name="street"
                            id="street"
                            type="text"
@@ -119,7 +119,7 @@ function ProfileAddress() {
                            onError={setUserStreetError}
                            onChange={onUserStreetChangeHandler}
                     />
-                    <label htmlFor="house">Дом</label>
+                    <label htmlFor="house">*Дом</label>
                     <Input name="house"
                            id="house"
                            type="number"

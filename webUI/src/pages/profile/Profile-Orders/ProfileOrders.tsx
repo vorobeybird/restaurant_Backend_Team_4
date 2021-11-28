@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { AppStateType } from "../../../store";
 import { AuthStateType } from "../../../store/auth/auth.reducer";
 import "./profileOrders.scss";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { orderAPI } from "../../../api/api";
 import { useAppSelector } from "../../../store/hooks";
 import { Link } from "react-router-dom";
@@ -38,33 +38,33 @@ export const ProfileOrders = () => {
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
   const [ordersCurrent, setOrdersCurrent] = useState([] as Order[]);
   const [ordersHistory, setOrdersHistory] = useState([] as Order[]);
-  const [ordersType, setOrdersType] = useState('current');
+  const [ordersType, setOrdersType] = useState('');
   const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(0);
   const ordersPerPage: number = 3;
+  let pages: number = 1;
 
   useEffect(() => {
-    orderAPI.getOrders(userId).then((orders: any) => {
-      const currentOrders: Order[] = orders.filter((order: Order) => {
+    let currentOrders: Order[] = [];
+    let historyOrders: Order[] = [];
+    orderAPI.getOrders(userId).then(async (orders: any) => {
+       currentOrders = await orders.filter((order: Order) => {
         return order.status === "Принят в работу" && "Готовится" && "Изменен" && "Отправлен";
       });
-      const historyOrders: Order[] = orders.filter((order: Order) => {
+      historyOrders = await orders.filter((order: Order) => {
         return order.status === "Готов" && "Отменен";
       });
       setOrdersCurrent(currentOrders);
       setOrdersHistory(historyOrders);
       onCurrentClicked();
-    });
+    })
   }, [userId]);
 
   const onCurrentClicked = () => {
     setOrdersType('current');
-    setPages(Math.ceil(ordersCurrent.length / ordersPerPage));
   }
 
   const onHistoryClicked = () => {
     setOrdersType('history');
-    setPages(Math.ceil(ordersHistory.length / ordersPerPage));
   }
 
   const renderColumn = (colName: string) => {
@@ -79,8 +79,9 @@ export const ProfileOrders = () => {
 
   const renderRows = () => {
     const tableData = ordersType === "current" ? ordersCurrent : ordersHistory;
+    pages = Math.ceil(tableData.length / ordersPerPage);
     let tableRows: any = [];
-    if (pages > 0) {
+    if (tableData.length) {
       const curPage = Math.min(pages, selectedPage);
       let startOrder = ordersPerPage * curPage - ordersPerPage;
       for (let i = startOrder; i < Math.min(ordersPerPage * curPage, tableData.length); i++) {

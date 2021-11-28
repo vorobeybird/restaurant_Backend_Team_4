@@ -39,7 +39,7 @@
 }
 
 .link {
-  margin-left: 30px;
+  margin-left: 70px;
   display: inline;
   height: 100%;
   text-decoration: none;
@@ -50,6 +50,10 @@
   line-height: 1.6rem;
   color: #FFFFFF;
   white-space: nowrap;
+}
+
+.link__active {
+  color: #EF742F;
 }
 
 .input_container {
@@ -90,6 +94,14 @@
   width: 25px;
   height: 24px;
   cursor: pointer;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+.search_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
 }
 
 .navigation_icons_container {
@@ -100,6 +112,7 @@
   margin-left: 25px;
   justify-content: space-around;
   margin-right: 25px;
+
   
   & a {
     width: 24px;
@@ -113,12 +126,29 @@
   width: 24px;
   height: 24px;
   margin-right: 50px;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+
+}
+
+.cart_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
 }
 
 .profile_icon {
   width: 24px;
   height: 24px;
   margin-right: 60px;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+.profile_icon_active {
+  filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg) brightness(96%) contrast(95%);
 }
 
 .hamburger-menu {
@@ -211,6 +241,10 @@
   transition-duration: .25s;
   border-bottom: 1px dotted #CFD8DC;
   position: relative;
+}
+
+.menu__item_active {
+  font-size: 1.5rem;
 }
 .menu__item:hover {
   background-color: #CFD8DC;
