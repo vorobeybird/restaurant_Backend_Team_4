@@ -6,19 +6,11 @@ export const addToCart =
   (item: MenuItem, items: ICartItem[]) => (dispatch: AppDispatch) => {
     let sameItem = items.find((i) => (i.id === item.id) && (i.excluded_ingredients.join() === item.excluded_ingredients.join()));
     if (sameItem) {
-      console.log('sameItem:', sameItem)
       //если ингредиенты в корзине и в настройках нового блюда, добавляемого в корзину, совпадают
       // нужно найти в корзине нужное блюдо и инкрементировать его количество
-      dispatch({
-        type: CartConstants.ADD_SAME_DISH,
-        payload: { ...item, amount: sameItem.amount + 1 },
-      });
+      dispatch({ type: CartConstants.ADD_SAME_DISH, payload: { ...item, amount: sameItem.amount + 1 }});
     } else {
-      console.log('Not the sameItem:', sameItem)
-      dispatch({
-        type: CartConstants.ADD_TO_CART,
-        payload: { ...item, amount: 1},
-      });
+      dispatch({ type: CartConstants.ADD_TO_CART, payload: { ...item, amount: 1}});
     }
   };
 

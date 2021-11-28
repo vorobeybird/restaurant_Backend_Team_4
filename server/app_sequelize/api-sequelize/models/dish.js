@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "category",
         foreignKey: "dish_id",
       });
+
       Dish.hasMany(models.OrderDish, { foreignKey: "dish_id" });
 
       Dish.belongsToMany(models.Order, {

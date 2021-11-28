@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeTime } from "../../../store/order/order.actions";
-import { Button } from "../button/Button";
 import "./chooseTime.scss";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -63,15 +61,15 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
           const toBeBooked = dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm');
           const alreadyBooked = dayjs(`${item.reserve_date} ${item.reserve_start_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour');
           const timeDifference = toBeBooked.diff(alreadyBooked,'minute');
-          console.log(timeDifference)
+          // console.log(timeDifference)
           return (Math.abs(timeDifference) < 240);
         }
      )
-          console.log('Conflicting reservation:', conflictingReservation)
+          // console.log('Conflicting reservation:', conflictingReservation)
       return conflictingReservation === -1 ? true : false;
       }
       else {
-          console.log(`Table reservations for table ${table.id} is ${table.reserve} and has a lot of slots for ${table.persons} persons on: ${time}`)
+          // console.log(`Table reservations for table ${table.id} is ${table.reserve} and has a lot of slots for ${table.persons} persons on: ${time}`)
           return true;
       }
   }

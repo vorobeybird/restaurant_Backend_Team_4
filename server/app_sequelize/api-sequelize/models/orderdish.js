@@ -14,7 +14,12 @@ module.exports = (sequelize, DataTypes) => {
     }
     toJSON() {
       console.log(this.get());
-      return { ...this.get(), id: undefined, order_id: undefined };
+      return {
+        ...this.get(),
+        id: undefined,
+        dish_id: undefined,
+        order_id: undefined,
+      };
     }
   }
   OrderDish.init(
