@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import { MarketMain } from "../marketComponents/MarketMain";
-
+import { MarketTabNavigation } from '../navigation/MarketMainNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
 import { MenuTabNavigation } from './menuNav';
+import { MarketMain } from "../marketComponents/MarketMain";
 import { ProfileNavigation } from './profileNav'
 import { testIconNav } from './testIconNav'
 export type RootStackParamList = {
@@ -13,6 +13,7 @@ export type RootStackParamList = {
     Menu: undefined;
     MenuTabNavigation: undefined;
     testIconNav:undefined;
+    MarketTabNavigation:undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -74,10 +75,12 @@ export const BottomTabNavigation = () => {
                     }}   
                 />
                 <Tab.Screen
-                    name="MarketMain"
-                    component={MarketMain}
+                    name="MarketTabNavigation"
+                    component={MarketTabNavigation}
+                    
                     options={{
-                        title: 'Menu',
+                        unmountOnBlur: true,
+                        title: 'MarketTabNavigation',
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
                             if(focused){

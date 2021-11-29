@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native"
 const styles = StyleSheet.create({
     Wrapper:{
-        flex:1,
         backgroundColor:'white',
     },
     size:{
@@ -98,12 +97,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
       },
       flexWrapper: {
+        
         justifyContent: 'space-evenly',
         alignItems: 'center',
         flexDirection: 'row',
       },
       flex:{
-        flex:1
+        marginTop:10,
+        height:'85%',
+        width:'100%',
+   
+
       },
       flexEnd: {
         justifyContent: 'flex-end',
@@ -121,7 +125,8 @@ const styles = StyleSheet.create({
         color: 'black',
       },
       orderDishes: {
-        paddingBottom: 15,
+        marginBottom:40,
+        paddingBottom:15,
         paddingTop: 15,
         top: '10%',
         elevation: 3,

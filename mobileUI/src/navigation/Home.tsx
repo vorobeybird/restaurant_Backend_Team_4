@@ -20,7 +20,7 @@ export const Home = () => {
         <Text style={styles.TitleText}> Ocean Bar </Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MenuTabNavigation')}
+        onPress={() => navigation.navigate('MenuTabNavigation',{screen:'Menu'})}
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}
@@ -35,7 +35,7 @@ export const Home = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(clearCart());
-          navigation.navigate('MenuTabNavigation', {
+          navigation.navigate('MarketTabNavigation', {
             screen: 'ConfirmOrderTable',
           });
         }}

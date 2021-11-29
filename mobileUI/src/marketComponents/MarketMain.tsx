@@ -93,7 +93,7 @@ export const MarketMain = () => {
             <View style={styles.ButWrapp}>
               <Text
                 style={styles.But}
-                onPress={() => navigation.navigate('MenuTabNavigation', {screen: 'ChoseTypeOrder'})}>
+                onPress={() => navigation.navigate('ChoseTypeOrder')}>
                 ДАЛЕЕ
               </Text>
             </View>

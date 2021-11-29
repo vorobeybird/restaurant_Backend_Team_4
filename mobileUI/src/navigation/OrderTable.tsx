@@ -232,7 +232,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
                 )}
             </View>
             <TouchableOpacity style={styles.Button} onPress={() => {
-                getTableByNum()
+             
                 onMakingOrder()
                 
             }}>

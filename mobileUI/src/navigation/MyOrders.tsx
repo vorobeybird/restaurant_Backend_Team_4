@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ToastAndroid, FlatList} from 'react-native';
 import styles from "./myOrders/style";
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
 
 import dayjs from 'dayjs';
@@ -12,6 +13,19 @@ type RootStackParamList = {
 
 
 export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+    const [orders, setOrders] = useState([])
+    const getItems = async () => {
+        const response = await axios.get('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/764df1cc-70f2-4ee9-8780-4a4449c1a3e4')
+        const res = response.data
+        return res
+    }
+    
+    const fetchMenuItems = async () => {
+        const items = await getItems()
+        setOrders(items)
+    }
+
+      console.log(orders)
     const navigation = useNavigation()
     const [pay, setPay] = useState('а мне похуй')
     const [histPay, setHistPay] = useState('а мне похуй')
@@ -27,6 +41,16 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         
         setHistPay(payWord)
     }
+    const anFunc = (item) => {
+        let newTitle
+        if(item.title.length >7){
+            let name = item.title.substr(0,6)
+            newTitle = name+'...'
+            console.log(newTitle)
+        } else {
+            newTitle = item.title
+        }
+    }
     const payWordFunc = () => {
         let payWord
         if (cart.paymentType == 0){
@@ -40,11 +64,13 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         setPay(payWord)
     }
       useEffect(() => {
+        fetchMenuItems()
+        console.log(orders,'ordersordersorders')
         payWordFunc();
       }, []);
    
     const cart = useSelector((state) => state.dishes);
-    console.log(cart)
+    console.log(orders,'ordersordersorders')
     const [state, setState] = useState( true )
    
     return (
@@ -75,75 +101,84 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
             {state === true ? (
                         <View>
                            
-                                {cart.dishes.length ? (
+                                {orders.length ? (
                                     <View>
-                                        <View style={styles.orderType}>
-                                        <View style={styles.flexWrapper}>
-                                        <View style={styles.flexEnd}>
-                                            <Text style={styles.color}>ТИП ЗАКАЗА</Text>
-                                            <Text style={styles.color}> ДАТА</Text>
-                                            <Text style={styles.color}> ВРЕМЯ</Text>
-                                            <Text style={styles.color}> ОПЛАТА</Text>
-                                            <Text style={styles.color}>СТАТУС</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={styles.simpText}>{cart.orderType}</Text>
-                                            <Text style={styles.simpText}>13 октября</Text>
-                                            <Text style={styles.simpText}>15:00</Text>
-                                            <Text style={styles.simpText}>{pay}</Text>
-                                            <Text style={styles.simpText}>Принят в работу</Text>
-                                        </View>
-                                        </View>
+                                        <FlatList
+                                            style={styles.flex}
+                                            data={orders}
+                                            renderItem={({ item }) => { 
+                                                console.log(item,'itemitemitem')
+                                                return(
+                                                    <>
+                                                        <View style={styles.orderType}>
+                                                            <View style={styles.flexWrapper}>
+                                                                <View style={styles.flexEnd}>
+                                                                    <Text style={styles.color}>ТИП ЗАКАЗА</Text>
+                                                                    <Text style={styles.color}> ДАТА</Text>
+                                                                    <Text style={styles.color}> ВРЕМЯ</Text>
+                                                                    <Text style={styles.color}> ОПЛАТА</Text>
+                                                                    <Text style={styles.color}>СТАТУС</Text>
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.simpText}>{item.delivery_method}</Text>
+                                                                    <Text style={styles.simpText}>{dayjs(item.delivery_date).format('YYYY-MM-DD')}</Text>
+                                                                    <Text style={styles.simpText}>{dayjs(item.delivery_date).format('HH:mm')}</Text>
+                                                                    <Text style={styles.simpText}>{pay}</Text>
+                                                                    <Text style={styles.simpText}>{item.status}</Text>
+                                                                </View>
+                                                            </View>
+                                                        </View>
+                                                        <View>
+                                                            {item.dish.length ? (
+                                                                item.dish.map((item: any) => {
+                                                                    anFunc(item)
+                                                                    
+                                                                    return(
+                                                                        
+                                                                        <View style={styles.orderDishes}>
+                                                                            <View style={styles.rowWrapper}>
+                                                                                <Text style={styles.color}>БЛЮДО</Text>
+                                                                                <Text style={styles.color}>ЦЕНА</Text>
+                                                                                <Text style={styles.color}>КОЛ-ВО</Text>
+                                                                                <Text style={styles.color}>СУММА</Text>
+                                                                            </View>
+                                                                        <View
+                                                                        style={{
+                                                                            paddingTop: 15,
+                                                                            borderBottomColor: '#979A9F',
+                                                                            borderBottomWidth: 0.3,
+                                                                        }}/>
+                                                                        <View style={styles.contContent} key={item.id}>
+                                                                            <Text style={styles.simpText}>{item.title}</Text>
+                                                                            <Text style={styles.Price}> {item.price} BYN</Text>
+                                                                            <Text style={styles.Qan}> {item.cardQuantity}</Text>
+                                                                            <Text style={styles.simpText}>{item.price * item.OrderDish.quantity} BYN</Text>
+                                                                        </View>
+                                                                        <View
+                                                            style={{
+                                                                paddingTop: 15,
+                                                                borderBottomColor: '#979A9F',
+                                                                borderBottomWidth: 0.3,
+                                                            }}
+                                                            />
+                                                            <View style={styles.TotalCounter}>
+                                                                <Text style={styles.finHardText}>ИТОГО</Text>
+                                                                <Text style={styles.finText}>{item.total_price} BYN</Text>
+                                                            </View>
+                                                                        </View>
+                                                                    )
+                                                                })
+                                                            ):(
+                                                                <>
+                                                                </>
+                                                            )}
+                                                            
+                                                        </View>     
+                                                    </>
+                                                )
+
+                                             }}/>    
                                     </View>
-                                    <View style={styles.orderDishes}>
-                                        <View style={styles.rowWrapper}>
-                                        <Text style={styles.color}>БЛЮДО</Text>
-                                        <Text style={styles.color}>ЦЕНА</Text>
-                                        <Text style={styles.color}>КОЛ-ВО</Text>
-                                        <Text style={styles.color}>СУММА</Text>
-                                        
-                                        </View>
-                                        <View
-                                        style={{
-                                            paddingTop: 15,
-                                            borderBottomColor: '#979A9F',
-                                            borderBottomWidth: 0.3,
-                                        }}
-                                        />
-                                        {cart.dishes.map((item: any) => {
-                                            let newTitle
-                                            if(item.title.length >7){
-                                              let name = item.title.substr(0,6)
-                                               newTitle = name+'...'
-                                              console.log(newTitle)
-                                            } else {
-                                              newTitle = item.title
-                                            }
-                                            
-                                            return(
-                                                <View style={styles.contContent} key={item.id}>
-                                                    <Text style={styles.simpText}>{newTitle}</Text>
-                                                    <Text style={styles.Price}> {item.price} BYN</Text>
-                                                    <Text style={styles.Qan}> {item.cardQuantity}</Text>
-                                                    <Text style={styles.simpText}>
-                                                    {item.price * item.cardQuantity} BYN
-                                                </Text>
-                                            
-                                        </View>
-                                        )})}
-                                        <View
-                                        style={{
-                                            paddingTop: 15,
-                                            borderBottomColor: '#979A9F',
-                                            borderBottomWidth: 0.3,
-                                        }}
-                                        />
-                                        <View style={styles.TotalCounter}>
-                                        <Text style={styles.finHardText}>ИТОГО</Text>
-                                        <Text style={styles.finText}>{cart.cardTotalAmount} BYN</Text>
-                                        </View>
-                                    </View>
-                                        </View>
                                 ):(
                                         <View style={styles.EmptyTextWrapper}>
                                             <Text style={styles.EmptyText}>У вас нет текущих заказов</Text>
