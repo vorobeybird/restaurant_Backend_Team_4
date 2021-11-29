@@ -50,6 +50,7 @@ export const OrderDetails = ({
   const [id, setId] = useState();
   const cart = useSelector(state => state.dishes);
   const [pay, setPay] = useState('а мне похуй')
+  console.log(cart.userInfo.attributes.name,'cart')
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -73,12 +74,12 @@ export const OrderDetails = ({
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
-    order.customer_id = cart.userInfo.surName;
+    order.customer_id = cart.userInfo.attributes.sub;
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
-    order.contact_name = cart.userInfo.surName;
-    order.contact_phone = cart.userInfo.phone;
+    order.contact_name = cart.userInfo.attributes.name+' '+ cart.userInfo.attributes.family_name;
+    order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = cart.paymentType;
     order.comment = "Hi, I'm hardcode comment";
 
@@ -102,17 +103,17 @@ export const OrderDetails = ({
           headers: {'Content-type': 'application/json'},
         },
       )
-      .then((response:any) => setId(response))
+      .then((response:any) => console.log(response,'order'))
       .catch(err => console.log(err));
   };
 
   const onMakingOrderTable = async () => {
-      
+      console.log(cart)
     let order = {} as Order;
     order.num_of_persons = cart.num;
-    order.customer_id = "889993242341";
-    order.contact_name = cart.userInfo.name +" "+cart.userInfo.surName;
-    order.contact_phone = "1111111";
+    order.customer_id = cart.userInfo.attributes.sub;
+    order.contact_name = cart.userInfo.attributes.name+' '+ cart.userInfo.attributes.family_name;
+    order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
     order.status = "bla";
@@ -133,7 +134,7 @@ export const OrderDetails = ({
     });
     
     order.dish = dishesShortInfo;
-    console.log(order)
+    console.log(order,'order')
       const servResp = await axios
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
@@ -144,7 +145,7 @@ export const OrderDetails = ({
       )
       const res = servResp;
       console.log(res,'res')
-    
+      console.log(order,'order')
     
   };
 
@@ -244,11 +245,11 @@ export const OrderDetails = ({
           showToast();
           if(cart.orderType == "Бронирование стола") {
             onMakingOrderTable()
-            console.log(onMakingOrderTable(),'return')
+            
           
           } else {
             onMakingOrder();
-            console.log(id,'id')
+            
            
           }
           console.log(id)
