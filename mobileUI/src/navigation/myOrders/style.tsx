@@ -48,6 +48,44 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         color:'black',
     },
+    switcher:{
+      top:5,
+      alignSelf:'center',
+      borderRadius: 20,
+      width: 260,
+      height: 30,
+      backgroundColor: 'rgba(239, 116, 47, 0.25)',
+    },
+    switchBut:{
+      alignItems:'center',
+      justifyContent:'center',
+      width:'50%',
+      height:'105%',
+      backgroundColor: '#FFFFFF',
+      borderColor:'#FF4D00',
+      borderWidth:1.5,
+      borderRadius: 20,
+    },
+    switchButHist:{
+      alignItems:'center',
+      justifyContent:'center',
+      left:73,
+      width:'50%',
+      height:'105%',
+      backgroundColor: '#FFFFFF',
+      borderColor:'#FF4D00',
+      borderWidth:1.5,
+      borderRadius: 20,
+    },
+    trueText:{
+      color:'black',
+      alignSelf:'center',
+    },
+    inActText:{
+      alignSelf:'center',
+      left:40,
+      color: 'rgba(255, 77, 0, 0.5)',
+    },
     orderType: {
       marginBottom:15,
         paddingBottom: 15,
@@ -95,6 +133,10 @@ const styles = StyleSheet.create({
       rowWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  rowSwitcher: {
+    
+    flexDirection: 'row',
   },
   contContent: {
     paddingTop: 15,

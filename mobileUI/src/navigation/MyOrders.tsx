@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button, ToastAndroid, FlatList} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ToastAndroid, FlatList} from 'react-native';
 import styles from "./myOrders/style";
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux'
+
 import dayjs from 'dayjs';
 type RootStackParamList = {
     
@@ -54,10 +55,22 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                 </TouchableOpacity>
                 <Text style={styles.TitleText}>Мои заказы</Text>
             </View>
-            <TouchableOpacity onPress={() => setState(!state)}>
-                <View>
-                    <Text>Текущие/история</Text>
-                </View>
+            <TouchableOpacity style={styles.switcher} onPress={() => setState(!state)}>
+                {state == true ? (
+                    <View style={styles.rowSwitcher}>
+                        <View style={styles.switchBut}>
+                            <Text style={styles.trueText}>Текущие</Text>
+                        </View>
+                        <Text style={styles.inActText}>История</Text>
+                    </View>
+                ):(
+                    <View style={styles.rowSwitcher}>
+                        <Text style={styles.inActText}>Текущие</Text>
+                        <View style={styles.switchButHist}>
+                            <Text style={styles.trueText}>История</Text>
+                        </View>
+                    </View>
+                )}
             </TouchableOpacity>
             {state === true ? (
                         <View>

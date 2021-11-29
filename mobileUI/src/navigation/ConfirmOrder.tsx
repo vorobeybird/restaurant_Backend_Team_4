@@ -86,7 +86,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
             <TouchableOpacity style={styles.Button} onPress={() => {
                 console.log(date)
                 handleAddDate(date.toString())
-                if(cart.orderType == 'Навынос'){
+                if(cart.orderType == 'Самовывоз'){
                     navigation.navigate('ChosePaymentType')
                 } else if(cart.orderType == 'Доставка') {
                     navigation.navigate('writeAdress')

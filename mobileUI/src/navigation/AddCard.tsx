@@ -28,23 +28,23 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
     const required = () => {
         let sixTeenErr,CvvErr,DateErr
         if (!card.num){
-            sixTeenErr = 'Введите цифры'
+            sixTeenErr = 'Введите номер карты'
         } else if(regexSixteen.test(card.num) === false ) {
-            sixTeenErr = 'Вы ввыели неправильно'
+            sixTeenErr = 'Введите номер карты'
         } else {
             sixTeenErr = ''
         }
         if (!card.cvv){
-            CvvErr = 'Введите цифры Cvv'
+            CvvErr = 'Введите код CVV'
         } else if(regexSixteen.test(card.cvv) === false ) {
-            CvvErr = 'Введите действительный Cvv'
+            CvvErr = 'Введите код CVV'
         } else {
             CvvErr = ''
         }
         if (!card.live){
-            DateErr = 'Введите срок'
+            DateErr = 'Введите месяц/год'
         } else if(regexDate.test(card.live) === false ) {
-            DateErr = 'Введите действительный срок'
+            DateErr = 'Введите месяц/год'
         } else {
             DateErr = ''
         }
