@@ -145,6 +145,12 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
 
+                    
+
+                    <TouchableOpacity onPress={showTimepicker} style={styles.box}>
+                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
+                        <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
                         
                     }}>
@@ -154,11 +160,6 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                     <Modal transparent={true} animationType='fade' visible={isModalVisible} onRequestClose={() => changeModalVisible(false)}>
                         <ModalPicker/>
                     </Modal>
-
-                    <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
-                        <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
-                    </TouchableOpacity>
                 {show && (
                     <DateTimePicker
                         testID="dateTimePicker"
