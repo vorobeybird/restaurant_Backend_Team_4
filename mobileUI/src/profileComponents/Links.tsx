@@ -86,8 +86,9 @@ const styles = StyleSheet.create({
       flexDirection:'row',
     },
     PictStyle:{
-      width:22,
-      height:22,
+      resizeMode:'contain',
+      width:30,
+      height:25,
       marginRight:'5%',
       marginLeft:'5%',
     },
