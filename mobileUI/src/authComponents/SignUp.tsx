@@ -49,14 +49,14 @@ const required = () => {
     if (!state.name){
       nameErr = 'Введите имя'
   } else if(nameRegEx.test(state.name) === false ) {
-      nameErr = 'Введите имя на русском'
+      nameErr = 'Введите имя'
   } else {
       nameErr = ''
   }
   if (!state.surName){
       surNameErr = 'Введите фамилию'
   }else if(nameRegEx.test(state.surName) === false ) {
-      surNameErr = 'Введите фамилию на русском'
+      surNameErr = 'Введите фамилию'
   } else {
       surNameErr = ''
   }

@@ -82,11 +82,11 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
             <Text style={styles.prgressText}> шаг 1/3</Text>
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 if(checkedThird) {
-                    navigation.navigate('ConfirmOrder');handleAddOrderType("Навынос");
+                    navigation.navigate('ConfirmOrder');handleAddOrderType("Самовывоз");
                 } else if(checkedSecond) {
                     navigation.navigate('ConfirmOrder');handleAddOrderType("Доставка");
                 } else if(checkedFirs) {
-                    navigation.navigate('ConfirmOrderTable');handleAddOrderType("Бронь стола"); 
+                    navigation.navigate('ConfirmOrderTable');handleAddOrderType("Бронирование стола"); 
                 }
             }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>

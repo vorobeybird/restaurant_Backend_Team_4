@@ -28,9 +28,9 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
     const required = () => {
         let streetErr,homeErr
         if (!street){
-            streetErr = 'Введите улицу'
+            streetErr = 'Введите название улицы'
         } else if(nameRegEx.test(street) === false ) {
-            streetErr = 'Введите улицу на русском'
+            streetErr = 'Введите название улицы'
         } else {
             streetErr = ''
         }

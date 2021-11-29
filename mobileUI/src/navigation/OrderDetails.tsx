@@ -242,7 +242,7 @@ export const OrderDetails = ({
         style={styles.butStyle}
         onPress={() => {
           showToast();
-          if(cart.orderType == "Бронь стола") {
+          if(cart.orderType == "Бронирование стола") {
             onMakingOrderTable()
             console.log(onMakingOrderTable(),'return')
           

@@ -25,9 +25,9 @@ export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, ro
     const required = () => {
         let streetErr,homeErr
         if (!adress.str){
-            streetErr = 'Введите улицу'
+            streetErr = 'Введите название улицы'
         } else if(nameRegEx.test(adress.str) === false ) {
-            streetErr = 'Введите улицу на русском'
+            streetErr = 'Введите название улицы'
         } else {
             streetErr = ''
         }
