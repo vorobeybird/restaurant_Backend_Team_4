@@ -8,6 +8,7 @@ var app = require("../app");
 var debug = require("debug")("api-sequelize:server");
 var http = require("http");
 var cors = require("cors");
+socketIO = require("socket.io");
 /**
  * Get port from environment and store in Express.
  */
@@ -21,7 +22,26 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
+global.io = socketIO(server, {
+  transports: ["polling"],
+  cors: {
+    cors: {
+      origin: "http://localhost:3000",
+    },
+  },
+});
 
+io.on("connection", (socket) => {
+  socket.emit("hello", "We were just connected");
+
+  socket.on("message", (message) => {
+    console.log(`message from ${socket.id} : ${message}`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`socket ${socket.id} disconnected`);
+  });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */
