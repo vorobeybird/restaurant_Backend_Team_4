@@ -154,8 +154,6 @@ export const Delivery = ({ total, combineOrder }: OrderProps) => {
     }
   };
 
-  console.log(order);
-
   const stepsController = () => {
     switch (currentStep) {
       case 0:
