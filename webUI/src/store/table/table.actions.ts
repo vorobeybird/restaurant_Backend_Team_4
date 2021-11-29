@@ -2,6 +2,7 @@ import { AppDispatch } from "..";
 import { TableConstants } from "./table.types";
 import axios, { AxiosResponse } from "axios";
 import dayjs from 'dayjs';
+import Api from "../Api";
 
 const getTablesReservations = async (date?: Date) => {
 
@@ -10,7 +11,7 @@ const getTablesReservations = async (date?: Date) => {
   ? `${process.env.REACT_APP_GET_DISHES}/api/tables/${strToDate}` 
   : `${process.env.REACT_APP_GET_DISHES}/api/tablepool`;
 
-   return await axios.get<AxiosResponse>(GET_TABLES_URL)
+   return await Api.get<AxiosResponse>(GET_TABLES_URL)
   .then(response => response.data)
   .catch(err=> console.error(err))
   };
