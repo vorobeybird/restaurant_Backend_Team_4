@@ -2,6 +2,7 @@ const Order = require("../models").Order;
 const Dish = require("../models").Dish;
 const OrderDish = require("../models").OrderDish;
 const db = require("../models/index");
+const { QueryTypes } = require("sequelize");
 
 module.exports = {
   list(req, res) {
