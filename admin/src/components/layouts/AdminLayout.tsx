@@ -1,7 +1,8 @@
 import { styled} from "@mui/styles";
 import { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Dishes from "../dishes/Dishes";
+import Dashboard from "../dashboard/Dashboard";
 import AdminNavBar from "./navbar/AdminNavBar";
 import AdminSideBar from "./sidebar/AdminSideBar";
 import Orders from "../orders/Orders";
@@ -56,7 +57,9 @@ const AdminLayout = ()=>{
       <AdminLayoutWrapper>
         <AdminLayoutContainer>
           <AdminLayoutContent>
+            <Redirect to="/dashboard" />
         <Switch>
+        <Route path="/dashboard"><Dashboard/></Route>
         <Route path="/dishes"><Dishes/></Route>
         <Route path="/orders"><Orders/></Route>
         <Route path="/reservations"><Reservations/></Route>
