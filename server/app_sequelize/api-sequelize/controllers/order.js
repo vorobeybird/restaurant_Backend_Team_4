@@ -99,7 +99,7 @@ module.exports = {
       });
       for (let elem of dish) {
         await db.sequelize.query(
-          "INSERT INTO `OrderDish` (`id`, `DishId`, `OrderId`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
           {
             replacements: [
               elem.dish_id,

@@ -20,6 +20,7 @@ export const ChooseDate = () => {
 
   useEffect(()=>{
     dispatch(getTablePool());
+    dispatch(getTableReservations(date));
   }, [])
   return (
       <>
