@@ -28,7 +28,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
-    const [getTable, setTable] = useState([])
+    
     let devState: any[] = [];
 
     const showToast = () => {
