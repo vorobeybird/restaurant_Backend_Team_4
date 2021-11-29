@@ -85,7 +85,16 @@ const required = () => {
       const user = await Auth.signUp({
         username: state.email,
         password: state.password,
+        attributes: {
+            name: state.name,
+            family_name: state.surName,
+            email: state.email,
+            phone_number: state.phone,
+            address: JSON.stringify({}),
+            "custom:card_number": JSON.stringify({}),
+        }
       });
+
       props.onStateChange('confirmSignUp', state);
     } catch (error: any) {
       console.log(error);
@@ -96,13 +105,7 @@ const required = () => {
     const handlePassword = (pass:any) =>{
         dispatch(addPassword(pass))
     }
-    const [state, setState] = useState({
-        name:'',
-        surName:'',
-        email:'',
-        password:'',
-        phone:'',  
-    })
+    
     
     
     const onSubmit = async () => {
@@ -177,8 +180,7 @@ const required = () => {
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 required()
                 onSubmit()
-                handleEmail(state.email)
-                handleAddUserInfo(state)
+              
                 handlePassword(state.password)
                 
             }}>

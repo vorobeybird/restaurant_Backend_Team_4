@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity, Button, TextInput} from 'react-native';
-
+import {Auth} from 'aws-amplify';
 import { useNavigation } from '@react-navigation/native';
 import { addUserInfo} from '../store/StoreCard'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type RootStackParamList = {
     navigate:any;
@@ -11,14 +11,36 @@ type RootStackParamList = {
 const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
 
 export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const navigation = useNavigation()
-    const dispatch = useDispatch()
-
+    const user = useSelector(state => state.dishes.userInfo.attributes);
     const [state, setState] = useState({
         name:'',
         surName:'',
         phone:'',  
     })
+    
+    async function updateUserAttributesHandler() {
+        try {
+            if (user) {
+                console.log(user,'asdfasdfasdfasdfasdf')
+                console.log(state)
+                const userAmp = await Auth.currentAuthenticatedUser();
+                await Auth.updateUserAttributes(userAmp, {
+                    name: state.name,
+                    family_name: state.surName,
+                    phone_number: state.phone
+                });
+                const updatedUser = await Auth.currentAuthenticatedUser();
+                handleAddUserInfo(updatedUser)
+        }    
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+
+    
     const [error, setError] = useState({
         name:'',
         surName:'',
@@ -92,7 +114,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                     if(nameRegEx.test(state.name) === false ||  nameRegEx.test(state.surName) === false) {
                         required()  
                     } else if(state.name && state.surName && state.phone ){
-                        handleAddUserInfo(state);navigation.navigate('ProfileComponent')
+                        updateUserAttributesHandler();navigation.navigate('ProfileComponent')
                     } }}>
                     <Text style={styles.ButText}> ГОТОВО </Text>
             </TouchableOpacity>

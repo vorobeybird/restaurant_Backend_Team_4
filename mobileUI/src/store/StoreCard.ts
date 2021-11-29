@@ -12,7 +12,7 @@ interface CounterState {
   isSignedIn: boolean;
   adress: Adress[];
   card: Card[];
-  userInfo: UserInfo[];
+  userInfo:  any[];
   order: any[];
   num: string;
   orderHistory: History[];
@@ -32,11 +32,7 @@ interface Card {
   id: number;
   type: string;
 }
-interface UserInfo {
-  name: string;
-  surName: string;
-  phone: string;
-}
+
 interface Adress {
   adress: string;
   id: string;
@@ -204,7 +200,7 @@ export const dishSlice = createSlice({
     },
     addOrderHistoryItem(state,action) {
       state.orderHistory.push({...action.payload})
-      console.log(initialState.orderHistory,'store')
+      
     },
   },
 });
