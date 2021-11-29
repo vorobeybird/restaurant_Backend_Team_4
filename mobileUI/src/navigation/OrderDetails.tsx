@@ -143,7 +143,7 @@ export const OrderDetails = ({
         },
       )
       const res = servResp;
-      console.log({...res}.data.id,'res')
+      console.log(res,'res')
     
     
   };
