@@ -27,6 +27,7 @@ export interface MenuItem {
       is_default: boolean
     }
   }[];
+  excluded_ingredients: string[];
 }
 
 export interface Category {

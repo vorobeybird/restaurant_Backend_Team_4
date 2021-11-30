@@ -34,7 +34,14 @@ export const DishPage = ({
       ToastAndroid.TOP,
     );
   };
-
+  let newTitle
+          if(item.title.length >7){
+            let name = item.title.substr(0,20)
+             newTitle = name+'...'
+            console.log(newTitle)
+          } else {
+            newTitle = item.title
+          }
   return (
     <View key={id} style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -45,7 +52,7 @@ export const DishPage = ({
           />
         </TouchableOpacity>
         <Text ellipsizeMode="tail" numberOfLines={1} style={styles.TitleText}>
-          {title}
+          {newTitle}
         </Text>
       </View>
       <ScrollView pagingEnabled horizontal style={styles.Pict}>
@@ -145,6 +152,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   Title: {
+    height: '10%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -165,7 +173,7 @@ const styles = StyleSheet.create({
   Pict: {
     top: '1%',
     alignSelf: 'center',
-    resizeMode: 'contain',
+    
     width: 325,
     height: 265,
     backgroundColor: 'white',

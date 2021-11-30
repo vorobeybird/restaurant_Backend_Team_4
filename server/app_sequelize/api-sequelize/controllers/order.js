@@ -1,14 +1,20 @@
 const Order = require("../models").Order;
 const Dish = require("../models").Dish;
+const OrderDish = require("../models").OrderDish;
+const db = require("../models/index");
+const { QueryTypes } = require("sequelize");
 
 module.exports = {
   list(req, res) {
-    
     return Order.findAll({
       include: [
         {
-          model: Dish,
-          as: "dish",
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
         },
       ],
     })
@@ -22,8 +28,12 @@ module.exports = {
     return Order.findByPk(req.params.id, {
       include: [
         {
-          model: Dish,
-          as: "dish",
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
         },
       ],
     })
@@ -43,33 +53,38 @@ module.exports = {
 
   getByCustmerId(req, res) {
     return Order.findAll({
-      include: [{
-        model: Dish,
-        as: "dish"
-      }],
+      include: [
+        {
+          model: OrderDish,
+          include: [
+            {
+              model: Dish,
+            },
+          ],
+        },
+      ],
       where: {
-        customer_id: req.params.customerId
-      }
+        customer_id: req.params.customerId,
+      },
     })
-    .then((orders) => {
-      if (!orders) {
-        return res.status(404).send({
-          message: "Orders Not Found",
-        });
-      }
-      return res.status(200).send(orders);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(400).send(error);
-    });
+      .then((orders) => {
+        if (!orders) {
+          return res.status(404).send({
+            message: "Orders Not Found",
+          });
+        }
+        return res.status(200).send(orders);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send(error);
+      });
   },
 
   async add(req, res) {
     const dish = req.body.dish;
     try {
       const date = req.body.delivery_date;
-      //   const date = new Date(req.body.delivery_date)
       const order = await Order.create({
         customer_id: req.body.customer_id,
         delivery_method: req.body.delivery_method,
@@ -82,11 +97,19 @@ module.exports = {
         status: req.body.status,
         comment: req.body.comment,
       });
-      for (const elem of dish) {
-        const dish_item = await Dish.findByPk(elem.dish_id);
-        await order.addDish(dish_item, {
-          through: { quantity: elem.dish_amount, excluded_ingredients: elem.excluded_ingredients},
-        });
+      for (let elem of dish) {
+        await db.sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          {
+            replacements: [
+              elem.dish_id,
+              order.id,
+              elem.dish_amount,
+              elem.excluded_ingredients,
+            ],
+            type: QueryTypes.INSERT,
+          }
+        );
       }
       res.status(200).send(order);
     } catch (error) {

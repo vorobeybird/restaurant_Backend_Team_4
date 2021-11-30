@@ -39,11 +39,11 @@ export const MarketMain = () => {
   const cart = useSelector(state => state.dishes);
   const dispatch = useDispatch();
   const navigation = useNavigation<RootStackParamList>();
-  console.log(cart.userInfo.name, 'asdf')
+
+  
   const handleClear = () => {
     dispatch(clearCart());
   };
-  console.log(cart)
 
     useEffect(() => {
         dispatch(getTotals());
@@ -56,7 +56,12 @@ export const MarketMain = () => {
       <View style={styles.PictCont}>
         <Text style={styles.Header}>Корзина</Text>
         <TouchableOpacity onPress={() => handleClear()}>
+        {cart.dishes.length === 0 ? (
+          <></>
+        ):(
           <Image style={styles.Bin} source={require('../../img/bin.png')} />
+          )}
+          
         </TouchableOpacity>
       </View>
       {cart.dishes.length === 0 ? (
@@ -69,12 +74,13 @@ export const MarketMain = () => {
           <Text style={styles.emptyText}> Похоже, вы пока ничего не </Text>
           <Text style={styles.emptyText}> добавили в корзину </Text>
           <TouchableOpacity
+            style={styles.ButtonWrapper}
             onPress={() => {
-              navigation.navigate('Menu');
+              navigation.navigate('MenuTabNavigation');
             }}>
-            <View style={styles.ButtonWrapper}>
+            
               <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
-            </View>
+          
           </TouchableOpacity>
         </View>
       ) : (
@@ -175,7 +181,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '800',
-    fontSize: 18,
+    fontSize: 15,
     lineHeight: 15,
     color: '#000000',
   },
@@ -207,8 +213,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     top: '20%',
-    height: '33%',
-    width: '90%',
+    height: '17%',
+    width: '80%',
     alignSelf: 'center',
     backgroundColor: '#FF4D00',
     borderRadius: 4,

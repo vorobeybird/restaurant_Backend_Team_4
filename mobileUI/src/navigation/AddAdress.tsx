@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity, Button, Touchable, TextInput, ToastAndroid} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput, ToastAndroid} from 'react-native';
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,28 @@ export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, ro
     const handleAddAdress = (item) => {
         dispatch(addAddress(item))
     }
+    const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+    const [error, setError] = useState({
+        street:'',
+        home:'',
+    })
+    const required = () => {
+        let streetErr,homeErr
+        if (!adress.str){
+            streetErr = 'Введите название улицы'
+        } else if(nameRegEx.test(adress.str) === false ) {
+            streetErr = 'Введите название улицы'
+        } else {
+            streetErr = ''
+        }
+        if (!adress.house){
+            homeErr = 'Введите номер дома'
+        } else {
+            homeErr = ''
+        }
+        setError({street:streetErr,home:homeErr})
+    }
+
     const showToast = () => {
         ToastAndroid.showWithGravity(
           "Адрес добавлен",
@@ -42,12 +64,14 @@ export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, ro
                     onChangeText={(val)=> setAdress({...adress,str:val, })}
                     
                 />
+                <Text style={styles.errorStreet}>{error.street}</Text>
                 <View style={styles.container}>
-                    <TextInput 
+                    <TextInput
                         style={styles.home}
                         placeholder='*Дом'
                         onChangeText={(val)=> setAdress({...adress,house:val})}
                     />
+                    
                     <TextInput 
                         style={styles.home}
                         placeholder='Корпус'
@@ -59,9 +83,17 @@ export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, ro
                         onChangeText={(val)=> setAdress({...adress,kv:val})}
                     />
                 </View>
+                <Text style={styles.errorHome}>{error.home}</Text>
             </View>
             
-            <TouchableOpacity style={styles.Button} onPress={() => {handleAddAdress(adress);goBack(); showToast()}}>
+            <TouchableOpacity style={styles.Button} onPress={() => {
+                if(adress.str !='' && adress.house !='' && nameRegEx.test(adress.str) === true){
+                    handleAddAdress(adress);goBack(); showToast()
+                }else {
+                    required()
+                    
+                }
+            }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>
@@ -128,6 +160,17 @@ const styles = StyleSheet.create({
         borderRadius:4,
         borderColor:'#C6C6C6',
 
+    },
+    errorStreet:{
+        top:20,
+        left:40,
+        color:'red',
+    },
+    errorHome:{
+        top:50,
+        left:40,
+        color:'red',
+        
     },
     container:{
         flexDirection:'row',
