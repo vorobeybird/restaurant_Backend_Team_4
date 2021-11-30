@@ -13,8 +13,6 @@ import {
 import {
   ErrorOutline,
   BarChart,
-  Lock,
-  Settings,
   ShoppingBasket,
   Person,
   PersonAdd,
@@ -32,7 +30,7 @@ const user = {
 
 const items = [
   {
-    href: '/',
+    href: '/dashboard',
     icon: BarChart,
     title: 'Статистика'
   },
@@ -50,31 +48,6 @@ const items = [
     href: '/reservations',
     icon: Event,
     title: 'Бронирование'
-  },
-  {
-    href: '/account',
-    icon: Person,
-    title: 'Account'
-  },
-  {
-    href: '/settings',
-    icon: Settings,
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: Lock,
-    title: 'Login'
-  },
-  {
-    href: '/createUser',
-    icon: PersonAdd,
-    title: 'Create user'
-  },
-  {
-    href: '/404',
-    icon: ErrorOutline,
-    title: 'Error'
   }
 ];
 
