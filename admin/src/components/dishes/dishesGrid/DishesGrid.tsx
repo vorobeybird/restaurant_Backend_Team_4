@@ -3,10 +3,10 @@ import DishDialog from '../dishDialog/DishDialog';
 import DishAlertDialog from '../dishDialog/DishAlertDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
-import axios, { AxiosResponse } from 'axios';
 import {Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import IngDialog from '../catIngDialog/CatIngDialog';
+import apiFetch from '../../common/apifetch/apifetch';
 
 interface IDish {
   id?: string;
@@ -88,13 +88,9 @@ const DishesGrid = () => {
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
 
-    axios.delete<AxiosResponse>(urlToDelete, {
-      headers: {
-          "Content-type": "application/json"
-         }
-      })
+    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
+    apiFetch('DELETE', urlToDelete)
       .then(response=> {
 
         fetchDishes();
@@ -107,11 +103,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<AxiosResponse | any>(`${apiUrl}/dishes?allInfo=true`, {
-        headers: {
-            "Content-type": "application/json"
-        }
-    })
+    apiFetch('GET', `${apiUrl}/dishes?allInfo=true`)
     .then(response=> {
         setDishes(response.data);
     })

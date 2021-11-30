@@ -1,7 +1,8 @@
 import { Grid, Container, TextField, Button, InputAdornment, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useTheme } from '@mui/styles';
-import axios, {AxiosResponse, Method}  from 'axios';
+import {Method}  from 'axios';
+import apiFetch from '../../../common/apifetch/apifetch';
 
 
 
@@ -43,14 +44,7 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
         const fillDish = ( type: Method, url: string, data: IDish, id?: number) => {
 
           const queryUrl = id ? `${url}/${id}`: url;
-          axios.request<AxiosResponse>({
-              method: type,
-              url: queryUrl,
-              data: data,
-              headers: {
-                "Content-type": "application/json"
-               }
-            })
+          apiFetch(type, queryUrl, data)
           .then(response => {
               handleClose();
               fetchDishes();
