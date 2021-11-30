@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, setOpenRForm, fetchReservationData}: any) => {
+const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, setOpenRForm, fetchAllOrders, fetchReservationData}: any) => {
     console.log(selectedCellData)
     const initialFormValues = {    
                 delivery_method: "bookTable",
@@ -59,6 +59,7 @@ const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, se
         if (response.status === 200) {
           setResponse(response.data);
           fetchReservationData();
+          fetchAllOrders();
         }
       })
       .catch(err=>{

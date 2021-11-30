@@ -17,7 +17,7 @@ const MenuItemComponent = (item: MenuItem) => {
   const onOrder = (item: MenuItem) => {
     if (userId) {
       toast.success(`Блюдо "${item.title}" добавлено в корзину`);
-      dispatch(addToCart(item, items));
+      dispatch(addToCart({...item, excluded_ingredients: []}, items));
     }
   };
 
