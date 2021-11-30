@@ -5,6 +5,7 @@ import { addDate,getNumOfPersons } from '../store/StoreCard'
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/core';
 import axios from "axios";
 import dayjs from 'dayjs';
 type RootStackParamList = {
@@ -12,7 +13,7 @@ type RootStackParamList = {
     navigate:any;
   }
 
-  interface category {
+  interface table {
     id: number,
     table_number: number,
     persons: number,
@@ -20,14 +21,18 @@ type RootStackParamList = {
   }
 
 
-export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+export const ConfirmOrderTable = () => {
     const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
+    const route = useRoute();
+    const {bookTable} = route?.params ?? {};
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
-    const [getTable, setTable] = useState()
+    const [getTable, setTable] = useState([]);
+    const [tablePool, setTablePool] = useState([]);
+
     let devState: any[] = [];
     const showToast = () => {
         ToastAndroid.showWithGravity(
@@ -45,11 +50,36 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
         );
       };
 
+    const getTablesByDate = async (date:any) => {
+            const correctDate = dayjs(date).format('YYYY-MM-DD')
+            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`)
+            const res = response.data
+            setTable(res)
+            console.log(getTable)
+        }
+    const getTablePool = async () => {
+            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tablepool`)
+            const res = response.data
+            setTablePool(res)
+        }
+    const fetchMenuItems = async (date:any) => {
+            const items = await getTablesByDate(date)
+            return items
+        }
+
+    useEffect(() => {
+        getTablesByDate(date);
+        getTablePool()
+    }, []);
+
+
     const onChange  = async (event:any, selectedDate:any) => {
         const currentDate = selectedDate || date;
         await setDate(currentDate);
+        getTablesByDate(date);
+        console.log(getTable)
+        console.log(tablePool)
         hideDatePicker()
-
       };
     
     const showMode = (currentMode:any) => {
@@ -101,6 +131,37 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     const HEIGHT = Dimensions.get('window').height
     const options = [ 'На двоих',  'На четверых', 'На шестерых', 'На восьмерых', 'На десятерых']
 
+    const result = [...new Set([...getTable, ...tablePool])]
+    let res = result.filter((v,i,a)=>a.findIndex(t=>(t.table_number === v.table_number))===i)
+
+const checkAvailableTable = (table:any) => {
+    if (!table.reserve) {
+      return true;
+    }
+
+    if (table.reserve && table.reserve.length < 3) {
+      return true; 
+    } else {
+      return false;
+    }
+  }
+
+  const findAvailableTables = (tables:any) => {
+    let tempAvailable:any = []
+    let tempAllTables:any = []
+    tables.forEach((table:any) => {
+      if (table.persons) {
+        //   console.log(table)
+      if (checkAvailableTable(table) && !tempAvailable.includes(table.persons))  tempAvailable.push(table.persons); // push table to available tables pool if it is not added there yet
+      if (!tempAllTables.includes(table.persons)) tempAllTables.push(table.persons);
+      }
+  })
+  console.log(tempAvailable);
+  tempAllTables.sort((a:any,b:any) => a - b);
+  console.log(tempAllTables);
+  }
+
+findAvailableTables(res)
     
     const ModalPicker = () => {
 
