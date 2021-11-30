@@ -5,6 +5,7 @@ import { addDate } from '../store/StoreCard'
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
 type RootStackParamList = {
     ConfirmOrder: undefined;
     navigate:any;
@@ -62,11 +63,11 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
                     }}>
-                        <Text style={styles.dateText}>{date.getDate()}.{date.getMonth()}.{date.getFullYear()}</Text>
+                        <Text style={styles.dateText}>{dayjs(date).format('YYYY-MM-DD')}</Text>
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
+                        <Text style={styles.dateText}>{dayjs(date).format('HH:mm')}</Text>
                         <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
                     </TouchableOpacity>
                 {show && (
@@ -85,7 +86,7 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
             <TouchableOpacity style={styles.Button} onPress={() => {
                 console.log(date)
                 handleAddDate(date.toString())
-                if(cart.orderType == 'Навынос'){
+                if(cart.orderType == 'Самовывоз'){
                     navigation.navigate('ChosePaymentType')
                 } else if(cart.orderType == 'Доставка') {
                     navigation.navigate('writeAdress')
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:'60%',
         alignSelf:'center',
-        color:'666666',
+        color:'#666666',
     },
     Arrow:{
         top:'26%',

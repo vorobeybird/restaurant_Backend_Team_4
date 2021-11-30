@@ -16,27 +16,28 @@ import edit from "../../assets/edit.svg";
 
 interface ICartItemProps {
   item: ICartItem;
+  idx: number;
   toggleModal:  Function;
   setSelectedDish: Function;
 }
-export const CartItem = ({item, toggleModal, setSelectedDish}: ICartItemProps) => {
+export const CartItem = ({item, idx, toggleModal, setSelectedDish}: ICartItemProps) => {
 
   const handleEditMode = () => {
-    setSelectedDish(item.id);
+    setSelectedDish(idx);
     toggleModal();
   }
   const dispatch = useAppDispatch();
 
-  const deleteDish = (id: number) => {
-    dispatch(deleteFromCart(id));
+  const deleteDish = (id: number, idx: number) => {
+    dispatch(deleteFromCart(id, idx));
   };
 
-  const incrementNumber = (id: number) => {
-    dispatch(incrementNumOfDishes(id));
+  const incrementNumber = (id: number, idx: number) => {
+    dispatch(incrementNumOfDishes(id, idx));
   };
 
-  const decrementNumber = (id: number) => {
-    dispatch(decrementNumofDishes(id));
+  const decrementNumber = (id: number, idx: number) => {
+    dispatch(decrementNumofDishes(id, idx));
   };
 
   return (
@@ -61,18 +62,18 @@ export const CartItem = ({item, toggleModal, setSelectedDish}: ICartItemProps) =
       </div>
       <div className="cart-item__actions">
         <div className="calculate">
-          <button onClick={() => incrementNumber(item.id)} type="button">
+          <button onClick={() => incrementNumber(item.id, idx)} type="button">
             <img src={Plus} alt="plus" />
           </button>
           <div className="quantity">{item.amount}</div>
-          <button type="button" onClick={() => decrementNumber(item.id)}>
+          <button type="button" onClick={() => decrementNumber(item.id, idx)}>
             <img src={Minus} alt="minus" />
           </button>
         </div>
         <button
           className="button-trash"
           type="button"
-          onClick={() => deleteDish(item.id)}
+          onClick={() => deleteDish(item.id, idx)}
         >
           <img src={DeleteIcon} alt="delete" />
         </button>

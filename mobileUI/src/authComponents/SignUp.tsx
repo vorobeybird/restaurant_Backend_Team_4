@@ -38,20 +38,162 @@ const SignUp = (props: any) => {
     name: '',
     surName: '',
     email: '',
+    phone:'',
     password: '',
   });
+  const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+
+
+const required = () => {
+    let nameErr,surNameErr,emailErr,phoneErr,passwordErr
+    if (!state.name){
+      nameErr = 'Введите имя'
+  } else if(nameRegEx.test(state.name) === false ) {
+      nameErr = 'Введите имя'
+  } else {
+      nameErr = ''
+  }
+  if (!state.surName){
+      surNameErr = 'Введите фамилию'
+  }else if(nameRegEx.test(state.surName) === false ) {
+      surNameErr = 'Введите фамилию'
+  } else {
+      surNameErr = ''
+  }
+    if (!state.email){
+        emailErr = 'Введите емэйл'
+    } else {
+        emailErr = ''
+    }
+    if (!state.phone){
+        phoneErr = 'Введите телефон'
+    } else {
+        phoneErr = ''
+    }
+    if (!state.password){
+        passwordErr = 'Введите пароль'
+    } else {
+        passwordErr = ''
+    }
+    setError({name:nameErr,surName:surNameErr,phone:phoneErr,email:emailErr,password:passwordErr})
+
+    
+}
 
   const onSubmit = async () => {
     try {
       const user = await Auth.signUp({
         username: state.email,
         password: state.password,
+        attributes: {
+            name: state.name,
+            family_name: state.surName,
+            email: state.email,
+            phone_number: state.phone,
+            address: JSON.stringify({}),
+            "custom:card_number": JSON.stringify({}),
+        }
       });
+
       props.onStateChange('confirmSignUp', state);
     } catch (error: any) {
       console.log(error);
     }
-  };
+    const handleAddUserInfo = (item:any) => {
+        dispatch(addUserInfo(item))
+    }
+    const handlePassword = (pass:any) =>{
+        dispatch(addPassword(pass))
+    }
+    
+    
+    
+    const onSubmit = async () => {
+            try {
+                const user = await Auth.signUp({
+                    username:state.email,
+                    password: state.password
+                });
+                props.onStateChange('confirmSignUp', state)
+            } catch(error:any){
+                console.log(error)
+            
+             
+        }
+        
+        
+    }
+
+    if(props.authState === 'signUp'){
+        
+        return (
+        <View style={styles.Wrapper}>
+            <Text style={styles.HeadStyle}>Регистрация</Text>
+            <TextInput 
+                    placeholderTextColor="#C6C6C6" 
+                    style={styles.street}
+                    placeholder='*Имя'
+                    onChangeText={(val) => {setState({...state,name:val})}}
+            />
+            
+            <TextInput 
+                    placeholderTextColor="#C6C6C6" 
+                    style={styles.street}
+                    placeholder='*Фамилия'
+                    onChangeText={(val) => {setState({...state,surName:val})}}
+                    
+            />
+            
+            <Text style={styles.error}>{error.surName}</Text>    
+            <TextInput 
+                    placeholderTextColor="#C6C6C6" 
+                    style={styles.street}
+                    placeholder='*Емэйл'
+                    onChangeText={(val) => {setState({...state,email:val.toLowerCase()})}}
+                    value={state.email}
+                />
+            <Text style={styles.error}>{error.email}</Text>
+            <TextInput 
+                    placeholderTextColor="#C6C6C6" 
+                    style={styles.street}
+                    placeholder='*Телефофвыафыан'
+                    onChangeText={(val) => setState({...state,phone:val})}
+                    
+                />
+            <Text style={styles.error}>{error.phone}</Text>
+            <TextInput 
+                    placeholderTextColor="#C6C6C6" 
+                    style={styles.street}
+                    placeholder='*Пароль'
+                    onChangeText={(val) => {setState({...state,password:val})}}
+                    secureTextEntry={true}
+                />
+            <Text style={styles.error}>{error.password}</Text>
+            <View style={styles.ButCont}>
+                <TouchableOpacity
+                    onPress={() => props.onStateChange('signIn', {})}
+                >
+                    <Text style={styles.SimpText}>back to signIn</Text>
+                </TouchableOpacity>
+                
+            </View>
+            <TouchableOpacity style={styles.Button} onPress={()=> { 
+                required()
+                onSubmit()
+              
+                handlePassword(state.password)
+                
+            }}>
+                <Text style={styles.ButText}> ЗАРЕГЕСТРИРОВАТЬСЯ</Text>
+            </TouchableOpacity>
+        </View>
+    )}
+    else {
+        return (
+            <></>
+        )
+    }
+}
 
   if (props.authState === 'signUp') {
     return (
@@ -63,18 +205,18 @@ const SignUp = (props: any) => {
           placeholder="Имя"
           onChangeText={val => setState({...state, name: val})}
         />
-
+        <Text style={styles.error}>{error.name}</Text>
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}
           placeholder="Фамилия"
           onChangeText={val => setState({...state, surName: val})}
         />
-
+        <Text style={styles.error}>{error.surName}</Text>
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}
-          placeholder="Емэйл"
+          placeholder="Email"
           onChangeText={val => setState({...state, email: val.toLowerCase()})}
           value={state.email}
         />
@@ -103,11 +245,17 @@ const SignUp = (props: any) => {
         <TouchableOpacity
           style={styles.Button}
           onPress={() => {
-            onSubmit();
-            handleEmail(state.email);
-            handleAddUserInfo(state);
-            handlePassword(state.password);
-          }}>
+            if(nameRegEx.test(state.name) === false ||  nameRegEx.test(state.surName) === false) {
+              required()  
+            } else {
+              onSubmit();
+              handleEmail(state.email);
+              handleAddUserInfo(state);
+              handlePassword(state.password);
+            }
+          }
+            
+          }>
           <Text style={styles.ButText}> ЗАРЕГИСТРИРОВАТЬСЯ</Text>
         </TouchableOpacity>
       </View>
@@ -139,7 +287,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#C6C6C6',
     marginBottom: '2%',
-    Bottom: '5%',
+
     color: 'black',
   },
   ButCont: {

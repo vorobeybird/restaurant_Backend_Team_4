@@ -3,19 +3,20 @@ import { AppDispatch } from "../../store";
 import axios, { AxiosResponse } from "axios";
 import { Response } from "./menu.types";
 import { useSelector } from "react-redux";
+import Api from "../Api";
 
 const GET_CATEGORIES_URL: any = `${process.env.REACT_APP_GET_DISHES}/api/category`;
 const GET_DISHES_URL: any = `${process.env.REACT_APP_GET_DISHES}/api/dishes`;
 
 const getCategories = async () => {
-  const response = (await axios.get(
+  const response = (await Api.get(
     GET_CATEGORIES_URL
   )) as AxiosResponse<Response>;
   return response.data;
 };
 
 const getDishes = async () => {
-  const response = (await axios.get(GET_DISHES_URL)) as AxiosResponse<Response>;
+  const response = (await Api.get(GET_DISHES_URL)) as AxiosResponse<Response>;
   return response.data;
 };
 

@@ -46,6 +46,10 @@
     flex: 1;
     text-align: center;
     vertical-align: top;
+    cursor: pointer;
+    &:hover {
+      color: #EF742F;
+    }
   }
 
   .menu_active_link {

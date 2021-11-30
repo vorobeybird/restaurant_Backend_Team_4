@@ -1,19 +1,10 @@
 import { useMemo, useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { ChooseDate } from "../common/chooseDate/ChooseDate";
-import { ChooseTime } from "../common/chooseTime/ChooseTime";
-import { EnterContacts } from "../common/enterContacts/EnterContacts";
-import { PaymentMethod } from "../common/paymentMethod/PaymentMethod";
-import PrevStepIcon from "../../assets/prev.png";
-import NextStepIcon from "../../assets/next.png";
-import { ICartItem } from "../../store/cart/cart.types";
-import edit from "../../assets/edit.svg";
 import { DishItem } from "./dishItem";
 import { OrderInformationRow } from "./OrderInformationRow";
 import moment from "moment";
 import "./orderConfirmation.scss";
 import axios, { Axios, AxiosResponse } from "axios";
-import Modal from "../common/modal/Modal";
 import visaImg from "../../assets/visa.svg";
 import mastercardImg from "../../assets/mastercard.svg";
 import { DELIVERY_METHOD } from "../../store/order/order.types";
@@ -22,8 +13,6 @@ import { OrderTemp } from "../cart/Cart";
 import { clearCart } from "../../store/cart/cart.actions";
 import {
   DishShortInfo,
-  Order,
-  OrderConstants,
 } from "../../store/order/order.types";
 import { useHistory } from "react-router-dom";
 

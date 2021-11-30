@@ -18,7 +18,7 @@ export interface Order {
   total_price: number;
   delivery_date: Date;
   comment: string;
-  dish: DishShortInfo[];
+  OrderDishes: DishSettingsInfo[];
   adress: string;
   contact_name: string;
   contact_phone: string;
@@ -27,11 +27,19 @@ export interface Order {
   id: number
 }
 
-export interface DishShortInfo {
+export interface DishSettingsInfo {
   dish_id: number;
-  dish_amount: number;
   excluded_ingredients: string;
-  title: string
+  quantity: number;
+  Dish: DishShortInfo;
+}
+
+export interface DishShortInfo {
+  title: string;
+  calories: number;
+  id: number;
+  price: number;
+  weight: number;
 }
 
 const paymentMethod = ["Наличными", "Картой онлайн", "Картой на месте"];
@@ -106,8 +114,8 @@ export const ProfileOrders = () => {
         tableRows.push(
           <tr className="table-row">
             <td>{
-              tableData[i].dish.map(el => {
-                return (<div>{el.title}</div>)
+              tableData[i].OrderDishes.map(el => {
+                return (<div>{el.Dish.title}</div>)
               })
             }</td>
             <td>{tableData[i].delivery_method === "takeaway" ? "Навынос" :
