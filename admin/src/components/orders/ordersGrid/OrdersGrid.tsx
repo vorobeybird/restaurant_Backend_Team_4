@@ -1,7 +1,6 @@
 import { DataGrid, GridCellValue, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import OrderDialog from '../orderDialog/OrderDialog';
 import { useState, useEffect } from "react";
-import axios, {AxiosResponse}  from 'axios';
 import {Container, IconButton } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { Edit, Pageview } from '@mui/icons-material';
