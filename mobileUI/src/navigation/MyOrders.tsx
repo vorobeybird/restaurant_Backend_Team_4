@@ -2,30 +2,37 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Switch, ToastAndroid, FlatList} from 'react-native';
 import styles from "./myOrders/style";
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux'
-
+import Api from '../apiSecure/Api'
 import dayjs from 'dayjs';
-type RootStackParamList = {
-    
-    navigate:any;
-  }
 
 
 export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const [orders, setOrders] = useState([])
+    const [history,setHistory] = useState([])
     const getItems = async () => {
-        const response = await axios.get('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/764df1cc-70f2-4ee9-8780-4a4449c1a3e4')
+        const response = await Api.get('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/764df1cc-70f2-4ee9-8780-4a4449c1a3e4')
         const res = response.data
         return res
     }
     
     const fetchMenuItems = async () => {
-        const items = await getItems()
-        setOrders(items)
-    }
-
-      console.log(orders)
+        const ordArr = [];
+        const histArr = [];
+        const items:any = await getItems();
+        items.map((item:any) => {
+            if(item.status == "Завершен"){
+                histArr.push(item)
+            } else {
+                ordArr.push(item)
+            }
+            
+        })
+        setHistory(histArr)
+        setOrders(ordArr)
+        console.log(orders,'ordersorders')
+    };
+    
     const navigation = useNavigation()
     const [pay, setPay] = useState('а мне похуй')
     const [histPay, setHistPay] = useState('а мне похуй')
@@ -46,7 +53,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         if(item.title.length >7){
             let name = item.title.substr(0,6)
             newTitle = name+'...'
-            console.log(newTitle)
+           
         } else {
             newTitle = item.title
         }
@@ -65,12 +72,12 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
     }
       useEffect(() => {
         fetchMenuItems()
-        console.log(orders,'ordersordersorders')
+        
         payWordFunc();
       }, []);
    
     const cart = useSelector((state) => state.dishes);
-    console.log(orders,'ordersordersorders')
+    
     const [state, setState] = useState( true )
    
     return (
@@ -106,7 +113,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                         <FlatList
                                             style={styles.flex}
                                             data={orders}
-                                            renderItem={({ item }) => { 
+                                            renderItem={({ item }:{item:any}) => { 
                                                 console.log(item,'itemitemitem')
                                                 return(
                                                     <>
@@ -194,10 +201,10 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                     (   
                         <View>
                        
-                            {cart.orderHistory.length ? (
+                            {history.length ? (
                                 <FlatList 
                                     style={styles.size}
-                                    data={cart.orderHistory}
+                                    data={history}
                                     renderItem={({ item }) => { 
                                         payWordFuncHist(item)
                                         return (

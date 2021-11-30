@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
+import Api from '../apiSecure/Api'
 import styles from './orderTable/style';
 import dayjs from 'dayjs';
 type RootStackParamList = {
@@ -93,7 +94,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
         currentOrder.reserve_time = cart.date;
         currentOrder.dish = dishesShortInfo;
         console.log(currentOrder)
-        return axios
+        return Api
 
         .post('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve', currentOrder, {
         headers: {
@@ -109,7 +110,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
     //////////////////
 
     const getItems = async () => {
-        const response = await axios.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
+        const response = await Api.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
         const res = response.data
         return res
     }

@@ -7,7 +7,7 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Input} from 'react-native-elements/dist/input/Input';
 import {useSelector} from 'react-redux';
 import {transform} from '@babel/core';
-
+import Api from '../apiSecure/Api';
 export type RootStackParamList = {
   MainMenu: undefined;
   Breakfast: undefined;
@@ -26,7 +26,7 @@ interface category {
 export const Menu = () => {
   const [date, setDate] = useState({} as any);
   const getItems = async () => {
-    const response = await axios.get<category[]>(
+    const response = await Api.get<category[]>(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/category',
     );
     const res = response.data;

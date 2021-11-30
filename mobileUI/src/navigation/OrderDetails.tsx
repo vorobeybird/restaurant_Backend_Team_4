@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import { addOrderHistoryItem, clearCart } from '../store/StoreCard';
 import dayjs from 'dayjs';
- 
+import Api from '../apiSecure/Api'
 interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
@@ -95,7 +95,7 @@ export const OrderDetails = ({
     
     order.dish = dishesShortInfo;
     console.log(order)
-    axios
+    Api
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
         order,
@@ -135,7 +135,7 @@ export const OrderDetails = ({
     
     order.dish = dishesShortInfo;
     console.log(order,'order')
-      const servResp = await axios
+      const servResp = await Api
       .post(
         'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
         order,
