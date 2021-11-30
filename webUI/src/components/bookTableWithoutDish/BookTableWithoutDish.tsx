@@ -1,13 +1,17 @@
 import "./bookTableWithoutDish.scss";
-import { BookTable } from "../bookTable/BookTable";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { changeDeliveryMethod, clearOrder } from "../../store/order/order.actions";
+import { changeDeliveryMethod, changePaymentMethod, clearOrder } from "../../store/order/order.actions";
 import { useHistory } from "react-router-dom";
 import { OrderTemp } from "../cart/Cart";
 import axios, { Axios, AxiosResponse } from 'axios';
 import { useEffect, useState } from "react";
 import Modal from "../common/modal/Modal";
 import moment from "moment";
+import { SliderComponent } from "./SliderComponent";
+import { ChooseDate } from "../common/chooseDate/ChooseDate";
+import { ChooseTime } from "../common/chooseTime/ChooseTime";
+import { EnterContacts } from "../common/enterContacts/EnterContacts";
+import { BookTableDetails } from "../common/bookTableDetails/BookTableDetails";
 
 export const BookTableWithoutDish = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +55,7 @@ export const BookTableWithoutDish = () => {
     let currentOrder = {} as OrderTemp;
 
     currentOrder.delivery_method = order.delivery_method;
-    currentOrder.payment_method = order.payment_method;
+    currentOrder.payment_method = 0;
     currentOrder.customer_id = userId;
     currentOrder.total_price = 0;
     currentOrder.delivery_date = order.delivery_date;
@@ -73,7 +77,45 @@ export const BookTableWithoutDish = () => {
       })
       .then((response) => response)
       .catch((err) => console.log(err));
+  }
 
+  const [time, setTime] = useState("");
+  const user = useAppSelector((state) => state.auth.user);
+  const [name, setName] = useState(user.attributes.name);
+  const [phone, setPhone] = useState(user.attributes.phone_number);
+  const isValidName = () => {
+    const reg = /[-|a-z|а-я]{2,30}/i;
+    return reg.test(name);
+  };
+
+  const isValidPhone = () => {
+    const reg = /^\+375[0-9]{9}$/;
+    return reg.test(phone);
+  };
+
+  const steps = [
+    {
+      component: <ChooseDate />,
+      validate: () => true
+    },
+    {
+      component: <BookTableDetails />,
+      validate: () => true
+    },
+    {
+      component: <ChooseTime time={time} setTime={setTime} />,
+      validate: () => !!time
+    },
+    {
+      component: <EnterContacts name={name} phone={phone} setName={setName} setPhone={setPhone} isValidName={isValidName} isValidPhone={isValidPhone} />,
+      validate: () => isValidName() && isValidPhone()
+    }
+  ]
+
+  const [blocked, setBlocked] = useState(true);
+
+  const onStepChange = (step: number) => {
+    setBlocked(step !== steps.length - 1) 
   }
 
   return (
@@ -81,19 +123,25 @@ export const BookTableWithoutDish = () => {
       <div className="booking-container">
         <div className="booking-title">Забронировать стол</div>
         <div className="booking-steps-container">
-          <BookTable />
+          <SliderComponent steps={steps} onStepChange={onStepChange} />
         </div>
         <div className="booking__button-wrapper">
           <button className="boocking-btn" onClick={() => routeChange('/')}>Отмена</button>
-          <button className="boocking-btn" onClick={reserveTable}>Забронировать</button>
+          <button
+            className="boocking-btn"
+            onClick={!blocked
+              ? reserveTable
+              : () => { }}>
+            Забронировать
+          </button>
         </div>
       </div>
       <Modal active={showModal} setActive={closeWithRedirect} title={""}>
         {reservationResult && reservationResult.status === 200
           ? <div className="booking-message">Вы забронировали стол на {moment(order.delivery_date).format("DD.MM.YYYY")}
             в {moment(order.delivery_date).format("hh.mm")}.<br /> Будем рады видеть Вас в Ocean Bar!</div>
-          : <div className="booking-message">К сожалению,<br/> на выбранные дату - {moment(order.delivery_date).format("DD.MM.YYYY")}<br />
-            время - {moment(order.delivery_date).format("hh.mm")} <br/> свободных столов на
+          : <div className="booking-message">К сожалению,<br /> на выбранные дату - {moment(order.delivery_date).format("DD.MM.YYYY")}<br />
+            время - {moment(order.delivery_date).format("hh.mm")} <br /> свободных столов на
             указанное количество человек - {order.num_of_persons} - не нашлось. <br />
             Попробуйте выбрать другую дату, время или другой стол!
           </div>
