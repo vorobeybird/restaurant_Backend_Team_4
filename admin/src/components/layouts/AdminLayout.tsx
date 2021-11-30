@@ -57,7 +57,7 @@ const AdminLayout = ()=>{
       <AdminLayoutWrapper>
         <AdminLayoutContainer>
           <AdminLayoutContent>
-            <Redirect to="/dashboard" />
+            <Redirect to="/dashboard"/>
         <Switch>
         <Route path="/dashboard"><Dashboard/></Route>
         <Route path="/dishes"><Dishes/></Route>

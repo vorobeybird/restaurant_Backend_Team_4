@@ -1,17 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useTheme } from '@mui/styles';
 import { Container, Grid } from '@mui/material';
 import apiFetch from '../common/apifetch/apifetch';
+import BarChart from './charts/barChart/BarChart';
+import PieChart from './charts/pieChart/PieChart';
+import LineChart from './charts/lineChart/LineChart';
 
 
-const Dashboard = ()=>{
+const Dashboard = () => {
 
+    const [allOrders, setAllOrders] = useState([]);
+    
     const fetchOrders = async () => {
         await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
     .then(response => {
-      /* const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
-        console.log(ordersWithReservations);
-        setAllOrders(ordersWithReservations); */
+        setAllOrders(response.data); 
         console.log(response.data)
         
     })
@@ -24,26 +27,24 @@ const Dashboard = ()=>{
     useEffect(()=> {
         fetchOrders();
     }, [])
-   return (<Container maxWidth="lg" sx={{mt: theme.spacing(5)}}>
-
-    <Grid container spacing={4}>
-    <Grid item md={12} xs={12}>
-Full width chart
+   return (<Container maxWidth="xl">
+    <Grid container item spacing={4}>
+    <Grid item md={12} xs={12} sx={{my: theme.spacing(2)}}>
+    <BarChart allOrders={allOrders} />
     </Grid>
     </Grid>
-    <Grid container spacing={4}>
+    <Grid container item spacing={2} >
+    <Grid item xs={12} md={3}>
+    <PieChart allOrders={allOrders}/>
+    </Grid>
+    <Grid item xs={12} md={9}>
+    <LineChart />
+{/*     </Grid>
+    <Grid item xs={12} md={4}>
+    <PieChart allOrders={allOrders}/> */}
+    </Grid>
+    </Grid>
     
-    <Grid container item xs={12} md={4} spacing={0}>
-    1/3 width chart
-    </Grid>
-    <Grid container item xs={12} md={4} spacing={0}>
-    1/3 width chart
-    </Grid>
-    <Grid container item xs={12} md={4} spacing={0}>
-    1/3 width chart
-    </Grid>
-    
-    </Grid>
     </Container>
 )};
 
