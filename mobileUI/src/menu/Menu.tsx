@@ -7,7 +7,7 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Input} from 'react-native-elements/dist/input/Input';
 import {useSelector} from 'react-redux';
 import {transform} from '@babel/core';
-
+import Api from '../apiSecure/Api';
 export type RootStackParamList = {
   MainMenu: undefined;
   Breakfast: undefined;
@@ -26,7 +26,7 @@ interface category {
 export const Menu = () => {
   const [date, setDate] = useState({} as any);
   const getItems = async () => {
-    const response = await axios.get<category[]>(
+    const response = await Api.get<category[]>(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/category',
     );
     const res = response.data;
@@ -116,39 +116,6 @@ export const Menu = () => {
       });
   };
 
-  //   const includesSuchCategory = () => {
-  //     let categories = date.map((item: any) => item.title);
-  //     let itHas = false;
-  //     categories.forEach((category: string) => {
-  //       if (
-  //         category.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
-  //         searchInputValue !== ''
-  //       )
-  //         itHas = true;
-  //     });
-  //     return itHas;
-  //   };
-
-  //   const showCategories = () => {
-  //     let categories = date.map((item: any) => item.title);
-  //     return categories
-  //       .filter((category: string) =>
-  //         category.toUpperCase().startsWith(searchInputValue.toUpperCase()),
-  //       )
-  //       .map((category: string) => {
-  //         let currentItem = date.filter((item: any) => item.title === category);
-  //         return (
-  //           <Text
-  //             style={styles.CategoryFromList}
-  //             onPress={() =>
-  //               navigation.navigate('Breakfast', {...currentItem[0]})
-  //             }>
-  //             {category}
-  //           </Text>
-  //         );
-  //       });
-  //   };
-
   const uniqueProps = (a: any) => {
     if (!a) return [];
     let seen = {} as any;
@@ -169,9 +136,7 @@ export const Menu = () => {
               <Input
                 onChangeText={setSearchInputValue}
                 value={searchInputValue}></Input>
-              {/* {includesSuchCategory() && (
-                <View style={styles.CategoriesList}>{showCategories()}</View>
-              )} */}
+              
               {includesSuchDish() && (
                 <View style={styles.CategoriesList}>{showDishes()}</View>
               )}
