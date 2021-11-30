@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import { setAutoFreeze } from 'immer'; setAutoFreeze(false);
 interface CounterState {
   dishes: Dish[];
   cardTotalQuantity: number;
@@ -11,10 +12,18 @@ interface CounterState {
   isSignedIn: boolean;
   adress: Adress[];
   card: Card[];
-  userInfo: UserInfo[];
+  userInfo:  any[];
   order: any[];
+  num: string;
+  orderHistory: History[];
 }
-
+interface History {
+    id: string;
+    type:string,
+    date:string,
+    paymentType: number,
+    orderStatus: string
+}
 interface Card {
   num: number;
   live: number;
@@ -23,11 +32,7 @@ interface Card {
   id: number;
   type: string;
 }
-interface UserInfo {
-  name: string;
-  surName: string;
-  phone: string;
-}
+
 interface Adress {
   adress: string;
   id: string;
@@ -38,7 +43,7 @@ interface Dish {
   photos: any[];
   price: number;
   cardQuantity: number;
-  descr: any[];
+  descr: [] ;
   excluded_ingredients: string[];
 }
 
@@ -56,6 +61,9 @@ export const initialState: CounterState = {
   card: [],
   userInfo: [],
   order: [],
+  num: '',
+  orderHistory:[],
+
 };
 
 export const dishSlice = createSlice({
@@ -187,6 +195,13 @@ export const dishSlice = createSlice({
     getOrder(state, action) {
       state.order = action.payload;
     },
+    getNumOfPersons(state, action) {
+      state.num = action.payload
+    },
+    addOrderHistoryItem(state,action) {
+      state.orderHistory.push({...action.payload})
+      
+    },
   },
 });
 export default dishSlice.reducer;
@@ -210,4 +225,6 @@ export const {
   addExcludedIngredients,
   addUserInfo,
   getOrder,
+  getNumOfPersons,
+  addOrderHistoryItem,
 } = dishSlice.actions;

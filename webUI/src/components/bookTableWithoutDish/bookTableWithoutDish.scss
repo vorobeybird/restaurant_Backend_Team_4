@@ -104,6 +104,14 @@
         line-height: normal;
         color: #FFFFFF;
         cursor: pointer;
+
+        &:first-child {
+          background-color: #BFBFBF;
+        }
+      }
+
+      & .boocking-btn:hover {
+        filter: brightness(120%);
       }
     }
   }

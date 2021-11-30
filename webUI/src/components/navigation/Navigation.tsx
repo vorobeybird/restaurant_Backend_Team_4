@@ -29,10 +29,7 @@ const Navigation = () => {
   const history = useHistory();
   const links: LinkType[] = [
     { title: "Меню", link: "/menu" },
-    {
-      title: "Забронировать стол",
-      link: user && user.username.length > 0 ? "/booktable" : "/",
-    },
+    { title: "Забронировать стол", link: user && user.username.length > 0 ? "/booktable" : '/login' }
   ];
 
   const changeRoute = (path: string) => {
