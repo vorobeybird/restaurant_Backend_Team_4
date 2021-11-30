@@ -18,9 +18,14 @@ module.exports = {
         },
       ],
     })
-      .then((order) => res.status(200).send(order))
+      .then((order) => {
+        // io.emit('order-added', order);
+        res.status(200).send(order)
+
+      })
       .catch((error) => {
         res.status(400).send(error);
+        console.log(error)
       });
   },
 
@@ -111,6 +116,7 @@ module.exports = {
           }
         );
       }
+      io.emit('order-added', order);
       res.status(200).send(order);
     } catch (error) {
       console.log(error);
