@@ -17,7 +17,8 @@ export function tableReducer(
 ): ReducerState {
   switch (action.type) {
     case TableConstants.GET_TABLE_POOL:
-      return { ...state, tablePool: action.payload as Table[]} ;
+      return { ...state, tablePool: action.payload as Table[]};
+
     case TableConstants.GET_TABLE_RESERVATIONS:
       const poolWithoutReservations = state.tablePool.map(table => {
         const tableIndex = action.payload.findIndex((el: any)=> table.id === el.id);
@@ -27,8 +28,6 @@ export function tableReducer(
           return action.payload[tableIndex];
         }        
       });
-     // const poolWithoutReservations = state.tablePool.filter(table => action.payload.findIndex((el: any)=> table.id === el.id) === -1 );
-     // return { ...state, tablePool: [ ...poolWithoutReservations, ...action.payload as Table[]]};
      return { ...state, tablePool: [ ...poolWithoutReservations ]};
     default:
       return state;

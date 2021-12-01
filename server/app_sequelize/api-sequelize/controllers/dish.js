@@ -6,15 +6,13 @@ const Order = require("../models").Order;
 const { Op } = require("sequelize");
 
 module.exports = {
-  async sortDish(req,res,sort){
+  async sortDish(req, res, sort) {
     console.log(sort);
-    let sortParameter, sortDirection
-    [sortParameter,sortDirection] = sort.split(',')
+    let sortParameter, sortDirection;
+    [sortParameter, sortDirection] = sort.split(",");
 
     return Dish.findAll({
-      order: [
-        [sortParameter,sortDirection.toUpperCase()],
-    ],
+      order: [[sortParameter, sortDirection.toUpperCase()]],
       include: [
         {
           model: Category,
@@ -82,12 +80,11 @@ module.exports = {
       module.exports.filterByTitle(req, res, filter);
     } else if (category) {
       module.exports.getByCategory(req, res, category);
-    } else if(allInfo) {
+    } else if (allInfo) {
       module.exports.listAllInfo(req, res, category);
-    } else if(sort){
+    } else if (sort) {
       module.exports.sortDish(req, res, sort);
-    }
-    else {
+    } else {
       module.exports.list(req, res);
     }
   },
@@ -159,9 +156,9 @@ module.exports = {
         },
         {
           model: Order,
-          as:"order",
-          attributes: ['id','status']
-        }
+          //as: "order",
+          attributes: ["id", "status"],
+        },
       ],
     })
       .then((dishes) => res.status(200).send(dishes))
@@ -188,9 +185,9 @@ module.exports = {
         },
         {
           model: Order,
-          as:"order",
-          attributes: ['id']
-        }
+          as: "order",
+          attributes: ["id"],
+        },
       ],
     })
       .then((dishes) => res.status(200).send(dishes))

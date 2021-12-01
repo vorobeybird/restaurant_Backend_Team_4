@@ -48,10 +48,6 @@ export const Links = () => {
         <Image style={styles.PictStyle}  source={require('../../img/myAdress.png')}/>
         <Text style={styles.TextStyle}>Адрес доставки</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('MyConfPol')} style={styles.BoxWrapper}>
-        <Image style={styles.PictStyle}  source={require('../../img/policy.png')}/>
-        <Text style={styles.TextStylePol}>Политика конфиденциальности</Text>
-      </TouchableOpacity>
       <TouchableOpacity onPress={()=>signOut()}>
         <View style={styles.BoxWrapper}>
           <Image style={styles.PictStyle}  source={require('../../img/carbon_logout.png')}/>
@@ -64,9 +60,10 @@ export const Links = () => {
 
 const styles = StyleSheet.create({
     LinkWrapper:{
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         justifyContent:'space-evenly',
-        top:'10%'
+        top:'10%',
+        paddingLeft:'10%',
 
     },
     TextStyle:{
@@ -89,8 +86,9 @@ const styles = StyleSheet.create({
       flexDirection:'row',
     },
     PictStyle:{
-      width:22,
-      height:22,
+      resizeMode:'contain',
+      width:30,
+      height:25,
       marginRight:'5%',
       marginLeft:'5%',
     },

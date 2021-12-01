@@ -31,7 +31,7 @@ export const BookTable = ({ total, combineOrder }: OrderProps) => {
   };
 
   const isValidPhone = () => {
-    const reg = /^\+375[0-9]{9}$/;
+    const reg = /^[^_]*$/;
     return reg.test(phone);
   };
 

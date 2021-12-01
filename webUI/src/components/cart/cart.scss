@@ -230,7 +230,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 95%;
-  & .actions__title{
+  & .actions__title {
     text-align: left;
   }
   & .order_buttons {
@@ -242,8 +242,11 @@
     & button {
       position: relative;
       background-color:white;
+      cursor: pointer;
+
       border: solid #979797;
       border-radius: 15px;
+      transition: all 0.1s ease-in-out;
       flex: 0 0 200px;
       height: 200px;
       margin: 0 60px;
@@ -259,25 +262,23 @@
         width: 100px;
         height: 100px;
       }
-      & .actions-button__desctiption{
+      & .actions-button__desctiption {
         margin-top: 10px;
         font-size: 24px;
         font-weight: bold;
       }
-      
+    }:hover{
+      transform: scale(1.1);
     }
-    
+
     & .order_button_pushed {
-      border: solid #EF742F;
+      border: solid #ef742f;
       border-radius: 15px;
       transform: scale(1.2);
       box-shadow: -10px 20px 10px rgba(0,0,0,0.4);
     }
-  
   }
 }
-
-
 
 .cart_title {
   margin-top: 20px;
@@ -314,31 +315,30 @@
     }
   }
   .order_actions {
-  & .order_buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5% -10px;
-    & > * {
-      background-color:white;
-      border: solid #979797;
-      border-radius: 15px;
-      flex: 0 0 100px;
-      height: 100px;
-      margin: 0 10px;
-      & img {
-        width: 50px;
-        height: 50px;
+    & .order_buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5% -10px;
+      & > * {
+        background-color: white;
+        border: solid #979797;
+        border-radius: 15px;
+        flex: 0 0 100px;
+        height: 100px;
+        margin: 0 10px;
+        & img {
+          width: 50px;
+          height: 50px;
+        }
+        & .actions-button__desctiption {
+          margin-top: 10px;
+          font-size: 14px;
+          font-weight: bold;
+        }
       }
-      & .actions-button__desctiption{
-        margin-top: 10px;
-        font-size: 14px;
-        font-weight: bold;
-      }
-      
     }
   }
-}
   .empty-cart {
     & .empty-cart__container {
       & .cart-body {

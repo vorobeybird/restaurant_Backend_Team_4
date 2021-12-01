@@ -33,13 +33,24 @@ export const OrderedDish = () => {
   return (
     <View style={styles.GreatCont}>
       <ScrollView style={styles.ScrollStyle}>
-        {card.dishes.map((item: any) => (
+        {card.dishes.map((item: any) => {
+          let newTitle
+          if(item.title.length >7){
+            let name = item.title.substr(0,13)
+             newTitle = name+'...'
+            console.log(newTitle)
+          } else {
+            newTitle = item.title
+            console.log(newTitle)
+          }
+          return (
+          
           <View key={item.id} style={styles.StyledDish}>
             <View style={styles.MainCont}>
               <Image source={{uri: item.photos[0]}} style={styles.Pict} />
               <View style={styles.Wrapper}>
                 <View style={styles.TextContainer}>
-                  <Text style={styles.StyledText}>{item.title}</Text>
+                  <Text style={styles.StyledText}>{newTitle}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ChangeDishIngr', {item})}>
@@ -68,7 +79,7 @@ export const OrderedDish = () => {
               </View>
             </View>
           </View>
-        ))}
+        )})}
       </ScrollView>
     </View>
   );
@@ -81,7 +92,7 @@ const styles = StyleSheet.create({
     left: 30,
   },
   Pict: {
-    resizeMode: 'contain',
+    
     width: 160,
     height: 150,
     backgroundColor: 'white',

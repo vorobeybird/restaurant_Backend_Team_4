@@ -13,18 +13,25 @@ const MenuItemComponent = (item: MenuItem) => {
 
     const items = useAppSelector((state) => state.cartItems.items);
     const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
+  const onOrder = (item: MenuItem) => {
+    if (userId) {
+      toast.success(`Блюдо "${item.title}" добавлено в корзину`);
+      dispatch(addToCart({...item, excluded_ingredients: []}, items));
+    }
+  };
 
-    const onOrder = (item: MenuItem) => {
-        if (userId) {
-            toast.success(`Блюдо "${item.title}" добавлено в корзину`);
-            dispatch(addToCart(item, items));
-        }
-    };
-
-    return (
-        <div className="item_container">
-            <div className="item_photos">
-                <img src={item.photo[0].photo_url} alt="dish-main-photo"/>
+  return (
+    <div className="item_container">
+      <div className="item_photos">
+        <img src={item?.photo[0]?.photo_url} alt="dish-main-photo" />
+      </div>
+      <div className="item_info">
+        <div className="dish-info">
+          <div className="dish-title">{item.title}</div>
+          <div className="dish-price-weight">
+            <div className="dish-price">
+              <span className="price">{item.price}</span>
+              <span className="currency"> BYN</span>
             </div>
             <div className="item_info">
                 <div className="dish-info">

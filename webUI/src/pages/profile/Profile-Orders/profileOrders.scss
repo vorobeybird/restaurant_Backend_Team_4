@@ -42,7 +42,7 @@ switch {
     }
 
     & .orders-table__container {
-      width: 95%;
+      width: 100%;
       height: 90%;
       position: relative;
       & table {
@@ -85,7 +85,7 @@ switch {
               width: 15%;
             }
             & th:nth-child(3){
-              width: 15%;
+              width: 10%;
             }
             & th:nth-child(4){
               width: 15%;
@@ -94,7 +94,10 @@ switch {
               width: 10%;
             }
             & th:nth-child(6){
-              width: 15%;
+              width: 13%;
+            }
+            & th:nth-child(7){
+              width: 7%;
             }
           }
         }
@@ -110,6 +113,35 @@ switch {
               color: #25213B;
               & .td-total-price {
                 font-weight: bold;
+              }
+
+              & .td-cancellation {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50%;
+                width: 90%;
+
+                & .td__btn {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 40px;
+                  width: 40px;
+                  border: none;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  background: none;
+
+                  & img {
+                    width: 25px;
+                    height: 25px
+                  }
+                }
+
+                & .td__btn:hover {
+                  background: #FFE0E0;
+                }
               }
             }
           }

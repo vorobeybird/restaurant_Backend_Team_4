@@ -1,17 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import { MarketMain } from "../marketComponents/MarketMain";
-
+import { MarketTabNavigation } from '../navigation/MarketMainNav';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { MenuTabNavigation } from './menuNav';
+import { MarketMain } from "../marketComponents/MarketMain";
 import { ProfileNavigation } from './profileNav'
+import { testIconNav } from './testIconNav'
 export type RootStackParamList = {
     ProfileNavigation: undefined;
     MarketMain: undefined;
     Menu: undefined;
     MenuTabNavigation: undefined;
+    testIconNav:undefined;
+    MarketTabNavigation:undefined;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -30,6 +32,29 @@ export const BottomTabNavigation = () => {
                     }
                 }}>
                 <Tab.Screen
+                    name="testIconNav"
+                    component={testIconNav}
+                    options={{
+                        title: 'Menu',
+                        headerShown: false,
+                        tabBarIcon: ({ focused }) => {
+                            if(focused){
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyleHome} source={require('../../img/activeHome.png')} resizeMode='contain' />
+                                        </View>;
+                            } else {
+                                return  <View style={styles.SmWrapper}>
+                                            <Image style={styles.PictStyleHome} source={require('../../img/inActiveHome.png')} resizeMode='contain' />
+                                        </View>;
+                            }
+
+                        }
+                    }}
+                    
+                        
+                      
+                />
+                <Tab.Screen
                     name="MenuTabNavigation"
                     component={MenuTabNavigation}
                     options={{
@@ -47,16 +72,15 @@ export const BottomTabNavigation = () => {
                             }
 
                         }
-                    }}
-                    
-                        
-                      
+                    }}   
                 />
                 <Tab.Screen
-                    name="MarketMain"
-                    component={MarketMain}
+                    name="MarketTabNavigation"
+                    component={MarketTabNavigation}
+                    
                     options={{
-                        title: 'Menu',
+                        unmountOnBlur: true,
+                        title: 'MarketTabNavigation',
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
                             if(focused){
@@ -108,6 +132,10 @@ const styles = StyleSheet.create({
         width: 120,
         height: '100%',
     },
+    PictStyleHome:{
+        width: 80,
+        height: '100%',
+    },
     SimpText: {
         bottom: 5,
         color: '#000000',
@@ -117,4 +145,5 @@ const styles = StyleSheet.create({
         height: '80%',
         top:'10%',
     },
+
 })

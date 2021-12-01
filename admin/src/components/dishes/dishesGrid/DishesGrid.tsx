@@ -1,12 +1,12 @@
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef} from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
 import DishAlertDialog from '../dishDialog/DishAlertDialog';
 import Button from '@mui/material/Button/Button';
 import { useState, useEffect } from "react";
-import axios, { AxiosResponse } from 'axios';
 import {Container, Grid } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import IngDialog from '../catIngDialog/CatIngDialog';
+import apiFetch from '../../common/apifetch/apifetch';
 
 interface IDish {
   id?: string;
@@ -74,7 +74,8 @@ const DishesGrid = () => {
     { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation(); 
-        const activeOrders = params.row.order.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
+        console.log(params)
+        const activeOrders = params.row.Orders.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
         setCurrentDish(params.id);
         if(activeOrders.length > 0 ){
           handleClickOpenAlert();
@@ -88,13 +89,9 @@ const DishesGrid = () => {
   ];
   
   const deleteDish = (id: any) => {
-    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
 
-    axios.delete<AxiosResponse>(urlToDelete, {
-      headers: {
-          "Content-type": "application/json"
-         }
-      })
+    const urlToDelete = `${process.env.REACT_APP_API!}/dish/${id}`;
+    apiFetch('DELETE', urlToDelete)
       .then(response=> {
 
         fetchDishes();
@@ -107,11 +104,7 @@ const DishesGrid = () => {
 
   const fetchDishes = () => {
     const apiUrl = process.env.REACT_APP_API!;
-    axios.get<AxiosResponse | any>(`${apiUrl}/dishes?allInfo=true`, {
-        headers: {
-            "Content-type": "application/json"
-        }
-    })
+    apiFetch('GET', `${apiUrl}/dishes?allInfo=true`)
     .then(response=> {
         setDishes(response.data);
     })

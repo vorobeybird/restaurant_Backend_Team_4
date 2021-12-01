@@ -1,30 +1,18 @@
 import { useMemo, useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../store/hooks";
-import { ChooseDate } from "../common/chooseDate/ChooseDate";
-import { ChooseTime } from "../common/chooseTime/ChooseTime";
-import { EnterContacts } from "../common/enterContacts/EnterContacts";
-import { PaymentMethod } from "../common/paymentMethod/PaymentMethod";
-import PrevStepIcon from "../../assets/prev.png";
-import NextStepIcon from "../../assets/next.png";
-import { ICartItem } from "../../store/cart/cart.types";
-import edit from "../../assets/edit.svg";
 import { DishItem } from "./dishItem";
 import { OrderInformationRow } from "./OrderInformationRow";
 import moment from "moment";
 import "./orderConfirmation.scss";
 import axios, { Axios, AxiosResponse } from "axios";
-import Modal from "../common/modal/Modal";
 import visaImg from "../../assets/visa.svg";
 import mastercardImg from "../../assets/mastercard.svg";
 import { DELIVERY_METHOD } from "../../store/order/order.types";
 import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import { OrderTemp } from "../cart/Cart";
 import { clearCart } from "../../store/cart/cart.actions";
-import {
-  DishShortInfo,
-  Order,
-  OrderConstants,
-} from "../../store/order/order.types";
+import toast, { Toaster } from "react-hot-toast";
+import { DishShortInfo } from "../../store/order/order.types";
 import { useHistory } from "react-router-dom";
 import Api from "../../store/Api";
 
@@ -102,7 +90,10 @@ export const OrderConfirmation = () => {
             "cross-domain": "true",
           },
         })
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response);
+          toast.success(`Ваш заказ был отправлен`);
+        })
         .catch((err) => console.log(err));
     }
 
@@ -118,7 +109,10 @@ export const OrderConfirmation = () => {
           "cross-domain": "true",
         },
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        toast.success(`Ваш заказ был отправлен`);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -158,7 +152,7 @@ export const OrderConfirmation = () => {
             />
             <OrderInformationRow
               label="ВРЕМЯ"
-              value={moment(order.delivery_date).format("hh.mm")}
+              value={moment(order.delivery_date).format("HH:mm")}
             />
             <OrderInformationRow
               label="КОНТАКТЫ"
@@ -171,7 +165,10 @@ export const OrderConfirmation = () => {
             </div>
           ) : undefined}
           <div className="order-info">
-            <OrderInformationRow label="ИТОГО" value={`${order.total_price}`} />
+            <OrderInformationRow
+              label="ИТОГО"
+              value={`${order.total_price} BYN`}
+            />
             <OrderInformationRow
               label="СПОСОБ ОПЛАТЫ"
               value={`${paymentType[order.payment_method]}`}
@@ -193,14 +190,14 @@ export const OrderConfirmation = () => {
       </div>
       <div className="order-confirmation__buttons">
         <SwitchButtons
-        firstValue={'Готово'}
+          firstValue={"Готово"}
           onClickNext={handleOnMakingOrder}
           onClickPrev={() => {
             history.push("/cart");
           }}
           children="I'm a pink circle!"
         />
-    </div>
+      </div>
     </div>
   );
 };

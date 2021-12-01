@@ -18,7 +18,7 @@ router.get("/", function (req, res, next) {
 });
 
 //ids=1,3,4,5 & category=3 & filter=Сардины
-router.get("/api/dishes", dishController.showDishes);
+router.get("/api/dishes", isAuth, dishController.showDishes);
 
 router.post("/api/dish", isAuth, dishController.add);
 
@@ -27,14 +27,22 @@ router.post("/api/addBigDish", isAuth, dishController.addBigDish);
 router.put("/api/dish/:id", isAuth, dishController.update);
 router.delete("/api/dish/:id", isAuth, dishController.delete);
 router.post("/api/dish/addIngredient", isAuth, dishController.addIngredient);
-router.delete("/api/dishremoveIngredient", isAuth, dishController.deleteIngredient);
+router.delete(
+  "/api/dishremoveIngredient",
+  isAuth,
+  dishController.deleteIngredient
+);
 router.post("/api/dish/addCategory", isAuth, dishController.addCategory);
 
 router.get("/api/ingredient", ingredientController.list);
 router.post("/api/ingredient", isAuth, ingredientController.add);
 router.get("/api/ingredient/:id", ingredientController.getById);
 router.put("/api/ingredient/:id", isAuth, ingredientController.update);
-router.delete("/api/ingredient/:id/:hard?", isAuth, ingredientController.delete);
+router.delete(
+  "/api/ingredient/:id/:hard?",
+  isAuth,
+  ingredientController.delete
+);
 
 router.get("/api/category", categoryController.list);
 router.post("/api/category", isAuth, categoryController.add);
@@ -48,10 +56,14 @@ router.get("/api/order/:id", isAuth, orderController.getById);
 router.put("/api/order/:id", isAuth, orderController.update);
 router.delete("/api/order/:id", isAuth, orderController.delete);
 
-router.get("/api/orderByCustomer/:customerId", isAuth, orderController.getByCustmerId);
+router.get(
+  "/api/orderByCustomer/:customerId",
+  isAuth,
+  orderController.getByCustmerId
+);
 
-router.post("/api/image", isAuth, upload.single("image"), dishPhotoController.add);
-router.delete("/api/image/:publicId", isAuth, dishPhotoController.delete);
+router.post("/api/image", upload.single("image"), dishPhotoController.add);
+router.delete("/api/image/:publicId", dishPhotoController.delete);
 
 router.post("/api/tables", isAuth, tableController.add);
 router.get("/api/tables", isAuth, tableController.getTablesReservatons);

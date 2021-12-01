@@ -58,7 +58,7 @@ export default function IngredientsForm({type}: ICIFormProps) {
     fetchIngredients('PUT', `${process.env.REACT_APP_API}/ingredient`, currentValue, value?.id)
     .then((response) =>  {
         getIngredients();
-        setValue(response.data);
+        response.data === 'Ingredient was updated succesfully' && setValue('Ингредиент изменен!');
     }
         )
     .catch(err=>{

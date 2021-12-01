@@ -3,7 +3,6 @@ const Category = require("../models").Category;
 const Ingredient = require("../models").Ingredient;
 const DishPhoto = require("../models").DishPhoto;
 module.exports = {
-
   list(req, res) {
     const data = {};
     return Category.findAll({
@@ -20,7 +19,7 @@ module.exports = {
               model: DishPhoto,
               as: "photo",
             },
-          ]
+          ],
         },
       ],
     })
@@ -29,12 +28,12 @@ module.exports = {
         res.status(400).send(error);
       });
   },
-  
+
   listAllIncluded(req, res) {
     return Category.findAll({
       include: [
         {
-          all: true
+          all: true,
         },
       ],
     })
@@ -105,7 +104,7 @@ module.exports = {
       const result = await Category.update(req.body, {
         where: { id: req.params.id },
       });
-      res.status(200).send({ message: "Category was updated succesfully" });
+      res.status(200).send("Category was updated succesfully");
     } catch (err) {
       res.status(400).send(error);
     }

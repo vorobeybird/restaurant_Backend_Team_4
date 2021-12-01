@@ -45,19 +45,23 @@ export const Cart = () => {
 
   let history = useHistory();
 
-  const [selectedDish, setSelectedDish] = useState(null);
-  const dishItem = items.find((i) => i.id === selectedDish);
+  const [selectedDish, setSelectedDish] = useState(0);
+
+ // const dishItem = items.find((i) => i.id === selectedDish);
+  const dishItem = items[selectedDish];
+
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
 
   const editIngredients = (
     e: React.ChangeEvent<HTMLInputElement>,
+    selectedDish: number,
     id: number
   ) => {
     !e.target.checked
-      ? dispatch(omitIngredient(id, e.target.value))
-      : dispatch(pickIngredient(id, e.target.value));
+      ? dispatch(omitIngredient(id, selectedDish, e.target.value))
+      : dispatch(pickIngredient(id, selectedDish, e.target.value));
   };
 
   const checkOrder = (order: Order) =>
@@ -188,6 +192,7 @@ export const Cart = () => {
             {items.map((item: ICartItem, index) => (
               <CartItem
                 key={index}
+                idx={index}
                 toggleModal={toggleModal}
                 item={item}
                 setSelectedDish={setSelectedDish}
@@ -272,9 +277,9 @@ export const Cart = () => {
                           <input
                             type="checkbox"
                             className="ingredient-checkbox"
-                            onChange={(e) => editIngredients(e, dishItem.id)}
+                            onChange={(e) => editIngredients(e, selectedDish, dishItem.id)}
                             checked={
-                              !dishItem.excluded_ingredients.includes(i.title)
+                              !dishItem.excluded_ingredients.includes(i.title) 
                             }
                             value={i.title}
                           />
