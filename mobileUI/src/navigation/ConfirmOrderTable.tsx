@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 import axios from "axios";
 import dayjs from 'dayjs';
+import Api from '../apiSecure/Api'
 import { COMPARISON_BINARY_OPERATORS } from "@babel/types";
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
@@ -67,12 +68,12 @@ type RootStackParamList = {
     
     const getTablesByDate = async (date:any) => {
             const correctDate = dayjs(date).format('YYYY-MM-DD')
-            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`)
+            const response = await Api.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`)
             const res = response.data
             setTable(res)
         }
     const getTablePool = async () => {
-            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tablepool`)
+            const response = await Api.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tablepool`)
             const res = response.data
             setTablePool(res)
         }
