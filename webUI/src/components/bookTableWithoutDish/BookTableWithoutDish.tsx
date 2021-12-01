@@ -69,8 +69,7 @@ export const BookTableWithoutDish = () => {
     currentOrder.reserve_date = order.delivery_date;
     currentOrder.reserve_time = order.delivery_date;
 
-    return Api
-      .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
+    return Api.post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
         headers: {
           "Content-type": "application/json",
           "cross-domain": "true",

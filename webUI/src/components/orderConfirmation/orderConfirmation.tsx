@@ -14,6 +14,7 @@ import { clearCart } from "../../store/cart/cart.actions";
 import toast, { Toaster } from "react-hot-toast";
 import { DishShortInfo } from "../../store/order/order.types";
 import { useHistory } from "react-router-dom";
+import Api from "../../store/Api";
 
 const paymentType = ["Картой на месте", "Картой онлайн", "Наличные"];
 
@@ -83,8 +84,7 @@ export const OrderConfirmation = () => {
       currentOrder.reserve_date = order.delivery_date;
       currentOrder.reserve_time = order.delivery_date;
 
-      return axios
-        .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
+      return Api.post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
           headers: {
             "Content-type": "application/json",
             "cross-domain": "true",
@@ -103,8 +103,7 @@ export const OrderConfirmation = () => {
 
     console.log(currentOrder);
 
-    return axios
-      .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
+    return Api.post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
         headers: {
           "Content-type": "application/json",
           "cross-domain": "true",
