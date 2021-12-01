@@ -35,7 +35,7 @@ export const OrderedDish = () => {
       <ScrollView style={styles.ScrollStyle}>
         {card.dishes.map((item: any) => {
           let newTitle
-          if(item.title.length >7){
+          if(item.title.length >40){
             let name = item.title.substr(0,13)
              newTitle = name+'...'
             console.log(newTitle)
@@ -50,14 +50,14 @@ export const OrderedDish = () => {
               <Image source={{uri: item.photos[0]}} style={styles.Pict} />
               <View style={styles.Wrapper}>
                 <View style={styles.TextContainer}>
-                  <Text style={styles.StyledText}>{newTitle}</Text>
+                  <Text style={styles.StyledText} numberOfLines={2}>{item.title}</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ChangeDishIngr', {item})}>
                   <Text style={styles.changeText}>Изменить состав</Text>
                 </TouchableOpacity>
                 <View style={styles.CountCont}>
-                  <Text style={styles.SimpText}>{item.price} BYN</Text>
+                  <Text style={styles.SimpTextPrice}>{item.price} <Text style={styles.SimpText}>BYN</Text></Text>
                   <View style={styles.Conta}>
                     <TouchableOpacity
                       onPress={() => handleDecreaseCartQuant(item)}>
@@ -111,6 +111,8 @@ const styles = StyleSheet.create({
   },
   CountCont: {
     alignItems: 'center',
+    
+    marginTop:10,
     paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -120,6 +122,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   StyledText: {
+    height:39,
+    width:150,
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '700',
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
   },
   Wrapper: {
     top: '3%',
-    right: '30%',
+    right: '20%',
     justifyContent: 'space-between',
     flexDirection: 'column',
   },
@@ -166,6 +170,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 'normal',
+    fontSize: 15,
+    lineHeight: 15,
+  },
+  SimpTextPrice:{
+    color: '#000000',
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
     fontSize: 15,
     lineHeight: 15,
   },

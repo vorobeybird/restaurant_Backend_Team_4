@@ -56,7 +56,7 @@ export const MarketMain = () => {
           {cart.dishes.length === 0 ? (
             <></>
           ) : (
-            <Image style={styles.Bin} source={require('../../img/bin.png')} />
+            <Image style={styles.Bin} source={require('../../img/garbage.png')} />
           )}
         </TouchableOpacity>
       </View>

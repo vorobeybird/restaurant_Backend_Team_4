@@ -102,8 +102,9 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     paddingBottom:100,
     color:'black',
-    fontSize:24,
-    fontWeight:'bold',
+    fontSize:40,
+    
+    fontFamily:'RegattiaStencil-Bold',
   },
   HeadStyle: {
     alignSelf: 'flex-start',
