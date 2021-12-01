@@ -108,7 +108,7 @@ const OrdersGrid = () => {
     { field: 'contact_name', headerName: 'Имя', width: 150 },
     { field: 'contact_phone', headerName: 'Телефон', width: 130 },
     { field: 'delivery_method', headerName: 'Тип заказа', width: 150, renderCell: (params: any)=> {
-     return params.row.dish.length > 0 ? DELIVERY_METHODS[params.row.delivery_method] : "Заказ стола";
+     return params.row.OrderDishes.length > 0 ? DELIVERY_METHODS[params.row.delivery_method] : "Заказ стола";
     }},
     { field: 'adress', headerName: 'Адрес', width: 150},
     { field: 'total_price', headerName: 'Цена', width: 100, align: 'center' },

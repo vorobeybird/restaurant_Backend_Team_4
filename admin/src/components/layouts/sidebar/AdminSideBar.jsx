@@ -11,12 +11,8 @@ import {
   Typography
 } from '@mui/material';
 import {
-  ErrorOutline,
   BarChart,
   ShoppingBasket,
-  Person,
-  PersonAdd,
-  PeopleAlt, 
   Fastfood,
   Event
 } from '@mui/icons-material';

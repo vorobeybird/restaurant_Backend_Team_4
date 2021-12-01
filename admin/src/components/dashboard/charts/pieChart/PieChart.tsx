@@ -11,12 +11,12 @@ const PieChart = ({allOrders}: any) => {
 
  allOrders.forEach((order: any) => {
 
-   if (order.dish.length > 0) {
+   if (order.OrderDishes.length > 0) {
      let dishesInOrder = 0;
-     order.dish.forEach((dish: any) => {
-      dishesInOrder += dish.OrderDish.quantity;
+     order.OrderDishes.forEach((dish: any) => {
+      dishesInOrder += dish.quantity;
       // console.log(dishesInOrder, 'dishes in order')
-      totalDishes += dish.OrderDish.quantity;
+      totalDishes += dish.quantity;
       // console.log(totalDishes, 'total dishes')
      });
      if (dishesInOrder < 5) {

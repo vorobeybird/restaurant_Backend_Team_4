@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       OrderDish.belongsTo(models.Order, { foreignKey: "order_id" });
     }
     toJSON() {
-      console.log(this.get());
       return {
         ...this.get(),
         id: undefined,
