@@ -34,7 +34,13 @@ export const Menu = () => {
   };
   const fetchMenuItems = async () => {
     const items = await getItems();
-    setDate(items);
+    const arr = []
+    items.map((item)=>{
+      if(item.show_in_menu){
+        arr.push(item);
+      }
+    })
+    setDate(arr)
   };
 
   useEffect(() => {
