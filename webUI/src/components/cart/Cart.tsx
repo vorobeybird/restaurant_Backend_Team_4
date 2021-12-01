@@ -28,6 +28,7 @@ import {
 import { BookTable } from "../bookTable/BookTable";
 import Modal from "../common/modal/Modal";
 import { useHistory } from "react-router-dom";
+import Api from "../../store/Api";
 
 export interface OrderTemp extends Order {
   reserve_time: Date;
@@ -107,8 +108,7 @@ export const Cart = () => {
       currentOrder.reserve_date = order.delivery_date;
       currentOrder.reserve_time = order.delivery_date;
 
-      return axios
-        .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
+      return Api.post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
           headers: {
             "Content-type": "application/json",
             "cross-domain": "true",
@@ -122,8 +122,7 @@ export const Cart = () => {
       currentOrder.adress = order.adress;
     }
 
-    return axios
-      .post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
+    return Api.post(`${process.env.REACT_APP_GET_DISHES}/api/order`, currentOrder, {
         headers: {
           "Content-type": "application/json",
           "cross-domain": "true",
