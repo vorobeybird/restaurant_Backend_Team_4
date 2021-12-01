@@ -34,13 +34,13 @@ export const Menu = () => {
   };
   const fetchMenuItems = async () => {
     const items = await getItems();
-    const arr = []
-    items.map((item)=>{
-      if(item.show_in_menu){
+    const arr = [];
+    items.map(item => {
+      if (item.show_in_menu) {
         arr.push(item);
       }
-    })
-    setDate(arr)
+    });
+    setDate(arr);
   };
 
   useEffect(() => {
@@ -98,8 +98,6 @@ export const Menu = () => {
         const photos = dish.photo;
         const urlArr = photos.map((item: any) => item.photo_url);
 
-        console.log(urlArr, 'penis');
-
         const newDish = {
           id: dish.id,
           title: dish.title,
@@ -110,14 +108,23 @@ export const Menu = () => {
           weight: dish.weight,
         };
 
-        console.log('zalupa', newDish);
-
         return (
-          <Text
-            style={styles.CategoryFromList}
-            onPress={() => navigation.navigate('DishPage', {...newDish})}>
-            {dish.title}
-          </Text>
+          <View
+            style={[
+              {display: 'flex'},
+              {flexDirection: 'row'},
+              {alignItems: 'center'},
+              {position: 'relative'},
+            ]}>
+            <Text style={[{position: 'absolute'}, {top: 4}, {left: 5}]}>
+              {'\u2022'}
+            </Text>
+            <Text
+              style={styles.CategoryFromList}
+              onPress={() => navigation.navigate('DishPage', {...newDish})}>
+              {dish.title}
+            </Text>
+          </View>
         );
       });
   };
@@ -142,7 +149,7 @@ export const Menu = () => {
               <Input
                 onChangeText={setSearchInputValue}
                 value={searchInputValue}></Input>
-              
+
               {includesSuchDish() && (
                 <View style={styles.CategoriesList}>{showDishes()}</View>
               )}
@@ -159,15 +166,16 @@ export const Menu = () => {
         data={date}
         renderItem={({item}) => {
           return (
-            <View key={item.id}
-              style={styles.FoodLinksKont}>
+            <View key={item.id} style={styles.FoodLinksKont}>
               <Text
                 style={styles.FoodLinks}
-                
                 onPress={() => navigation.navigate('Breakfast', {...item})}>
                 {item.title}
               </Text>
-              <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
+              <Image
+                style={styles.rightPict}
+                source={require('../../img/arrOrange.png')}
+              />
             </View>
           );
         }}
@@ -178,26 +186,25 @@ export const Menu = () => {
 
 const styles = StyleSheet.create({
   rightPict: {
-    alignSelf:'flex-end',
-   
-    width:8,
-    marginRight:25,
-    height:13,
+    alignSelf: 'flex-end',
+
+    width: 8,
+    marginRight: 25,
+    height: 13,
   },
-  FoodLinksKont:{
-    top:2,
-    left:5,
-    width:'95%',
-    marginBottom:10,
+  FoodLinksKont: {
+    top: 2,
+    left: 5,
+    width: '95%',
+    marginBottom: 10,
     borderRadius: 50,
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-between',
-    elevation:5,
-    backgroundColor:'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 5,
+    backgroundColor: 'white',
   },
   Wrapper: {
-  
     flex: 1,
     backgroundColor: 'white',
   },
@@ -227,16 +234,17 @@ const styles = StyleSheet.create({
     top: 80,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-around',
     width: '100%',
     borderColor: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
     zIndex: 9,
-    backgroundColor: '#FFEFD5',
+    backgroundColor: '#ffffff',
   },
   CategoryFromList: {
+    marginLeft: 12,
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '600',
@@ -247,9 +255,9 @@ const styles = StyleSheet.create({
     zIndex: 9,
   },
   FoodLinks: {
-    paddingLeft:10,
-    top:5,
-    left:15,
+    paddingLeft: 10,
+    top: 5,
+    left: 15,
     paddingBottom: 15,
     fontFamily: 'Open Sans',
     fontStyle: 'normal',
@@ -263,7 +271,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   FoodContainer: {
-    width:'97%',
+    width: '97%',
     flexGrow: 1,
     top: '2%',
     left: '3%',
