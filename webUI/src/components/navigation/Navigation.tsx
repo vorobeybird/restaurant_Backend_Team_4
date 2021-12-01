@@ -1,16 +1,13 @@
-import Logo from "../../assets/nav_logo.png";
 import SearchIcon from "../../assets/search.png";
 import Cart from "../../assets/cart.png";
 import CartWithItems from "../../assets/CartWithItems.svg";
 import Profile from "../../assets/profile.png";
 import "./navigation.scss";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppStateType } from "../../store";
 import { AuthStateType } from "../../store/auth/auth.reducer";
-import { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 interface LinkType {
   title: string;
   link: string;
@@ -25,7 +22,6 @@ const Navigation = () => {
   if(cartItems.length > 0){
     cartFull = true
   }
-  const dispatch = useDispatch();
   const history = useHistory();
   const links: LinkType[] = [
     { title: "Меню", link: "/menu" },

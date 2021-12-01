@@ -29,6 +29,11 @@
   white-space: nowrap;
   margin-left: 2.5%;
   margin-right: 0px;
+  cursor: pointer;
+  transition: 0.9s;
+  &:hover {
+    font-size: 2.2rem;
+  }
 }
 
 .links {

@@ -238,13 +238,23 @@
     justify-content: center;
     align-items: center;
     margin: 5% -60px;
-    & > * {
+
+    & button {
+      position: relative;
       background-color:white;
       border: solid #979797;
       border-radius: 15px;
       flex: 0 0 200px;
       height: 200px;
       margin: 0 60px;
+      cursor: pointer;
+      box-shadow: -30px 30px 20px rgba(0,0,0,0.4);
+
+      &:hover {
+        transform: scale(1.2);
+        box-shadow: -10px 20px 10px rgba(0,0,0,0.4);
+      }
+
       & img {
         width: 100px;
         height: 100px;
@@ -260,6 +270,8 @@
     & .order_button_pushed {
       border: solid #EF742F;
       border-radius: 15px;
+      transform: scale(1.2);
+      box-shadow: -10px 20px 10px rgba(0,0,0,0.4);
     }
   
   }
