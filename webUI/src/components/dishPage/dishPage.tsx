@@ -44,7 +44,7 @@ const DishPage = () => {
       else toast.error(`Войдите или зарегистрируйтесь!`);
     };
 
-    const sliderData: {image: string}[] = selectedDish.photo.map((photo, index) => {
+    const sliderData: {image: string}[] = selectedDish.photo?.map((photo, index) => {
         return { image: photo.photo_url };
     })
    

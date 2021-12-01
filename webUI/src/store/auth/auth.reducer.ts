@@ -9,7 +9,6 @@ export type AuthStateType = {
     card_number: string
     formType: "signUp" | "signIn" | "confirmSignUp" | "signedIn" | "signOut" | "togglePassword" | "confirmForgotPassword"
     user: null | any
-    //как определить тайп юзера
 }
 
 type actionType = {
