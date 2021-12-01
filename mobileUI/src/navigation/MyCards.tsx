@@ -143,10 +143,10 @@ const styles = StyleSheet.create({
     width: '100%',
 
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Pict: {
     top: 35,

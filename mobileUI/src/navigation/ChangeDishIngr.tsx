@@ -113,7 +113,9 @@ export const ChangeDishIngr = ({
         })}
       </View>
 
-      <TouchableOpacity style={styles.Button} onPress={() => handleAddExcludedIngredients()}>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => handleAddExcludedIngredients()}>
         <Text style={styles.ButText}>Готово</Text>
       </TouchableOpacity>
     </View>
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Arrow: {
     width: 30,
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: '5%',
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'normal',
     color: 'black',
   },
@@ -184,24 +186,23 @@ const styles = StyleSheet.create({
   SwitchMargin: {
     marginRight: 30,
   },
-  Button:{
-    top:'3%',
-    right:'10%',
-    alignSelf:'flex-end',
-    alignItems:'center',
-    justifyContent:'center',
-    width:'25%',
-    height:'8%',
-    backgroundColor:'#FF4D00',
+  Button: {
+    top: '3%',
+    right: '10%',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '25%',
+    height: '8%',
+    backgroundColor: '#FF4D00',
     borderRadius: 4,
-
   },
-  ButText:{
+  ButText: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 18,
     lineHeight: 24,
     color: '#FFFFFF',
-},
+  },
 });

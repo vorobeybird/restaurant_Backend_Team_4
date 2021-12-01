@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Arrow: {
     top: '26%',

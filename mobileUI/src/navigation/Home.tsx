@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     width: '100%',
 
     fontFamily: 'Roboto',
-    fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
     backgroundColor: '#ffffff',

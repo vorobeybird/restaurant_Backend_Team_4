@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   Arrow: {
-    top: '26%',
     width: 30,
     height: 30,
     marginRight: 15,
@@ -195,13 +194,15 @@ const styles = StyleSheet.create({
   TitleText: {
     alignSelf: 'center',
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'normal',
     color: 'black',
   },
   Title: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
     width: '100%',
     height: '13%',
     alignSelf: 'center',
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Header: {
     alignSelf: 'center',
