@@ -34,14 +34,14 @@ export const DishPage = ({
       ToastAndroid.TOP,
     );
   };
-  let newTitle
-          if(item.title.length >7){
-            let name = item.title.substr(0,20)
-             newTitle = name+'...'
-            console.log(newTitle)
-          } else {
-            newTitle = item.title
-          }
+  let newTitle;
+  if (item.title.length > 7) {
+    let name = item.title.substr(0, 20);
+    newTitle = name + '...';
+    console.log(newTitle);
+  } else {
+    newTitle = item.title;
+  }
   return (
     <View key={id} style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   TitleText: {
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'normal',
     color: 'black',
     marginLeft: 5,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Header: {
     bottom: '2%',
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   Pict: {
     top: '1%',
     alignSelf: 'center',
-    
+
     width: 325,
     height: 265,
     backgroundColor: 'white',
