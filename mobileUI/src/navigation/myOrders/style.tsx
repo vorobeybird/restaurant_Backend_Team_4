@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
       height:'80%',
     },
     EmptyTextWrapper:{
+      
         justifyContent:'center',
-        top:'50%'
+     
     },
     EmptyText:{
         position:'absolute',
@@ -20,6 +21,13 @@ const styles = StyleSheet.create({
         fontSize:20,
         color: 'black',
     },
+    EmptyTextHist:{
+      position:'absolute',
+      alignSelf:'center',
+      fontWeight:'800',
+      fontSize:20,
+      color: 'black',
+  },
     Title: {
         flexDirection:'row',
         height:'9%',
@@ -109,6 +117,13 @@ const styles = StyleSheet.create({
    
 
       },
+      flexHistory:{
+        
+        height:'85%',
+        width:'100%',
+   
+
+      },
       flexEnd: {
         justifyContent: 'flex-end',
       },
@@ -187,6 +202,18 @@ const styles = StyleSheet.create({
         borderRadius: 4,
 
     },
+    ButtonHist:{
+      position:'absolute',
+      
+      alignSelf:'center',
+      alignItems:'center',
+      justifyContent:'center',
+      width:'90%',
+      height:60,
+      backgroundColor:'#FF4D00',
+      borderRadius: 4,
+
+  },
     ButText:{
         fontFamily: 'Roboto',
         fontStyle: 'normal',
