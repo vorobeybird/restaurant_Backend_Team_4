@@ -92,7 +92,7 @@ const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, se
     
       <Box sx={{ height:30, mb: 4}}>
         {response.message === "No tables found!" && <span style={{color: "red", }}>Извините, нет свободных столов на указанное время</span>}
-        {response.persons === selectedCellData.num_of_persons && <span>Стол № {response.table_number} на {response.num_of_persons} забронирован на {dayjs(selectedCellData.reserve_date).format('HH:mm DD MMMM YYYY г.')} </span>}
+        {response.persons >= selectedCellData.num_of_persons && <span>Стол № {response.table_number} на {response.num_of_persons} забронирован на {dayjs(selectedCellData.reserve_date).format('HH:mm DD MMMM YYYY г.')} </span>}
        </Box>
       <Grid container spacing={2}>
      

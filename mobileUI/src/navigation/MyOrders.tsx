@@ -11,12 +11,17 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
     const [orders, setOrders] = useState([])
     const [history,setHistory] = useState([])
     const getItems = async () => {
+        setIsloading(true)
         const response = await Api.get('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/764df1cc-70f2-4ee9-8780-4a4449c1a3e4')
         const res = response.data
+        setIsloading(false)
         return res
+        
     }
-    
+    const [isLoading, setIsloading] = useState(false)
     const fetchMenuItems = async () => {
+        
+        console.log(isLoading)
         const ordArr = [];
         const histArr = [];
         const items:any = await getItems();
@@ -30,7 +35,8 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         })
         setHistory(histArr)
         setOrders(ordArr)
-        console.log(orders,'ordersorders')
+        
+        console.log(isLoading)
     };
     
     const navigation = useNavigation()
@@ -113,6 +119,8 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                         <FlatList
                                             style={styles.flex}
                                             data={orders}
+                                            refreshing={isLoading}
+                                            onRefresh={getItems}
                                             renderItem={({ item }:{item:any}) => { 
                                                 console.log(item,'itemitemitem')
                                                 return(
@@ -192,6 +200,18 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                             <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('Menu')}>
                                                 <Text style={styles.ButText}> ПЕРЕЙТИ В МЕНЮ </Text>
                                             </TouchableOpacity>
+                                            <FlatList
+                                                style={styles.flexHistory}
+                                                data={orders}
+                                                refreshing={isLoading}
+                                                onRefresh={getItems}
+                                                renderItem={() => {
+                                                    return(
+                                                        <></>
+                                                    )
+                                                }}
+                                                />
+                                            
                                         </View>
                                 
                                 )}
@@ -228,7 +248,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                         />
                             ):(
                                     <View style={styles.EmptyTextWrapper}>
-                                        <Text style={styles.EmptyText}>Ваша история заказов пуста</Text>
+                                        <Text style={styles.EmptyTextHist}>Ваша история заказов пуста</Text>
                                         <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('Menu')}>
                                             <Text style={styles.ButText}> ПЕРЕЙТИ В МЕНЮ </Text>
                                         </TouchableOpacity>
