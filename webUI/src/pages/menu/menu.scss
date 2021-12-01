@@ -35,7 +35,6 @@
   border-bottom: 1px solid #C6C5C5;
   justify-content: flex-start;
   position: relative;
-
   & div {
     text-decoration: none;
     font-style: normal;
@@ -48,18 +47,14 @@
     text-align: center;
     vertical-align: top;
     cursor: pointer;
-    transition: 0.8s;
-
     &:hover {
       color: #EF742F;
-      font-size: 1.2rem;
     }
   }
 
   .menu_active_link {
     border-bottom: #EF742F 5px solid;
     color: #EF742F;
-    font-size: 1.2rem;
   }
 }
 
@@ -87,27 +82,23 @@
   flex-direction: column;
   align-items: center;
   border: 1px solid #E5E5E5;
-  border-radius: 1rem;
-  transition: 0.9s;
-
-  &:hover {
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
-    box-sizing: border-box;
-    box-shadow: 0px 3px 18px rgba(0, 0, 0, 0.6);
-    transform: scale(1.05);
-  }
+  border-radius: 2px;
 }
 
+.item_container:hover {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.08);
+}
 
 .item_photos {
   height: 65%;
   width: 100%;
-
   & img {
     height: 100%;
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 8px;
     object-fit: cover;
   }
 }
@@ -119,7 +110,6 @@
   width: 100%;
   justify-content: space-around;
   align-items: center;
-
   & .dish-info {
     display: flex;
     flex-direction: column;
@@ -138,10 +128,8 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-
       & .dish-price {
         flex: 1;
-
         & .price {
           font-style: normal;
           font-weight: 500;
@@ -165,7 +153,6 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-
         & .weight {
           font-style: normal;
           font-weight: normal;
@@ -193,14 +180,12 @@
   z-index: 1;
 }
 
-.button {
+.button {   
   height: 100%;
-  border-radius: 1rem;
-
   & button {
     border: 1px solid #EF742F;
     box-sizing: border-box;
-    border-radius: 1rem;
+    border-radius: 2px;
     cursor: pointer;
     font-style: normal;
     font-weight: normal;
@@ -210,7 +195,6 @@
     color: #EF742F;
     background: none;
     height: 100%;
-
     &:hover {
       color: white;
       background-color: #EF742F;
@@ -235,7 +219,6 @@
 
   .tabs {
     justify-content: space-around;
-
     & div {
       flex: 1;
     }
@@ -247,14 +230,13 @@
   .menu {
     height: 800px;
   }
-
+  
   .menu_title {
     font-size: 2rem;
   }
 
   .tabs {
     justify-content: space-around;
-
     & div {
       flex: 1;
     }
@@ -265,14 +247,13 @@
   .menu {
     height: 600px;
   }
-
+  
   .menu_title {
     font-size: 1.5rem;
   }
 
   .tabs {
     justify-content: space-around;
-
     & div {
       flex: 1;
     }
@@ -283,13 +264,11 @@
       & .dish-title {
         font-size: 0.8rem;
       }
-
       & .dish-price-weight {
         & .dish-price {
           & .price {
             font-size: 1rem;
           }
-
           & .currency {
             font-size: 0.8rem;
           }
@@ -307,9 +286,8 @@
       }
     }
   }
-  .button {
+  .button {   
     height: 100%;
-
     & button {
       font-size: 0.8rem;
     }
@@ -320,14 +298,13 @@
   .menu {
     height: 500px;
   }
-
+  
   .menu_title {
     font-size: 1.4rem;
   }
 
   .tabs {
     height: 35%;
-
     & div {
       flex: 1;
     }
@@ -338,13 +315,12 @@
       & .dish-title {
         font-size: 0.8rem;
       }
-
+      
       & .dish-price-weight {
         & .dish-price {
           & .price {
             font-size: 1rem;
           }
-
           & .currency {
             font-size: 0.8rem;
           }
@@ -362,9 +338,8 @@
       }
     }
   }
-  .button {
+  .button {   
     height: 100%;
-
     & button {
       font-size: 0.8rem;
     }
@@ -375,14 +350,13 @@
   .menu {
     height: 800px;
   }
-
+  
   .menu_title {
     font-size: 1.4rem;
   }
 
   .tabs {
     height: 35%;
-
     & div {
       flex: 1;
     }
@@ -398,13 +372,12 @@
       & .dish-title {
         font-size: 0.8rem;
       }
-
+      
       & .dish-price-weight {
         & .dish-price {
           & .price {
             font-size: 1rem;
           }
-
           & .currency {
             font-size: 0.8rem;
           }
@@ -422,7 +395,7 @@
       }
     }
   }
-  .button {
+  .button {   
     & button {
       font-size: 0.6rem;
     }
@@ -433,14 +406,13 @@
   .menu {
     height: 1000px;
   }
-
+  
   .menu_title {
     font-size: 1.2rem;
   }
 
   .tabs {
     height: 20%;
-
     & div {
       font-size: 0.7rem;
     }
