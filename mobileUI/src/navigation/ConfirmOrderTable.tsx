@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 import axios from "axios";
 import dayjs from 'dayjs';
+import { COMPARISON_BINARY_OPERATORS } from "@babel/types";
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
@@ -21,17 +22,17 @@ type RootStackParamList = {
   }
 
 
-export const ConfirmOrderTable = () => {
+  export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
-    const route = useRoute();
-    const {bookTable} = route?.params ?? {};
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
-    const [getTable, setTable] = useState([]);
+    const [reservedTable, setTable] = useState([])
     const [tablePool, setTablePool] = useState([]);
+    const [availableTables, setavailableTables] = useState([]);
+    const [allTables, setallTables] = useState([]);
 
     let devState: any[] = [];
     const showToast = () => {
@@ -50,36 +51,72 @@ export const ConfirmOrderTable = () => {
         );
       };
 
+      const checkAvailableTable = (table:any) => {
+        if (!table.reserve) {
+          return true;
+        }
+    
+        if (table.reserve && table.reserve.length < 3) {
+          return true; 
+        } else {
+          return false;
+        }
+      }
+    
+
+    
     const getTablesByDate = async (date:any) => {
             const correctDate = dayjs(date).format('YYYY-MM-DD')
             const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`)
             const res = response.data
             setTable(res)
-            console.log(getTable)
         }
     const getTablePool = async () => {
             const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tablepool`)
             const res = response.data
             setTablePool(res)
         }
-    const fetchMenuItems = async (date:any) => {
-            const items = await getTablesByDate(date)
-            return items
-        }
 
     useEffect(() => {
         getTablesByDate(date);
         getTablePool()
-    }, []);
-
-
-    const onChange  = async (event:any, selectedDate:any) => {
-        const currentDate = selectedDate || date;
-        await setDate(currentDate);
-        getTablesByDate(date);
-        console.log(getTable)
+        tables(date);
         console.log(tablePool)
+        console.log(reservedTable)
+    }, []);
+    
+    const concatResult = (arr1:[],arr2:[]) => {
+        const result = [...new Set([...arr1, ...arr2])];
+        let res = result.filter((v,i,a)=>a.findIndex(t=>(t.table_number === v.table_number))===i)
+        console.log(res, 'resresres');
+        return res
+    }
+
+    const findAvailableTables = (tables:any) => {
+        let tempAvailable:any = []
+        let tempAllTables:any = []
+        tables.forEach((table:any) => {
+          if (table.persons) {
+          if (checkAvailableTable(table) && !tempAvailable.includes(table.persons))  tempAvailable.push(table.persons); // push table to available tables pool if it is not added there yet
+          if (!tempAllTables.includes(table.persons)) tempAllTables.push(table.persons);
+          }
+      })
+      setavailableTables(tempAvailable);
+      tempAllTables.sort((a:any,b:any) => a - b);
+      setallTables(tempAllTables);
+      }
+
+    const tables = (currentDate:any) =>{
+        getTablesByDate(currentDate);
+        const tables = concatResult(reservedTable, tablePool);
+        findAvailableTables(tables);
+    }
+
+    const onChange  = (event:any, selectedDate:any) => {
+        const currentDate = selectedDate || date;
+        setDate(currentDate);
         hideDatePicker()
+        tables(currentDate);
       };
     
     const showMode = (currentMode:any) => {
@@ -129,40 +166,8 @@ export const ConfirmOrderTable = () => {
     }
     const WIDTH = Dimensions.get('window').width
     const HEIGHT = Dimensions.get('window').height
-    const options = [ 'На двоих',  'На четверых', 'На шестерых', 'На восьмерых', 'На десятерых']
+    const options = {2:'На двоих',  4:'На четверых', 6:'На шестерых', 8:'На восьмерых', 10:'На десятерых'}
 
-    const result = [...new Set([...getTable, ...tablePool])]
-    let res = result.filter((v,i,a)=>a.findIndex(t=>(t.table_number === v.table_number))===i)
-
-const checkAvailableTable = (table:any) => {
-    if (!table.reserve) {
-      return true;
-    }
-
-    if (table.reserve && table.reserve.length < 3) {
-      return true; 
-    } else {
-      return false;
-    }
-  }
-
-  const findAvailableTables = (tables:any) => {
-    let tempAvailable:any = []
-    let tempAllTables:any = []
-    tables.forEach((table:any) => {
-      if (table.persons) {
-        //   console.log(table)
-      if (checkAvailableTable(table) && !tempAvailable.includes(table.persons))  tempAvailable.push(table.persons); // push table to available tables pool if it is not added there yet
-      if (!tempAllTables.includes(table.persons)) tempAllTables.push(table.persons);
-      }
-  })
-  console.log(tempAvailable);
-  tempAllTables.sort((a:any,b:any) => a - b);
-  console.log(tempAllTables);
-  }
-
-findAvailableTables(res)
-    
     const ModalPicker = () => {
 
         const onPressItem = (option:any) => {
@@ -170,14 +175,14 @@ findAvailableTables(res)
             setChooseTable(option)
         }
 
-        const option = options.map((item, index) => {
+        const option = availableTables.map((item, index) => {
             return (
                 <TouchableOpacity
                     key={index}
                     style={styles.option}
-                    onPress={() => onPressItem(item)}
+                    onPress={() => onPressItem(options[item])}
                     >
-                        <Text style={styles.modalText}>{item}</Text>
+                        <Text style={styles.modalText}>{options[item]}</Text>
                 </TouchableOpacity>
             )
         })
