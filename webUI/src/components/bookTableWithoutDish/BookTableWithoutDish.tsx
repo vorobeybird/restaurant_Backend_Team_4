@@ -12,6 +12,7 @@ import { ChooseDate } from "../common/chooseDate/ChooseDate";
 import { ChooseTime } from "../common/chooseTime/ChooseTime";
 import { EnterContacts } from "../common/enterContacts/EnterContacts";
 import { BookTableDetails } from "../common/bookTableDetails/BookTableDetails";
+import Api from "../../store/Api";
 
 export const BookTableWithoutDish = () => {
   const dispatch = useAppDispatch();
@@ -68,7 +69,7 @@ export const BookTableWithoutDish = () => {
     currentOrder.reserve_date = order.delivery_date;
     currentOrder.reserve_time = order.delivery_date;
 
-    return axios
+    return Api
       .post(`${process.env.REACT_APP_GET_DISHES}/api/reserve`, currentOrder, {
         headers: {
           "Content-type": "application/json",

@@ -23,7 +23,7 @@ const rfsStream = rfs.createStream(process.env.LOG_FILE || 'log.txt', {
   compress: 'gzip' // compress rotated files
 });
 
-app.use(logger('combined', { stream: rfsStream }))
+app.use(logger('combined', { skip: function (req, res) { return req.method === "GET" && res.statusCode < 400}, stream: rfsStream }))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

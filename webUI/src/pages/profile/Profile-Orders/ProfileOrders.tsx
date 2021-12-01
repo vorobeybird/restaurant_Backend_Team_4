@@ -143,7 +143,7 @@ export const ProfileOrders = () => {
             </td>
             <td>{paymentMethod[tableData[i].payment_method]}</td>
             <td>
-              {tableData[i].delivery_method === "bookTable" && tableData[i].total_price === 0 && tableData[i].dish.length === 0 && ordersType === "current"
+              {tableData[i].delivery_method === "bookTable" && tableData[i].total_price === 0 && tableData[i].OrderDishes.length === 0 && ordersType === "current"
                 ? <div className="td-cancellation">
                   <button className="td__btn" onClick={() => cancelReservation(tableData[i].id)}>
                     <img src={Delete}></img>

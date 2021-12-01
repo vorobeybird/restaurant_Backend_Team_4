@@ -16,7 +16,7 @@ export const orderAPI = {
       })
   },
   changeOrderStatus(orderId: number, newStatus: string) {
-    return axios.put(`${BASE_URL}/api/order/${orderId}`, {status: newStatus})
+    return Api.put(`${BASE_URL}/api/order/${orderId}`, {status: newStatus})
     .then(response => response);
   }
 }
