@@ -52,7 +52,7 @@ export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, ro
                 <TouchableOpacity onPress={() => goBack()}>
                     <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
                 </TouchableOpacity>
-                <Text style={styles.TitleText}> Доставка</Text>
+                <Text style={styles.TitleText}> Добавить адрес доставки</Text>
             </View>
             <View style={styles.HeadWrap}>
                 <Text style={styles.Header}> Добавить адрес доставки </Text>

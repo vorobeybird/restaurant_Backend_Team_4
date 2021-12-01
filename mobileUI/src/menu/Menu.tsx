@@ -159,12 +159,16 @@ export const Menu = () => {
         data={date}
         renderItem={({item}) => {
           return (
-            <Text
-              style={styles.FoodLinks}
-              id={item.id}
-              onPress={() => navigation.navigate('Breakfast', {...item})}>
-              {item.title}
-            </Text>
+            <View key={item.id}
+              style={styles.FoodLinksKont}>
+              <Text
+                style={styles.FoodLinks}
+                
+                onPress={() => navigation.navigate('Breakfast', {...item})}>
+                {item.title}
+              </Text>
+              <Image style={styles.rightPict} source={require('../../img/arrOrange.png')}/>
+            </View>
           );
         }}
       />
@@ -173,7 +177,27 @@ export const Menu = () => {
 };
 
 const styles = StyleSheet.create({
+  rightPict: {
+    alignSelf:'flex-end',
+   
+    width:8,
+    marginRight:25,
+    height:13,
+  },
+  FoodLinksKont:{
+    top:2,
+    left:5,
+    width:'95%',
+    marginBottom:10,
+    borderRadius: 50,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    elevation:5,
+    backgroundColor:'white',
+  },
   Wrapper: {
+  
     flex: 1,
     backgroundColor: 'white',
   },
@@ -223,8 +247,10 @@ const styles = StyleSheet.create({
     zIndex: 9,
   },
   FoodLinks: {
-    paddingBottom: 10,
-    top: 10,
+    paddingLeft:10,
+    top:5,
+    left:15,
+    paddingBottom: 15,
     fontFamily: 'Open Sans',
     fontStyle: 'normal',
     fontWeight: '600',
@@ -237,9 +263,10 @@ const styles = StyleSheet.create({
     height: 24,
   },
   FoodContainer: {
+    width:'97%',
     flexGrow: 1,
     top: '2%',
-    left: '10%',
+    left: '3%',
     zIndex: -1,
   },
 });

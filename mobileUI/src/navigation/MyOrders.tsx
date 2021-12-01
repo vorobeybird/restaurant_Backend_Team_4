@@ -143,50 +143,60 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                                                 </View>
                                                             </View>
                                                         </View>
-                                                        <View>
-                                                            {item.dish.length ? (
-                                                                item.dish.map((item: any) => {
-                                                                    anFunc(item)
-                                                                    
-                                                                    return(
-                                                                        
-                                                                        <View style={styles.orderDishes}>
-                                                                            <View style={styles.rowWrapper}>
-                                                                                <Text style={styles.color}>БЛЮДО</Text>
-                                                                                <Text style={styles.color}>ЦЕНА</Text>
-                                                                                <Text style={styles.color}>КОЛ-ВО</Text>
-                                                                                <Text style={styles.color}>СУММА</Text>
-                                                                            </View>
-                                                                        <View
-                                                                        style={{
-                                                                            paddingTop: 15,
-                                                                            borderBottomColor: '#979A9F',
-                                                                            borderBottomWidth: 0.3,
-                                                                        }}/>
-                                                                        <View style={styles.contContent} key={item.id}>
-                                                                            <Text style={styles.simpText}>{item.title}</Text>
-                                                                            <Text style={styles.Price}> {item.price} BYN</Text>
-                                                                            <Text style={styles.Qan}> {item.cardQuantity}</Text>
-                                                                            <Text style={styles.simpText}>{item.price * item.OrderDish.quantity} BYN</Text>
-                                                                        </View>
-                                                                        <View
+                                                        <View style={styles.orderDishes}>
+                                                        <View style={styles.rowWrapper}>
+                                                            <Text style={styles.color}>БЛЮДО</Text>
+                                                            <Text style={styles.color}>ЦЕНА</Text>
+                                                            <Text style={styles.color}>КОЛ-ВО</Text>
+                                                            <Text style={styles.color}>СУММА</Text>
+                                                        </View>
+                                                        <View
                                                             style={{
                                                                 paddingTop: 15,
                                                                 borderBottomColor: '#979A9F',
                                                                 borderBottomWidth: 0.3,
-                                                            }}
-                                                            />
-                                                            <View style={styles.TotalCounter}>
-                                                                <Text style={styles.finHardText}>ИТОГО</Text>
-                                                                <Text style={styles.finText}>{item.total_price} BYN</Text>
-                                                            </View>
+                                                            }}/>
+                                                            {item.dish.length ? (
+                                                           
+                                                                item.dish.map((item: any) => {
+                                                                    let newTitle
+                                                                    if(item.title.length >10){
+                                                                        let name = item.title.substr(0,6)
+                                                                        newTitle = name+'...'
+                                                                    
+                                                                    } else {
+                                                                        newTitle = item.title
+                                                                    }
+                                                                    console.log(item)
+                                                                    return(
+                                                                        <View>
+                                                                        
+                                                                            <View style={styles.contContent} key={item.id}>
+                                                                                <Text numberOfLines={3} style={styles.simpTextTitle}>{item.title}</Text>
+                                                                                <Text style={styles.Price}> {item.price} BYN</Text>
+                                                                                <Text style={styles.Qan}> {item.OrderDish.quantity}</Text>
+                                                                                <Text style={styles.simpText}>{item.price * item.OrderDish.quantity} BYN</Text>
+                                                                            </View>
+                                                                        
                                                                         </View>
                                                                     )
+                                                                    
                                                                 })
+                                                               
+                                                                
                                                             ):(
                                                                 <>
                                                                 </>
                                                             )}
+                                                            <View style={{
+                                                                        paddingTop: 15,
+                                                                        borderBottomColor: '#979A9F',
+                                                                        borderBottomWidth: 0.3,
+                                                                    }}/>
+                                                                            <View style={styles.TotalCounter}>
+                                                                                <Text style={styles.finHardText}>ИТОГО</Text>
+                                                                                <Text style={styles.finText}>{item.total_price} BYN</Text>
+                                                                            </View>
                                                             
                                                         </View>     
                                                     </>

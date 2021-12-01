@@ -36,7 +36,8 @@ const Profile = () => {
           <Text style={styles.Email}>{email}</Text>
           <Text style={styles.Phone}>{phoneNumber}</Text>
           <TouchableOpacity style={styles.ButCont} onPress={() => {navigation.navigate('PersonalData')}}>
-            <Text style={styles.ButText}>Изменить  {'>'}</Text>
+            <Text style={styles.ButText}>Изменить </Text>
+            <Image style={styles.pic}  source={require('../../img/arrowDes.png')}/>
           </TouchableOpacity>
         </View>
     </View>
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
       color: '#000000',
     },
     ButCont:{
+      flexDirection:'row',
       marginTop:50,
       width: 146,
       height: 38,
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent:'center',
     },
+    
     ButText:{
       fontFamily: 'Roboto',
       fontStyle: 'normal',
@@ -106,6 +109,10 @@ const styles = StyleSheet.create({
       lineHeight: 24,
       color: '#FFFFFF',
     },
+    pic:{
+      top:2,
+      left:10,
+    }
 });
 
 export default Profile;

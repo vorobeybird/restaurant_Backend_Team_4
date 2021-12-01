@@ -137,6 +137,13 @@ const styles = StyleSheet.create({
         color: '#979A9F',
       },
       simpText: {
+        
+        right:10,
+        color: 'black',
+      },
+      simpTextTitle:{
+        width:100,
+        right:10,
         color: 'black',
       },
       orderDishes: {
@@ -166,11 +173,11 @@ const styles = StyleSheet.create({
   },
   Qan: {
     color: 'black',
-    right: '70%',
+    right: 35,
   },
   Price: {
     color: 'black',
-    right: '75%',
+    right: 50,
   },
   TotalCounter: {
     flexDirection: 'row',

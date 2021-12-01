@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
   TextStyle: {
     fontFamily: 'Roboto',
-    fontWeight: '500',
-    fontSize: 20,
+    fontWeight: 'bold',
+    fontSize: 19,
     lineHeight: 24,
     color: '#000000',
   },
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     right: 30,
   },
   simpWrapper: {
+    top:5,
     alignItems: 'center',
   },
 });
