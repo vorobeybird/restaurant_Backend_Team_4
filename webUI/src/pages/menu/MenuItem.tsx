@@ -1,15 +1,18 @@
-import {Button} from "../../components/common/button/Button";
-import {MenuItem} from "../../store/menu/menu.types";
+import { Button } from "../../components/common/button/Button";
+import { MenuItem } from "../../store/menu/menu.types";
 import "./menu.scss";
 import "@brainhubeu/react-carousel/lib/style.css";
-import {addToCart} from "../../store/cart/cart.actions";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {ICartItem} from "../../store/cart/cart.types";
+import { addToCart } from "../../store/cart/cart.actions";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { ICartItem } from "../../store/cart/cart.types";
 import toast from "react-hot-toast";
-import {Redirect, useHistory} from "react-router";
+import { Redirect, useHistory } from "react-router";
 
 const MenuItemComponent = (item: MenuItem) => {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
+  const items = useAppSelector((state) => state.cartItems.items);
+  const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
 
     const items = useAppSelector((state) => state.cartItems.items);
     const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
@@ -19,7 +22,6 @@ const MenuItemComponent = (item: MenuItem) => {
             dispatch(addToCart({...item, excluded_ingredients: []}, items));
         }
     };
-
     return (
         <div className="item_container">
             <div className="item_photos">
@@ -49,6 +51,12 @@ const MenuItemComponent = (item: MenuItem) => {
                     </Button>
                 </div>
             </div>
+          </div>
+        </div>
+        <div className="btn-wrapper">
+          <Button type="button" onClick={() => onOrder(item)}>
+            Заказать
+          </Button>
         </div>
     )
 };

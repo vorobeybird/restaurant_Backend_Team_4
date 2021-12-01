@@ -3,7 +3,6 @@ import Input from "../../components/common/input/Input";
 import {Button} from "../../components/common/button/Button";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import toast from "react-hot-toast";
 
 // imports for aws authentication
 import {Auth} from "aws-amplify";
@@ -125,8 +124,7 @@ export function Authentication() {
             setUserEmail("");
             setUserPassword("");
         } catch (err) {
-            console.log(err)
-            toast.error("Не удалось авторизироваться. Неверное имя пользователя или пароль");
+            console.log(err);
         }
     }
 
@@ -163,7 +161,7 @@ export function Authentication() {
     async function forgotPasswordHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            await Auth.forgotPassword(userEmail);
+            const response = await Auth.forgotPassword(userEmail);
             dispatch({type: "FORGOT_PASSWORD"});
         } catch (err) {
             console.log(err);
@@ -173,7 +171,8 @@ export function Authentication() {
     async function confirmForgotPasswordHandler(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
-            await Auth.forgotPasswordSubmit(userEmail, confirmationCode, userPassword);
+            // const {username, confirmCode, password} = authState;
+            const response = await Auth.forgotPasswordSubmit(userEmail, confirmationCode, userPassword);
             dispatch({type: "CONFIRM_FORGOT_PASSWORD"});
         } catch (err) {
             console.log(err);
@@ -195,10 +194,17 @@ export function Authentication() {
         "A": "[234]",
         "B": "[3459]",
         "9": "[0-9]",
+        // "1": "+",
+        // "3": "3",
+        // "5": "5",
+        // "7": "7",
     }
 
     return (
         <>
+            {/* <div className="login_logo">
+                <img src={Logo} alt="logo"/>
+            </div> */}
             <section className="auth">
                 {formType === "signIn" && <div className="register_container">
                     <form onSubmit={signInHandler}>
