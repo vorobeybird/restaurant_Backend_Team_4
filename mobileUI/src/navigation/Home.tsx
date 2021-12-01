@@ -17,10 +17,12 @@ export const Home = () => {
   return (
     <View style={styles.MainWrapper}>
       <View style={styles.Title}>
-        <Text style={styles.TitleText}> Ocean Bar </Text>
+        <Text style={styles.TitleText}>Ocean Bar</Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MenuTabNavigation',{screen:'Menu'})}
+        onPress={() =>
+          navigation.navigate('MenuTabNavigation', {screen: 'Menu'})
+        }
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}
@@ -90,7 +92,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   Title: {
+    display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: '9%',
     width: '100%',
 
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   TextStyle: {
     fontFamily: 'Roboto',
@@ -109,6 +114,7 @@ const styles = StyleSheet.create({
   },
   TitleText: {
     alignSelf: 'center',
+    elevation: 1,
     fontFamily: 'Roboto',
 
     fontSize: 25,
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     right: 30,
   },
   simpWrapper: {
-    top:5,
+    top: 5,
     alignItems: 'center',
   },
 });
