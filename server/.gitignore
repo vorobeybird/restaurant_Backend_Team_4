@@ -3,3 +3,4 @@ node_modules
 mysqldb/
 db/
 app_sequelize/config/config.json
+!log.txt
