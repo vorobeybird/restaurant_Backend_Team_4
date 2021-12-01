@@ -254,7 +254,7 @@ export const OrderDetails = ({
           }
           console.log(id)
           
-          handleAddOrderHistoryItem(historyOrder)
+          // handleAddOrderHistoryItem(historyOrder)
           handleClearCart()
           
           navigation.navigate('Home')
