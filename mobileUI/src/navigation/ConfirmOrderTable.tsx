@@ -391,11 +391,10 @@ const styles = StyleSheet.create({
 
   Button: {
     top: '20%',
-    right: '10%',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '25%',
+    width: '70%',
     height: '8%',
     backgroundColor: '#FF4D00',
     borderRadius: 4,
