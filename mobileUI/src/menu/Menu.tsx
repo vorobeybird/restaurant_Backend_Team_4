@@ -114,8 +114,11 @@ export const Menu = () => {
               {display: 'flex'},
               {flexDirection: 'row'},
               {alignItems: 'center'},
+              {position: 'relative'},
             ]}>
-            <Text style={[{marginRight: 5}, {marginLeft: 5}]}>{'\u2022'}</Text>
+            <Text style={[{position: 'absolute'}, {top: 4}, {left: 5}]}>
+              {'\u2022'}
+            </Text>
             <Text
               style={styles.CategoryFromList}
               onPress={() => navigation.navigate('DishPage', {...newDish})}>
@@ -241,6 +244,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   CategoryFromList: {
+    marginLeft: 12,
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '600',
