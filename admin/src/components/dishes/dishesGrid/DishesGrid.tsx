@@ -1,4 +1,4 @@
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef} from '@mui/x-data-grid';
 import DishDialog from '../dishDialog/DishDialog';
 import DishAlertDialog from '../dishDialog/DishAlertDialog';
 import Button from '@mui/material/Button/Button';
@@ -74,7 +74,8 @@ const DishesGrid = () => {
     { field:'Delete', headerName: 'Удалить', width: 100, sortable: false, filterable: false, disableColumnMenu: true, align: 'center', headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {
         e.stopPropagation(); 
-        const activeOrders = params.row.order.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
+        console.log(params)
+        const activeOrders = params.row.Orders.filter((order:any) =>  order.status !== "Готов" && order.status !== "Отменен"  )
         setCurrentDish(params.id);
         if(activeOrders.length > 0 ){
           handleClickOpenAlert();

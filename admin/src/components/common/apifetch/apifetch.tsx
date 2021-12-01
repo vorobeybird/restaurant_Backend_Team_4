@@ -30,7 +30,7 @@ const apiFetch = async ( type: Method, url: string, data?: any | null, id?: numb
           let token = null;
           try {
               token =  await getToken();
-              console.log("TOKEN ", token);
+            //   console.log("TOKEN ", token);
           } catch (error) {
               /* Nothing */
           }

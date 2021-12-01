@@ -8,14 +8,14 @@ import LineChart from './charts/lineChart/LineChart';
 
 
 const Dashboard = () => {
-
-    const [allOrders, setAllOrders] = useState([]);
+    const initialOrders:any = [];
+    const [allOrders, setAllOrders] = useState(initialOrders);
     
     const fetchOrders = async () => {
-        await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
+    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
     .then(response => {
-        setAllOrders(response.data); 
         console.log(response.data)
+     setAllOrders(response.data); 
         
     })
     .catch(err=>{
@@ -25,6 +25,7 @@ const Dashboard = () => {
     }
     const theme = useTheme();
     useEffect(()=> {
+        console.log('here')
         fetchOrders();
     }, [])
    return (<Container maxWidth="xl">
