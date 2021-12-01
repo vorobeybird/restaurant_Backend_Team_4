@@ -30,6 +30,7 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
   const dispatch = useAppDispatch();
   const persons = useAppSelector((state) => state.order.order.num_of_persons);
   const deliveryMethod = useAppSelector((state) => state.order.order.delivery_method);
+  const deliveryDate = useAppSelector((state) => state.order.order.delivery_date);
   const filteredTablesData = useAppSelector((state) => state.table.tablePool.filter(item => item.persons === persons));
 
 
@@ -44,6 +45,7 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
   const checkAvailableTime = (tablesData: Table[], time: string) => {
 
     if (deliveryMethod === 'bookTable') {
+      
     const result = tablesData.some((table) => {
       if (table.reserve) {
         const conflictingReservation = table.reserve.findIndex((item) => {          
@@ -68,7 +70,7 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
     //  console.log(dayjs());
     // console.log(dayjs().hour(Number(time.split(':')[0]) + 1))
 
-    if (dayjs() > dayjs().hour(Number(time.split(':')[0]) - 2)) {
+    if (dayjs() > dayjs(deliveryDate).hour(Number(time.split(':')[0]) - 2)) {
       return true
     }
     return false
@@ -80,9 +82,9 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
       <div className="order-header">Время</div>
       <div>
         <div className="time_container">
-          {possibleTime.map((timeItem) => {
+          {possibleTime.map((timeItem, i) => {
             return (
-              <div  className={
+              <div key={i}  className={
                 timeItem === props.time ? "timebox pushed_button" : "timebox"
               }>
                 <button
