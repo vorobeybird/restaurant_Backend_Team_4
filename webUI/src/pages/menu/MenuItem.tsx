@@ -15,16 +15,16 @@ const MenuItemComponent = (item: MenuItem) => {
   const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
 
   const onOrder = (item: MenuItem) => {
-    if(userId) {
+    if (userId) {
       toast.success(`Блюдо "${item.title}" добавлено в корзину`);
-      dispatch(addToCart(item, items));
+      dispatch(addToCart({...item, excluded_ingredients: []}, items));
     }
   };
 
   return (
     <div className="item_container">
       <div className="item_photos">
-        <img src={item.photo[0].photo_url} alt="dish-main-photo" />
+        <img src={item?.photo[0]?.photo_url} alt="dish-main-photo" />
       </div>
       <div className="item_info">
         <div className="dish-info">

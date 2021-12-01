@@ -6,11 +6,13 @@ import {
   Box,
   Hidden,
   IconButton,
-  Toolbar
+  Toolbar,
+  Typography
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
 import InputIcon from '@mui/icons-material/InputOutlined';
 import MenuIcon from '@mui/icons-material/MenuOutlined';
+import logo from '../../../assets/logo.svg';
 
 interface IAdminProps {
   onMobileNavOpen: any;
@@ -26,7 +28,7 @@ const AdminNavBar = ({ onMobileNavOpen, ...rest }: IAdminProps ) => {
     >
       <Toolbar>
         <RouterLink to="/">
-<div>LOGO</div>
+<div style={{color: 'white', fontSize: '2rem'}}><img src={logo} height="50px"/><span style={{verticalAlign: 'super', marginLeft: '1rem'}}>Ocean Bar</span></div>
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>

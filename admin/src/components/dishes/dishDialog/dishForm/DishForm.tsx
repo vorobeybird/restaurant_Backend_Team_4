@@ -5,7 +5,8 @@ import { useTheme } from '@mui/styles';
 import IngSelector from '../../ingredients/selector/IngSelector';
 import CatSelector from '../../categories/selector/CatSelector';
 import PhotoUploader from './photoUploader/PhotoUploader';
-import axios, {AxiosResponse, Method}  from 'axios';
+import {Method}  from 'axios';
+import apiFetch from '../../../common/apifetch/apifetch';
 interface IPhoto {
   photo_url: string,
   public_id: string,
@@ -57,14 +58,8 @@ const DishForm = ({dish, handleClose, fetchDishes}: IDishFormProps ) => {
         const fillDish = ( type: Method, url: string, data: IDish, id?: string) => {
 
           const queryUrl = id ? `${url}/${id}`: url;
-          axios.request<AxiosResponse>({
-              method: type,
-              url: queryUrl,
-              data: data,
-              headers: {
-                "Content-type": "application/json"
-               }
-            })
+          
+          apiFetch(type, queryUrl, data)
           .then(response => {
               handleClose();
               fetchDishes();

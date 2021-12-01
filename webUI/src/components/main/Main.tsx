@@ -1,17 +1,17 @@
 import "./main.scss";
-import Figure from "../../assets/figure.png";
-import Input from "../common/input/Input";
-import InputCTA from "../common/input/InputCTA";
-import CalendarLogo from "../../assets/calendar.png";
-import ClockLogo from "../../assets/clock.png";
-import { Button } from "../common/button/Button";
-import Logo from "../../assets/main_logo.png";
-import GooglePlay from "../../assets/google_play.png";
 import { useSelector } from "react-redux";
 import { AppStateType } from "../../store";
 import { AuthStateType } from "../../store/auth/auth.reducer";
-import { Redirect } from "react-router-dom";
-import { ChangeEvent } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import MenuItemComponent from "../../pages/menu/MenuItem";
+import { fetchCategories, fetchDishes } from "../../store/menu/menu.actions";
+import { MenuItem } from "../../store/menu/menu.types";
+import { ICartItem } from "../../store/cart/cart.types";
+import { setSelectedDish } from "../../store/dishPage/dishPage.actions";
+import NextLogo from "../../assets/next.png";
+import PrevLogo from "../../assets/prev.png";
 
 const STEPS = [
   "Забронируйте стол",
@@ -20,49 +20,91 @@ const STEPS = [
   "К вашему приходу все готово",
 ];
 
-const MEAL_BLOCKS = [
-  {
-    image: Figure,
-    name: "Название блюда",
-    price: 8,
-    onclick: () => console.log("Order"),
-  },
-  {
-    image: Figure,
-    name: "Название блюда",
-    price: 10,
-    onclick: () => console.log("Order"),
-  },
-  {
-    image: Figure,
-    name: "Название блюда",
-    price: 14,
-    onclick: () => console.log("Order"),
-  },
-  {
-    image: Figure,
-    name: "Название блюда",
-    price: 6,
-    onclick: () => console.log("Order"),
-  },
-];
-
 const Main = () => {
-  const user = useSelector<AppStateType, AuthStateType>(state => state.auth.user);
+  const user = useSelector<AppStateType, AuthStateType>(
+    (state) => state.auth.user
+  );
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("changed");
-  };
-
-  const onClickDate = () => {
-    console.log("Dclick!");
-  };
-
-  const onClickTime = () => {
-    console.log("Tclick!");
-  };
+  const dispatch = useAppDispatch();
 
   // if (user === null) return <Redirect to="/login" />
+
+  let dishesForWeek = [] as MenuItem[];
+  const [tempDishesForWeek, setTempDishesForWeek] = useState([] as MenuItem[]);
+
+  const [step, setStep] = useState(1);
+
+  const numOfDishes = 12;
+  const maxStep = Math.ceil(numOfDishes / 4);
+
+  let dishes = useAppSelector((state) => state.menu.items);
+  useEffect(() => {
+    if (localStorage.getItem(`saveDishes`)) {
+      const newDishes = JSON.parse(localStorage[`saveDishes`]);
+      dishesForWeek = newDishes.filter(
+        (value: MenuItem, index: number) => index < numOfDishes
+      );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < step * 4 && index >= step * 4 - 4;
+        })
+      );
+    } else {
+      dispatch(fetchDishes());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (dishes.length !== 0) {
+      localStorage.setItem("saveDishes", JSON.stringify(dishes));
+      dishesForWeek = dishes.filter(
+        (value: MenuItem, index: number) => index < numOfDishes
+      );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < step * 4 && index >= step * 4 - 4;
+        })
+      );
+    }
+  }, [dishes]);
+
+  const goPrevDishes = () => {
+    if (step > 1) {
+      setStep((state) => state - 1);
+      const newStep = step - 1;
+      const newDishes = localStorage.getItem("saveDishes");
+      if (newDishes)
+        dishesForWeek = JSON.parse(newDishes).filter(
+          (value: MenuItem, index: number) => index < numOfDishes
+        );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < newStep * 4 && index >= newStep * 4 - 4;
+        })
+      );
+    }
+  };
+
+  const goNextDishes = () => {
+    if (step < maxStep) {
+      setStep((state) => state + 1);
+      const newStep = step + 1;
+      const newDishes = localStorage.getItem("saveDishes");
+      if (newDishes)
+        dishesForWeek = JSON.parse(newDishes).filter(
+          (value: MenuItem, index: number) => index < numOfDishes
+        );
+      setTempDishesForWeek(
+        dishesForWeek.filter((dish, index) => {
+          return index < newStep * 4 && index >= newStep * 4 - 4;
+        })
+      );
+    }
+  };
+
+  const handleDishClick = (item: ICartItem | MenuItem) => {
+    dispatch(setSelectedDish(item));
+  };
 
   return (
     <>
@@ -79,56 +121,40 @@ const Main = () => {
         ))}
       </div>
 
-      <div className="table_reserve_container">
-        <div className="table_reserve">
-          <p>Забронируйте стол</p>
-          <div className="inputs_container">
-            <Input placeholder="&nbsp;&nbsp;Имя" onChange={(onChange)} />
-            <Input placeholder="&nbsp;&nbsp;Номер телефона" onChange={onChange} />
-            <div className="time_and_date_input_container">
-              <InputCTA
-                placeholder="&nbsp;&nbsp;Дата"
-                onClick={onClickDate}
-                Icon={CalendarLogo}
-              />
-              <InputCTA
-                placeholder="&nbsp;&nbsp;Время"
-                onClick={onClickTime}
-                Icon={ClockLogo}
-              />
-            </div>
-          </div>
-          <button className="reserve-btn">Забронировать</button>
-        </div>
-      </div>
-
       <div className="main_menu">
         <div className="main_menu__title">Предложение недели</div>
         <div className="main_meals_container">
-          <button className="main_meals_container__btn .left_btn"></button>
-          {/* {MEAL_BLOCKS.map(({ image, name, price, onclick }) => {
-            return (
-              <div className="meals_container">
-                <div className="meal">
-                  <div>
-                    <img src={image} alt="meal icon" />
-                  </div>
-                  <div>
-                    <p>{name}</p>
-                    <p>Цена: ${price}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })} */}
+          <button
+            className={`main_meals_container__btn ${
+              step === 1 ? "blur" : undefined
+            }`}
+            onClick={goPrevDishes}
+          >
+            <img src={PrevLogo} alt="prev" />
+          </button>
           <div className="meals_container">
-
+            {tempDishesForWeek?.map((dish) => {
+              return (
+                <Link
+                  to="/dishPage"
+                  className="dish-link"
+                  onClick={() => handleDishClick(dish)}
+                >
+                  <MenuItemComponent {...dish} />
+                </Link>
+              );
+            })}
           </div>
-          <button className="main_meals_container__btn .right_btn"></button>
+          <button
+            className={`main_meals_container__btn ${
+              step === maxStep ? "blur" : undefined
+            }`}
+            onClick={goNextDishes}
+          >
+            <img src={NextLogo} alt="next" />
+          </button>
         </div>
       </div>
-
-
     </>
   );
 };

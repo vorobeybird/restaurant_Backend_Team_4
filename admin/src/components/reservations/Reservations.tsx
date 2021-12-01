@@ -72,7 +72,6 @@ const Reservations = () => {
    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
     .then(response => {
       const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
-        console.log(ordersWithReservations);
         setAllOrders(ordersWithReservations);
     })
     .catch(err=>{
@@ -142,7 +141,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
           setSelectedCellData({
             ...selectedCellData,
             num_of_persons: params.row.persons,
-            reserve_date: dayjs().hour(+timeParsed).minute(0).second(0).toISOString(),
+            reserve_date: dayjs(date).hour(+timeParsed).minute(0).second(0).toISOString(),
           })
          setOpenRForm(true);
         }
@@ -197,7 +196,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   </div>
   <OrderCard currentOrder={currentOrder} openCard={cardOpen} handleCloseCard={handleCloseCard} />
   <TableDialog currentTable={currentTable} setCurrentTable={setCurrentTable} tableOpen={tableOpen} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData} />
-  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} selectedCellData={selectedCellData} setSelectedCellData={setSelectedCellData} fetchReservationData={fetchReservationData} />
+  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} selectedCellData={selectedCellData} setSelectedCellData={setSelectedCellData} fetchAllOrders={fetchAllOrders} fetchReservationData={fetchReservationData} />
   </>
 );
 }

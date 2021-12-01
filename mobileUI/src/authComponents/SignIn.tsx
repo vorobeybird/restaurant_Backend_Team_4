@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {BottomSheet} from 'react-native-elements/dist/bottomSheet/BottomSheet';
 
-import {addEmail, addSignInStat} from '../store/StoreCard';
+import {addEmail, addUserInfo} from '../store/StoreCard';
 import {useDispatch, useSelector} from 'react-redux';
 
 const windowWidth = Dimensions.get('window').width;
@@ -20,6 +20,9 @@ const SignIn = (props: any) => {
   const cart = useSelector(state => state.dishes);
   const dispatch = useDispatch();
 
+  const handleAddUserInfo = (item:any) => {
+    dispatch(addUserInfo(item))
+}
   const handleEmail = (email: any) => {
     dispatch(addEmail(email));
   };
@@ -35,6 +38,8 @@ const SignIn = (props: any) => {
   const onSubmit = async () => {
     try {
       const user = await Auth.signIn(state.email, state.password);
+      console.log(user, 'amplifyUser')
+      handleAddUserInfo(user)
     } catch (error) {
       console.log('error signing in', error);
     }

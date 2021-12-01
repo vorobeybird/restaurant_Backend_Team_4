@@ -14,5 +14,9 @@ export const orderAPI = {
       .then(response => {
         return response.data;
       })
+  },
+  changeOrderStatus(orderId: number, newStatus: string) {
+    return Api.put(`${BASE_URL}/api/order/${orderId}`, {status: newStatus})
+    .then(response => response);
   }
 }
