@@ -18,7 +18,7 @@ router.get("/", function (req, res, next) {
 });
 
 //ids=1,3,4,5 & category=3 & filter=Сардины
-router.get("/api/dishes", isAuth, dishController.showDishes);
+router.get("/api/dishes", dishController.showDishes);
 
 router.post("/api/dish", isAuth, dishController.add);
 
@@ -51,7 +51,7 @@ router.put("/api/category/:id", isAuth, categoryController.update);
 router.delete("/api/category/:id", isAuth, categoryController.delete);
 
 router.get("/api/order", isAuth, orderController.list);
-router.post("/api/order", isAuth, orderController.add);
+router.post("/api/order",isAuth, orderController.add);
 router.get("/api/order/:id", isAuth, orderController.getById);
 router.put("/api/order/:id", isAuth, orderController.update);
 router.delete("/api/order/:id", isAuth, orderController.delete);
@@ -65,14 +65,14 @@ router.get(
 router.post("/api/image", upload.single("image"), dishPhotoController.add);
 router.delete("/api/image/:publicId", dishPhotoController.delete);
 
-router.post("/api/tables", isAuth, tableController.add);
-router.get("/api/tables", isAuth, tableController.getTablesReservatons);
-router.get("/api/tablepool", isAuth, tableController.getTables);
-router.get("/api/tables/:date", isAuth, tableController.getSortedTables);
-router.post("/api/tables", isAuth, tableController.add);
-router.put("/api/tables/:id/:hard?", isAuth, tableController.update);
-router.delete("/api/tables/:id/:hard?", isAuth, tableController.delete);
+router.post("/api/tables", tableController.add);
+router.get("/api/tables",tableController.getTablesReservatons);
+router.get("/api/tablepool", tableController.getTables);
+router.get("/api/tables/:date", tableController.getSortedTables);
+router.post("/api/tables", tableController.add);
+router.put("/api/tables/:id/:hard?", tableController.update);
+router.delete("/api/tables/:id/:hard?", tableController.delete);
 
-router.post("/api/reserve", isAuth, reserveController.add);
+router.post("/api/reserve", reserveController.add);
 
 module.exports = router;

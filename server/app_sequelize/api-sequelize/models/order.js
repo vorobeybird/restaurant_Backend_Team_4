@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
 
       status: {
         type: DataTypes.STRING,
-        defaultValue: "Принят в работу",
+        defaultValue: "Отправлен",
       },
       comment: DataTypes.STRING,
       reserve_id: DataTypes.INTEGER,
