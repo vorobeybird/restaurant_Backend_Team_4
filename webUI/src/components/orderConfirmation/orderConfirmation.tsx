@@ -16,7 +16,7 @@ import { DishShortInfo } from "../../store/order/order.types";
 import { useHistory } from "react-router-dom";
 import Api from "../../store/Api";
 
-const paymentType = ["Картой на месте", "Картой онлайн", "Наличные"];
+const paymentType = ["Наличными", "Картой онлайн","Картой на месте"];
 
 const deliveryDisplayNames = {
   [DELIVERY_METHOD.takeaway]: "Самовывоз",

@@ -7,7 +7,6 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {ICartItem} from "../../store/cart/cart.types";
 import toast from "react-hot-toast";
 import {Redirect, useHistory} from "react-router";
-
 const MenuItemComponent = (item: MenuItem) => {
     const dispatch = useAppDispatch();
 
