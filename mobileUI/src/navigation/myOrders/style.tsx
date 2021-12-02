@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   simpTextTitle: {
-    width: 100,
+    width: 84,
+    paddingRight:30,
     right: 10,
     color: 'black',
   },

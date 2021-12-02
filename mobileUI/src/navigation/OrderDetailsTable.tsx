@@ -127,7 +127,7 @@ export const OrderDetailsTable = ({
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
-    order.status = 'bla';
+    order.status = 'Отправлен';
     order.comment = 'bla';
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
@@ -193,62 +193,17 @@ export const OrderDetailsTable = ({
             <Text style={styles.color}>ТИП ЗАКАЗА</Text>
             <Text style={styles.color}> ДАТА</Text>
             <Text style={styles.color}> ВРЕМЯ</Text>
-            <Text style={styles.color}> ОПЛАТА</Text>
+            
           </View>
           <View>
             <Text style={styles.simpText}>Бронь стола</Text>
-            <Text style={styles.simpText}>{dayjs(cart.date).format('YYYY-MM-DD')}</Text>
+            <Text style={styles.simpText}>{dayjs(cart.date).format('DD-MM-YYYY')}</Text>
             <Text style={styles.simpText}>{dayjs(cart.date).format('HH:mm')}</Text>
-            <Text style={styles.simpText}>{pay}</Text>
+            
           </View>
         </View>
       </View>
-      <View style={styles.orderDishes}>
-        <View style={styles.rowWrapper}>
-          <Text style={styles.color}>БЛЮДО</Text>
-          <Text style={styles.color}>ЦЕНА</Text>
-          <Text style={styles.color}>КОЛ-ВО</Text>
-          <Text style={styles.color}>СУММА</Text>
-        </View>
-        <View
-          style={{
-            paddingTop: 15,
-            borderBottomColor: '#979A9F',
-            borderBottomWidth: 0.3,
-          }}
-        />
-        {cart.dishes.map((item: any) => {
-          let newTitle;
-          if (item.title.length > 20) {
-            let name = item.title.substr(0, 20);
-            newTitle = name + '...';
-            console.log(newTitle);
-          } else {
-            newTitle = item.title;
-          }
-
-          return (
-            <View style={styles.contContent} key={item.id}>
-              <Text style={styles.simpTextTitle} numberOfLines={3}>{newTitle}</Text>
-              <Text style={styles.Price}>{item.price} BYN</Text>
-              <Text style={styles.Qan}>{item.cardQuantity}</Text>
-              <Text style={styles.simpText}>{item.price * item.cardQuantity} BYN
-              </Text>
-            </View>
-          );
-        })}
-        <View
-          style={{
-            paddingTop: 15,
-            borderBottomColor: '#979A9F',
-            borderBottomWidth: 0.3,
-          }}
-        />
-        <View style={styles.TotalCounter}>
-          <Text style={styles.finHardText}>ИТОГО</Text>
-          <Text style={styles.finText}>{cart.cardTotalAmount} BYN</Text>
-        </View>
-      </View>
+      
       <TouchableOpacity
         style={styles.butStyle}
         onPress={() => {

@@ -80,6 +80,7 @@ export const TableNoDish = ({
 
   const getTablesByDate = async (date: any) => {
     const correctDate = dayjs(date).format('YYYY-MM-DD');
+    const correctDateInp = dayjs(date).format('DD-MM-YYYY');
     const response = await Api.get<table[]>(
       `http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`,
     );
@@ -244,7 +245,7 @@ export const TableNoDish = ({
           style={styles.box}
           onPressIn={() => {}}>
           <Text style={styles.dateText}>
-            {dayjs(date).format('YYYY-MM-DD')}
+            {dayjs(date).format('DD-MM-YYYY')}
           </Text>
           <Image
             style={styles.dateImage}

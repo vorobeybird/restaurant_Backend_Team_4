@@ -244,7 +244,7 @@ export const ConfirmOrderTable = ({
           style={styles.box}
           onPressIn={() => {}}>
           <Text style={styles.dateText}>
-            {date.getDate()}-{date.getMonth()}-{date.getFullYear()}
+            {dayjs(date).format('DD-MM-YYYY')}
           </Text>
           <Image
             style={styles.dateImage}
@@ -254,7 +254,7 @@ export const ConfirmOrderTable = ({
 
         <TouchableOpacity onPress={showTimepicker} style={styles.box}>
           <Text style={styles.dateText}>
-            {date.getHours()}:{date.getMinutes()}
+            {dayjs(date).format('HH:mm')}
           </Text>
           <Image
             style={styles.dateImage}

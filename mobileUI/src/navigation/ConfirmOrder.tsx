@@ -77,7 +77,7 @@ export const ConfirmOrder = ({
           style={styles.box}
           onPressIn={() => {}}>
           <Text style={styles.dateText}>
-            {dayjs(date).format('YYYY-MM-DD')}
+            {dayjs(date).format('DD-MM-YYYY')}
           </Text>
           <Image
             style={styles.dateImage}

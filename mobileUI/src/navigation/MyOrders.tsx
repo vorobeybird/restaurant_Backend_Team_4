@@ -26,10 +26,11 @@ export const MyOrders = ({
 }) => {
   const [orders, setOrders] = useState([]);
   const [history, setHistory] = useState([]);
+  
   const getItems = async () => {
     setIsloading(true);
     const response = await Api.get(
-      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/764df1cc-70f2-4ee9-8780-4a4449c1a3e4',
+      `http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/orderByCustomer/${cart.userInfo.username}`,
     );
     const res = response.data;
     setIsloading(false);
@@ -37,7 +38,7 @@ export const MyOrders = ({
   };
   const [isLoading, setIsloading] = useState(false);
   const fetchMenuItems = async () => {
-    console.log(isLoading);
+    
     const ordArr = [];
     const histArr = [];
     const items: any = await getItems();
@@ -96,7 +97,7 @@ export const MyOrders = ({
   }, []);
 
   const cart = useSelector(state => state.dishes);
-
+  console.log(cart.userInfo.username,'ddddddddddDDDDDDDD');
   const [state, setState] = useState(true);
 
   return (
@@ -154,7 +155,6 @@ export const MyOrders = ({
                             ):(
                               <></>
                             )}
-                            
                             <Text style={styles.color}>СТАТУС</Text>
                           </View>
                           <View>
@@ -162,7 +162,7 @@ export const MyOrders = ({
                               {item.delivery_method}
                             </Text>
                             <Text style={styles.simpText}>
-                              {dayjs(item.delivery_date).format('YYYY-MM-DD')}
+                              {dayjs(item.delivery_date).format('DD-MM-YYYY')}
                             </Text>
                             <Text style={styles.simpText}>
                               {dayjs(item.delivery_date).format('HH:mm')}
@@ -195,10 +195,12 @@ export const MyOrders = ({
                         />
                         {item.OrderDishes?.length ? (
                           item.OrderDishes.map((item: any) => {
+                            console.log(item,'itemitemitemitemitemitemitemitemitemitemitem');
                             let newTitle;
-                            if (item.title?.length > 10) {
-                              let name = item.title.substr(0, 6);
+                            if (item.Dish.title.length > 15) {
+                              let name = item.Dish.title.substr(0, 15);
                               newTitle = name + '...';
+                              console.log(newTitle);
                             } else {
                               newTitle = item.title;
                             }
@@ -209,7 +211,7 @@ export const MyOrders = ({
                                   <Text
                                     numberOfLines={3}
                                     style={styles.simpTextTitle}>
-                                    {item.Dish.title}
+                                    {newTitle}
                                   </Text>
                                   <Text style={styles.Price}>
                                     {' '}
@@ -299,7 +301,7 @@ export const MyOrders = ({
                       <View>
                         <Text style={styles.simpText}>{item.delivery_method}</Text>
                         <Text style={styles.simpText}>
-                          {dayjs(item.date).format('YYYY-MM-DD')}
+                          {dayjs(item.date).format('DD-MM-YYYY')}
                         </Text>
                         <Text style={styles.simpText}>
                           {dayjs(item.date).format('HH:mm')}

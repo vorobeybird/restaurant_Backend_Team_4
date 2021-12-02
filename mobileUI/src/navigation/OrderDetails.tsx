@@ -4,12 +4,11 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   TouchableOpacity,
   Button,
   ToastAndroid,
 } from 'react-native';
-import axios from 'axios';
+
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {addOrderHistoryItem, clearCart} from '../store/StoreCard';
@@ -79,7 +78,7 @@ export const OrderDetails = ({
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
-
+    order.status = "Отправлен";
     order.contact_name =
       cart.userInfo.attributes.name +
       ' ' +
@@ -98,10 +97,9 @@ export const OrderDetails = ({
         : '';
       return dish;
     });
-
     order.dish = dishesShortInfo;
 
-    console.log(order);
+    console.log(order,'orderorder');
     Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
       order,
@@ -114,8 +112,6 @@ export const OrderDetails = ({
   };
 
   const onMakingOrderTable = async () => {
-
-    console.log(cart);
     let order = {} as Order;
     order.num_of_persons = cart.num;
     order.customer_id = cart.userInfo.attributes.sub;
@@ -123,12 +119,11 @@ export const OrderDetails = ({
       cart.userInfo.attributes.name +
       ' ' +
       cart.userInfo.attributes.family_name;
-
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
-    order.status = 'bla';
-    order.comment = 'bla';
+    order.status = "Отправлен";
+    order.comment = 'Hard comment';
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
@@ -146,7 +141,7 @@ export const OrderDetails = ({
 
     order.dish = dishesShortInfo;
 
-    console.log(order, 'order');
+    console.log(order, 'orderЩквукфывафыва');
     const servResp = await Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
       order,
@@ -156,8 +151,6 @@ export const OrderDetails = ({
     );
     const res = servResp;
     console.log(res, 'resresresresresrserser');
-    
-
   };
 
   const payWordFunc = () => {
@@ -197,7 +190,7 @@ export const OrderDetails = ({
           </View>
           <View>
             <Text style={styles.simpText}>{cart.orderType}</Text>
-            <Text style={styles.simpText}>{dayjs(cart.date).format('YYYY-MM-DD')}</Text>
+            <Text style={styles.simpText}>{dayjs(cart.date).format('DD-MM-YYYY')}</Text>
             <Text style={styles.simpText}>{dayjs(cart.date).format('HH:mm')}</Text>
             <Text style={styles.simpText}>{pay}</Text>
           </View>
