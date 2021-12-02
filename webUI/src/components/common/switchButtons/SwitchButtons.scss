@@ -20,9 +20,21 @@
         &:first-child{
             background-color: #BFBFBF;
             margin-right: 20px ;
+            &:hover {
+                color: #BFBFBF;
+                box-shadow: inset 0 0 0 3px #BFBFBF;
+            }
+            &:active {
+                box-shadow: inset 0 0 0 6px #BFBFBF;
+            }
         }
-        &:hover{
-            filter: brightness(120%);
+        &:hover {
+            background-color: transparent;
+            color: #ef742f;
+            box-shadow: inset 0 0 0 3px #ef742f;
+        }
+        &:active {
+            box-shadow: inset 0 0 0 6px #ef742f;
         }
     }
 }
