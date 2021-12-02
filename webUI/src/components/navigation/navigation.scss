@@ -51,6 +51,11 @@
   line-height: 1.6rem;
   color: #ffffff;
   white-space: nowrap;
+  transition: 0.8s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 .link__active {
@@ -103,7 +108,7 @@
 
 .search_icon_active {
   filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg)
-    brightness(96%) contrast(95%);
+  brightness(96%) contrast(95%);
 }
 
 .navigation_icons_container {
@@ -136,7 +141,7 @@
 
 .cart_icon_active {
   filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg)
-    brightness(96%) contrast(95%);
+  brightness(96%) contrast(95%);
 }
 
 .profile_icon {
@@ -151,7 +156,7 @@
 
 .profile_icon_active {
   filter: invert(50%) sepia(40%) saturate(7210%) hue-rotate(340deg)
-    brightness(96%) contrast(95%);
+  brightness(96%) contrast(95%);
 }
 
 .hamburger-menu {
