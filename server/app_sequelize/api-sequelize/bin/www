@@ -26,7 +26,7 @@ global.io = socketIO(server, {
   transports: ["polling"],
   cors: {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "http://18.198.161.12:3000",
     },
   },
 });
