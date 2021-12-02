@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   EmptyTextWrapper: {
+    marginTop: 10,
+    height: '80%',
+    width: '100%',
     justifyContent: 'center',
   },
   EmptyText: {

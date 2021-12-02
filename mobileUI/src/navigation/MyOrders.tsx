@@ -202,7 +202,7 @@ export const MyOrders = ({
                               newTitle = name + '...';
                               console.log(newTitle);
                             } else {
-                              newTitle = item.title;
+                              newTitle = item.Dish.title;
                             }
                             console.log(item,'fuck you costia');
                             return (
