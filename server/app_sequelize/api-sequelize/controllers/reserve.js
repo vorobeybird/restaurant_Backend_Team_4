@@ -2,7 +2,8 @@ const Reserve = require("../models/").Reserve;
 const Table = require("../models/").Table;
 const Order = require("../models/").Order;
 const Dish = require("../models/").Dish;
-const { Op, literal } = require("sequelize");
+const { Op, literal, QueryTypes } = require("sequelize");
+const db = require("../models/index");
 
 const parseDateToUTC = (date) => {
   const parsed = new Date(date);
@@ -16,7 +17,7 @@ module.exports = {
     const endTime = parseDateToUTC(startTime);
     endTime.setUTCHours(Math.min(23, startTime.getUTCHours() + 3));
     endTime.setUTCMinutes(endTime.getUTCMinutes() + 59);
-
+    try{
     const tables = await module.exports.getTables(
       startTime,
       endTime,
@@ -28,13 +29,14 @@ module.exports = {
       res.status(400).send({ message: "No tables found!" });
       return;
     }
-    const reserve = await Reserve.create({
-      reserve_date: reserveDate,
-      reserve_start_time: startTime,
-      reserve_end_time: endTime,
-      table_id: tables[0].id,
-    });
-    try {
+
+      const reserve = await Reserve.create({
+        reserve_date: reserveDate,
+        reserve_start_time: startTime,
+        reserve_end_time: endTime,
+        table_id: tables[0].id,
+      });
+      console.log(reserve);
       const order = await Order.create({
         customer_id: req.body.customer_id,
         delivery_method: req.body.delivery_method,
@@ -49,19 +51,24 @@ module.exports = {
         reserve_id: reserve.id,
       });
       const dish = req.body.dish;
-      for (const elem of dish) {
-        const dish_item = await Dish.findByPk(elem.dish_id);
-        await order.addDish(dish_item, {
-          through: {
-            quantity: elem.dish_amount,
-            excluded_ingredients: elem.excluded_ingredients,
-          },
-        });
+      for (let elem of dish) {
+        await db.sequelize.query(
+          "INSERT INTO `OrderDish` (`id`, `dish_id`, `order_id`, `quantity`, `excluded_ingredients`) VALUES (DEFAULT, ?, ?, ?, ? )",
+          {
+            replacements: [
+              elem.dish_id,
+              order.id,
+              elem.dish_amount,
+              elem.excluded_ingredients,
+            ],
+            type: QueryTypes.INSERT,
+          }
+        );
       }
       res.status(200).send(tables[0]);
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(400).send({ message: `Витя, ну ёб твою мать, вот твоя ошибка: ${error}`});
     }
   },
 

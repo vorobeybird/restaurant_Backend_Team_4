@@ -201,7 +201,6 @@ const styles = StyleSheet.create({
   },
   ButtonHist: {
     position: 'absolute',
-
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -219,5 +218,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
+
 
 export default styles;

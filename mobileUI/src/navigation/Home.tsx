@@ -23,6 +23,7 @@ export const Home = () => {
         onPress={() =>
           navigation.navigate('MenuTabNavigation', {screen: 'Menu'})
         }
+
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}

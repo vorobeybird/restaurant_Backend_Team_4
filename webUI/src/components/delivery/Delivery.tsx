@@ -19,13 +19,11 @@ export interface IAddress {
 }
 
 interface OrderProps {
-  total?: number,
+  total?: number;
   combineOrder?: any;
 }
 
-
-export const Delivery = ({total,combineOrder}:OrderProps) => {
-
+export const Delivery = ({ total, combineOrder }: OrderProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
   const [name, setName] = useState(user.attributes.name);
@@ -33,14 +31,17 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
   let history = useHistory();
   // let address = "Ваш текущий адрес не указан";
 
-  let ustreet,uhouse,uflat,uhousing = "";
+  let ustreet,
+    uhouse,
+    uflat,
+    uhousing = "";
 
   if (user.attributes.address) {
     const addr = JSON.parse(user.attributes.address);
-      ustreet = addr.street;
-      uhouse = addr.house;
-      uflat = addr.flat;
-      uhousing = addr.housing;
+    ustreet = addr.street;
+    uhouse = addr.house;
+    uflat = addr.flat;
+    uhousing = addr.housing;
   }
 
   const isValidName = () => {
@@ -49,7 +50,7 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
   };
 
   const isValidPhone = () => {
-    const reg = /^\+375[0-9]{9}$/;
+    const reg = /^[^_]*$/;
     return reg.test(phone);
   };
 
@@ -63,13 +64,14 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
   });
 
   const isValidAddress = (address: IAddress) => {
-    const regForStreet = /[a-z]|[а-я]/i;
+    // const regForStreet = /[a-z]|[а-я]/g;
+    const regForStreet = /^([^0-9]*)$/g;
     const regForHouseNumber = /^\d{1,3}$/;
     const regForHouseBuilding = /^\d{1,3}$/;
     const regForApartment = /^\d{1,4}$/;
     const regForEmptyString = /^$/;
 
-    console.log(regForHouseBuilding.test(address.houseBuilding));
+    // console.log(regForHouseBuilding.test(address.houseBuilding));
 
     return (
       regForStreet.test(address.street) &&
@@ -149,11 +151,9 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
     handleChangeCurrentStepNext();
     if (currentStep === 4) {
       history.push("/cart/confirm");
-      combineOrder(total)
+      combineOrder(total);
     }
   };
-
-  console.log(order);
 
   const stepsController = () => {
     switch (currentStep) {
@@ -201,11 +201,13 @@ export const Delivery = ({total,combineOrder}:OrderProps) => {
       <div className="step_progress">
         Шаг {currentStep + 1}/{ADD_DELIVERY_STEPS.length}
       </div>
-      <SwitchButtons
-                onClickNext={pushToConfirmation}
-                onClickPrev={handleChangeCurrentStepPrev}
-                children="I'm a pink circle!"
-              />
+      <div className="switch-buttons-component">
+        <SwitchButtons
+          onClickNext={pushToConfirmation}
+          onClickPrev={handleChangeCurrentStepPrev}
+          children="I'm a pink circle!"
+        />
+      </div>
     </div>
   );
 };

@@ -22,15 +22,23 @@
     "@types/react-dom": "^17.0.9",
     "aws-amplify": "^4.3.2",
     "axios": "^0.23.0",
+    "chart.js": "^3.6.0",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "formik": "^2.2.9",
+    "notistack": "^2.0.3",
     "react": "^17.0.2",
+    "react-chartjs-2": "^4.0.0",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
+    "react-redux": "^7.2.6",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.0",
+    "socket.io-client": "^4.4.0",
     "typescript": "^4.4.4",
     "web-vitals": "^1.1.2"
   },
@@ -59,6 +67,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.1"
+    "@types/faker": "^5.5.9",
+    "@types/react-router-dom": "^5.3.1",
+    "faker": "^5.5.3"
   }
 }

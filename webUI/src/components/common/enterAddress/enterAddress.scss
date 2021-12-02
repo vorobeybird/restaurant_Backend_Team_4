@@ -26,6 +26,18 @@
     :last-child {
       margin-right: 0;
     }
+    .main-input{
+      &__content{
+        input {
+          border: 1px solid #bdbdbd;
+          border-radius: 8px;
+          height: 100px;
+          max-height: 100%;
+          padding-left: 10px;
+          font-size: 24px;
+        }
+      }
+    }
     .main_input_container {
       input {
         border: 1px solid #bdbdbd;

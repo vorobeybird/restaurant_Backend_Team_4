@@ -19,6 +19,7 @@ import awsconfig from "./aws-exports";
 import {Amplify, Auth, Hub} from "aws-amplify";
 import { Search } from "./components/search/search";
 import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
+import { FaRegIdBadge } from "react-icons/fa";
 
 Amplify.configure(awsconfig);
 
@@ -69,10 +70,12 @@ const App = () => {
                 toastOptions={{
                     className: "",
                     style: {
-                        border: "3px solid #212529",
+                        border: "none",
+                        borderRadius: "15px",
                         padding: "16px",
                         color: "#FFFFFF",
-                        background: "#EF752B",
+                        backgroundColor: "rgba(239, 117, 43, 0.7)",
+                        
                     },
                 }}
             />

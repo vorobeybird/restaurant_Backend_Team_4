@@ -12,11 +12,11 @@ import "./bookTable.scss";
 import { useHistory } from "react-router-dom";
 
 interface OrderProps {
-  total?: number,
+  total?: number;
   combineOrder?: any;
 }
 
-export const BookTable = ({total,combineOrder}:OrderProps) => {
+export const BookTable = ({ total, combineOrder }: OrderProps) => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.auth.user);
@@ -31,7 +31,7 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
   };
 
   const isValidPhone = () => {
-    const reg = /^\+375[0-9]{9}$/;
+    const reg = /^[^_]*$/;
     return reg.test(phone);
   };
 
@@ -39,6 +39,7 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
 
   const [numberOfPeople, setNumberOfPeople] = useState(2);
 
+  const isBookTable = true;
   const ADD_BOOKTABLE_STEPS = [
     {
       id: "ChooseDate",
@@ -66,7 +67,7 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
     {
       id: "PaymentMethod",
       Component: PaymentMethod,
-      props: {},
+      props: { isBookTable },
     },
   ];
 
@@ -97,7 +98,7 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
     handleChangeCurrentStepNext();
     if (currentStep === 4) {
       history.push("/cart/confirm");
-      combineOrder(total)
+      combineOrder(total);
     }
   };
 
@@ -125,8 +126,8 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
       <div className="booktable_container">
         <button
           className={
-            currentStep === 0 ? "swiper_disabled" : 
-           "swiper_booktable_left"}
+            currentStep === 0 ? "swiper_disabled" : "swiper_booktable_left"
+          }
           type="button"
           onClick={handleChangeCurrentStepPrev}
         >
@@ -138,8 +139,8 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
         />
         <button
           className={
-            currentStep === 4 ? "swiper_disabled" : 
-           "swiper_booktable_left"}
+            currentStep === 4 ? "swiper_disabled" : "swiper_booktable_left"
+          }
           type="button"
           onClick={handleChangeCurrentStepNext}
         >
@@ -150,13 +151,13 @@ export const BookTable = ({total,combineOrder}:OrderProps) => {
         Шаг {currentStep + 1}/{ADD_BOOKTABLE_STEPS.length}
       </div>
       <div className="switch-buttons-component">
-        { cartItems.length === 0 ? undefined :
-                <SwitchButtons
-                onClickNext={pushToConfirmation}
-                onClickPrev={handleChangeCurrentStepPrev}
-                children="I'm a pink circle!"
-              />
-        }
+        {cartItems.length === 0 ? undefined : (
+          <SwitchButtons
+            onClickNext={pushToConfirmation}
+            onClickPrev={handleChangeCurrentStepPrev}
+            children="I'm a pink circle!"
+          />
+        )}
       </div>
     </div>
   );

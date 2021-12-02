@@ -3,11 +3,13 @@ import { useSelector } from "react-redux";
 import { AppStateType } from "../../../store";
 import { AuthStateType } from "../../../store/auth/auth.reducer";
 import "./profileOrders.scss";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { orderAPI } from "../../../api/api";
 import { useAppSelector } from "../../../store/hooks";
 import { Link } from "react-router-dom";
 import moment from 'moment';
+import Delete from "../../../assets/delete.png";
+import toast, { Toaster } from "react-hot-toast";
 
 export interface Order {
   delivery_method: string;
@@ -16,19 +18,28 @@ export interface Order {
   total_price: number;
   delivery_date: Date;
   comment: string;
-  dish: DishShortInfo[];
+  OrderDishes: DishSettingsInfo[];
   adress: string;
   contact_name: string;
   contact_phone: string;
   num_of_persons: number;
-  status: string
+  status: string;
+  id: number
+}
+
+export interface DishSettingsInfo {
+  dish_id: number;
+  excluded_ingredients: string;
+  quantity: number;
+  Dish: DishShortInfo;
 }
 
 export interface DishShortInfo {
-  dish_id: number;
-  dish_amount: number;
-  excluded_ingredients: string;
-  title: string
+  title: string;
+  calories: number;
+  id: number;
+  price: number;
+  weight: number;
 }
 
 const paymentMethod = ["Наличными", "Картой онлайн", "Картой на месте"];
@@ -40,31 +51,37 @@ export const ProfileOrders = () => {
   const [ordersHistory, setOrdersHistory] = useState([] as Order[]);
   const [ordersType, setOrdersType] = useState('current');
   const [selectedPage, setSelectedPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(0);
+  const [resStatus, setResStatus] = useState<boolean>(false);
   const ordersPerPage: number = 3;
+  
+  const tableData: Order[] = ordersType === "current" ? ordersCurrent : ordersHistory;
+  const pages: number = Math.ceil(tableData.length / ordersPerPage);
+  const currentPage = Math.min(pages, selectedPage);
+
+  const userComparer = (a: any, b: any) => {
+    if(a.delivery_date > b.delivery_date) return 1;
+    if(a.delivery_date < b.delivery_date) return -1;
+    return 0;
+  }
 
   useEffect(() => {
-    orderAPI.getOrders(userId).then((orders: any) => {
-      const currentOrders: Order[] = orders.filter((order: Order) => {
-        return order.status === "Принят в работу" && "Готовится" && "Изменен" && "Отправлен";
-      });
-      const historyOrders: Order[] = orders.filter((order: Order) => {
-        return order.status === "Готов" && "Отменен";
-      });
-      setOrdersCurrent(currentOrders);
-      setOrdersHistory(historyOrders);
-      onCurrentClicked();
-    });
-  }, [userId]);
+    orderAPI.getOrders(userId)
+      .then(async (orders: any) => {
+        setOrdersCurrent(await orders.filter((order: Order) => ["Принят в работу", "Готовится", "Изменен", "Отправлен"].includes(order.status)).sort(userComparer).reverse());
+        setOrdersHistory(await orders.filter((order: Order) => ["Готов", "Отменен"].includes(order.status)).sort(userComparer).reverse());
+      })
+  }, [resStatus]);
 
   const onCurrentClicked = () => {
     setOrdersType('current');
-    setPages(Math.ceil(ordersCurrent.length / ordersPerPage));
+    setSelectedPage(1);
+    setResStatus(!resStatus);
   }
 
   const onHistoryClicked = () => {
     setOrdersType('history');
-    setPages(Math.ceil(ordersHistory.length / ordersPerPage));
+    setSelectedPage(1);
+    setResStatus(!resStatus);
   }
 
   const renderColumn = (colName: string) => {
@@ -77,21 +94,30 @@ export const ProfileOrders = () => {
     )
   }
 
+  const cancelReservation = async (orderId: number) => {
+    const orderStatus = "Отменен";
+    await orderAPI.changeOrderStatus(orderId, orderStatus)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success(`Бронирование стола отменено`);
+          console.log(`Отменен заказ на бронирование стола с id = ${orderId}`);
+          setResStatus(!resStatus);
+        } else toast.error(`Не удалось отменить!`);
+      })
+  }
+
   const renderRows = () => {
-    const tableData = ordersType === "current" ? ordersCurrent : ordersHistory;
     let tableRows: any = [];
-    if (pages > 0) {
-      const curPage = Math.min(pages, selectedPage);
-      let startOrder = ordersPerPage * curPage - ordersPerPage;
-      for (let i = startOrder; i < Math.min(ordersPerPage * curPage, tableData.length); i++) {
-        console.log(i, tableData);
+    if (tableData.length) {
+      let startOrder = ordersPerPage * currentPage - ordersPerPage;
+      for (let i = startOrder; i < Math.min(ordersPerPage * currentPage, tableData.length); i++) {
         tableRows.push(
           <tr className="table-row">
             <td>{
-              tableData[i].dish.map(el => {
-                return (<div>{el.title}</div>)
+              tableData[i].OrderDishes.map(el => {
+                return (<div>{el.Dish.title}</div>)
               })
-              }</td>
+            }</td>
             <td>{tableData[i].delivery_method === "takeaway" ? "Навынос" :
               tableData[i].delivery_method === "bookTable" ? "Бронирование стола" :
                 tableData[i].delivery_method === "delivery" ? "Доставка" : null
@@ -111,11 +137,20 @@ export const ProfileOrders = () => {
             </td>
             <td>
               <span className="td-total-price">
-                {tableData[i].total_price}  
+                {tableData[i].total_price}
               </span>
               &#8194;BYN
-              </td>
+            </td>
             <td>{paymentMethod[tableData[i].payment_method]}</td>
+            <td>
+              {tableData[i].delivery_method === "bookTable" && tableData[i].total_price === 0 && tableData[i].OrderDishes.length === 0 && ordersType === "current"
+                ? <div className="td-cancellation">
+                  <button className="td__btn" onClick={() => cancelReservation(tableData[i].id)}>
+                    <img src={Delete}></img>
+                  </button>
+                </div>
+                : null}
+            </td>
           </tr>
         );
       }
@@ -125,21 +160,17 @@ export const ProfileOrders = () => {
 
   const renderTable = () => {
     const selectNextPage = () => {
-      let currentPage = selectedPage;
       if (pages > 0) {
         if (currentPage < pages) {
-          currentPage++;
-          setSelectedPage(currentPage);
+          setSelectedPage(currentPage + 1);
         }
       }
     }
 
     const selectPrevioustPage = () => {
-      let currentPage = selectedPage;
       if (pages > 0) {
         if (currentPage > 1) {
-          currentPage--;
-          setSelectedPage(currentPage)
+          setSelectedPage(currentPage - 1)
         }
       }
     }
@@ -155,6 +186,7 @@ export const ProfileOrders = () => {
               {renderColumn("Статус")}
               {renderColumn("Итого")}
               {renderColumn("Способ оплаты")}
+              {renderColumn(ordersType === "current" ? "Отмена" : "")}
             </tr>
           </thead>
           <tbody>
@@ -162,7 +194,7 @@ export const ProfileOrders = () => {
           </tbody>
         </table>
         <div className="orders-table__pages-list-container">
-          <div className="pages-list-container__info">{selectedPage} из {pages}</div>
+          <div className="pages-list-container__info">{currentPage} из {pages}</div>
           <button className="pages-list-container__btn" onClick={selectPrevioustPage}>
             &#60;
           </button>

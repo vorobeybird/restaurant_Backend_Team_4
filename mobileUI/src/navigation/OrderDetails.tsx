@@ -15,6 +15,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {addOrderHistoryItem, clearCart} from '../store/StoreCard';
 import dayjs from 'dayjs';
 import Api from '../apiSecure/Api';
+
 interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
@@ -49,8 +50,8 @@ export const OrderDetails = ({
   const dispatch = useDispatch();
   const [id, setId] = useState();
   const cart = useSelector(state => state.dishes);
-  const [pay, setPay] = useState('а мне похуй');
-  console.log(cart.userInfo.attributes.name, 'cart');
+
+  const [pay, setPay] = useState('');
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -78,10 +79,12 @@ export const OrderDetails = ({
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
+
     order.contact_name =
       cart.userInfo.attributes.name +
       ' ' +
       cart.userInfo.attributes.family_name;
+
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = cart.paymentType;
     order.comment = "Hi, I'm hardcode comment";
@@ -97,6 +100,7 @@ export const OrderDetails = ({
     });
 
     order.dish = dishesShortInfo;
+
     console.log(order);
     Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
@@ -110,6 +114,7 @@ export const OrderDetails = ({
   };
 
   const onMakingOrderTable = async () => {
+
     console.log(cart);
     let order = {} as Order;
     order.num_of_persons = cart.num;
@@ -118,6 +123,7 @@ export const OrderDetails = ({
       cart.userInfo.attributes.name +
       ' ' +
       cart.userInfo.attributes.family_name;
+
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
@@ -139,6 +145,7 @@ export const OrderDetails = ({
     });
 
     order.dish = dishesShortInfo;
+
     console.log(order, 'order');
     const servResp = await Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
@@ -150,6 +157,7 @@ export const OrderDetails = ({
     const res = servResp;
     console.log(res, 'res');
     console.log(order, 'order');
+
   };
 
   const payWordFunc = () => {
@@ -246,10 +254,12 @@ export const OrderDetails = ({
         style={styles.butStyle}
         onPress={() => {
           showToast();
+
           if (cart.orderType == 'Бронирование стола') {
             onMakingOrderTable();
           } else {
             onMakingOrder();
+
           }
           console.log(id);
 

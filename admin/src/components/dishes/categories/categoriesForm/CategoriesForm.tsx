@@ -70,7 +70,7 @@ export default function CategoriesForm({type}: ICIFormProps) {
     fetchCategories('PUT', `${process.env.REACT_APP_API}/category`, {title, show_in_menu}, value?.id)
     .then((response) =>  {
         getCategories();
-        setValue(response.data);
+        response.data === 'Category was updated succesfully' && setValue('Категория изменена!');
     }
         )
     .catch(err=>{

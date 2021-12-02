@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -13,6 +14,7 @@ import styles from './myOrders/style';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import Api from '../apiSecure/Api';
+
 import dayjs from 'dayjs';
 
 export const MyOrders = ({
@@ -51,7 +53,6 @@ export const MyOrders = ({
 
     console.log(isLoading);
   };
-
   const navigation = useNavigation();
   const [pay, setPay] = useState('а мне похуй');
   const [histPay, setHistPay] = useState('а мне похуй');
@@ -116,6 +117,7 @@ export const MyOrders = ({
           <View style={styles.rowSwitcher}>
             <View style={styles.switchBut}>
               <Text style={styles.trueText}>Текущие</Text>
+
             </View>
             <Text style={styles.inActText}>История</Text>
           </View>
@@ -227,6 +229,7 @@ export const MyOrders = ({
                           <Text style={styles.finText}>
                             {item.total_price} BYN
                           </Text>
+
                         </View>
                       </View>
                     </>

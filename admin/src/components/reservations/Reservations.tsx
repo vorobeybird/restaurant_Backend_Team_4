@@ -9,6 +9,7 @@ import apiFetch from '../../components/common/apifetch/apifetch';
 import OrderCard from '../orders/orderCard/OrderCard';
 import TableDialog from './tableDialog/TableDialog';
 import { makeStyles } from '@mui/styles';
+import ReservationDialog from './reservationDialog/ReservationDialog';
 
 interface ITable {
 id?: number;
@@ -23,6 +24,8 @@ const initialTable = {
   persons: 2,
   is_available: true
 }
+
+
 const useClasses = makeStyles(theme => ({
   iconContainer: {
       "&:hover $icon": {
@@ -40,11 +43,19 @@ const Reservations = () => {
   const [allOrders, setAllOrders] = useState<any[]>([]);
   const [cardOpen, setCardOpen] = useState(false);
   const [tableOpen, setTableOpen] = useState(false);
-  const [currentTable, setCurrentTable] = useState<ITable>(initialTable)
+  const [openRForm, setOpenRForm] = useState(false);
+  const [currentTable, setCurrentTable] = useState<ITable>(initialTable);
   const [currentOrder, setCurrentOrder] = useState<any>({});
+ 
+
   const theme = useTheme();
   const classes = useClasses();
 
+ /*  const initialSelectedData = {
+    num_of_persons: undefined,
+    reserve_date: "bookTable",
+  } */
+   const [selectedCellData, setSelectedCellData] = useState<any>({});
 
   const fetchReservationData = async () => {
     await apiFetch("GET", `${process.env.REACT_APP_API}/tables`)
@@ -61,7 +72,6 @@ const Reservations = () => {
    await apiFetch("GET", `${process.env.REACT_APP_API}/order`)
     .then(response => {
       const ordersWithReservations = response.data.filter( (order: any) => order.reserve_id);
-        console.log(ordersWithReservations);
         setAllOrders(ordersWithReservations);
     })
     .catch(err=>{
@@ -83,7 +93,7 @@ const Reservations = () => {
     setCurrentTable({...currentTable, id, table_number, persons, is_available});
   }
   const handleCloseCard = () => {
-    setCardOpen(false)
+    setCardOpen(false);
   }
 
   useEffect(()=> {
@@ -126,7 +136,14 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
         setCurrentOrder(orderFound[0]); 
         setCardOpen(true);
         } else {
-          alert('Well gonna reserve a tabel')
+          let timeParsed = params.field.substring(8);
+          timeParsed = timeParsed.substring(0,2);
+          setSelectedCellData({
+            ...selectedCellData,
+            num_of_persons: params.row.persons,
+            reserve_date: dayjs(date).hour(+timeParsed).minute(0).second(0).toISOString(),
+          })
+         setOpenRForm(true);
         }
       };
       if (params.value) {
@@ -179,6 +196,7 @@ const reservations = createFilteredReservations(dayjs(date).format('YYYY-MM-DD')
   </div>
   <OrderCard currentOrder={currentOrder} openCard={cardOpen} handleCloseCard={handleCloseCard} />
   <TableDialog currentTable={currentTable} setCurrentTable={setCurrentTable} tableOpen={tableOpen} handleCloseTable={handleCloseTable} fetchReservationData={fetchReservationData} />
+  <ReservationDialog openRForm={openRForm} setOpenRForm={setOpenRForm} selectedCellData={selectedCellData} setSelectedCellData={setSelectedCellData} fetchAllOrders={fetchAllOrders} fetchReservationData={fetchReservationData} />
   </>
 );
 }

@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeTime } from "../../../store/order/order.actions";
-import { Button } from "../button/Button";
 import "./chooseTime.scss";
 import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -31,6 +29,8 @@ interface ChooseTimeProps {
 export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
   const dispatch = useAppDispatch();
   const persons = useAppSelector((state) => state.order.order.num_of_persons);
+  const deliveryMethod = useAppSelector((state) => state.order.order.delivery_method);
+  const deliveryDate = useAppSelector((state) => state.order.order.delivery_date);
   const filteredTablesData = useAppSelector((state) => state.table.tablePool.filter(item => item.persons === persons));
 
 
@@ -41,43 +41,40 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
     props.setTime(time);
   };
 
+
   const checkAvailableTime = (tablesData: Table[], time: string) => {
 
+    if (deliveryMethod === 'bookTable') {
+      
     const result = tablesData.some((table) => {
-
       if (table.reserve) {
         const conflictingReservation = table.reserve.findIndex((item) => {          
-      /*     if ((Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour'),'minute')) < 240)) 
-         {
-           console.log(Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')))
-           console.log('Time we choose: ', dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm'));
-
-           console.log(`Table ${table.id} has no free reservations slot on this time: ${time}. `, (Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')) < 240))
-         } else {
-           console.log(Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')))
-           console.log(`Table ${table.id} has free reservation slot on this time: ${time}`, (Math.abs(dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm').diff(dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss'),'minute')) < 240))
-         } */
-
-         /* console.log('Time we chose: ', dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm'));
-         console.log('Time we found in reservations array: ', dayjs(`${item.reserve_date} ${item.reserve_time}`, 'YYYY-MM-DD HH:mm:ss')); */
           const toBeBooked = dayjs(`${item.reserve_date} ${time}`, 'YYYY-MM-DD HH:mm');
           const alreadyBooked = dayjs(`${item.reserve_date} ${item.reserve_start_time}`, 'YYYY-MM-DD HH:mm:ss').add(3, 'hour');
           const timeDifference = toBeBooked.diff(alreadyBooked,'minute');
-          console.log(timeDifference)
+          // console.log(timeDifference)
           return (Math.abs(timeDifference) < 240);
         }
      )
-          console.log('Conflicting reservation:', conflictingReservation)
+          // console.log('Conflicting reservation:', conflictingReservation)
       return conflictingReservation === -1 ? true : false;
       }
       else {
-          console.log(`Table reservations for table ${table.id} is ${table.reserve} and has a lot of slots for ${table.persons} persons on: ${time}`)
+          // console.log(`Table reservations for table ${table.id} is ${table.reserve} and has a lot of slots for ${table.persons} persons on: ${time}`)
           return true;
       }
   }
     )
     return !result;
+} else {
+    //  console.log(dayjs());
+    // console.log(dayjs().hour(Number(time.split(':')[0]) + 1))
 
+    if (dayjs() > dayjs(deliveryDate).hour(Number(time.split(':')[0]) - 2)) {
+      return true
+    }
+    return false
+}
   }
 
   return (
@@ -85,9 +82,9 @@ export const ChooseTime = ({ ...props }: ChooseTimeProps) => {
       <div className="order-header">Время</div>
       <div>
         <div className="time_container">
-          {possibleTime.map((timeItem) => {
+          {possibleTime.map((timeItem, i) => {
             return (
-              <div  className={
+              <div key={i}  className={
                 timeItem === props.time ? "timebox pushed_button" : "timebox"
               }>
                 <button

@@ -4,6 +4,7 @@ import Calendar from "react-calendar";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { changeDate } from "../../../store/order/order.actions";
 import { getTablePool, getTableReservations } from "../../../store/table/table.actions";
+import { useEffect } from "react";
 
 export const ChooseDate = () => {
   const date = useAppSelector((state) => state.order.order.delivery_date);
@@ -15,9 +16,12 @@ export const ChooseDate = () => {
     value.setHours(date.getHours());
     dispatch(changeDate(value));
     dispatch(getTableReservations(value));
-
   };
 
+  useEffect(()=>{
+    dispatch(getTablePool());
+    dispatch(getTableReservations(date));
+  }, [])
   return (
       <>
       <div className="order-header">Дата</div>
