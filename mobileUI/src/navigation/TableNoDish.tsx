@@ -31,7 +31,7 @@ interface table {
   reserve: [];
 }
 
-export const ConfirmOrderTable = ({
+export const TableNoDish = ({
   navigation: {goBack},
   route,
 }: {
@@ -244,7 +244,7 @@ export const ConfirmOrderTable = ({
           style={styles.box}
           onPressIn={() => {}}>
           <Text style={styles.dateText}>
-            {date.getDate()}-{date.getMonth()}-{date.getFullYear()}
+            {dayjs(date).format('YYYY-MM-DD')}
           </Text>
           <Image
             style={styles.dateImage}
@@ -254,7 +254,7 @@ export const ConfirmOrderTable = ({
 
         <TouchableOpacity onPress={showTimepicker} style={styles.box}>
           <Text style={styles.dateText}>
-            {date.getHours()}:{date.getMinutes()}
+            {dayjs(date).format('HH:mm')}
           </Text>
           <Image
             style={styles.dateImage}
@@ -296,7 +296,9 @@ export const ConfirmOrderTable = ({
           handleAddDate(dayjs(date).toISOString());
           checkNum();
           showToastSuccs();
-          navigation.navigate('ChosePaymentType');
+          navigation.navigate('MenuTabNavigation', {
+            screen: 'OrderDetailsTable',
+          });
         }}>
         <Text style={styles.ButText}> Подтвердить</Text>
       </TouchableOpacity>

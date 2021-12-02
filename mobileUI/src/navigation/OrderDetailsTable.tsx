@@ -39,7 +39,7 @@ interface Order {
   dish: DishShortInfo[];
 }
 
-export const OrderDetails = ({
+export const OrderDetailsTable = ({
   navigation: {goBack},
   route,
 }: {
@@ -76,7 +76,7 @@ export const OrderDetails = ({
     let order = {} as Order;
     order.adress = 'asdf';
     order.customer_id = cart.userInfo.attributes.sub;
-    order.delivery_method = cart.orderType;
+    order.delivery_method = "Бронь стола";
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
 
@@ -196,7 +196,7 @@ export const OrderDetails = ({
             <Text style={styles.color}> ОПЛАТА</Text>
           </View>
           <View>
-            <Text style={styles.simpText}>{cart.orderType}</Text>
+            <Text style={styles.simpText}>Бронь стола</Text>
             <Text style={styles.simpText}>{dayjs(cart.date).format('YYYY-MM-DD')}</Text>
             <Text style={styles.simpText}>{dayjs(cart.date).format('HH:mm')}</Text>
             <Text style={styles.simpText}>{pay}</Text>

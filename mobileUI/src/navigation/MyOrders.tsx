@@ -147,9 +147,14 @@ export const MyOrders = ({
                         <View style={styles.flexWrapper}>
                           <View style={styles.flexEnd}>
                             <Text style={styles.color}>ТИП ЗАКАЗА</Text>
-                            <Text style={styles.color}> ДАТА</Text>
-                            <Text style={styles.color}> ВРЕМЯ</Text>
-                            <Text style={styles.color}> ОПЛАТА</Text>
+                            <Text style={styles.color}>ДАТА</Text>
+                            <Text style={styles.color}>ВРЕМЯ</Text>
+                            {item.OrderDishes?.length ? (
+                              <Text style={styles.color}>ОПЛАТА</Text>
+                            ):(
+                              <></>
+                            )}
+                            
                             <Text style={styles.color}>СТАТУС</Text>
                           </View>
                           <View>
@@ -162,12 +167,19 @@ export const MyOrders = ({
                             <Text style={styles.simpText}>
                               {dayjs(item.delivery_date).format('HH:mm')}
                             </Text>
-                            <Text style={styles.simpText}>{pay}</Text>
+                            {item.OrderDishes?.length ? (
+                              <Text style={styles.simpText}>{pay}</Text>
+                            ):(
+                              <></>
+                            )}
+                            
                             <Text style={styles.simpText}>{item.status}</Text>
                           </View>
                         </View>
                       </View>
-                      <View style={styles.orderDishes}>
+                      {item.OrderDishes?.length ? (
+                        <View style={styles.orderDishes}>
+                      
                         <View style={styles.rowWrapper}>
                           <Text style={styles.color}>БЛЮДО</Text>
                           <Text style={styles.color}>ЦЕНА</Text>
@@ -224,14 +236,24 @@ export const MyOrders = ({
                             borderBottomWidth: 0.3,
                           }}
                         />
-                        <View style={styles.TotalCounter}>
-                          <Text style={styles.finHardText}>ИТОГО</Text>
-                          <Text style={styles.finText}>
-                            {item.total_price} BYN
-                          </Text>
+                        {item.OrderDishes?.length ? (
+                          <View style={styles.TotalCounter}>
+                            <Text style={styles.finHardText}>ИТОГО</Text>
+                            <Text style={styles.finText}>
+                              {item.total_price} BYN
+                            </Text>
+                          </View>
+                        ):(
+                          <></>
+                        )}
+                          
 
-                        </View>
+                        
                       </View>
+                      ):(
+                        <></>
+                      )}
+                      
                     </>
                   );
                 }}
@@ -270,9 +292,9 @@ export const MyOrders = ({
                     <View style={styles.flexWrapper}>
                       <View style={styles.flexEnd}>
                         <Text style={styles.color}>ТИП ЗАКАЗА</Text>
-                        <Text style={styles.color}> ДАТА</Text>
-                        <Text style={styles.color}> ВРЕМЯ</Text>
-                        <Text style={styles.color}> ОПЛАТА</Text>
+                        <Text style={styles.color}>ДАТА</Text>
+                        <Text style={styles.color}>ВРЕМЯ</Text>
+                        <Text style={styles.color}>ОПЛАТА</Text>
                       </View>
                       <View>
                         <Text style={styles.simpText}>{item.delivery_method}</Text>

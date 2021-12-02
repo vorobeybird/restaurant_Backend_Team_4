@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   TitleText: {
     alignSelf: 'center',
     fontFamily: 'Roboto',
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },
@@ -176,7 +176,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    height: '13%',
+    height: '8%',
+    elevation:10,
     alignSelf: 'center',
     fontFamily: 'Roboto',
     fontSize: 30,

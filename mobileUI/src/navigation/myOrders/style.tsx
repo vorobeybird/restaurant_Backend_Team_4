@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   Title: {
+    elevation:10,
     flexDirection: 'row',
-    height: '9%',
+    height: '8%',
     width: '100%',
 
     fontFamily: 'Roboto',

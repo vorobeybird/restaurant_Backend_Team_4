@@ -47,7 +47,7 @@ export const Breakfast = ({
         </TouchableOpacity>
         <Text style={styles.TitleText}>{item.title}</Text>
 
-        <Image style={styles.Scope} source={require('../../../img/scop.png')} />
+        
       </View>
       <FlatList
         style={styles.Flat}
@@ -89,10 +89,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   Title: {
+    elevation:10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     width: '100%',
-    height: '10%',
+    height: '8%',
     alignSelf: 'center',
     fontFamily: 'Roboto',
     fontSize: 30,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   TitleText: {
     alignSelf: 'center',
     fontFamily: 'Roboto',
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },

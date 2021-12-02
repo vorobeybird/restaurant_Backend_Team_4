@@ -35,8 +35,8 @@ export const DishPage = ({
     );
   };
   let newTitle;
-  if (item.title.length > 7) {
-    let name = item.title.substr(0, 20);
+  if (item.title.length > 14) {
+    let name = item.title.substr(0, 14);
     newTitle = name + '...';
     console.log(newTitle);
   } else {
@@ -146,13 +146,14 @@ const styles = StyleSheet.create({
   },
   TitleText: {
     fontFamily: 'Roboto',
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
     marginLeft: 5,
   },
   Title: {
-    height: '10%',
+    elevation:10,
+    height: '9%',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',

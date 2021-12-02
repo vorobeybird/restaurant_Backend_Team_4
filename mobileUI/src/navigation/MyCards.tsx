@@ -141,9 +141,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: '9%',
     width: '100%',
-
+    elevation:10,
     fontFamily: 'Roboto',
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
     backgroundColor: '#ffffff',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Roboto',
 
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },

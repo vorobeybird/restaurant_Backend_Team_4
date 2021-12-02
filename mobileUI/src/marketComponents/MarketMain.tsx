@@ -72,7 +72,9 @@ export const MarketMain = () => {
           <TouchableOpacity
             style={styles.ButtonWrapper}
             onPress={() => {
-              navigation.navigate('MenuTabNavigation');
+              navigation.navigate('MenuTabNavigation', {
+                screen: 'Menu',
+              });
             }}>
             <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
           </TouchableOpacity>
@@ -100,7 +102,7 @@ export const MarketMain = () => {
 
 const styles = StyleSheet.create({
   Bin: {
-    // right: '30%',
+    right:25,
     width: 30,
     height: 30,
   },
@@ -109,10 +111,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   PictCont: {
-    height: '10%',
+    height: '8%',
+    elevation:10,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: 10,
     paddingLeft: 5,
@@ -124,7 +127,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 25,
+    left:20,
+    fontSize: 24,
     lineHeight: 33,
     color: '#000000',
   },

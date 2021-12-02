@@ -38,8 +38,8 @@ export const Home = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(clearCart());
-          navigation.navigate('MarketTabNavigation', {
-            screen: 'ConfirmOrderTable',
+          navigation.navigate('MenuTabNavigation', {
+            screen: 'TableNoDish',
           });
         }}
         style={styles.contenWrapper}>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   TitleText: {
     alignSelf: 'center',
     elevation: 1,
-    fontFamily: 'Roboto',
+    fontFamily: 'RegattiaStencil-Bold',
 
     fontSize: 25,
     fontWeight: 'normal',
