@@ -110,7 +110,34 @@ switch {
               font-weight: normal;
               font-size: 0.8rem;
               line-height: normal;
+              font-family: Ubuntu, Roboto, sans-serif;
               color: #25213B;
+              border: 2px #EF742F;
+              border-style: solid none;
+
+              
+              &:first-child{
+                text-align: left;
+                font-size: 1rem;
+                max-width: 1rem;
+                margin-left: 0px;
+
+                > * {
+                  margin-top: 5px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2; /* number of lines to show */
+                  line-height: 1.25rem;        /* fallback */
+                  max-height: 2.5rem; 
+                  // max-width: 100%;
+                  &:before{
+                    font-size: 18px;
+                    content:" • ";
+                  }
+                }
+              }
               & .td-total-price {
                 font-weight: bold;
               }
@@ -241,7 +268,14 @@ switch {
       color: #4A4AFF;
       background: #E6E6F2;
     }
-
+    .status-sent{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 0.8rem;
+      line-height: normal;
+      color: #6E6893;
+      background:  #F2F0F9;
+    }
     .status-canceled {
       font-style: normal;
       font-weight: 500;

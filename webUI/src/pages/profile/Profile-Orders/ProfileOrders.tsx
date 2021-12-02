@@ -52,7 +52,7 @@ export const ProfileOrders = () => {
   const [ordersType, setOrdersType] = useState('current');
   const [selectedPage, setSelectedPage] = useState<number>(1);
   const [resStatus, setResStatus] = useState<boolean>(false);
-  const ordersPerPage: number = 3;
+  const ordersPerPage: number = 2;
   
   const tableData: Order[] = ordersType === "current" ? ordersCurrent : ordersHistory;
   const pages: number = Math.ceil(tableData.length / ordersPerPage);
@@ -97,7 +97,7 @@ export const ProfileOrders = () => {
   const cancelReservation = async (orderId: number) => {
     const orderStatus = "Отменен";
     await orderAPI.changeOrderStatus(orderId, orderStatus)
-      .then((response) => {
+      .then((response:any) => {
         if (response.status === 200) {
           toast.success(`Бронирование стола отменено`);
           console.log(`Отменен заказ на бронирование стола с id = ${orderId}`);
@@ -130,9 +130,10 @@ export const ProfileOrders = () => {
                     tableData[i].status === "Отменен" ? "status-wrapper status-canceled" :
                       tableData[i].status === "Изменен" ? "status-wrapper status-shanged" :
                         tableData[i].status === "Принят в работу" ? "status-wrapper status-in-progress" :
+                          tableData[i].status === "Отправлен" ? "status-wrapper status-sent" :
                           undefined
               }>
-                &#8226;{tableData[i].status}
+                &#8226; {tableData[i].status}
               </div>
             </td>
             <td>

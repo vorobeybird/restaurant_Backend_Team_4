@@ -38,7 +38,7 @@
             </ul>
           </div>
         </div>
-        <iframe className='map' src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9402.7932719204!2d27.54608244970704!3d53.90156584693363!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfe967b4142f%3A0xc70eccdee62c5086!2z0YPQuy4g0KDQtdCy0L7Qu9GO0YbQuNC-0L3QvdCw0Y8gMTcsINCc0LjQvdGB0Lo!5e0!3m2!1sru!2sby!4v1637768488215!5m2!1sru!2sby" width={"1600"} height={"410"} style={{border:0}} loading="lazy"></iframe>
+        <iframe className='map' src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9402.7932719204!2d27.54608244970704!3d53.90156584693363!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfe967b4142f%3A0xc70eccdee62c5086!2z0YPQuy4g0KDQtdCy0L7Qu9GO0YbQuNC-0L3QvdCw0Y8gMTcsINCc0LjQvdGB0Lo!5e0!3m2!1sru!2sby!4v1637768488215!5m2!1sru!2sby" width={"1600"} height={"440"} style={{border:0}} loading="lazy"></iframe>
       </div>
     );
   };
