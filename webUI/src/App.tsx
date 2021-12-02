@@ -26,7 +26,6 @@ import { persistor } from './store';
 Amplify.configure(awsconfig);
 
 const App = () => {
-    console.log("App rendering")
     const dispatch = useDispatch();
     useEffect(() => {
         persistor.purge();
@@ -38,10 +37,8 @@ const App = () => {
         Hub.listen("auth", (data: { payload: { event: any } }) => {
             switch (data.payload.event) {
                 case "signIn":
-                    console.log("user signed in");
                     break;
                 case "signUp":
-                    console.log("user signed up");
                     break;
                 case "signOut":
                     dispatch({type: "SIGN_OUT"});
@@ -58,7 +55,6 @@ const App = () => {
     async function checkUser() {
         try {
             const user = await Auth.currentAuthenticatedUser();
-            console.log("User checking...");
             dispatch({type: "CHECK_USER", payload: user});
         } catch (err) {
             // updateUser(null);

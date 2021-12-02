@@ -4,9 +4,9 @@ import "./menu.scss";
 import "@brainhubeu/react-carousel/lib/style.css";
 import {addToCart} from "../../store/cart/cart.actions";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {ICartItem} from "../../store/cart/cart.types";
 import toast from "react-hot-toast";
 import {Redirect, useHistory} from "react-router";
+
 const MenuItemComponent = (item: MenuItem) => {
     const dispatch = useAppDispatch();
 
@@ -16,6 +16,8 @@ const MenuItemComponent = (item: MenuItem) => {
         if (userId) {
             toast.success(`Блюдо "${item.title}" добавлено в корзину`);
             dispatch(addToCart({...item, excluded_ingredients: []}, items));
+        } else {
+            toast.error(`Войдите или зарегистрируйтесь!`);
         }
     };
 

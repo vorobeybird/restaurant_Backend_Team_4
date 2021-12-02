@@ -23,7 +23,6 @@ Api.interceptors.request.use(
         let token = null;
         try {
             token =  await getToken();
-            console.log("TOKEN ", token);
         } catch (error) {
             /* Nothing */
         }
