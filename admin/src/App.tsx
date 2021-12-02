@@ -43,8 +43,7 @@ function App() {
 
 
   React.useEffect(() => {
-    const socket = io('ws://localhost:5000')
-
+    const socket = io(`ws://${process.env.API_ADRESS}`)
     socket.on('connnection', () => {
       console.log('connected to server');
     })
