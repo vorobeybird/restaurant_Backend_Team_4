@@ -16,8 +16,6 @@ function ProfileAddress() {
         console.log(err)
     }
     const hasAddress = Object.keys(userAddress).length > 0;
-    console.log(userAddress);
-    console.log(hasAddress);
     const dispatch = useAppDispatch();
 
     const [editMode, setEditMode] = useState<boolean>(false);

@@ -162,7 +162,6 @@ export const Cart = () => {
       {items.length === 0 ? (
         <div className="empty-cart">
           <div className="empty-cart__container empty-cart__container--small">
-            <div className="cart-title">Корзина</div>
             <div className="cart-body">
               <div className="empty-cart__img">
                 <img src={emptyCart} alt="empty-cart-img" />
@@ -180,9 +179,6 @@ export const Cart = () => {
       ) : (
         <div className="full-cart">
           <div className="cart_order_container">
-            <div className="cart_title">
-              <p>Корзина</p>
-            </div>
             <div className="cart_order">
               <h1>Ваш заказ</h1>
             </div>

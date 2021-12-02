@@ -37,7 +37,6 @@ function ProfileCards() {
             setEditMode(true);
         }
     }
-    console.log(editMode)
     const showModalHandler = () => {
         setShowModal(true);
     }
@@ -74,7 +73,6 @@ function ProfileCards() {
                 {cardDataArray.length > 0?
                     <ul className={"profileCards__list"}>
                         {cardDataArray.map(card => {
-                            console.log(card.cardNumber)
                             return <li className={"profileCards__item"} key={card.cardNumber}>
                                 <div className={"profileCards__image"}>
                                     <img src={+card.cardNumber[0] === 4 ? visaImg : mastercardImg}
