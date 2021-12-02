@@ -60,7 +60,7 @@ export const ChosePaymentType = ({
     dispatch(clearCart());
   };
 
-  const withoutOrder = useSelector(state => state.dishes.dishes);
+  const typeOrd = useSelector(state => state.dishes);
 
   return (
     <View style={styles.Wrapper}>
@@ -83,7 +83,9 @@ export const ChosePaymentType = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              typeOrd.orderType === 'Бронирование стола'
+                ? styles.OrderTextDisabled
+                : undefined,
             ]}>
             Наличными
           </Text>
@@ -91,7 +93,7 @@ export const ChosePaymentType = ({
             onPress={() => {
               checkFuncFirst();
             }}
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={typeOrd.orderType === 'Бронирование стола' ? true : false}
             checked={checkedFirs}
             checkedIcon={<Image source={require('../../img/checked.png')} />}
             uncheckedIcon={
@@ -124,12 +126,14 @@ export const ChosePaymentType = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              typeOrd.orderType === 'Бронирование стола'
+                ? styles.OrderTextDisabled
+                : undefined,
             ]}>
             Картой на месте
           </Text>
           <CheckBox
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={typeOrd.orderType === 'Бронирование стола' ? true : false}
             onPress={() => {
               checkFuncThird();
             }}
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   Title: {
-    elevation:10,
+    elevation: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
