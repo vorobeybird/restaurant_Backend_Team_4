@@ -35,8 +35,11 @@ module.exports = {
   },
 
   getSortedTables(req, res) {
+    try{
     if (req.params.date) {
       module.exports.getTablesByDate(req, res, req.params.date);
+    }} catch(error){
+      res.status(400).send(error);
     }
   },
 
@@ -60,7 +63,7 @@ module.exports = {
         }
         return res.status(200).send(table);
       })
-      .catch((err) => res.status(400).send(error));
+      .catch((err) => res.status(400).send(err));
   },
 
   update(req, res) {

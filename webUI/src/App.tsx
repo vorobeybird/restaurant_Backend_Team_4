@@ -1,3 +1,4 @@
+import { PersistGate } from 'redux-persist/integration/react'
 import MainPage from "./pages/mainPage/MainPage";
 import "./app.scss";
 import {Authentication} from "./pages/login/Login";
@@ -20,6 +21,7 @@ import {Amplify, Auth, Hub} from "aws-amplify";
 import { Search } from "./components/search/search";
 import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
 import { FaRegIdBadge } from "react-icons/fa";
+import { persistor } from './store';
 
 Amplify.configure(awsconfig);
 
@@ -27,6 +29,7 @@ const App = () => {
     console.log("App rendering")
     const dispatch = useDispatch();
     useEffect(() => {
+        persistor.purge();
         checkUser();
         setAuthListener();
     }, []);
@@ -63,40 +66,42 @@ const App = () => {
     }
 
     return (
-        <Router>
-            <Navigation/>
-            <Toaster
-                position="bottom-right"
-                toastOptions={{
-                    className: "",
-                    style: {
-                        border: "none",
-                        borderRadius: "15px",
-                        padding: "16px",
-                        color: "#FFFFFF",
-                        backgroundColor: "rgba(239, 117, 43, 0.7)",
-                        
-                    },
-                }}
-            />
-            <Switch>
-                <Route exact path="/" component={MainPage}/>
-                <Route exact path="/login" component={Authentication}/>
-                <Route exact path="/menu" component={Menu}/>
-                <Route exact path="/cart" component={Cart}/>
-                <Route path="/dishPage" component={DishPage}/>
-                <Route path="/profile">
-                    <Profile></Profile>
-                    <Redirect to={"/profile/orders"}/>
-                </Route>
-                <Route path="/search" component={Search}/>
-                <Route exact path="/booktable" component={BookTableWithoutDish}/>
-                <Route path="/cart/confirm" component={OrderConfirmation}/>
+        <PersistGate loading={null} persistor={persistor} >
+            <Router>
+                <Navigation/>
+                <Toaster
+                    position="bottom-right"
+                    toastOptions={{
+                        className: "",
+                        style: {
+                            border: "none",
+                            borderRadius: "15px",
+                            padding: "16px",
+                            color: "#FFFFFF",
+                            backgroundColor: "rgba(239, 117, 43, 0.7)",
+                            
+                        },
+                    }}
+                />
+                <Switch>
+                    <Route exact path="/" component={MainPage}/>
+                    <Route exact path="/login" component={Authentication}/>
+                    <Route exact path="/menu" component={Menu}/>
+                    <Route exact path="/cart" component={Cart}/>
+                    <Route path="/dishPage" component={DishPage}/>
+                    <Route path="/profile">
+                        <Profile></Profile>
+                        <Redirect to={"/profile/orders"}/>
+                    </Route>
+                    <Route path="/search" component={Search}/>
+                    <Route exact path="/booktable" component={BookTableWithoutDish}/>
+                    <Route path="/cart/confirm" component={OrderConfirmation}/>
 
-            </Switch>
-            <Contacts/>
-            <Footer/>
-        </Router>
+                </Switch>
+                <Contacts/>
+                <Footer/>
+            </Router>
+        </PersistGate>
     );
 };
 

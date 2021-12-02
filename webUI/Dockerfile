@@ -4,4 +4,4 @@ COPY package.json ./
 RUN npm install --legacy-peer-deps
 COPY . .
 CMD ["node", "server.js"]
-EXPOSE 3000
+EXPOSE 80
