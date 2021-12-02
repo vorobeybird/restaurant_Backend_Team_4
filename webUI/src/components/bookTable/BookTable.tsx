@@ -10,6 +10,7 @@ import { BookTableDetails } from "../common/bookTableDetails/BookTableDetails";
 import { SwitchButtons } from "../common/switchButtons/SwitchButtons";
 import "./bookTable.scss";
 import { useHistory } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface OrderProps {
   total?: number;
@@ -94,7 +95,18 @@ export const BookTable = ({ total, combineOrder }: OrderProps) => {
     }
   };
 
+  let cardNumber = useAppSelector(
+    (state) => state.auth?.user?.attributes[`custom:card_number`]
+  );
+
+  if (!cardNumber) cardNumber = "{}";
+
   const pushToConfirmation = () => {
+    if (Object.keys(JSON.parse(cardNumber)).length === 0) {
+      toast.error("Привяжите карту, чтобы забронировать стол");
+      return;
+    }
+
     handleChangeCurrentStepNext();
     if (currentStep === 4) {
       history.push("/cart/confirm");

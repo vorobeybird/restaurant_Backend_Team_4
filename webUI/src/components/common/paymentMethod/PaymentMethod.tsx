@@ -39,9 +39,7 @@ export const PaymentMethod = (props: any) => {
           <div className="radio">
             <label
               className={
-                props.isBookTable
-                  ? "label-disabled"
-                  : Object.keys(JSON.parse(cardNumber)).length === 0
+                Object.keys(JSON.parse(cardNumber)).length === 0
                   ? "label-disabled"
                   : undefined
               }
@@ -51,23 +49,24 @@ export const PaymentMethod = (props: any) => {
                 value="1"
                 title="Для разблокировки данной функции нужно привязать карту в личном кабинете"
                 disabled={
-                  props.isBookTable
-                    ? true
-                    : Object.keys(JSON.parse(cardNumber)).length === 0
+                  Object.keys(JSON.parse(cardNumber)).length === 0
                     ? true
                     : false
                 }
-                checked={currentPaymentMethod === 1}
+                checked={
+                  currentPaymentMethod === 1 || props.isBookTable === true
+                }
                 onChange={onValueChange}
               />
               Картой онлайн
             </label>
           </div>
           <div className="radio">
-            <label>
+            <label className={props.isBookTable ? "label-disabled" : undefined}>
               <input
                 type="radio"
                 value="2"
+                disabled={props.isBookTable ? true : false}
                 checked={currentPaymentMethod === 2}
                 onChange={onValueChange}
               />
