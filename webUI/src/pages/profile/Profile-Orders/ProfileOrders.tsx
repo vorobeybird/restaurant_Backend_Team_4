@@ -122,7 +122,7 @@ export const ProfileOrders = () => {
               tableData[i].delivery_method === "bookTable" ? "Бронирование стола" :
                 tableData[i].delivery_method === "delivery" ? "Доставка" : null
             }</td>
-            <td>{moment(tableData[i].delivery_date).format("DD.MM.YYYY hh.mm")}</td>
+            <td>{moment(tableData[i].delivery_date).format("DD.MM.YYYY HH.mm")}</td>
             <td>
               <div className={
                 tableData[i].status === "Готовится" ? "status-wrapper status-in-progress" :
