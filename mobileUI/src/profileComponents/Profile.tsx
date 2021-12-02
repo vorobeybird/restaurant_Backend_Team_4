@@ -16,13 +16,25 @@ type RootStackParamList = {
 const Profile = () => {
   const navigation = useNavigation<RootStackParamList>();
   const cart = useSelector((state) => state.dishes);
-  console.log(cart.userInfo)
+  console.log(cart)
+  const user = useSelector(state => state.dishes.userInfo.attributes);
+  console.log(user, ' hyi')
+    let email;
+    let name;
+    let familyName;
+    let phoneNumber;
+    if (user) {
+        email = user.email;
+        name = user.name;
+        familyName = user.family_name;
+        phoneNumber = user.phone_number;
+    }
   return (
     <View style={styles.MainCont}>
         <View style={styles.Conts}>
-          <Text style={styles.Header}>{cart.userInfo.name} {cart.userInfo.surName} </Text>
-          <Text style={styles.Email}> {cart.email}</Text>
-          <Text style={styles.Phone}> {cart.userInfo.phone}</Text>
+          <Text style={styles.Header}>{name} {familyName}</Text>
+          <Text style={styles.Email}>{email}</Text>
+          <Text style={styles.Phone}>{phoneNumber}</Text>
           <TouchableOpacity style={styles.ButCont} onPress={() => {navigation.navigate('PersonalData')}}>
             <Text style={styles.ButText}>Изменить  {'>'}</Text>
           </TouchableOpacity>

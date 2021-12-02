@@ -5,7 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import LoginLayout from "./components/layouts/LoginLayout";
 import AdminLayout from "./components/layouts/AdminLayout";
 import "./App.css";
-
+import io from 'socket.io-client'
 import {
   AmplifyAuthenticator,
   AmplifySignOut,
@@ -16,12 +16,14 @@ import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import React, { useState } from "react";
+import { useSnackbar } from 'notistack';
 
 Amplify.configure(awsconfig);
 
 function App() {
   const [authState, setAuthState] = useState<AuthState>();
   const [user, setUser] = useState<any>();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   console.log(user);
   let group;
   if (user) {
@@ -37,6 +39,32 @@ function App() {
       setUser(authData);
     });
   }, []);
+  // const [orders, setOrders] = useState(true)
+
+
+  React.useEffect(() => {
+    const socket = io(`ws://${process.env.API_ADRESS}`)
+    socket.on('connnection', () => {
+      console.log('connected to server');
+    })
+
+    socket.on('order-added', (newOrders) => {
+       enqueueSnackbar('Новый заказ!',{ 
+        variant: 'info',
+    });
+      console.log("We were updated");
+    })
+
+    socket.on('message', (message) => {
+      console.log(message);
+    })
+
+    socket.on('disconnect', () => {
+      console.log('Socket disconnecting');
+    })
+
+  }, [])
+
   return authState === AuthState.SignedIn && user ? (
     <div className="App">
       <StyledEngineProvider injectFirst>

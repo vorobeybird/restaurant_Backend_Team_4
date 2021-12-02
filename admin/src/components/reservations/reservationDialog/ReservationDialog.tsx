@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect}  from 'react';
+import { useState }  from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Typography, Slide, Box, Grid, TextField } from "@mui/material";
 import dayjs from 'dayjs';
@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, setOpenRForm, fetchReservationData}: any) => {
+const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, setOpenRForm, fetchAllOrders, fetchReservationData}: any) => {
     console.log(selectedCellData)
     const initialFormValues = {    
                 delivery_method: "bookTable",
@@ -59,6 +59,7 @@ const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, se
         if (response.status === 200) {
           setResponse(response.data);
           fetchReservationData();
+          fetchAllOrders();
         }
       })
       .catch(err=>{
@@ -91,7 +92,7 @@ const ReservationDialog = ({selectedCellData, setSelectedCellData, openRForm, se
     
       <Box sx={{ height:30, mb: 4}}>
         {response.message === "No tables found!" && <span style={{color: "red", }}>Извините, нет свободных столов на указанное время</span>}
-        {response.persons === selectedCellData.num_of_persons && <span>Стол № {response.table_number} на {response.num_of_persons} забронирован на {dayjs(selectedCellData.reserve_date).format('HH:mm DD MMMM YYYY г.')} </span>}
+        {response.persons >= selectedCellData.num_of_persons && <span>Стол № {response.table_number} на {response.num_of_persons} забронирован на {dayjs(selectedCellData.reserve_date).format('HH:mm DD MMMM YYYY г.')} </span>}
        </Box>
       <Grid container spacing={2}>
      

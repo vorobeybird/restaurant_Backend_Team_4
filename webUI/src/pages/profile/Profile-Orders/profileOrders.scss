@@ -42,7 +42,7 @@ switch {
     }
 
     & .orders-table__container {
-      width: 95%;
+      width: 100%;
       height: 90%;
       position: relative;
       & table {
@@ -85,7 +85,7 @@ switch {
               width: 15%;
             }
             & th:nth-child(3){
-              width: 15%;
+              width: 10%;
             }
             & th:nth-child(4){
               width: 15%;
@@ -94,7 +94,10 @@ switch {
               width: 10%;
             }
             & th:nth-child(6){
-              width: 15%;
+              width: 13%;
+            }
+            & th:nth-child(7){
+              width: 7%;
             }
           }
         }
@@ -107,9 +110,65 @@ switch {
               font-weight: normal;
               font-size: 0.8rem;
               line-height: normal;
+              font-family: Ubuntu, Roboto, sans-serif;
               color: #25213B;
+              border: 2px #EF742F;
+              border-style: solid none;
+
+              
+              &:first-child{
+                text-align: left;
+                font-size: 1rem;
+                max-width: 1rem;
+                margin-left: 0px;
+
+                > * {
+                  margin-top: 5px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2; /* number of lines to show */
+                  line-height: 1.25rem;        /* fallback */
+                  max-height: 2.5rem; 
+                  // max-width: 100%;
+                  &:before{
+                    font-size: 18px;
+                    content:" • ";
+                  }
+                }
+              }
               & .td-total-price {
                 font-weight: bold;
+              }
+
+              & .td-cancellation {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50%;
+                width: 90%;
+
+                & .td__btn {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 40px;
+                  width: 40px;
+                  border: none;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  background: none;
+
+                  & img {
+                    width: 25px;
+                    height: 25px
+                  }
+                }
+
+                & .td__btn:hover {
+                  background: #FFE0E0;
+                }
               }
             }
           }
@@ -209,7 +268,14 @@ switch {
       color: #4A4AFF;
       background: #E6E6F2;
     }
-
+    .status-sent{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 0.8rem;
+      line-height: normal;
+      color: #6E6893;
+      background:  #F2F0F9;
+    }
     .status-canceled {
       font-style: normal;
       font-weight: 500;

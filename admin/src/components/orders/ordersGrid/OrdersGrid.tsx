@@ -1,12 +1,12 @@
 import { DataGrid, GridCellValue, GridColDef, GridRenderCellParams, GridValueGetterParams } from '@mui/x-data-grid';
 import OrderDialog from '../orderDialog/OrderDialog';
 import { useState, useEffect } from "react";
-import axios, {AxiosResponse}  from 'axios';
 import {Container, IconButton } from '@mui/material';
 import { useTheme } from '@mui/styles';
 import { Edit, Pageview } from '@mui/icons-material';
 import apiFetch from '../../common/apifetch/apifetch';
 import OrderCard from '../orderCard/OrderCard';
+import {DELIVERY_METHODS}  from '../../common/const/constants';
 
 interface IOrder {
   id: number;
@@ -73,7 +73,7 @@ const OrdersGrid = () => {
   }
    const saveStatus = () => {
     const newOrders = orders.map(order=> (order.id === currentOrder.id) ? {...currentOrder, status} : order);      
-        setOrders(newOrders);
+      setOrders(newOrders);
        setOrder();
   }
   const columns: GridColDef[] = [
@@ -105,9 +105,12 @@ const OrdersGrid = () => {
         return updated.toLocaleString("ru", options) 
      },
     },
-    { field: 'contact_name', headerName: 'Имя', width: 200 },
-    { field: 'contact_phone', headerName: 'Телефон', width: 150 },
-    { field: 'adress', headerName: 'Адрес', width: 250 },
+    { field: 'contact_name', headerName: 'Имя', width: 150 },
+    { field: 'contact_phone', headerName: 'Телефон', width: 130 },
+    { field: 'delivery_method', headerName: 'Тип заказа', width: 150, renderCell: (params: any)=> {
+     return params.row.OrderDishes.length > 0 ? DELIVERY_METHODS[params.row.delivery_method] : "Заказ стола";
+    }},
+    { field: 'adress', headerName: 'Адрес', width: 150},
     { field: 'total_price', headerName: 'Цена', width: 100, align: 'center' },
     { field:'status', headerName: 'Статус заказа', width: 200, sortable: false, filterable: false, disableColumnMenu: true, headerAlign: 'center', renderCell: (params) => {
       const onClick = (e: any) => {

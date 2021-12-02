@@ -31,7 +31,14 @@ function ProfileInfo() {
 
     const [firstNameError, setFirstNameError] = useState<string>("");
     const [lastNameError, setLastNameError] = useState<string>("");
-    const formChars = {
+    const formatChar = {
+        "A": "[234]",
+        "B": "[3459]",
+        "9": "[0-9]",
+        // "1": "+",
+        // "3": "3",
+        // "5": "5",
+        // "7": "7",
     }
 
     const updatedNumber = userNumber.replaceAll(" ", "").replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").replaceAll("_", "")
@@ -126,21 +133,12 @@ function ProfileInfo() {
                            onError={setLastNameError}
                            onChange={onLastNameChangeHandler}
                     />
-                    {/*<Input name="phone_number"*/}
-                    {/*       type="text"*/}
-                    {/*       placeholder="Номер телефона"*/}
-                    {/*       value={number}*/}
-                    {/*       validationSchema={phoneNumberRegEx}*/}
-                    {/*       error={numberError}*/}
-                    {/*       onError={setNumberError}*/}
-                    {/*       errorMessage="Недопустимый номер телефона"*/}
-                    {/*       onChange={onNumberChangeHandler}*/}
-                    {/*/>*/}
                     <InputMask
                         className="masked_input"
-                        mask='+375 (99) 999-99-99'
+                        mask='+375 (AB) 999-99-99'
                         value={userNumber}
                         alwaysShowMask={true}
+                        formatChars={formatChar}
                         onChange={userNumberChangeHandler}>
                     </InputMask>
                 </div>

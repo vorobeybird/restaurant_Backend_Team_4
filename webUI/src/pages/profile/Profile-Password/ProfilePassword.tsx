@@ -46,16 +46,6 @@ function ProfilePassword() {
             if (user) {
                 await Auth.changePassword(user, oldPassword, newPassword);
                 toast.success(`Пароль успешно изменен`);
-                // const updatedUser = await Auth.currentAuthenticatedUser();
-                // dispatch(
-                //     {
-                //         type: "UPDATE_USER_ATTR",
-                //         payload: updatedUser,
-                //     }
-                // )
-                // setOldPassword("");
-                // setNewPassword("");
-                // setConfirmedNewPassword("");
             }
         } catch (err) {
             setOldPasswordError("Неверный пароль")
@@ -91,6 +81,7 @@ function ProfilePassword() {
                        validationSchema={passwordRegEx}
                        onError={setOldPasswordError}
                        onChange={onOldPasswordChangeHandler}
+                       isToggled={true}
                 />
                 <label htmlFor="newPassword">*Новый пароль</label>
                 <Input name="newPassword"
@@ -102,6 +93,7 @@ function ProfilePassword() {
                        validationSchema={passwordRegEx}
                        onError={setNewPasswordError}
                        onChange={onNewPasswordChangeHandler}
+                       isToggled={true}
                 />
                 <label htmlFor="confirmNewPassword">*Повторите новый пароль</label>
                 <Input name="confirmNewPassword"
@@ -114,6 +106,7 @@ function ProfilePassword() {
                        onError={setConfirmedNewPasswordError}
                        onChange={onConfirmNewPasswordChangeHandler}
                        validate={validateConfirmedPassword}
+                       isToggled={true}
                 />
             </div>
             <Button disabled={formIsInvalid} type="submit">Готово</Button>

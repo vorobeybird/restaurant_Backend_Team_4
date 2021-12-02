@@ -1,18 +1,20 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, Modal, Dimensions, ToastAndroid} from 'react-native';
 import { useState, useEffect } from "react";
-import { addDate } from '../store/StoreCard' 
+import { addDate,getNumOfPersons } from '../store/StoreCard' 
 import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/core';
 import axios from "axios";
-
+import dayjs from 'dayjs';
+import { COMPARISON_BINARY_OPERATORS } from "@babel/types";
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
   }
 
-  interface category {
+  interface table {
     id: number,
     table_number: number,
     persons: number,
@@ -20,14 +22,18 @@ type RootStackParamList = {
   }
 
 
-export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
+  export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
     const cart = useSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
-    const [getTable, setTable] = useState()
+    const [reservedTable, setTable] = useState([])
+    const [tablePool, setTablePool] = useState([]);
+    const [availableTables, setavailableTables] = useState([]);
+    const [allTables, setallTables] = useState([]);
+
     let devState: any[] = [];
     const showToast = () => {
         ToastAndroid.showWithGravity(
@@ -39,36 +45,80 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
 
       const showToastSuccs = () => {
         ToastAndroid.showWithGravity(
-          'Стол за вами',
+          'Стол забронирован',
           ToastAndroid.SHORT,
           ToastAndroid.TOP,
         );
       };
 
-    const getItems = async () => {
-        const response = await axios.get<category[]>('http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables')
-        const res = response.data
-        return res
-      }
-      const fetchMenuItems = async () => {
-        const items = await getItems()
-        setTable(items)
-        
+      const checkAvailableTable = (table:any) => {
+        if (!table.reserve) {
+          return true;
+        }
+    
+        if (table.reserve && table.reserve.length < 3) {
+          return true; 
+        } else {
+          return false;
+        }
       }
     
-      
-      useEffect(() => {
-        fetchMenuItems()
-        console.log(getTable)
-      },[])
 
-    const onChange  = async (event:any, selectedDate:any) => {
+    
+    const getTablesByDate = async (date:any) => {
+            const correctDate = dayjs(date).format('YYYY-MM-DD')
+            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables/${correctDate}`)
+            const res = response.data
+            setTable(res)
+        }
+    const getTablePool = async () => {
+            const response = await axios.get<table[]>(`http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tablepool`)
+            const res = response.data
+            setTablePool(res)
+        }
+
+    useEffect(() => {
+        getTablesByDate(date);
+        getTablePool()
+        tables(date);
+        console.log(tablePool)
+        console.log(reservedTable)
+    }, []);
+    
+    const concatResult = (arr1:[],arr2:[]) => {
+        const result = [...new Set([...arr1, ...arr2])];
+        let res = result.filter((v,i,a)=>a.findIndex(t=>(t.table_number === v.table_number))===i)
+        console.log(res, 'resresres');
+        return res
+    }
+
+    const findAvailableTables = (tables:any) => {
+        let tempAvailable:any = []
+        let tempAllTables:any = []
+        tables.forEach((table:any) => {
+          if (table.persons) {
+          if (checkAvailableTable(table) && !tempAvailable.includes(table.persons))  tempAvailable.push(table.persons); // push table to available tables pool if it is not added there yet
+          if (!tempAllTables.includes(table.persons)) tempAllTables.push(table.persons);
+          }
+      })
+      setavailableTables(tempAvailable);
+      tempAllTables.sort((a:any,b:any) => a - b);
+      setallTables(tempAllTables);
+      }
+
+    const tables = (currentDate:any) =>{
+        getTablesByDate(currentDate);
+        const tables = concatResult(reservedTable, tablePool);
+        findAvailableTables(tables);
+    }
+
+    const onChange  = (event:any, selectedDate:any) => {
         const currentDate = selectedDate || date;
-        await setDate(currentDate);
+        setDate(currentDate);
         hideDatePicker()
-
+        tables(currentDate);
       };
-
+    
     const showMode = (currentMode:any) => {
         setShow(true);
         setMode(currentMode);
@@ -83,11 +133,27 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     const hideDatePicker = () => {
         setShow(false);
     };
-    const handleConfirm = (val:any) => {
-        
-        hideDatePicker();
-    };
-
+    const handleGetNumOfPersons = (item:any) => {
+        dispatch(getNumOfPersons(item))
+    }
+    const checkNum = () => {
+        if(chooseTable ==='На двоих') {
+            handleGetNumOfPersons(2)
+            console.log(2)
+        }else if(chooseTable ==='На четверых') {
+            handleGetNumOfPersons(4)
+            console.log(4)
+        }else if(chooseTable ==='На шестерых') {
+            handleGetNumOfPersons(6)
+            console.log(6)
+        }else if(chooseTable ==='На восьмерых') {
+            handleGetNumOfPersons(8)
+            console.log(8)
+        }else if(chooseTable ==='На десятерых') {
+            handleGetNumOfPersons(10)
+            console.log(10)
+        }
+    }
     const handleAddDate= (item:any) => {
         dispatch(addDate(item))
     };
@@ -100,9 +166,8 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
     }
     const WIDTH = Dimensions.get('window').width
     const HEIGHT = Dimensions.get('window').height
-    const options = [ 'На двоих',  'На четверых', 'На шестерых', 'На восьмерых', 'На десятерых']
+    const options = {2:'На двоих',  4:'На четверых', 6:'На шестерых', 8:'На восьмерых', 10:'На десятерых'}
 
-    
     const ModalPicker = () => {
 
         const onPressItem = (option:any) => {
@@ -110,14 +175,14 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
             setChooseTable(option)
         }
 
-        const option = options.map((item, index) => {
+        const option = availableTables.map((item, index) => {
             return (
                 <TouchableOpacity
                     key={index}
                     style={styles.option}
-                    onPress={() => onPressItem(item)}
+                    onPress={() => onPressItem(options[item])}
                     >
-                        <Text style={styles.modalText}>{item}</Text>
+                        <Text style={styles.modalText}>{options[item]}</Text>
                 </TouchableOpacity>
             )
         })
@@ -136,7 +201,7 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
             <TouchableOpacity onPress={() => goBack()}>
                 <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
             </TouchableOpacity>
-            <Text style={styles.TitleText}> {cart.orderType}</Text>
+            <Text style={styles.TitleText}> Забронировать стол</Text>
             </View>
             <View>
                     <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
@@ -146,6 +211,12 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                         <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                     </TouchableOpacity>
 
+                    
+
+                    <TouchableOpacity onPress={showTimepicker} style={styles.box}>
+                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
+                        <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
                         
                     }}>
@@ -155,11 +226,6 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                     <Modal transparent={true} animationType='fade' visible={isModalVisible} onRequestClose={() => changeModalVisible(false)}>
                         <ModalPicker/>
                     </Modal>
-
-                    <TouchableOpacity onPress={showTimepicker} style={styles.box}>
-                        <Text style={styles.dateText}>{date.getHours()}.{date.getMinutes()}</Text>
-                        <Image style={styles.dateImage} source={require('../../img/clock.png')}/>
-                    </TouchableOpacity>
                 {show && (
                     <DateTimePicker
                         testID="dateTimePicker"
@@ -173,54 +239,12 @@ export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation
                 )}
             </View>
             <Text style={styles.prgressText}> шаг 2/3</Text>
-            <TouchableOpacity style={styles.Button} onPress={() => {
-                
-                if(chooseTable ==='На двоих') {
-                    devState = []
-
-                    console.log(getTable)
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 2) {
-                            
-                            devState.push(element)
-                        }
-
-                    });
-                    
-                    console.log(date.getHours()+':'+date.getMinutes()+'0:00', 'trim')
-                    devState.map((item:any) => {
-                        item.reserve.map((data:any) => {
-                            
-                            if(data.reserve_date == date.getFullYear()+'-'+date.getMonth()+'-'+date.getDate() && data.reserve_time == date.getHours()+':'+date.getMinutes()+'0:'+'00'){
-                                showToast()
-                            } else {
-                                showToastSuccs()
-                                navigation.navigate('ChosePaymentType')
-                            }
-                        })
-                    })
-                }
-                if(chooseTable ==='На четверых') {
-                    devState = []
-                    handleAddDate(date.toString())
-                    getTable.map((element:any) => {
-                        if(element.persons == 4) {
-                            
-                            devState.push(element)
-                        }
-                    });
-                    console.log(devState, 'devState')
-                }
-                console.log(date)
-                
-                
-                if(cart.orderType == 'Навынос'){
-                    navigation.navigate('ChosePaymentType')
-                } else if(cart.orderType == 'Доставка') {
-                    navigation.navigate('writeAdress')
-                }
-                }}>
+            <TouchableOpacity style={styles.Button} onPress={() => {      
+                handleAddDate(dayjs(date).toISOString())   
+                checkNum()
+                showToastSuccs()
+                navigation.navigate('ChosePaymentType')
+            }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>
         </View>
@@ -257,7 +281,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         top:'60%',
         alignSelf:'center',
-        color:'666666',
+        color:'#666666',
     },
     dateText:{
         left:10,
@@ -296,7 +320,7 @@ const styles = StyleSheet.create({
     TitleText:{
         alignSelf:'center',
         fontFamily: 'Roboto',
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'normal',
         color:'black',
     },

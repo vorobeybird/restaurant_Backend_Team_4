@@ -18,6 +18,31 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
     const [home, setHome] = useState('')
     const [corp, setCorp] = useState('')
     const [dep, setDep] = useState('')
+    const [error, setError] = useState({
+        street:'',
+        home:'',
+        corp:'',
+    })
+
+    const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
+    const required = () => {
+        let streetErr,homeErr
+        if (!street){
+            streetErr = 'Введите название улицы'
+        } else if(nameRegEx.test(street) === false ) {
+            streetErr = 'Введите название улицы'
+        } else {
+            streetErr = ''
+        }
+        if (!home){
+            homeErr = 'Введите номер дома'
+        } else {
+            homeErr = ''
+        }
+        setError({street:streetErr,home:homeErr})
+    }
+
+
     const showToast = () => {
         ToastAndroid.showWithGravity(
           "Введите необходимые поля",
@@ -40,35 +65,42 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
                 <TextInput 
                     style={styles.street}
                     placeholder='*Улица'
+                    placeholderTextColor='rgba(0, 0, 0, 0.6)'
                     onChangeText={(val)=> setStreet(val)}
                     
                 />
+                <Text style={styles.errorStreet}>{error.street}</Text>
                 <View style={styles.container}>
                     <TextInput 
                         style={styles.home}
                         placeholder='*Дом'
+                        placeholderTextColor='rgba(0, 0, 0, 0.6)'
                         onChangeText={(val)=> setHome(val)}
                     />
+                    
                     <TextInput 
                         style={styles.home}
                         placeholder='Корпус'
+                        placeholderTextColor='rgba(0, 0, 0, 0.6)'
                         onChangeText={(val)=> setCorp(val)}
                     />
                     <TextInput 
                         style={styles.home}
                         placeholder='Квартира'
+                        placeholderTextColor='rgba(0, 0, 0, 0.6)'
                         onChangeText={(val)=> setDep(val)}
                     />
                 </View>
+                <Text style={styles.errorHome}>{error.home}</Text>
             </View>
             <Text style={styles.prgressText}> шаг 3/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
-                    if(street !='' && home !=''){
+                    if(street !='' && home !='' && nameRegEx.test(street) === true){
                         navigation.navigate('ChosePaymentType')
                     } 
-                    else {
-                        
+                    else { required()
                         return (
+                            
                             showToast()
                         )
                     }
@@ -95,6 +127,17 @@ const styles = StyleSheet.create({
         lineHeight:20,
         color: '#000000',
 
+    },
+    errorStreet:{
+        top:20,
+        left:40,
+        color:'red',
+    },
+    errorHome:{
+        top:50,
+        left:40,
+        color:'red',
+        
     },
     Wrapper:{
         flex:1,

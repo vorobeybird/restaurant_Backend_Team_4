@@ -23,18 +23,29 @@
     max-width: 600px;
     height: 100%;
     max-height: 250px;
+    .main-input{
+      width:100%;
+      &__content{
 
-    .main_input_container {
+        input {
+          border: 1px solid #bdbdbd;
+          border-radius: 8px;
+          height: 100px;
+          max-height: 100%;
+          padding-left: 10px;
+          font-size: 24px;
+        }
+      }
+    }
+    
+    .masked_input{
       min-height: 100px;
       width: 100%;
       border: 2px solid #BDBDBD;
       border-radius: 8px;
       margin: 20px;
-      input{
-        all:unset;
-        font-size: 24px;
-        padding-left: 20px;
-      }
+      font-size: 24px;
+      padding-left: 20px;
     }
   }
 

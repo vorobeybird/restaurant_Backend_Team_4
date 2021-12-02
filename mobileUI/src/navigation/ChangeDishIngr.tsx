@@ -113,13 +113,9 @@ export const ChangeDishIngr = ({
         })}
       </View>
 
-      <View style={styles.ButtonReady}>
-        <Button
-          title="Готово"
-          onPress={() => handleAddExcludedIngredients()}
-          color="#FF4D00"
-        />
-      </View>
+      <TouchableOpacity style={styles.Button} onPress={() => handleAddExcludedIngredients()}>
+        <Text style={styles.ButText}>Готово</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -188,9 +184,24 @@ const styles = StyleSheet.create({
   SwitchMargin: {
     marginRight: 30,
   },
-  ButtonReady: {
-    marginTop: 60,
-    width: '30%',
-    left: '60%',
+  Button:{
+    top:'3%',
+    right:'10%',
+    alignSelf:'flex-end',
+    alignItems:'center',
+    justifyContent:'center',
+    width:'25%',
+    height:'8%',
+    backgroundColor:'#FF4D00',
+    borderRadius: 4,
+
   },
+  ButText:{
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 18,
+    lineHeight: 24,
+    color: '#FFFFFF',
+},
 });
