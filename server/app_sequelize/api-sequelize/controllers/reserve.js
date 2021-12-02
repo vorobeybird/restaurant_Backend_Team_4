@@ -6,18 +6,22 @@ const { Op, literal, QueryTypes } = require("sequelize");
 const db = require("../models/index");
 
 const parseDateToUTC = (date) => {
-  const parsed = new Date(date);
-  return new Date(parsed.toUTCString());
+  try{
+    const parsed = new Date(date);
+    return new Date(parsed.toUTCString());
+  }catch(error){
+    console.log(error);
+  }
 };
 
 module.exports = {
   async add(req, res) {
+    try{
     const reserveDate = parseDateToUTC(req.body.reserve_date);
     const startTime = parseDateToUTC(req.body.reserve_time);
     const endTime = parseDateToUTC(startTime);
     endTime.setUTCHours(Math.min(23, startTime.getUTCHours() + 3));
     endTime.setUTCMinutes(endTime.getUTCMinutes() + 59);
-    try{
     const tables = await module.exports.getTables(
       startTime,
       endTime,
@@ -68,7 +72,7 @@ module.exports = {
       res.status(200).send(tables[0]);
     } catch (error) {
       console.log(error);
-      res.status(400).send({ message: `Витя, ну ёб твою мать, вот твоя ошибка: ${error}`});
+      res.status(400).send(error);
     }
   },
 

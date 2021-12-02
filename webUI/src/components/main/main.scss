@@ -190,11 +190,12 @@
     width: 100%;
     height: 100%;
   }
+  .blur {
+    opacity: 0.5;
+  }
 }
 
-.blur {
-  opacity: 0.5;
-}
+
 
 .meals_container {
   display: flex;

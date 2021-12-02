@@ -5,6 +5,7 @@ import "@brainhubeu/react-carousel/lib/style.css";
 import {addToCart} from "../../store/cart/cart.actions";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import toast from "react-hot-toast";
+import {Redirect, useHistory} from "react-router";
 
 const MenuItemComponent = (item: MenuItem) => {
     const dispatch = useAppDispatch();
