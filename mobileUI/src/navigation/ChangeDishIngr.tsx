@@ -48,11 +48,7 @@ export const ChangeDishIngr = ({
     });
   };
 
-  console.log(optionalIngred, ' state');
-
   const cart = useSelector(state => state.dishes);
-
-  console.log(cart, ' cart');
 
   const findExcludedIngredients = () => {
     let excludedIngredients = item.descr.filter((ingredient: any) => {
@@ -65,17 +61,29 @@ export const ChangeDishIngr = ({
       return ingredient.title;
     });
     excludedIngredients = excludedIngredients.join(', ');
-    console.log(excludedIngredients, ' iFan BEn mezd');
     return {title: item.title, excludedIngredients: excludedIngredients};
   };
 
   const handleAddExcludedIngredients = () => {
-    console.log(findExcludedIngredients(), '  adada');
     dispatch(addExcludedIngredients(findExcludedIngredients()));
     navigation.navigate('MarketMain');
   };
 
   const navigation = useNavigation<RootStackParamList>();
+
+  useEffect(() => {
+    item?.descr.forEach((ingredient: any) => {
+      setOptionalIngred((prevState: any) => {
+        return {
+          ...prevState,
+          [ingredient.id]: !item.excluded_ingredients
+            ? true
+            : !item.excluded_ingredients.includes(ingredient.title),
+        };
+      });
+    });
+  }, []);
+
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -133,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '8%',
-    elevation:10,
+    elevation: 10,
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',

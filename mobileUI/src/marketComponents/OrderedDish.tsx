@@ -34,52 +34,71 @@ export const OrderedDish = () => {
     <View style={styles.GreatCont}>
       <ScrollView style={styles.ScrollStyle}>
         {card.dishes.map((item: any) => {
-          let newTitle
-          if(item.title.length >40){
-            let name = item.title.substr(0,13)
-             newTitle = name+'...'
-            console.log(newTitle)
+          let newTitle;
+          if (item.title.length > 40) {
+            let name = item.title.substr(0, 13);
+            newTitle = name + '...';
           } else {
-            newTitle = item.title
-            console.log(newTitle)
+            newTitle = item.title;
           }
           return (
-          
-          <View key={item.id} style={styles.StyledDish}>
-            <View style={styles.MainCont}>
-              <Image source={{uri: item.photos[0]}} style={styles.Pict} />
-              <View style={styles.Wrapper}>
-                <View style={styles.TextContainer}>
-                  <Text style={styles.StyledText} numberOfLines={2}>{item.title}</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('ChangeDishIngr', {item})}>
-                  <Text style={styles.changeText}>Изменить состав</Text>
-                </TouchableOpacity>
-                <View style={styles.CountCont}>
-                  <Text style={styles.SimpTextPrice}>{item.price} <Text style={styles.SimpText}>BYN</Text></Text>
-                  <View style={styles.Conta}>
-                    <TouchableOpacity
-                      onPress={() => handleDecreaseCartQuant(item)}>
-                      <Image
-                        style={styles.PictBut1}
-                        source={require('../../img/desMin.png')}
-                      />
-                    </TouchableOpacity>
-                    <Text style={styles.StyledCount}>{item.cardQuantity}</Text>
-                    <TouchableOpacity
-                      onPress={() => handleIncreaseCartQuant(item)}>
-                      <Image
-                        style={styles.PictBut2}
-                        source={require('../../img/desPlus.png')}
-                      />
-                    </TouchableOpacity>
+            <View key={item.id} style={styles.StyledDish}>
+              <View style={styles.MainCont}>
+                <Image source={{uri: item.photos[0]}} style={styles.Pict} />
+                <View style={styles.Wrapper}>
+                  <View style={styles.TextContainer}>
+                    <Text style={styles.StyledText} numberOfLines={2}>
+                      {item.title}
+                    </Text>
                   </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ChangeDishIngr', {item})
+                    }>
+                    <Text style={styles.changeText}>Изменить состав</Text>
+                  </TouchableOpacity>
+                  <View style={styles.CountCont}>
+                    <Text style={styles.SimpTextPrice}>
+                      {item.price} <Text style={styles.SimpText}>BYN</Text>
+                    </Text>
+                    <View style={styles.Conta}>
+                      <TouchableOpacity
+                        onPress={() => handleDecreaseCartQuant(item)}>
+                        <Image
+                          style={styles.PictBut1}
+                          source={require('../../img/desMin.png')}
+                        />
+                      </TouchableOpacity>
+                      <Text style={styles.StyledCount}>
+                        {item.cardQuantity}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => handleIncreaseCartQuant(item)}>
+                        <Image
+                          style={styles.PictBut2}
+                          source={require('../../img/desPlus.png')}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  {item.excluded_ingredients ? (
+                    <Image
+                      source={require('../../img/modified.png')}
+                      style={{
+                        width: 20,
+                        height: 20,
+                        position: 'absolute',
+                        bottom: 15,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </View>
               </View>
             </View>
-          </View>
-        )})}
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -92,7 +111,6 @@ const styles = StyleSheet.create({
     left: 30,
   },
   Pict: {
-    
     width: 160,
     height: 150,
     backgroundColor: 'white',
@@ -111,8 +129,8 @@ const styles = StyleSheet.create({
   },
   CountCont: {
     alignItems: 'center',
-    
-    marginTop:10,
+
+    marginTop: 10,
     paddingRight: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -122,8 +140,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   StyledText: {
-    height:39,
-    width:150,
+    height: 39,
+    width: 150,
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '700',
@@ -173,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 15,
   },
-  SimpTextPrice:{
+  SimpTextPrice: {
     color: '#000000',
     fontFamily: 'Roboto',
     fontStyle: 'normal',
