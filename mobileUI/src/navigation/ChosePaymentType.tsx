@@ -97,7 +97,19 @@ export const ChosePaymentType = ({
             checked={checkedFirs}
             checkedIcon={<Image source={require('../../img/checked.png')} />}
             uncheckedIcon={
-              <Image source={require('../../img/unChecked.png')} />
+              <Image
+                style={
+                  typeOrd.orderType === 'Бронирование стола'
+                    ? {
+                        borderColor: 'grey',
+                        borderWidth: 2,
+                        borderRadius: 17,
+                        backgroundColor: 'grey',
+                      }
+                    : undefined
+                }
+                source={require('../../img/unChecked.png')}
+              />
             }
           />
         </View>
@@ -140,7 +152,19 @@ export const ChosePaymentType = ({
             checked={checkedThird}
             checkedIcon={<Image source={require('../../img/checked.png')} />}
             uncheckedIcon={
-              <Image source={require('../../img/unChecked.png')} />
+              <Image
+                style={
+                  typeOrd.orderType === 'Бронирование стола'
+                    ? {
+                        borderColor: 'grey',
+                        borderWidth: 2,
+                        borderRadius: 17,
+                        backgroundColor: 'grey',
+                      }
+                    : undefined
+                }
+                source={require('../../img/unChecked.png')}
+              />
             }
           />
         </View>
