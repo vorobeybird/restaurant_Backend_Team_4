@@ -40,7 +40,7 @@ export const MyOrders = ({
     const histArr = [];
     const items: any = await getItems();
     items.map((item: any) => {
-      if (item.status == 'Завершен') {
+      if (item.status == 'Готов') {
         histArr.push(item);
       } else {
         ordArr.push(item);
@@ -179,8 +179,8 @@ export const MyOrders = ({
                             borderBottomWidth: 0.3,
                           }}
                         />
-                        {item.dish?.length ? (
-                          item.dish.map((item: any) => {
+                        {item.OrderDishes?.length ? (
+                          item.OrderDishes.map((item: any) => {
                             let newTitle;
                             if (item.title?.length > 10) {
                               let name = item.title.substr(0, 6);
@@ -188,25 +188,25 @@ export const MyOrders = ({
                             } else {
                               newTitle = item.title;
                             }
-                            console.log(item);
+                            console.log(item,'fuck you costia');
                             return (
                               <View>
                                 <View style={styles.contContent} key={item.id}>
                                   <Text
                                     numberOfLines={3}
                                     style={styles.simpTextTitle}>
-                                    {item.title}
+                                    {item.Dish.title}
                                   </Text>
                                   <Text style={styles.Price}>
                                     {' '}
-                                    {item.price} BYN
+                                    {item.Dish.price} BYN
                                   </Text>
                                   <Text style={styles.Qan}>
                                     {' '}
-                                    {item.OrderDish.quantity}
+                                    {item.quantity}
                                   </Text>
                                   <Text style={styles.simpText}>
-                                    {item.price * item.OrderDish.quantity} BYN
+                                    {item.Dish.price * item.quantity} BYN
                                   </Text>
                                 </View>
                               </View>
@@ -272,14 +272,14 @@ export const MyOrders = ({
                         <Text style={styles.color}> ОПЛАТА</Text>
                       </View>
                       <View>
-                        <Text style={styles.simpText}>{item.type}</Text>
+                        <Text style={styles.simpText}>{item.delivery_method}</Text>
                         <Text style={styles.simpText}>
                           {dayjs(item.date).format('YYYY-MM-DD')}
                         </Text>
                         <Text style={styles.simpText}>
                           {dayjs(item.date).format('HH:mm')}
                         </Text>
-                        <Text style={styles.simpText}>{histPay}</Text>
+                        <Text style={styles.simpText}>{pay}</Text>
                       </View>
                     </View>
                   </View>

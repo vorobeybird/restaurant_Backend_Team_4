@@ -4,8 +4,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   size: {
-    width: '100%',
+    marginTop: 10,
     height: '80%',
+    width: '100%',
   },
   EmptyTextWrapper: {
     justifyContent: 'center',
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 77, 0, 0.5)',
   },
   orderType: {
+    marginTop:15,
     marginBottom: 15,
     paddingBottom: 15,
     paddingTop: 15,
