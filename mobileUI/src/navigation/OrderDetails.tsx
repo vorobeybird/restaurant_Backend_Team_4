@@ -4,17 +4,17 @@ import {
   View,
   Text,
   Image,
-  ScrollView,
   TouchableOpacity,
   Button,
   ToastAndroid,
 } from 'react-native';
-import axios from 'axios';
+
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
-import { addOrderHistoryItem, clearCart } from '../store/StoreCard';
+import {addOrderHistoryItem, clearCart} from '../store/StoreCard';
 import dayjs from 'dayjs';
-import Api from '../apiSecure/Api'
+import Api from '../apiSecure/Api';
+
 interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
@@ -31,26 +31,26 @@ interface Order {
   payment_method: number;
   contact_phone: string;
   comment: string;
-  reserve_time:string;
-  status:string;
-  reserve_date:string;
+  reserve_time: string;
+  status: string;
+  reserve_date: string;
   num_of_persons: number;
   dish: DishShortInfo[];
 }
 
 export const OrderDetails = ({
   navigation: {goBack},
-  route
+  route,
 }: {
   navigation: any;
   route: any;
 }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [id, setId] = useState();
   const cart = useSelector(state => state.dishes);
-  const [pay, setPay] = useState('а мне похуй')
-  console.log(cart.userInfo.attributes.name,'cart')
+
+  const [pay, setPay] = useState('');
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -58,19 +58,19 @@ export const OrderDetails = ({
       ToastAndroid.TOP,
     );
   };
-  const handleAddOrderHistoryItem = (item:any) => {
-    dispatch(addOrderHistoryItem(item))
-  }
+  const handleAddOrderHistoryItem = (item: any) => {
+    dispatch(addOrderHistoryItem(item));
+  };
   const handleClearCart = () => {
-    dispatch(clearCart())
-  }
+    dispatch(clearCart());
+  };
   const historyOrder = {
-    id:cart.date,
-    type:cart.orderType,
-    date:cart.date,
+    id: cart.date,
+    type: cart.orderType,
+    date: cart.date,
     paymentType: cart.paymentType,
-    orderStatus: 'Завершен'
-  }
+    orderStatus: 'Завершен',
+  };
   const onMakingOrder = () => {
     let order = {} as Order;
     order.adress = 'asdf';
@@ -78,7 +78,12 @@ export const OrderDetails = ({
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
-    order.contact_name = cart.userInfo.attributes.name+' '+ cart.userInfo.attributes.family_name;
+    order.status = "Отправлен";
+    order.contact_name =
+      cart.userInfo.attributes.name +
+      ' ' +
+      cart.userInfo.attributes.family_name;
+
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = cart.paymentType;
     order.comment = "Hi, I'm hardcode comment";
@@ -92,32 +97,33 @@ export const OrderDetails = ({
         : '';
       return dish;
     });
-    
     order.dish = dishesShortInfo;
-    console.log(order)
-    Api
-      .post(
-        'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
-        order,
-        {
-          headers: {'Content-type': 'application/json'},
-        },
-      )
-      .then((response:any) => console.log(response,'order'))
+
+    console.log(order,'orderorder');
+    Api.post(
+      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
+      order,
+      {
+        headers: {'Content-type': 'application/json'},
+      },
+    )
+      .then((response: any) => console.log(response, 'order'))
       .catch(err => console.log(err));
   };
 
   const onMakingOrderTable = async () => {
-      console.log(cart)
     let order = {} as Order;
     order.num_of_persons = cart.num;
     order.customer_id = cart.userInfo.attributes.sub;
-    order.contact_name = cart.userInfo.attributes.name+' '+ cart.userInfo.attributes.family_name;
+    order.contact_name =
+      cart.userInfo.attributes.name +
+      ' ' +
+      cart.userInfo.attributes.family_name;
     order.contact_phone = cart.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
-    order.status = "bla";
-    order.comment = "bla";
+    order.status = "Отправлен";
+    order.comment = 'Hard comment';
     order.delivery_method = cart.orderType;
     order.total_price = cart.cardTotalAmount;
     order.delivery_date = cart.date;
@@ -132,39 +138,37 @@ export const OrderDetails = ({
         : '';
       return dish;
     });
-    
+
     order.dish = dishesShortInfo;
-    console.log(order,'order')
-      const servResp = await Api
-      .post(
-        'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
-        order,
-        {
-          headers: {'Content-type': 'application/json'},
-        },
-      )
-      const res = servResp;
-      console.log(res,'res')
-      console.log(order,'order')
-    
+
+    console.log(order, 'orderЩквукфывафыва');
+    const servResp = await Api.post(
+      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
+      order,
+      {
+        headers: {'Content-type': 'application/json'},
+      },
+    );
+    const res = servResp;
+    console.log(res, 'resresresresresrserser');
   };
 
   const payWordFunc = () => {
-    let payWord
-    if (cart.paymentType == 0){
-      payWord = 'Наличными'
-    }else if (cart.paymentType == 1){
-      payWord = 'Картой онлайн'
-    } else if (cart.paymentType == 2){
-      payWord = 'Картой'
-    } 
-    
-    setPay(payWord)
-  }
+    let payWord;
+    if (cart.paymentType == 0) {
+      payWord = 'Наличными';
+    } else if (cart.paymentType == 1) {
+      payWord = 'Картой онлайн';
+    } else if (cart.paymentType == 2) {
+      payWord = 'Картой';
+    }
+
+    setPay(payWord);
+  };
   useEffect(() => {
     payWordFunc();
   }, []);
-  
+
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -186,8 +190,8 @@ export const OrderDetails = ({
           </View>
           <View>
             <Text style={styles.simpText}>{cart.orderType}</Text>
-            <Text style={styles.simpText}>13 октября</Text>
-            <Text style={styles.simpText}>15:00</Text>
+            <Text style={styles.simpText}>{dayjs(cart.date).format('DD-MM-YYYY')}</Text>
+            <Text style={styles.simpText}>{dayjs(cart.date).format('HH:mm')}</Text>
             <Text style={styles.simpText}>{pay}</Text>
           </View>
         </View>
@@ -207,26 +211,25 @@ export const OrderDetails = ({
           }}
         />
         {cart.dishes.map((item: any) => {
-          let newTitle
-          if(item.title.length >7){
-            let name = item.title.substr(0,7)
-             newTitle = name+'...'
-            console.log(newTitle)
+          let newTitle;
+          if (item.title.length > 20) {
+            let name = item.title.substr(0, 20);
+            newTitle = name + '...';
+            console.log(newTitle);
           } else {
-            newTitle = item.title
+            newTitle = item.title;
           }
-          
-      
+
           return (
             <View style={styles.contContent} key={item.id}>
-              <Text style={styles.simpText}>{newTitle}</Text>
-              <Text style={styles.Price}> {item.price} BYN</Text>
-              <Text style={styles.Qan}> {item.cardQuantity}</Text>
-              <Text style={styles.simpText}>
-                {item.price * item.cardQuantity} BYN
+              <Text style={styles.simpTextTitle} numberOfLines={3}>{newTitle}</Text>
+              <Text style={styles.Price}>{item.price} BYN</Text>
+              <Text style={styles.Qan}>{item.cardQuantity}</Text>
+              <Text style={styles.simpText}>{item.price * item.cardQuantity} BYN
               </Text>
             </View>
-      )} )}
+          );
+        })}
         <View
           style={{
             paddingTop: 15,
@@ -243,23 +246,20 @@ export const OrderDetails = ({
         style={styles.butStyle}
         onPress={() => {
           showToast();
-          if(cart.orderType == "Бронирование стола") {
-            onMakingOrderTable()
+
+          if (cart.orderType == 'Бронирование стола') {
+            onMakingOrderTable();
             
-          
           } else {
             onMakingOrder();
-            
-           
+
           }
-          console.log(id)
-          
+          console.log(id);
+
           // handleAddOrderHistoryItem(historyOrder)
-          handleClearCart()
-          
-          navigation.navigate('Home')
-          
-          
+          handleClearCart();
+
+          navigation.navigate('Home');
         }}>
         <Text style={styles.ButText}> ГОТОВО </Text>
       </TouchableOpacity>
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   },
   butStyle: {
     position: 'absolute',
-    top: '75%',
+    top: '80%',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -317,11 +317,11 @@ const styles = StyleSheet.create({
   },
   Qan: {
     color: 'black',
-    right: '70%',
+    right: 30,
   },
   Price: {
     color: 'black',
-    right: '70%',
+    right: 35,
   },
   rowWrapper: {
     flexDirection: 'row',
@@ -340,15 +340,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   Title: {
+    display: 'flex',
     flexDirection: 'row',
-    height: '9%',
+    alignItems: 'center',
+    height: '8%',
     width: '100%',
-
+    elevation:10,
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   orderDishes: {
     paddingBottom: 15,
@@ -366,7 +368,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Arrow: {
-    top: '26%',
     width: 30,
     height: 30,
     marginRight: 15,
@@ -376,11 +377,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Roboto',
 
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },
   simpText: {
+    color: 'black',
+
+  },
+  simpTextTitle: {
+    width: 90,
+    right: 10,
     color: 'black',
   },
   orderType: {

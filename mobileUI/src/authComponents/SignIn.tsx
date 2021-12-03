@@ -48,6 +48,7 @@ const SignIn = (props: any) => {
   if (props.authState === 'signIn') {
     return (
       <View style={styles.Wrapper}>
+        <Text style={styles.logo}>Ocean bar</Text>
         <Text style={styles.HeadStyle}>Вход</Text>
         <TextInput
           style={styles.street}
@@ -97,8 +98,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  logo:{
+    alignSelf:'center',
+    paddingBottom:100,
+    color:'black',
+    fontSize:40,
+    
+    fontFamily:'RegattiaStencil-Bold',
+  },
   HeadStyle: {
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
     fontFamily: 'Roboto',
     fontSize: 20,
     fontStyle: 'normal',

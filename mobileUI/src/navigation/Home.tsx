@@ -17,10 +17,13 @@ export const Home = () => {
   return (
     <View style={styles.MainWrapper}>
       <View style={styles.Title}>
-        <Text style={styles.TitleText}> Ocean Bar </Text>
+        <Text style={styles.TitleText}>Ocean Bar</Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MenuTabNavigation',{screen:'Menu'})}
+        onPress={() =>
+          navigation.navigate('MenuTabNavigation', {screen: 'Menu'})
+        }
+
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}
@@ -35,8 +38,8 @@ export const Home = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(clearCart());
-          navigation.navigate('MarketTabNavigation', {
-            screen: 'ConfirmOrderTable',
+          navigation.navigate('MenuTabNavigation', {
+            screen: 'TableNoDish',
           });
         }}
         style={styles.contenWrapper}>
@@ -90,26 +93,29 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   Title: {
+    display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: '9%',
     width: '100%',
 
     fontFamily: 'Roboto',
-    fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   TextStyle: {
     fontFamily: 'Roboto',
-    fontWeight: '500',
-    fontSize: 20,
+    fontWeight: 'bold',
+    fontSize: 19,
     lineHeight: 24,
     color: '#000000',
   },
   TitleText: {
     alignSelf: 'center',
-    fontFamily: 'Roboto',
+    elevation: 1,
+    fontFamily: 'RegattiaStencil-Bold',
 
     fontSize: 25,
     fontWeight: 'normal',
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     right: 30,
   },
   simpWrapper: {
+    top: 5,
     alignItems: 'center',
   },
 });

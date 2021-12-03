@@ -123,13 +123,14 @@ const styles = StyleSheet.create({
   },
   Title: {
     flexDirection: 'row',
-    height: '9%',
+    height: '8%',
+    elevation:10,
     width: '100%',
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Arrow: {
     top: '26%',
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Roboto',
 
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },

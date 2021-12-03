@@ -70,7 +70,7 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                 <Image style={styles.CardPict} source={require('../../img/myCard.png')}/>
                 <TextInput 
                         style={styles.number}
-                        placeholder='1234 1234 1234'
+                        placeholder='1234 1234 1234 1234'
                         onChangeText={(val)=> {
                             setCard({...card,num:val, });
                             
@@ -101,7 +101,7 @@ export const AddCard = ({  navigation: { goBack }, route }:{navigation:any, rout
                 <Text style={styles.textName}>Имя владельца карты</Text>
                     <TextInput 
                             style={styles.Name}
-                            placeholder='Имя владельца карты'
+                            placeholder='   IVAN IVANOV'
                             onChangeText={(val)=> setCard({...card,name:val, })}
                         />
             </View>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     CardPict:{
         position:'absolute',
-        top:'25%',
+        top:'18%',
         left:'85%',
         zIndex:1,
     },
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     TitleText:{
         alignSelf:'center',
         fontFamily: 'Roboto',
-        fontSize: 30,
+        fontSize: 24,
         fontWeight: 'normal',
         color:'black',
     },
@@ -232,13 +232,14 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'flex-start',
         width:'100%',
-        height:'13%',
+        height:'8%',
         alignSelf:'center',
         fontFamily: 'Roboto',
-        fontSize: 30,
+        fontSize: 28,
         fontWeight: 'normal',
         color:'black',
-        backgroundColor:'#F4F4F4',
+        backgroundColor:'white',
+        elevation:10,
     },
     mainWrapper:{
         alignSelf:'center',

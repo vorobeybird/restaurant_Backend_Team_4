@@ -60,7 +60,7 @@ export const ChosePaymentType = ({
     dispatch(clearCart());
   };
 
-  const withoutOrder = useSelector(state => state.dishes.dishes);
+  const typeOrd = useSelector(state => state.dishes);
 
   return (
     <View style={styles.Wrapper}>
@@ -83,7 +83,9 @@ export const ChosePaymentType = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              typeOrd.orderType === 'Бронирование стола'
+                ? styles.OrderTextDisabled
+                : undefined,
             ]}>
             Наличными
           </Text>
@@ -91,7 +93,7 @@ export const ChosePaymentType = ({
             onPress={() => {
               checkFuncFirst();
             }}
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={typeOrd.orderType === 'Бронирование стола' ? true : false}
             checked={checkedFirs}
             checkedIcon={<Image source={require('../../img/checked.png')} />}
             uncheckedIcon={
@@ -124,12 +126,14 @@ export const ChosePaymentType = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              typeOrd.orderType === 'Бронирование стола'
+                ? styles.OrderTextDisabled
+                : undefined,
             ]}>
             Картой на месте
           </Text>
           <CheckBox
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={typeOrd.orderType === 'Бронирование стола' ? true : false}
             onPress={() => {
               checkFuncThird();
             }}
@@ -180,7 +184,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   Arrow: {
-    top: '26%',
     width: 30,
     height: 30,
     marginRight: 15,
@@ -195,21 +198,24 @@ const styles = StyleSheet.create({
   TitleText: {
     alignSelf: 'center',
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },
   Title: {
+    elevation: 10,
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
     width: '100%',
-    height: '13%',
+    height: '8%',
     alignSelf: 'center',
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Header: {
     alignSelf: 'center',
@@ -245,11 +251,10 @@ const styles = StyleSheet.create({
   },
   Button: {
     top: '40%',
-    right: '10%',
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '25%',
+    width: '70%',
     height: '8%',
     backgroundColor: '#FF4D00',
     borderRadius: 4,

@@ -48,11 +48,7 @@ export const ChangeDishIngr = ({
     });
   };
 
-  console.log(optionalIngred, ' state');
-
   const cart = useSelector(state => state.dishes);
-
-  console.log(cart, ' cart');
 
   const findExcludedIngredients = () => {
     let excludedIngredients = item.descr.filter((ingredient: any) => {
@@ -65,17 +61,29 @@ export const ChangeDishIngr = ({
       return ingredient.title;
     });
     excludedIngredients = excludedIngredients.join(', ');
-    console.log(excludedIngredients, ' iFan BEn mezd');
     return {title: item.title, excludedIngredients: excludedIngredients};
   };
 
   const handleAddExcludedIngredients = () => {
-    console.log(findExcludedIngredients(), '  adada');
     dispatch(addExcludedIngredients(findExcludedIngredients()));
     navigation.navigate('MarketMain');
   };
 
   const navigation = useNavigation<RootStackParamList>();
+
+  useEffect(() => {
+    item?.descr.forEach((ingredient: any) => {
+      setOptionalIngred((prevState: any) => {
+        return {
+          ...prevState,
+          [ingredient.id]: !item.excluded_ingredients
+            ? true
+            : !item.excluded_ingredients.includes(ingredient.title),
+        };
+      });
+    });
+  }, []);
+
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -113,7 +121,9 @@ export const ChangeDishIngr = ({
         })}
       </View>
 
-      <TouchableOpacity style={styles.Button} onPress={() => handleAddExcludedIngredients()}>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => handleAddExcludedIngredients()}>
         <Text style={styles.ButText}>Готово</Text>
       </TouchableOpacity>
     </View>
@@ -130,12 +140,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    height: '13%',
+    height: '8%',
+    elevation: 10,
     fontFamily: 'Roboto',
     fontSize: 30,
     fontWeight: 'normal',
     color: 'black',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Arrow: {
     width: 30,
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: '5%',
     fontFamily: 'Roboto',
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'normal',
     color: 'black',
   },
@@ -184,24 +195,23 @@ const styles = StyleSheet.create({
   SwitchMargin: {
     marginRight: 30,
   },
-  Button:{
-    top:'3%',
-    right:'10%',
-    alignSelf:'flex-end',
-    alignItems:'center',
-    justifyContent:'center',
-    width:'25%',
-    height:'8%',
-    backgroundColor:'#FF4D00',
+  Button: {
+    top: '3%',
+    right: '10%',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '25%',
+    height: '8%',
+    backgroundColor: '#FF4D00',
     borderRadius: 4,
-
   },
-  ButText:{
+  ButText: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 18,
     lineHeight: 24,
     color: '#FFFFFF',
-},
+  },
 });

@@ -227,6 +227,7 @@ const required = () => {
           placeholder="Телефон"
           onChangeText={val => setState({...state, phone: val})}
         />
+        <Text style={styles.error}></Text>
         <TextInput
           placeholderTextColor="#C6C6C6"
           style={styles.street}

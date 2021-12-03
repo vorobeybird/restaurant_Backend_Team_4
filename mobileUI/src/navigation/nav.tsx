@@ -75,12 +75,12 @@ export const BottomTabNavigation = () => {
                     }}   
                 />
                 <Tab.Screen
-                    name="MarketTabNavigation"
+                    name="MarketMain"
                     component={MarketTabNavigation}
                     
                     options={{
                         unmountOnBlur: true,
-                        title: 'MarketTabNavigation',
+                        title: 'MarketMain',
                         headerShown: false,
                         tabBarIcon: ({ focused }) => {
                             if(focused){

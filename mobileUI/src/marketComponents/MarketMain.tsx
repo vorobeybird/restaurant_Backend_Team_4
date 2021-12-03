@@ -40,28 +40,24 @@ export const MarketMain = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<RootStackParamList>();
 
-  
   const handleClear = () => {
     dispatch(clearCart());
   };
 
-    useEffect(() => {
-        dispatch(getTotals());
-        
-      }, [cart, dispatch]);
-      
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   return (
     <View style={styles.mainCont}>
       <View style={styles.PictCont}>
         <Text style={styles.Header}>Корзина</Text>
         <TouchableOpacity onPress={() => handleClear()}>
-        {cart.dishes.length === 0 ? (
-          <></>
-        ):(
-          <Image style={styles.Bin} source={require('../../img/bin.png')} />
+          {cart.dishes.length === 0 ? (
+            <></>
+          ) : (
+            <Image style={styles.Bin} source={require('../../img/garbage.png')} />
           )}
-          
         </TouchableOpacity>
       </View>
       {cart.dishes.length === 0 ? (
@@ -76,11 +72,11 @@ export const MarketMain = () => {
           <TouchableOpacity
             style={styles.ButtonWrapper}
             onPress={() => {
-              navigation.navigate('MenuTabNavigation');
+              navigation.navigate('MenuTabNavigation', {
+                screen: 'Menu',
+              });
             }}>
-            
-              <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
-          
+            <Text style={styles.ButtText}> ПЕРЕЙТИ В МЕНЮ</Text>
           </TouchableOpacity>
         </View>
       ) : (
@@ -106,30 +102,33 @@ export const MarketMain = () => {
 
 const styles = StyleSheet.create({
   Bin: {
-    right: '30%',
+    right:25,
     width: 30,
     height: 30,
-    alignSelf: 'center',
   },
   mainCont: {
     flex: 1,
     backgroundColor: 'white',
   },
   PictCont: {
-    height: '10%',
+    height: '8%',
+    elevation:10,
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: 10,
     paddingLeft: 5,
     paddingRight: 5,
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#ffffff',
   },
   Header: {
     alignSelf: 'center',
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 30,
+    left:20,
+    fontSize: 24,
     lineHeight: 33,
     color: '#000000',
   },

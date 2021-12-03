@@ -203,7 +203,7 @@ export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, r
                 <TouchableOpacity onPress={showDatepicker} style={styles.box} onPressIn={() => {
                         
                 }}>
-                    <Text style={styles.dateText}>{dayjs(date).format('YYYY-MM-DD')}</Text>
+                    <Text style={styles.dateText}>{dayjs(date).format('DD-MM-YYYY')}</Text>
                     <Image style={styles.dateImage} source={require('../../img/calendar.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => changeModalVisible(true)} style={styles.box} onPressIn={() => {
