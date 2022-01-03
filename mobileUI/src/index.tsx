@@ -1,6 +1,6 @@
 import React from 'react';
 import Amplify from '@aws-amplify/core';
-import awsconfig from './aws-exports';
+import awsconfig from '../aws-exports';
 import {
   Authenticator,
   ConfirmSignIn,
