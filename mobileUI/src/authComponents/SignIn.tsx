@@ -14,10 +14,11 @@ import {BottomSheet} from 'react-native-elements/dist/bottomSheet/BottomSheet';
 
 import {addEmail, addUserInfo} from '../store/StoreCard';
 import {useDispatch, useSelector} from 'react-redux';
+import { RootState } from '../store';
 
 const windowWidth = Dimensions.get('window').width;
 const SignIn = (props: any) => {
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   const dispatch = useDispatch();
 
   const handleAddUserInfo = (item:any) => {

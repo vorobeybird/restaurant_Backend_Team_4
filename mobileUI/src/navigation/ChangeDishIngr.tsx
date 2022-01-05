@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 import {color} from 'react-native-elements/dist/helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {addExcludedIngredients} from '../store/StoreCard';
+import { RootState } from '../store';
 
 type RootStackParamList = {
   ChangeDishIngr: undefined;
@@ -50,7 +51,7 @@ export const ChangeDishIngr = ({
 
   console.log(optionalIngred, ' state');
 
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
 
   console.log(cart, ' cart');
 

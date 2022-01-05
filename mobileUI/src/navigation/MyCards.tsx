@@ -13,8 +13,10 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {delCard} from '../store/StoreCard';
+import { RootState } from '../store';
 
 type RootStackParamList = {
+  AddCard: undefined,
   navigate: any;
 };
 
@@ -25,9 +27,9 @@ export const MyCards = ({
   navigation: any;
   route: any;
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackParamList>();
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   const handleDelCard = (item: string) => {
     dispatch(delCard(item));
   };

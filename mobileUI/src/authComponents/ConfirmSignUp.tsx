@@ -12,11 +12,12 @@ import {
 } from 'react-native';
 import {Provider, useSelector} from 'react-redux';
 import {BottomTabNavigation} from '../navigation/nav';
+import { RootState } from '../store';
 
 const windowWidth = Dimensions.get('window').width;
 
 const ConfirmSignUp = (props: any) => {
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   const [state, setState] = useState({
     email: cart.email,
     confirmationCode: '',
