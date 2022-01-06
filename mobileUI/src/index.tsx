@@ -4,10 +4,10 @@ import {persistStore} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
 
 import {store} from './store';
-import {useAppSelector} from './hooks/hooks';
 
 import {BottomTabNavigation} from './navigation/nav';
-import AuthenticationScreen from './modules/Auth/AuthenticationScreen/AuthenticationScreen';
+import {useAppSelector} from './hooks/hooks';
+import AuthenticationScreen from './modules/Auth/AuthenticationScreen';
 
 const ShowMainContent = () => {
   return <BottomTabNavigation />;
@@ -15,6 +15,7 @@ const ShowMainContent = () => {
 const ShowContent = () => {
   const authState = useAppSelector(state => state.auth);
   console.log(authState.isSignedIn, 'SignIn message');
+
   return (
     <>
       {authState.isSignedIn === 'signedIn' ? (

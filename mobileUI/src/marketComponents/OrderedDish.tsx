@@ -6,6 +6,7 @@ import {delFromCard, decreaseCartQuant, addToCard} from '../store/StoreCard';
 import {useEffect} from 'react';
 import {getTotals} from '../store/StoreCard';
 import {useNavigation} from '@react-navigation/native';
+import { RootState } from '../store';
 
 type RootStackParamList = {
   ChangeDishIngr: undefined;
@@ -14,7 +15,7 @@ type RootStackParamList = {
 
 export const OrderedDish = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const card = useSelector(state => state.dishes);
+  const card = useSelector((state: RootState) => state.dishes);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTotals());

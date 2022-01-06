@@ -10,12 +10,19 @@ type RootStackParamList = {
     navigate:any;
   }
 
+interface IAddress {
+    str: string,
+    house: string,
+    corp: string,
+    kv: string,
+    id: number
+}
 
 export const AddAdress = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const [adress, setAdress] = useState({str:'',house:'',corp:'',kv:'',id:1})
+    const [adress, setAdress] = useState<IAddress>({str:'',house:'',corp:'',kv:'',id:1})
     const dispatch = useDispatch()
-    const handleAddAdress = (item) => {
-        dispatch(addAddress(item))
+    const handleAddAdress = (address: IAddress) => {
+        dispatch(addAddress(address))
     }
     const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
     const [error, setError] = useState({

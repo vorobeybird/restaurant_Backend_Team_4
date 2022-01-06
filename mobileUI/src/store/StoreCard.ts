@@ -10,7 +10,7 @@ interface CounterState {
   paymentType: string;
   email: string;
   password: string;
-  isSignedIn: boolean;
+  isSignedIn: boolean | string;
   adress: Adress[];
   card: Card[];
   userInfo: any[];
@@ -102,7 +102,7 @@ export const dishSlice = createSlice({
         state.dishes = nextItems;
       }
     },
-    getTotals(state, action) {
+    getTotals(state) {
       let {total, quantity} = state.dishes.reduce(
         (cartTotal, cartItem) => {
           const {price, cardQuantity} = cartItem;
@@ -129,7 +129,7 @@ export const dishSlice = createSlice({
     addAddress(state, action) {
       const tempProd = {...action.payload};
       let index = Math.floor(Math.random() * 10000000);
-      console.log(index);
+      console.log(action.payload, "space", tempProd);
       tempProd.id = state.adress.length + index;
       state.adress.push(tempProd);
     },

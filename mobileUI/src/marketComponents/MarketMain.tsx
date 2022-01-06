@@ -14,6 +14,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getTotals, clearCart} from '../store/StoreCard';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import { RootState } from '../store';
 
 interface DishShortInfo {
   dish_id: number;
@@ -36,7 +37,7 @@ type RootStackParamList = {
   navigate: any;
 };
 export const MarketMain = () => {
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   const dispatch = useDispatch();
   const navigation = useNavigation<RootStackParamList>();
 
