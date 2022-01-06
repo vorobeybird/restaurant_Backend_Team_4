@@ -72,7 +72,7 @@ const LoginLayout = () => {
   //
   // async function signOut() {
   //   try {
-  //     await Auth.signOut();
+  //     await AuthenticationScreen.signOut();
   //   } catch (error) {
   //     console.log('error signing out: ', error);
   //   }
@@ -81,7 +81,7 @@ const LoginLayout = () => {
   //function for global signOut
   // async function signOut() {
   //   try {
-  //     await Auth.signOut({ global: true });
+  //     await AuthenticationScreen.signOut({ global: true });
   //   } catch (error) {
   //     console.log('error signing out: ', error);
   //   }

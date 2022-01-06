@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import { setAutoFreeze } from 'immer'; setAutoFreeze(false);
+import {setAutoFreeze} from 'immer';
+setAutoFreeze(false);
 interface CounterState {
   dishes: Dish[];
   cardTotalQuantity: number;
@@ -12,17 +13,17 @@ interface CounterState {
   isSignedIn: boolean | string;
   adress: Adress[];
   card: Card[];
-  userInfo:  any[];
+  userInfo: any[];
   order: any[];
   num: string;
   orderHistory: History[];
 }
 interface History {
-    id: string;
-    type:string,
-    date:string,
-    paymentType: number,
-    orderStatus: string
+  id: string;
+  type: string;
+  date: string;
+  paymentType: number;
+  orderStatus: string;
 }
 interface Card {
   num: number;
@@ -43,7 +44,7 @@ interface Dish {
   photos: any[];
   price: number;
   cardQuantity: number;
-  descr: [] ;
+  descr: [];
   excluded_ingredients: string[];
 }
 
@@ -62,8 +63,7 @@ export const initialState: CounterState = {
   userInfo: [],
   order: [],
   num: '',
-  orderHistory:[],
-
+  orderHistory: [],
 };
 
 export const dishSlice = createSlice({
@@ -196,11 +196,10 @@ export const dishSlice = createSlice({
       state.order = action.payload;
     },
     getNumOfPersons(state, action) {
-      state.num = action.payload
+      state.num = action.payload;
     },
-    addOrderHistoryItem(state,action) {
-      state.orderHistory.push({...action.payload})
-      
+    addOrderHistoryItem(state, action) {
+      state.orderHistory.push({...action.payload});
     },
   },
 });

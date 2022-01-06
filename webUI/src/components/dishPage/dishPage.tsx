@@ -25,7 +25,7 @@ const DishPage = () => {
     const userId = useAppSelector((state) => state.auth?.user?.attributes?.sub);
 
     const editIngredients = (e: any) => {
-        !e.target.checked ? 
+        !e.target.checked ?
         setOmitIngredients([...omitIngredients, e.target.value]) :
         setOmitIngredients(omitIngredients.filter((item:any)=> item !== e.target.value))
     }
@@ -47,7 +47,7 @@ const DishPage = () => {
     const sliderData: {image: string}[] = selectedDish?.photo.map((photo, index) => {
         return { image: photo.photo_url };
     })
-   
+
     return (
         <div className="dish-page">
             <div className="dish-page__container">
@@ -83,8 +83,8 @@ const DishPage = () => {
                     <Modal active={showModal} setActive={toggleModal} title={"Изменить состав"}><div className="dish-modal-title">{selectedDish.title}</div>
                     <div className="ingredients-form">
                     <div className="ingredients-list">
-                        {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default 
-                    ? <input type="checkbox" className="ingredient-checkbox" checked disabled /> 
+                        {selectedDish.ingredient.map(item => <div className="ingredient-item" key={item.id}><label>{item.DishIngredient.is_default
+                    ? <input type="checkbox" className="ingredient-checkbox" checked disabled />
                     : <input type="checkbox" className="ingredient-checkbox" onClick={editIngredients} value={item.title} defaultChecked />}  {item.title}</label></div>)}
                             </div>
                             <div className="button-container"><button onClick={toggleModal} className="ingredients-edit__btn">Готово</button></div>

@@ -22,6 +22,7 @@ import { Search } from "./components/search/search";
 import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
 import { FaRegIdBadge } from "react-icons/fa";
 import { persistor } from './store';
+import React from 'react';
 
 Amplify.configure(awsconfig);
 
@@ -47,7 +48,7 @@ const App = () => {
                     console.log("user sign in failed");
                     break;
                 case "configured":
-                    console.log("the Auth module is configured");
+                    console.log("the AuthenticationScreen module is configured");
             }
         });
     }
@@ -75,7 +76,7 @@ const App = () => {
                             padding: "16px",
                             color: "#FFFFFF",
                             backgroundColor: "rgba(239, 117, 43, 0.7)",
-                            
+
                         },
                     }}
                 />

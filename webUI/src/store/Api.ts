@@ -19,7 +19,7 @@ const Api = axios.create({
 Api.interceptors.request.use(
     async (inputConfig) => {
         const config = inputConfig;
-        // Check for and add the stored Auth Token to the header request
+        // Check for and add the stored AuthenticationScreen Token to the header request
         let token = null;
         try {
             token =  await getToken();
