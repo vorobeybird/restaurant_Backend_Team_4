@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {delAdress} from '../store/StoreCard';
 import {Card} from 'react-native-elements';
+import { RootState } from '../store';
 
 type RootStackParamList = {
   AddAdress: undefined;
@@ -27,9 +28,9 @@ export const MyAdress = ({
   navigation: any;
   route: any;
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackParamList>();
   const dispatch = useDispatch();
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   const handleDelAdress = (item: string) => {
     dispatch(delAdress(item));
   };

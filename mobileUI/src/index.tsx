@@ -14,7 +14,7 @@ import SignIn from './authComponents/SignIn';
 import {addSignInStat} from './store/StoreCard';
 import {persistStore} from 'redux-persist';
 import {PersistGate} from 'redux-persist/integration/react';
-
+import { RootState } from './store/index';
 import ConfirmSignUp from './authComponents/ConfirmSignUp';
 
 Amplify.configure({
@@ -30,6 +30,7 @@ const ShowMainContent = () => {
 const ShowAuthContent = () => {
   const dispatch = useDispatch();
   const handleAddSignInStat = (item: any) => {
+    console.log(item, 'ITEM_LOOK')
     dispatch(addSignInStat(item));
   };
   return (
@@ -50,7 +51,7 @@ const ShowAuthContent = () => {
   );
 };
 const ShowContent = () => {
-  const cart = useSelector(state => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
 
   return (
     <>

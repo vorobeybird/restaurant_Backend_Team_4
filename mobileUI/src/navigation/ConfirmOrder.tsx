@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
+import { RootState } from "../store";
 type RootStackParamList = {
     ConfirmOrder: undefined;
     navigate:any;
@@ -13,7 +14,7 @@ type RootStackParamList = {
 
 
 export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state) => state.dishes);
+    const cart = useSelector((state: RootState) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());

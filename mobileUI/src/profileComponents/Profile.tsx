@@ -9,16 +9,16 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
+import { RootState } from '../store';
 type RootStackParamList = {
     PersonalData: undefined;
     navigate:any;
   }
 const Profile = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const cart = useSelector((state) => state.dishes);
+  const cart = useSelector((state: RootState) => state.dishes);
   console.log(cart)
   const user = useSelector(state => state.dishes.userInfo.attributes);
-  console.log(user, ' hyi')
     let email;
     let name;
     let familyName;

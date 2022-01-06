@@ -9,6 +9,7 @@ import { useRoute } from '@react-navigation/core';
 import axios from "axios";
 import dayjs from 'dayjs';
 import { COMPARISON_BINARY_OPERATORS } from "@babel/types";
+import { RootState } from "../store";
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
@@ -23,14 +24,14 @@ type RootStackParamList = {
 
 
   export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state) => state.dishes);
+    const cart = useSelector((state: RootState) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState();
     const [show, setShow] = useState(false);
-    const [reservedTable, setTable] = useState([])
-    const [tablePool, setTablePool] = useState([]);
+    const [reservedTable, setTable] = useState<table[]>([])
+    const [tablePool, setTablePool] = useState<table[]>([]);
     const [availableTables, setavailableTables] = useState([]);
     const [allTables, setallTables] = useState([]);
 
@@ -63,7 +64,9 @@ type RootStackParamList = {
         }
       }
     
-
+    //   const handleSetTable = (table: table) => {
+    //       setTable()
+    //   }
     
     const getTablesByDate = async (date:any) => {
             const correctDate = dayjs(date).format('YYYY-MM-DD')
@@ -85,7 +88,7 @@ type RootStackParamList = {
         console.log(reservedTable)
     }, []);
     
-    const concatResult = (arr1:[],arr2:[]) => {
+    const concatResult = (arr1: table[], arr2: table[]) => {
         const result = [...new Set([...arr1, ...arr2])];
         let res = result.filter((v,i,a)=>a.findIndex(t=>(t.table_number === v.table_number))===i)
         console.log(res, 'resresres');

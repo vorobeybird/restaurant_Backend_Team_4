@@ -15,6 +15,8 @@ const rootReducer = combineReducers({
     dishes: dishReducer
 })
 
+export type RootState = ReturnType<typeof rootReducer>
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export default  configureStore({
