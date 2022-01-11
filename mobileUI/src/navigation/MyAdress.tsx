@@ -1,20 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
-  ScrollView,
-  TouchableOpacity,
-  Button,
-  ToastAndroid,
+  TouchableOpacity
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {delAdress} from '../store/StoreCard';
-import {Card} from 'react-native-elements';
-import { RootState } from '../store';
+import ScreenNames from './ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 
 type RootStackParamList = {
   AddAdress: undefined;
@@ -30,7 +27,7 @@ export const MyAdress = ({
 }) => {
   const navigation = useNavigation<RootStackParamList>();
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state) => state.dishes);
   const handleDelAdress = (item: string) => {
     dispatch(delAdress(item));
   };
@@ -75,7 +72,7 @@ export const MyAdress = ({
       {cart.adress.length === 0 ? (
         <TouchableOpacity
           style={styles.Button}
-          onPress={() => navigation.navigate('AddAdress')}>
+          onPress={() => navigation.navigate(ScreenNames.AddAdress)}>
           <Text style={styles.ButText}> Добавить адрес</Text>
         </TouchableOpacity>
       ) : (

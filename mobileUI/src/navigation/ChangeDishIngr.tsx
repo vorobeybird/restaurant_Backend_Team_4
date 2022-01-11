@@ -12,7 +12,8 @@ import {useNavigation} from '@react-navigation/native';
 import {color} from 'react-native-elements/dist/helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {addExcludedIngredients} from '../store/StoreCard';
-import { RootState } from '../store';
+import ScreenNames from './ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 
 type RootStackParamList = {
   ChangeDishIngr: undefined;
@@ -51,7 +52,7 @@ export const ChangeDishIngr = ({
 
   console.log(optionalIngred, ' state');
 
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state) => state.dishes);
 
   console.log(cart, ' cart');
 
@@ -66,14 +67,12 @@ export const ChangeDishIngr = ({
       return ingredient.title;
     });
     excludedIngredients = excludedIngredients.join(', ');
-    console.log(excludedIngredients, ' iFan BEn mezd');
     return {title: item.title, excludedIngredients: excludedIngredients};
   };
 
   const handleAddExcludedIngredients = () => {
-    console.log(findExcludedIngredients(), '  adada');
     dispatch(addExcludedIngredients(findExcludedIngredients()));
-    navigation.navigate('MarketMain');
+    navigation.navigate(ScreenNames.MarketMain);
   };
 
   const navigation = useNavigation<RootStackParamList>();

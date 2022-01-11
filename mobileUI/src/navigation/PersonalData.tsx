@@ -4,6 +4,8 @@ import {Auth} from 'aws-amplify';
 import { useNavigation } from '@react-navigation/native';
 import { addUserInfo} from '../store/StoreCard'
 import { useDispatch, useSelector } from "react-redux";
+import ScreenNames from "./ScreenNames";
+import { useAppSelector } from "../hooks/hooks";
 
 type RootStackParamList = {
     navigate:any;
@@ -11,7 +13,7 @@ type RootStackParamList = {
 const nameRegEx = new RegExp("^([а-яА-Я]{2,30})");
 
 export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const user = useSelector(state => state.dishes.userInfo.attributes);
+    const user = useAppSelector(state => state.dishes.userInfo.attributes);
     const [state, setState] = useState({
         name:'',
         surName:'',
@@ -37,7 +39,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
         }
     }
     
-    const navigation = useNavigation()
+    const navigation = useNavigation<RootStackParamList>()
     const dispatch = useDispatch()
 
     
@@ -114,7 +116,7 @@ export const PersonalData = ({  navigation: { goBack }, route }:{navigation:any,
                     if(nameRegEx.test(state.name) === false ||  nameRegEx.test(state.surName) === false) {
                         required()  
                     } else if(state.name && state.surName && state.phone ){
-                        updateUserAttributesHandler();navigation.navigate('ProfileComponent')
+                        updateUserAttributesHandler();navigation.navigate(ScreenNames.ProfileComponent)
                     } }}>
                     <Text style={styles.ButText}> ГОТОВО </Text>
             </TouchableOpacity>

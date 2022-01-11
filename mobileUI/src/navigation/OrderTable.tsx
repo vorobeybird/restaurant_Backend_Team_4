@@ -9,6 +9,7 @@ import axios from "axios";
 import Api from '../apiSecure/Api'
 import styles from './orderTable/style';
 import dayjs from 'dayjs';
+import { useAppSelector } from "../hooks/hooks";
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
@@ -23,7 +24,7 @@ type RootStackParamList = {
 
 
 export const OrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state) => state.dishes);
+    const cart = useAppSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());

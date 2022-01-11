@@ -7,6 +7,7 @@ import {MarketMain } from '../marketComponents/MarketMain'
 import {addOrderType} from '../store/StoreCard'
 
 import { useDispatch } from "react-redux";
+import ScreenNames from "./ScreenNames";
 
 type RootStackParamList = {
     ChoseTypeOrder: undefined;
@@ -43,7 +44,7 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
     return (
         <View style={styles.Wrapper}>
             <View style={styles.Title}>
-                <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
+                <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.MarketMain)}>
                     <Image style={styles.Arrow} source={require('../../img/arrowLeft.png')}/>
                 </TouchableOpacity>
                 <Text style={styles.TitleText}> Корзина</Text>
@@ -82,11 +83,11 @@ export const ChoseTypeOrder = ({  navigation: { goBack }, route }:{navigation:an
             <Text style={styles.prgressText}> шаг 1/3</Text>
             <TouchableOpacity style={styles.Button} onPress={()=> { 
                 if(checkedThird) {
-                    navigation.navigate('ConfirmOrder');handleAddOrderType("Самовывоз");
+                    navigation.navigate(ScreenNames.ConfirmOrder);handleAddOrderType("Самовывоз");
                 } else if(checkedSecond) {
-                    navigation.navigate('ConfirmOrder');handleAddOrderType("Доставка");
+                    navigation.navigate(ScreenNames.ConfirmOrder);handleAddOrderType("Доставка");
                 } else if(checkedFirs) {
-                    navigation.navigate('ConfirmOrderTable');handleAddOrderType("Бронирование стола"); 
+                    navigation.navigate(ScreenNames.ConfirmOrder);handleAddOrderType("Бронирование стола"); 
                 }
             }}>
                 <Text style={styles.ButText}> ДАЛЕЕ</Text>

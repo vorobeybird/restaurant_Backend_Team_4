@@ -101,27 +101,18 @@ export const BottomTabNavigation = () => {
             title: 'MarketTabNavigation',
             headerShown: false,
             tabBarIcon: ({focused}) => {
-              if (focused) {
+              
                 return (
                   <View style={styles.SmWrapper}>
                     <Image
                       style={styles.PictStyle}
-                      source={require('../../img/cartActive.png')}
+                   source = {focused === true ?   require('../../img/cartActive.png'): require('../../img/cartInActive.png')}
+                      
                       resizeMode="contain"
                     />
                   </View>
                 );
-              } else {
-                return (
-                  <View style={styles.SmWrapper}>
-                    <Image
-                      style={styles.PictStyle}
-                      source={require('../../img/cartInActive.png')}
-                      resizeMode="contain"
-                    />
-                  </View>
-                );
-              }
+              
             },
           }}
         />

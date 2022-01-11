@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {clearCart} from '../store/StoreCard';
+import ScreenNames from './ScreenNames';
 
 type RootStackParamList = {
   MenuTabNavigation: undefined;
@@ -20,7 +21,7 @@ export const Home = () => {
         <Text style={styles.TitleText}> Ocean Bar </Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MenuTabNavigation',{screen:'Menu'})}
+        onPress={() => navigation.navigate(ScreenNames.MenuTabNavigation,{screen:'Menu'})}
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}
@@ -35,7 +36,7 @@ export const Home = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(clearCart());
-          navigation.navigate('MarketTabNavigation', {
+          navigation.navigate(ScreenNames.MarketTabNavigation, {
             screen: 'ConfirmOrderTable',
           });
         }}
@@ -54,7 +55,7 @@ export const Home = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('ProfileNavigation')}
+        onPress={() => navigation.navigate(ScreenNames.ProfileNavigation)}
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}

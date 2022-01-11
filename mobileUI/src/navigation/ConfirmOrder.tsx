@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { RootState } from "../store";
+import ScreenNames from "./ScreenNames";
+import { useAppSelector } from "../hooks/hooks";
 type RootStackParamList = {
     ConfirmOrder: undefined;
     navigate:any;
@@ -14,7 +15,7 @@ type RootStackParamList = {
 
 
 export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state: RootState) => state.dishes);
+    const cart = useAppSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());
@@ -88,9 +89,9 @@ export const ConfirmOrder = ({  navigation: { goBack }, route }:{navigation:any,
                 console.log(date)
                 handleAddDate(date.toString())
                 if(cart.orderType == 'Самовывоз'){
-                    navigation.navigate('ChosePaymentType')
+                    navigation.navigate(ScreenNames.ChosePaymentType)
                 } else if(cart.orderType == 'Доставка') {
-                    navigation.navigate('writeAdress')
+                    navigation.navigate(ScreenNames.writeAdress)
                 }
                 }}>
                 <Text style={styles.ButText}> Подтвердить</Text>

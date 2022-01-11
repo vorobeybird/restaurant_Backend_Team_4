@@ -15,7 +15,8 @@ import {useNavigation} from '@react-navigation/native';
 import {addPaymentType, clearCart} from '../store/StoreCard';
 
 import {useDispatch, useSelector} from 'react-redux';
-import { RootState } from '../store';
+import ScreenNames from './ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 
 type RootStackParamList = {
   ChoseTypeOrder: undefined;
@@ -31,7 +32,7 @@ export const ChosePaymentType = ({
 }) => {
   const dispatch = useDispatch();
 
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state) => state.dishes);
   const navigation = useNavigation<RootStackParamList>();
   const [checkedFirs, toggleCheckedFirs] = useState(false);
   const [checkedSecond, toggleCheckedSecond] = useState(false);
@@ -61,12 +62,12 @@ export const ChosePaymentType = ({
     dispatch(clearCart());
   };
 
-  const withoutOrder = useSelector((state: RootState) => state.dishes.dishes);
+  const withoutOrder = useAppSelector((state) => state.dishes.dishes);
 
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
-        <TouchableOpacity onPress={() => navigation.navigate('MarketMain')}>
+        <TouchableOpacity onPress={() => navigation.navigate(ScreenNames.MarketMain)}>
           <Image
             style={styles.Arrow}
             source={require('../../img/arrowLeft.png')}
@@ -149,15 +150,15 @@ export const ChosePaymentType = ({
           if (checkedFirs) {
             handleAddOrderType('0');
 
-            navigation.navigate('OrderDetails');
+            navigation.navigate(ScreenNames.OrderDetails);
           } else if (checkedSecond) {
             handleAddOrderType('1');
 
-            navigation.navigate('OrderDetails');
+            navigation.navigate(ScreenNames.OrderDetails);
           } else if (checkedThird) {
             handleAddOrderType('2');
 
-            navigation.navigate('OrderDetails');
+            navigation.navigate(ScreenNames.OrderDetails);
           }
         }}>
         <Text style={styles.ButText}> ДАЛЕЕ</Text>

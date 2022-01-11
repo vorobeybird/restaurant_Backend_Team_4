@@ -15,6 +15,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import { addOrderHistoryItem, clearCart } from '../store/StoreCard';
 import dayjs from 'dayjs';
 import Api from '../apiSecure/Api'
+import ScreenNames from './ScreenNames';
+import { RootStackParamList } from '../menu/Menu';
+import { useAppSelector } from '../hooks/hooks';
 interface DishShortInfo {
   dish_id: number;
   dish_amount: number;
@@ -45,10 +48,10 @@ export const OrderDetails = ({
   navigation: any;
   route: any;
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackParamList>();
   const dispatch = useDispatch()
   const [id, setId] = useState();
-  const cart = useSelector(state => state.dishes);
+  const cart = useAppSelector(state => state.dishes);
   const [pay, setPay] = useState('а мне похуй')
   console.log(cart.userInfo.attributes.name,'cart')
   const showToast = () => {
@@ -257,7 +260,7 @@ export const OrderDetails = ({
           // handleAddOrderHistoryItem(historyOrder)
           handleClearCart()
           
-          navigation.navigate('Home')
+          navigation.navigate(ScreenNames.Home)
           
           
         }}>
