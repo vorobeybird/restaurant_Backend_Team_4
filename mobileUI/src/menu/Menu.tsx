@@ -34,13 +34,13 @@ export const Menu = () => {
   };
   const fetchMenuItems = async () => {
     const items = await getItems();
-    const arr = [] as category[]
-    items.map((item)=>{
-      if(item.show_in_menu){
+    const arr = [] as category[];
+    items.map(item => {
+      if (item.show_in_menu) {
         arr.push(item);
       }
-    })
-    setDate(arr)
+    });
+    setDate(arr);
   };
 
   useEffect(() => {
@@ -60,7 +60,9 @@ export const Menu = () => {
 
     date.forEach((item: any) => {
       item.dish.forEach((dish: any) => {
-        if (!unicDishes.includes(dish)) unicDishes.push(dish);
+        if (!unicDishes.includes(dish)) {
+          unicDishes.push(dish);
+        }
       });
     });
 
@@ -71,8 +73,9 @@ export const Menu = () => {
       if (
         dish.title.toUpperCase().startsWith(searchInputValue.toUpperCase()) &&
         searchInputValue !== ''
-      )
+      ) {
         itHas = true;
+      }
     });
     return itHas;
   };
@@ -82,7 +85,9 @@ export const Menu = () => {
 
     date.forEach((item: any) => {
       item.dish.forEach((dish: any) => {
-        if (!unicDishes.includes(dish)) unicDishes.push(dish);
+        if (!unicDishes.includes(dish)) {
+          unicDishes.push(dish);
+        }
       });
     });
 
@@ -111,7 +116,9 @@ export const Menu = () => {
         return (
           <Text
             style={styles.CategoryFromList}
-            onPress={() => navigation.navigate(ScreenNames.DishPage, {...newDish})}>
+            onPress={() =>
+              navigation.navigate(ScreenNames.DishPage, {...newDish})
+            }>
             {dish.title}
           </Text>
         );
@@ -119,7 +126,9 @@ export const Menu = () => {
   };
 
   const uniqueProps = (a: any) => {
-    if (!a) return [];
+    if (!a) {
+      return [];
+    }
     let seen = {} as any;
     return a.filter((x: any) => {
       var key = JSON.stringify(x);
@@ -137,8 +146,9 @@ export const Menu = () => {
             <>
               <Input
                 onChangeText={setSearchInputValue}
-                value={searchInputValue}></Input>
-              
+                value={searchInputValue}
+              />
+
               {includesSuchDish() && (
                 <View style={styles.CategoriesList}>{showDishes()}</View>
               )}
@@ -158,7 +168,9 @@ export const Menu = () => {
             <Text
               style={styles.FoodLinks}
               id={item.id}
-              onPress={() => navigation.navigate(ScreenNames.Breakfast, {...item})}>
+              onPress={() =>
+                navigation.navigate(ScreenNames.Breakfast, {...item})
+              }>
               {item.title}
             </Text>
           );

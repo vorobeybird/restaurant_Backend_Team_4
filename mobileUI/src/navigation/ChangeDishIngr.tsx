@@ -13,7 +13,7 @@ import {color} from 'react-native-elements/dist/helpers';
 import {useDispatch, useSelector} from 'react-redux';
 import {addExcludedIngredients} from '../store/StoreCard';
 import ScreenNames from './ScreenNames';
-import { useAppSelector } from '../hooks/hooks';
+import {useAppSelector} from '../hooks/hooks';
 
 type RootStackParamList = {
   ChangeDishIngr: undefined;
@@ -52,7 +52,7 @@ export const ChangeDishIngr = ({
 
   console.log(optionalIngred, ' state');
 
-  const cart = useAppSelector((state) => state.dishes);
+  const cart = useAppSelector(state => state.dishes);
 
   console.log(cart, ' cart');
 
@@ -113,7 +113,9 @@ export const ChangeDishIngr = ({
         })}
       </View>
 
-      <TouchableOpacity style={styles.Button} onPress={() => handleAddExcludedIngredients()}>
+      <TouchableOpacity
+        style={styles.Button}
+        onPress={() => handleAddExcludedIngredients()}>
         <Text style={styles.ButText}>Готово</Text>
       </TouchableOpacity>
     </View>
@@ -184,24 +186,23 @@ const styles = StyleSheet.create({
   SwitchMargin: {
     marginRight: 30,
   },
-  Button:{
-    top:'3%',
-    right:'10%',
-    alignSelf:'flex-end',
-    alignItems:'center',
-    justifyContent:'center',
-    width:'25%',
-    height:'8%',
-    backgroundColor:'#FF4D00',
+  Button: {
+    top: '3%',
+    right: '10%',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '25%',
+    height: '8%',
+    backgroundColor: '#FF4D00',
     borderRadius: 4,
-
   },
-  ButText:{
+  ButText: {
     fontFamily: 'Roboto',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 18,
     lineHeight: 24,
     color: '#FFFFFF',
-},
+  },
 });

@@ -21,7 +21,9 @@ export const Home = () => {
         <Text style={styles.TitleText}> Ocean Bar </Text>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate(ScreenNames.MenuTabNavigation,{screen:'Menu'})}
+        onPress={() =>
+          navigation.navigate(ScreenNames.MenuTabNavigation, {screen: 'Menu'})
+        }
         style={styles.contenWrapper}>
         <Image
           style={styles.leftPict}

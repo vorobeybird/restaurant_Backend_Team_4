@@ -1,21 +1,23 @@
 import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import {AddAdress} from './AddAdress';
+import {Home} from '../../Home';
 
 export type RootStackParamList = {
-  AddAdressNavigation: undefined;
-  AddAdress: undefined;
+  Home: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
-export const ChosePaymentTypeNavigation = () => {
+
+const HomeNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="AddAdress" component={AddAdress} />
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };
+
+export default HomeNavigator;
