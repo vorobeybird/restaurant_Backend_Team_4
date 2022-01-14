@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {Image} from 'react-native-elements/dist/image/Image';
-import axios from 'axios';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Input} from 'react-native-elements/dist/input/Input';
-import {useSelector} from 'react-redux';
-import {transform} from '@babel/core';
 import Api from '../apiSecure/Api';
+import ScreenNames from '../navigation/ScreenNames';
+
 export type RootStackParamList = {
   MainMenu: undefined;
   Breakfast: undefined;
@@ -21,6 +20,7 @@ interface category {
   id: number;
   title: string;
   dish: [];
+  show_in_menu: boolean;
 }
 
 export const Menu = () => {
@@ -34,7 +34,7 @@ export const Menu = () => {
   };
   const fetchMenuItems = async () => {
     const items = await getItems();
-    const arr = []
+    const arr = [] as category[]
     items.map((item)=>{
       if(item.show_in_menu){
         arr.push(item);
@@ -98,8 +98,6 @@ export const Menu = () => {
         const photos = dish.photo;
         const urlArr = photos.map((item: any) => item.photo_url);
 
-        console.log(urlArr, 'penis');
-
         const newDish = {
           id: dish.id,
           title: dish.title,
@@ -110,12 +108,10 @@ export const Menu = () => {
           weight: dish.weight,
         };
 
-        console.log('zalupa', newDish);
-
         return (
           <Text
             style={styles.CategoryFromList}
-            onPress={() => navigation.navigate('DishPage', {...newDish})}>
+            onPress={() => navigation.navigate(ScreenNames.DishPage, {...newDish})}>
             {dish.title}
           </Text>
         );
@@ -162,7 +158,7 @@ export const Menu = () => {
             <Text
               style={styles.FoodLinks}
               id={item.id}
-              onPress={() => navigation.navigate('Breakfast', {...item})}>
+              onPress={() => navigation.navigate(ScreenNames.Breakfast, {...item})}>
               {item.title}
             </Text>
           );

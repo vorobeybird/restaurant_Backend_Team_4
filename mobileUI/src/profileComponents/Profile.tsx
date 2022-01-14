@@ -9,16 +9,17 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux'
 import { useNavigation } from '@react-navigation/native';
-import { RootState } from '../store';
+import ScreenNames from '../navigation/ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 type RootStackParamList = {
     PersonalData: undefined;
     navigate:any;
   }
 const Profile = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state) => state.dishes);
   console.log(cart)
-  const user = useSelector(state => state.dishes.userInfo.attributes);
+  const user = useAppSelector(state => state.dishes.userInfo.attributes);
     let email;
     let name;
     let familyName;
@@ -35,7 +36,7 @@ const Profile = () => {
           <Text style={styles.Header}>{name} {familyName}</Text>
           <Text style={styles.Email}>{email}</Text>
           <Text style={styles.Phone}>{phoneNumber}</Text>
-          <TouchableOpacity style={styles.ButCont} onPress={() => {navigation.navigate('PersonalData')}}>
+          <TouchableOpacity style={styles.ButCont} onPress={() => {navigation.navigate(ScreenNames.PersonalData)}}>
             <Text style={styles.ButText}>Изменить  {'>'}</Text>
           </TouchableOpacity>
         </View>

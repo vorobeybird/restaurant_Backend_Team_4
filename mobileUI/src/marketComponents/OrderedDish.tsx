@@ -6,7 +6,8 @@ import {delFromCard, decreaseCartQuant, addToCard} from '../store/StoreCard';
 import {useEffect} from 'react';
 import {getTotals} from '../store/StoreCard';
 import {useNavigation} from '@react-navigation/native';
-import { RootState } from '../store';
+import ScreenNames from '../navigation/ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 
 type RootStackParamList = {
   ChangeDishIngr: undefined;
@@ -15,7 +16,7 @@ type RootStackParamList = {
 
 export const OrderedDish = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const card = useSelector((state: RootState) => state.dishes);
+  const card = useAppSelector((state) => state.dishes);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTotals());
@@ -54,7 +55,7 @@ export const OrderedDish = () => {
                   <Text style={styles.StyledText}>{newTitle}</Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ChangeDishIngr', {item})}>
+                  onPress={() => navigation.navigate(ScreenNames.ChangeDishIngr, {item})}>
                   <Text style={styles.changeText}>Изменить состав</Text>
                 </TouchableOpacity>
                 <View style={styles.CountCont}>

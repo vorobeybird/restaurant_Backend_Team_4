@@ -1,0 +1,25 @@
+enum ScreenNames {
+  ChoseTypeOrder = 'ChoseTypeOrder',
+  MenuTabNavigation = 'MenuTabNavigation',
+  ChangeDishIngr = 'ChangeDishIngr',
+  DishPage = 'DishPage',
+  Breakfast = 'Breakfast',
+  MarketMain = 'MarketMain',
+  OrderDetails = 'OrderDetails',
+  ConfirmOrder = 'ConfirmOrder',
+  ChosePaymentType = 'ChosePaymentType',
+  writeAdress = 'writeAdress',
+  MarketTabNavigation = 'MarketTabNavigation',
+  ProfileNavigation = 'ProfileNavigation',
+  AddAdress = 'AddAdress',
+  AddCard = 'AddCard',
+  Menu = 'Menu',
+  Home = 'Home',
+  ProfileComponent = 'ProfileComponent',
+  MyOrders = 'MyOrders',
+  MyCards = 'MyCards',
+  MyAdress = 'MyAdress',
+  PersonalData = 'PersonalData',
+}
+
+export default ScreenNames

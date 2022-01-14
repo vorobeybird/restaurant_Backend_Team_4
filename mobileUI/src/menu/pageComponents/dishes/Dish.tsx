@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import ScreenNames from '../../../navigation/ScreenNames';
 
 type RootStackParamList = {
   DishPageNavigation: undefined;
@@ -31,7 +32,7 @@ export const Dishes = ({
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate('DishPage', {
+        navigation.navigate(ScreenNames.DishPage, {
           id,
           title,
           photos,

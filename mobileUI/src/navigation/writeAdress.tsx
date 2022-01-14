@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from '@react-navigation/native';
+import ScreenNames from "./ScreenNames";
+import { useAppSelector } from "../hooks/hooks";
 type RootStackParamList = {
     ConfirmOrder: undefined;
     navigate:any;
@@ -11,7 +13,7 @@ type RootStackParamList = {
 
 
 export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state) => state.dishes);
+    const cart = useAppSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [street, setStreet] = useState('')
@@ -96,7 +98,7 @@ export const writeAdress = ({  navigation: { goBack }, route }:{navigation:any, 
             <Text style={styles.prgressText}> шаг 3/3</Text>
             <TouchableOpacity style={styles.Button} onPress={() => {
                     if(street !='' && home !='' && nameRegEx.test(street) === true){
-                        navigation.navigate('ChosePaymentType')
+                        navigation.navigate(ScreenNames.ChosePaymentType)
                     } 
                     else { required()
                         return (

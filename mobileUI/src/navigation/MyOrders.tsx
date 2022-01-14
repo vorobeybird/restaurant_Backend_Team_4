@@ -5,6 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux'
 import Api from '../apiSecure/Api'
 import dayjs from 'dayjs';
+import { RootStackParamList } from "../menu/Menu";
+import ScreenNames from "./ScreenNames";
+import { useAppSelector } from "../hooks/hooks";
 
 
 export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
@@ -39,7 +42,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         console.log(isLoading)
     };
     
-    const navigation = useNavigation()
+    const navigation = useNavigation<RootStackParamList>()
     const [pay, setPay] = useState('а мне похуй')
     const [histPay, setHistPay] = useState('а мне похуй')
     const payWordFuncHist = (item:any) => {
@@ -66,11 +69,11 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
     }
     const payWordFunc = () => {
         let payWord
-        if (cart.paymentType == 0){
+        if (cart.paymentType == '0'){
           payWord = 'Наличными'
-        }else if (cart.paymentType == 1){
+        }else if (cart.paymentType == '1'){
           payWord = 'Картой онлайн'
-        } else if (cart.paymentType == 2){
+        } else if (cart.paymentType == '2'){
           payWord = 'Картой'
         } 
         
@@ -82,7 +85,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
         payWordFunc();
       }, []);
    
-    const cart = useSelector((state) => state.dishes);
+    const cart = useAppSelector((state) => state.dishes);
     
     const [state, setState] = useState( true )
    
@@ -197,7 +200,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                                 ):(
                                         <View style={styles.EmptyTextWrapper}>
                                             <Text style={styles.EmptyText}>У вас нет текущих заказов</Text>
-                                            <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('Menu')}>
+                                            <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate(ScreenNames.Menu)}>
                                                 <Text style={styles.ButText}> ПЕРЕЙТИ В МЕНЮ </Text>
                                             </TouchableOpacity>
                                             <FlatList
@@ -249,7 +252,7 @@ export const MyOrders = ({  navigation: { goBack }, route }:{navigation:any, rou
                             ):(
                                     <View style={styles.EmptyTextWrapper}>
                                         <Text style={styles.EmptyTextHist}>Ваша история заказов пуста</Text>
-                                        <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate('Menu')}>
+                                        <TouchableOpacity style={styles.Button} onPress={()=> navigation.navigate(ScreenNames.Menu)}>
                                             <Text style={styles.ButText}> ПЕРЕЙТИ В МЕНЮ </Text>
                                         </TouchableOpacity>
                                     </View>

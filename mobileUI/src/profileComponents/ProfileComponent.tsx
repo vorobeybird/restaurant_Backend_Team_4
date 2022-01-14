@@ -8,9 +8,10 @@ import Profile from './Profile';
 import { Links } from './Links';
 import {useSelector} from 'react-redux'
 import { RootState } from '../store';
+import { useAppSelector } from '../hooks/hooks';
 export const ProfileComponent = () => {
 
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state: RootState) => state.dishes);
   return (
     <View style={styles.Wrapper}>
       <View style={styles.PictCont}>

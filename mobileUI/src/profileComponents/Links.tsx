@@ -4,6 +4,7 @@ import {Auth} from 'aws-amplify';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {authActions} from '../modules/Auth/store/authStore';
+import ScreenNames from '../navigation/ScreenNames';
 
 type RootStackParamList = {
   navigate: any;
@@ -28,7 +29,7 @@ export const Links = () => {
   return (
     <View style={styles.LinkWrapper}>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MyOrders')}
+        onPress={() => navigation.navigate(ScreenNames.MyOrders)}
         style={styles.BoxWrapper}>
         <Image
           style={styles.PictStyle}
@@ -37,7 +38,7 @@ export const Links = () => {
         <Text style={styles.TextStyle}>Мои заказы</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MyCards')}
+        onPress={() => navigation.navigate(ScreenNames.MyCards)}
         style={styles.BoxWrapper}>
         <Image
           style={styles.PictStyle}
@@ -46,7 +47,7 @@ export const Links = () => {
         <Text style={styles.TextStyle}>Мои карты</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate('MyAdress')}
+        onPress={() => navigation.navigate(ScreenNames.MyAdress)}
         style={styles.BoxWrapper}>
         <Image
           style={styles.PictStyle}

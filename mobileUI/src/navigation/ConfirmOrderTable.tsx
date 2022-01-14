@@ -8,8 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/core';
 import axios from "axios";
 import dayjs from 'dayjs';
-import { COMPARISON_BINARY_OPERATORS } from "@babel/types";
-import { RootState } from "../store";
+import { useAppSelector } from "../hooks/hooks";
+import ScreenNames from "./ScreenNames";
+
 type RootStackParamList = {
     ConfirmOrderTeble: undefined;
     navigate:any;
@@ -24,7 +25,7 @@ type RootStackParamList = {
 
 
   export const ConfirmOrderTable = ({  navigation: { goBack }, route }:{navigation:any, route:any}) => {
-    const cart = useSelector((state: RootState) => state.dishes);
+    const cart = useAppSelector((state) => state.dishes);
     const dispatch = useDispatch()
     const navigation = useNavigation<RootStackParamList>();
     const [date, setDate] = useState(new Date());
@@ -246,7 +247,7 @@ type RootStackParamList = {
                 handleAddDate(dayjs(date).toISOString())   
                 checkNum()
                 showToastSuccs()
-                navigation.navigate('ChosePaymentType')
+                navigation.navigate(ScreenNames.ChosePaymentType)
             }}>
                 <Text style={styles.ButText}> Подтвердить</Text>
             </TouchableOpacity>

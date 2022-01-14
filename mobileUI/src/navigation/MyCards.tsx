@@ -1,19 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
   Text,
   Image,
-  ScrollView,
   TouchableOpacity,
-  Button,
-  ToastAndroid,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {delCard} from '../store/StoreCard';
-import { RootState } from '../store';
+import ScreenNames from './ScreenNames';
+import { useAppSelector } from '../hooks/hooks';
 
 type RootStackParamList = {
   AddCard: undefined,
@@ -29,7 +27,7 @@ export const MyCards = ({
 }) => {
   const navigation = useNavigation<RootStackParamList>();
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.dishes);
+  const cart = useAppSelector((state) => state.dishes);
   const handleDelCard = (item: string) => {
     dispatch(delCard(item));
   };
@@ -87,7 +85,7 @@ export const MyCards = ({
       <TouchableOpacity
         style={styles.Button}
         onPress={() => {
-          navigation.navigate('AddCard');
+          navigation.navigate(ScreenNames.AddCard);
         }}>
         <Text style={styles.ButText}> Добавить карту</Text>
       </TouchableOpacity>
