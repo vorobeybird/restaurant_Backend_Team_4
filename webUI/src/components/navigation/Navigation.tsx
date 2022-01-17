@@ -2,7 +2,7 @@ import Logo from "../../assets/nav_logo.png";
 import SearchIcon from "../../assets/search.png";
 import Cart from "../../assets/cart.png";
 import CartWithItems from "../../assets/CartWithItems.svg";
-import Profile from "../../assets/profile.png";
+import UserInfo from "../../assets/profile.png";
 import "./navigation.scss";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";

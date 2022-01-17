@@ -1,18 +1,16 @@
 import {Image, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeNavigator from './auxillaryNavigators/HomeNavigator';
 import MenuNavigator from './auxillaryNavigators/MenuNavigator';
 import CartNavigator from './auxillaryNavigators/CartNavigator';
 import ProfileNavigator from './auxillaryNavigators/ProfileNavigator';
 import React from 'react';
 import styles from './styles';
+import Home from '../../modules/Home';
 
 export type RootStackParamList = {
   ProfileNavigator: undefined;
-  MarketMain: undefined;
-  Menu: undefined;
   MenuNavigator: undefined;
-  HomeNavigator: undefined;
+  Home: undefined;
   CartNavigator: undefined;
 };
 
@@ -31,10 +29,10 @@ const RootStack = () => {
         },
       }}>
       <Tab.Screen
-        name="HomeNavigator"
-        component={HomeNavigator}
+        name="Home"
+        component={Home}
         options={{
-          title: 'Menu',
+          title: 'Home',
           headerShown: false,
           tabBarIcon: ({focused}) => {
             return (
@@ -81,7 +79,7 @@ const RootStack = () => {
         component={CartNavigator}
         options={{
           unmountOnBlur: true,
-          title: 'MarketTabNavigation',
+          title: 'Cart',
           headerShown: false,
           tabBarIcon: ({focused}) => {
             return (
@@ -104,7 +102,7 @@ const RootStack = () => {
         name="ProfileNavigator"
         component={ProfileNavigator}
         options={{
-          title: 'Menu',
+          title: 'Profile',
           headerShown: false,
           tabBarIcon: ({focused}) => {
             return (

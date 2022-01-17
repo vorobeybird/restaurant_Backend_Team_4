@@ -1,14 +1,14 @@
 import React from 'react';
-import {Menu} from '../../../menu/Menu';
 
+import MenuMain from '../../../modules/Menu/MenuMain';
+import MenuBreakfast from '../../../modules/Menu/MenuBreakfast';
+import MenuDishToCart from '../../../modules/Menu/MenuDishToCart';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Breakfast} from '../../../menu/pageComponents/Breakfast';
-import {DishPage} from '../../DishPage';
 
 export type RootStackParamList = {
-  Menu: undefined;
-  DishPage: undefined;
-  Breakfast: undefined;
+  MenuMain: undefined;
+  MenuDishToCart: undefined;
+  MenuBreakfast: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -19,9 +19,9 @@ const MenuNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Menu" component={Menu} />
-      <Stack.Screen name="Breakfast" component={Breakfast} />
-      <Stack.Screen name="DishPage" component={DishPage} />
+      <Stack.Screen name="MenuMain" component={MenuMain} />
+      <Stack.Screen name="MenuBreakfast" component={MenuBreakfast} />
+      <Stack.Screen name="MenuDishToCart" component={MenuDishToCart} />
     </Stack.Navigator>
   );
 };

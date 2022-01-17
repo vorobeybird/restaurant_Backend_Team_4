@@ -1,26 +1,24 @@
 import React from 'react';
-import {Menu} from '../../../menu/Menu';
-
 import {createStackNavigator} from '@react-navigation/stack';
-import {ProfileComponent} from '../../../profileComponents/ProfileComponent';
-import {PersonalData} from '../../PersonalData';
-import {MyOrders} from '../../MyOrders';
-import {MyCards} from '../../MyCards';
-import {MyAdress} from '../../MyAdress';
-import {MyConfPol} from '../../MyConfPol';
-import {AddAdress} from '../../AddAdress';
-import {AddCard} from '../../AddCard';
+import PersonalData from '../../../modules/Orders/PersonalData';
+import ProfileOrders from '../../../modules/Profile/ProfileOrders';
+import ProfileCards from '../../../modules/Profile/ProfileCards';
+import ProfileAddress from '../../../modules/Profile/ProfileAddress';
+import ProfileConfidentiality from '../../../modules/Profile/ProfileConfidentiality';
+import ProfileAddAddress from '../../../modules/Profile/ProfileAddAddress';
+import ProfileAddCard from '../../../modules/Profile/ProfileAddCard';
+import ProfileMain from '../../../modules/Profile/ProfileMain';
 
 export type RootStackParamList = {
-  MenuTabNavigation: undefined;
-  ProfileComponent: undefined;
+  MenuNavigator: undefined;
+  ProfileMain: undefined;
   PersonalData: undefined;
-  MyOrders: undefined;
-  MyCards: undefined;
-  MyAdress: undefined;
-  MyConfPol: undefined;
-  AddAdress: undefined;
-  AddCard: undefined;
+  ProfileOrders: undefined;
+  ProfileCards: undefined;
+  ProfileAddress: undefined;
+  ProfileConfidentiality: undefined;
+  ProfileAddAddress: undefined;
+  ProfileAddCard: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -31,14 +29,17 @@ const ProfileNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="ProfileComponent" component={ProfileComponent} />
+      <Stack.Screen name="ProfileMain" component={ProfileMain} />
       <Stack.Screen name="PersonalData" component={PersonalData} />
-      <Stack.Screen name="MyOrders" component={MyOrders} />
-      <Stack.Screen name="MyCards" component={MyCards} />
-      <Stack.Screen name="MyAdress" component={MyAdress} />
-      <Stack.Screen name="MyConfPol" component={MyConfPol} />
-      <Stack.Screen name="AddAdress" component={AddAdress} />
-      <Stack.Screen name="AddCard" component={AddCard} />
+      <Stack.Screen name="ProfileOrders" component={ProfileOrders} />
+      <Stack.Screen name="ProfileCards" component={ProfileCards} />
+      <Stack.Screen name="ProfileAddress" component={ProfileAddress} />
+      <Stack.Screen
+        name="ProfileConfidentiality"
+        component={ProfileConfidentiality}
+      />
+      <Stack.Screen name="ProfileAddAddress" component={ProfileAddAddress} />
+      <Stack.Screen name="ProfileAddCard" component={ProfileAddCard} />
     </Stack.Navigator>
   );
 };
