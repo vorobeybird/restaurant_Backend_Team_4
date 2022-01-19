@@ -9,7 +9,7 @@ import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
-import Profile from "./pages/profile/Profile";
+import UserInfo from "./pages/profile/Profile";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
@@ -87,7 +87,7 @@ const App = () => {
                     <Route exact path="/cart" component={Cart}/>
                     <Route path="/dishPage" component={DishPage}/>
                     <Route path="/profile">
-                        <Profile></Profile>
+                        <UserInfo></UserInfo>
                         <Redirect to={"/profile/orders"}/>
                     </Route>
                     <Route path="/search" component={Search}/>
