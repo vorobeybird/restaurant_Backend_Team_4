@@ -7,35 +7,27 @@ import {Input} from 'react-native-elements/dist/input/Input';
 import Api from '../../../apiSecure/Api';
 import ScreenNames from '../../../navigation/ScreenNames';
 import styles from './styles';
-
-export type RootStackParamList = {
-  MainMenu: undefined;
-  MenuBreakfast: undefined;
-  MenuNavigator: undefined;
-  BarMenu: undefined;
-  WeekCatch: undefined;
-  navigate: any;
-};
-
-interface category {
-  id: number;
-  title: string;
-  dish: [];
-  show_in_menu: boolean;
-}
+import {
+  ICategory,
+  INewDish,
+  MenuMainScreenNavigationProp,
+} from '../../../navigation/routes/auxillaryNavigators/MenuNavigator';
 
 const MenuMain = () => {
-  const [date, setDate] = useState({} as any);
+  const navigation = useNavigation<MenuMainScreenNavigationProp>();
+
+  const [date, setDate] = useState<ICategory[]>([]);
+
   const getItems = async () => {
-    const response = await Api.get<category[]>(
-      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/category',
+    const response = await Api.get<ICategory[]>(
+      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/ICategory',
     );
     const res = response.data;
     return res;
   };
   const fetchMenuItems = async () => {
     const items = await getItems();
-    const arr = [] as category[];
+    const arr = [] as ICategory[];
     items.map(item => {
       if (item.show_in_menu) {
         arr.push(item);
@@ -104,7 +96,7 @@ const MenuMain = () => {
         const photos = dish.photo;
         const urlArr = photos.map((item: any) => item.photo_url);
 
-        const newDish = {
+        const newDish: INewDish = {
           id: dish.id,
           title: dish.title,
           photos: urlArr,
@@ -136,8 +128,6 @@ const MenuMain = () => {
       return !(key in seen) && (seen[key] = x);
     });
   };
-
-  const navigation = useNavigation<RootStackParamList>();
 
   return (
     <View style={styles.Wrapper}>
@@ -172,7 +162,6 @@ const MenuMain = () => {
           return (
             <Text
               style={styles.FoodProfileLinks}
-              id={item.id}
               onPress={() =>
                 navigation.navigate(ScreenNames.MenuBreakfast, {...item})
               }>

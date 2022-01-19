@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import {addOrderType} from '../../../store/StoreCard';
 
-import {useDispatch} from 'react-redux';
 import ScreenNames from '../../../navigation/ScreenNames';
 import styles from './styles';
+import {useAppDispatch} from '../../../hooks/hooks';
+import {ordersActions} from '../store/ordersStore';
 
 type RootStackParamList = {
   OrderType: undefined;
@@ -20,7 +20,7 @@ const OrderType = ({
   navigation: any;
   route: any;
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackParamList>();
   const [checkedFirs, toggleCheckedFirs] = useState(false);
   const [checkedSecond, toggleCheckedSecond] = useState(false);
@@ -44,7 +44,7 @@ const OrderType = ({
     toggleCheckedSecond(false);
   };
   const handleAddOrderType = (item: any) => {
-    dispatch(addOrderType(item));
+    dispatch(ordersActions.addOrderType(item));
   };
   return (
     <View style={styles.Wrapper}>

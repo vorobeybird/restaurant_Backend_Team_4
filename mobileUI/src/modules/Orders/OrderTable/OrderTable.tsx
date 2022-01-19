@@ -6,17 +6,15 @@ import {
   TouchableOpacity,
   Modal,
   Dimensions,
-  ToastAndroid,
 } from 'react-native';
 import {useState, useEffect} from 'react';
-import {addDate, getNumOfPersons} from '../../../store/StoreCard';
-import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useNavigation} from '@react-navigation/native';
 import Api from '../../../apiSecure/Api';
 import styles from './styles';
 import dayjs from 'dayjs';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
+import {IOrder, ordersActions} from '../store/ordersStore';
 
 type RootStackParamList = {
   OrderConfirmationTeble: undefined;
@@ -37,45 +35,16 @@ const OrderTable = ({
   navigation: any;
   route: any;
 }) => {
-  const cart = useAppSelector(state => state.dishes);
-  const dispatch = useDispatch();
+  const cart = useAppSelector(state => state.cart);
+  const order = useAppSelector(state => state.orders);
+  const user = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackParamList>();
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState();
   const [show, setShow] = useState(false);
 
-  let devState: any[] = [];
-
-  const showToast = () => {
-    ToastAndroid.showWithGravity(
-      'Стол занят',
-      ToastAndroid.SHORT,
-      ToastAndroid.TOP,
-    );
-  };
-
-  const showToastSuccs = () => {
-    ToastAndroid.showWithGravity(
-      'Стол забронирован',
-      ToastAndroid.SHORT,
-      ToastAndroid.TOP,
-    );
-  };
-  interface Order {
-    delivery_method: string;
-    payment_method: number;
-    customer_id: string;
-    total_price: number;
-    delivery_date: string;
-    comment: string;
-    dish: DishShortInfo[];
-    adress: string;
-    contact_name: string;
-    contact_phone: string;
-    num_of_persons: number;
-  }
-
-  interface OrderTemp extends Order {
+  interface IOrderTemp extends IOrder {
     reserve_time: string;
     reserve_date: string;
   }
@@ -84,7 +53,6 @@ const OrderTable = ({
     dish_amount: number;
     excluded_ingredients: string;
   }
-  /////////////////////////
 
   const onMakingOrder = () => {
     let dishesShortInfo = cart.dishes.map((item: any) => {
@@ -94,19 +62,20 @@ const OrderTable = ({
 
       return dish;
     });
-    let currentOrder = {} as OrderTemp;
-    currentOrder.delivery_method = cart.orderType;
-    currentOrder.payment_method = cart.paymentType * 1;
+
+    let currentOrder = {} as IOrderTemp;
+    currentOrder.delivery_method = order.orderType;
+    currentOrder.payment_method = +order.paymentType;
     currentOrder.customer_id = 'asdfasdf';
     currentOrder.contact_name =
-      cart.userInfo.name + ' ' + cart.userInfo.surName;
-    currentOrder.contact_phone = cart.userInfo.phone;
+      user.userInfo.name + ' ' + user.userInfo.surName;
+    currentOrder.contact_phone = user.userInfo.phone;
     currentOrder.total_price = cart.cardTotalAmount;
-    currentOrder.delivery_date = cart.date;
+    currentOrder.delivery_date = order.date;
     currentOrder.comment = "Hi, I'm hardcode comment :)";
-    currentOrder.num_of_persons = cart.num;
+    currentOrder.num_of_persons = +order.num;
     currentOrder.reserve_date = '2021-11-29T';
-    currentOrder.reserve_time = cart.date;
+    currentOrder.reserve_time = order.date;
     currentOrder.dish = dishesShortInfo;
     console.log(currentOrder);
     return Api.post(
@@ -122,8 +91,6 @@ const OrderTable = ({
       .then(response => console.log(response))
       .catch(err => console.log(err));
   };
-
-  //////////////////
 
   const getItems = async () => {
     const response = await Api.get<category[]>(
@@ -162,10 +129,10 @@ const OrderTable = ({
     setShow(false);
   };
   const handleGetNumOfPersons = (item: any) => {
-    dispatch(getNumOfPersons(item));
+    dispatch(ordersActions.getNumOfPersons(item));
   };
   const handleAddDate = (item: any) => {
-    dispatch(addDate(item));
+    dispatch(ordersActions.addDate(item));
   };
 
   const [chooseTable, setChooseTable] = useState('Выберите стол');

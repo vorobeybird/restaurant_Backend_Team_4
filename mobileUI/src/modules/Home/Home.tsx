@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {clearCart} from '../../store/StoreCard';
 import ScreenNames from '../../navigation/ScreenNames';
 import styles from './styles';
+import {useAppDispatch} from '../../hooks/hooks';
+import {cartActions} from '../Cart/store/cartStore';
 
 type RootStackParamList = {
   MenuNavigator: undefined;
@@ -16,7 +16,7 @@ type RootStackParamList = {
 
 const Home = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <View style={styles.MainWrapper}>
       <View style={styles.Title}>
@@ -37,7 +37,7 @@ const Home = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          dispatch(clearCart());
+          dispatch(cartActions.clearCart());
           navigation.navigate(ScreenNames.CartNavigator, {
             screen: 'OrderTableConfirm',
           });

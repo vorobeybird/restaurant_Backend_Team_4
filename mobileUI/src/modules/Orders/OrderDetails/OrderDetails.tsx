@@ -1,35 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, ToastAndroid} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {addOrderHistoryItem, clearCart} from '../../../store/StoreCard';
 import Api from '../../../apiSecure/Api';
 import ScreenNames from '../../../navigation/ScreenNames';
 import {RootStackParamList} from '../../Menu/MenuMain/MenuMain';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
-interface DishShortInfo {
-  dish_id: number;
-  dish_amount: number;
-  excluded_ingredients: string;
-}
-
-interface Order {
-  adress: string;
-  customer_id: string;
-  delivery_method: string;
-  total_price: number;
-  delivery_date: string;
-  contact_name: string;
-  payment_method: number;
-  contact_phone: string;
-  comment: string;
-  reserve_time: string;
-  status: string;
-  reserve_date: string;
-  num_of_persons: number;
-  dish: DishShortInfo[];
-}
+import {IDishShortInfo, ordersActions} from '../store/ordersStore';
+import {cartActions} from '../../Cart/store/cartStore';
 
 const OrderDetails = ({
   navigation: {goBack},
@@ -38,11 +16,13 @@ const OrderDetails = ({
   route: any;
 }) => {
   const navigation = useNavigation<RootStackParamList>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [id, setId] = useState();
-  const cart = useAppSelector(state => state.dishes);
-  const [pay, setPay] = useState('а мне похуй');
-  console.log(cart.userInfo.attributes.name, 'cart');
+  const user = useAppSelector(state => state.auth);
+  const order = useAppSelector(state => state.orders);
+  const cart = useAppSelector(state => state.cart);
+  const [pay, setPay] = useState('');
+  console.log(user.userInfo.attributes.name, 'cart');
   const showToast = () => {
     ToastAndroid.showWithGravity(
       'Заказ отправлен',
@@ -50,36 +30,38 @@ const OrderDetails = ({
       ToastAndroid.TOP,
     );
   };
-  const handleAddOrderHistoryItem = (item: any) => {
-    dispatch(addOrderHistoryItem(item));
-  };
+  // const handleAddOrderHistoryItem = (item: any) => {
+  //   dispatch(ordersActions.addOrderHistoryItem(item));
+  // };
+
   const handleClearCart = () => {
-    dispatch(clearCart());
+    dispatch(cartActions.clearCart());
   };
-  const historyOrder = {
-    id: cart.date,
-    type: cart.orderType,
-    date: cart.date,
-    paymentType: cart.paymentType,
-    orderStatus: 'Завершен',
-  };
+  // const historyOrder = {
+  //   id: order.date,
+  //   type: order.orderType,
+  //   date: order.date,
+  //   paymentType: order.paymentType,
+  //   orderStatus: 'Завершен',
+  // };
+
   const onMakingOrder = () => {
-    let order = {} as Order;
+    let order = {} as any;
     order.adress = 'asdf';
-    order.customer_id = cart.userInfo.attributes.sub;
-    order.delivery_method = cart.orderType;
+    order.customer_id = user.userInfo.attributes.sub;
+    order.delivery_method = order.orderType;
     order.total_price = cart.cardTotalAmount;
-    order.delivery_date = cart.date;
+    order.delivery_date = order.date;
     order.contact_name =
-      cart.userInfo.attributes.name +
+      user.userInfo.attributes.name +
       ' ' +
-      cart.userInfo.attributes.family_name;
-    order.contact_phone = cart.userInfo.attributes.phone_number;
-    order.payment_method = cart.paymentType;
+      user.userInfo.attributes.family_name;
+    order.contact_phone = user.userInfo.attributes.phone_number;
+    order.payment_method = order.paymentType;
     order.comment = "Hi, I'm hardcode comment";
 
     let dishesShortInfo = cart.dishes.map((item: any) => {
-      let dish = {} as DishShortInfo;
+      let dish = {} as IDishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.cardQuantity;
       dish.excluded_ingredients = item.excluded_ingredients
@@ -89,7 +71,7 @@ const OrderDetails = ({
     });
 
     order.dish = dishesShortInfo;
-    console.log(order);
+
     Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/order',
       order,
@@ -103,25 +85,26 @@ const OrderDetails = ({
 
   const onMakingOrderTable = async () => {
     console.log(cart);
-    let order = {} as Order;
-    order.num_of_persons = cart.num;
-    order.customer_id = cart.userInfo.attributes.sub;
+    let order = {} as any;
+    order.num_of_persons = order.num;
+    order.customer_id = user.userInfo.attributes.sub;
     order.contact_name =
-      cart.userInfo.attributes.name +
+      user.userInfo.attributes.name +
       ' ' +
-      cart.userInfo.attributes.family_name;
-    order.contact_phone = cart.userInfo.attributes.phone_number;
+      user.userInfo.attributes.family_name;
+    order.contact_phone = user.userInfo.attributes.phone_number;
     order.payment_method = 1;
     order.adress = 'bookTable';
     order.status = 'bla';
     order.comment = 'bla';
-    order.delivery_method = cart.orderType;
+    order.delivery_method = order.orderType;
     order.total_price = cart.cardTotalAmount;
-    order.delivery_date = cart.date;
-    order.reserve_time = cart.date;
-    order.reserve_date = cart.date;
+    order.delivery_date = order.date;
+    order.reserve_time = order.date;
+    order.reserve_date = order.date;
+
     let dishesShortInfo = cart.dishes.map((item: any) => {
-      let dish = {} as DishShortInfo;
+      let dish = {} as IDishShortInfo;
       dish.dish_id = item.id;
       dish.dish_amount = item.cardQuantity;
       dish.excluded_ingredients = item.excluded_ingredients
@@ -131,7 +114,7 @@ const OrderDetails = ({
     });
 
     order.dish = dishesShortInfo;
-    console.log(order, 'order');
+
     const servResp = await Api.post(
       'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/reserve',
       order,
@@ -145,12 +128,12 @@ const OrderDetails = ({
   };
 
   const payWordFunc = () => {
-    let payWord;
-    if (cart.paymentType == 0) {
+    let payWord = '';
+    if (order.paymentType === '0') {
       payWord = 'Наличными';
-    } else if (cart.paymentType == 1) {
+    } else if (order.paymentType === '1') {
       payWord = 'Картой онлайн';
-    } else if (cart.paymentType == 2) {
+    } else if (order.paymentType === '2') {
       payWord = 'Картой';
     }
 
@@ -180,7 +163,7 @@ const OrderDetails = ({
             <Text style={styles.color}> ОПЛАТА</Text>
           </View>
           <View>
-            <Text style={styles.simpText}>{cart.orderType}</Text>
+            <Text style={styles.simpText}>{order.orderType}</Text>
             <Text style={styles.simpText}>13 октября</Text>
             <Text style={styles.simpText}>15:00</Text>
             <Text style={styles.simpText}>{pay}</Text>
@@ -238,7 +221,7 @@ const OrderDetails = ({
         style={styles.butStyle}
         onPress={() => {
           showToast();
-          if (cart.orderType == 'Бронирование стола') {
+          if (order.orderType == 'Бронирование стола') {
             onMakingOrderTable();
           } else {
             onMakingOrder();

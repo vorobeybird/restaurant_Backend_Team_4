@@ -1,45 +1,26 @@
 import React from 'react';
 import {Image, Text, View, TouchableOpacity} from 'react-native';
 import {useEffect} from 'react';
-import {OrderedDish} from './components/OrderedDish';
+import OrderedDish from './components/OrderedDish';
 import {useDispatch} from 'react-redux';
-import {getTotals, clearCart} from '../../../store/StoreCard';
 import {useNavigation} from '@react-navigation/native';
 import ScreenNames from '../../../navigation/ScreenNames';
 import {useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {cartActions} from '../store/cartStore';
+import {CartMainScreenNavigationProp} from '../../../navigation/routes/auxillaryNavigators/CartNavigator';
 
-interface DishShortInfo {
-  dish_id: number;
-  dish_amount: number;
-}
-
-// interface Order {
-//   adress: string;
-//   customer_id: string;
-//   delivery_method: string;
-//   total_price: number;
-//   delivery_date: Date;
-//   contact_info: string;
-//   payment_method: boolean;
-//   comment: string;
-//   dish: DishShortInfo[];
-// }
-type RootStackParamList = {
-  OrderType: undefined;
-  navigate: any;
-};
 const CartMain = () => {
-  const cart = useAppSelector(state => state.dishes);
+  const cart = useAppSelector(state => state.cart);
   const dispatch = useDispatch();
-  const navigation = useNavigation<RootStackParamList>();
+  const navigation = useNavigation<CartMainScreenNavigationProp>();
 
   const handleClear = () => {
-    dispatch(clearCart());
+    dispatch(cartActions.clearCart());
   };
 
   useEffect(() => {
-    dispatch(getTotals());
+    dispatch(cartActions.getTotals());
   }, [cart, dispatch]);
 
   return (

@@ -3,12 +3,11 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 
-import {addPaymentType, clearCart} from '../../../store/StoreCard';
-
-import {useDispatch} from 'react-redux';
 import ScreenNames from '../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {cartActions} from '../../Cart/store/cartStore';
+import {ordersActions} from '../store/ordersStore';
 
 type RootStackParamList = {
   OrderType: undefined;
@@ -22,10 +21,11 @@ const OrderPayment = ({
   navigation: any;
   route: any;
 }) => {
-  const dispatch = useDispatch();
-
-  const cart = useAppSelector(state => state.dishes);
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector(state => state.cart);
+  const orders = useAppSelector(state => state.orders);
   const navigation = useNavigation<RootStackParamList>();
+
   const [checkedFirs, toggleCheckedFirs] = useState(false);
   const [checkedSecond, toggleCheckedSecond] = useState(false);
   const [checkedThird, toggleCheckedThird] = useState(false);
@@ -48,13 +48,11 @@ const OrderPayment = ({
     toggleCheckedSecond(false);
   };
   const handleAddOrderType = (item: any) => {
-    dispatch(addPaymentType(item));
+    dispatch(ordersActions.addPaymentType(item));
   };
   const handleClear = () => {
-    dispatch(clearCart());
+    dispatch(cartActions.clearCart());
   };
-
-  const withoutOrder = useAppSelector(state => state.dishes.dishes);
 
   return (
     <View style={styles.Wrapper}>
@@ -66,7 +64,7 @@ const OrderPayment = ({
             source={require('../../../../img/arrowLeft.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.TitleText}> {cart.orderType}</Text>
+        <Text style={styles.TitleText}> {orders.orderType}</Text>
       </View>
       <Text style={styles.Header}>Выберите способ оплаты</Text>
       <View style={styles.OrderWrapper}>
@@ -78,7 +76,7 @@ const OrderPayment = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              cart.dishes.length === 0 ? styles.OrderTextDisabled : undefined,
             ]}>
             Наличными
           </Text>
@@ -86,7 +84,7 @@ const OrderPayment = ({
             onPress={() => {
               checkFuncFirst();
             }}
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={cart.dishes.length === 0 ? true : false}
             checked={checkedFirs}
             checkedIcon={
               <Image source={require('../../../../img/checked.png')} />
@@ -123,12 +121,12 @@ const OrderPayment = ({
           <Text
             style={[
               styles.OrderText,
-              withoutOrder.length === 0 ? styles.OrderTextDisabled : undefined,
+              cart.dishes.length === 0 ? styles.OrderTextDisabled : undefined,
             ]}>
             Картой на месте
           </Text>
           <CheckBox
-            disabled={withoutOrder.length === 0 ? true : false}
+            disabled={cart.dishes.length === 0 ? true : false}
             onPress={() => {
               checkFuncThird();
             }}

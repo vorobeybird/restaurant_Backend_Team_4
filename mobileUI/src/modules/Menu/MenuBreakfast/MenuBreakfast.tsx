@@ -2,27 +2,20 @@ import React from 'react';
 import {Text, View, Image, FlatList, TouchableOpacity} from 'react-native';
 import Dish from './components/Dish';
 import styles from './styles';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  ICategory,
+  IMenuItem,
+  MenuBreakfastScreenNavigationProp,
+  MenuBreakfastScreenRouteProp,
+} from '../../../navigation/routes/auxillaryNavigators/MenuNavigator';
 
-interface MenuItem {
-  title: string;
-  default_ingredients: string;
-  ingredients: number[];
-  price: number;
-  weight: number;
-  categories: number[];
-  calories: number;
-  photo: string;
-  data: any;
-}
-const MenuBreakfast = ({
-  navigation: {goBack},
-  route,
-}: {
-  navigation: any;
-  route: any;
-}) => {
+const MenuBreakfast = () => {
+  const route = useRoute<MenuBreakfastScreenRouteProp>();
+  const navigation = useNavigation<MenuBreakfastScreenNavigationProp>();
+
   const {id, title, dish} = route.params;
-  const item = {
+  const item: ICategory = {
     id,
     title,
     dish,
@@ -31,7 +24,7 @@ const MenuBreakfast = ({
   return (
     <View style={styles.Scroll}>
       <View style={styles.Title}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             style={styles.Arrow}
             source={require('../../../../img/arrowLeft.png')}
@@ -47,15 +40,14 @@ const MenuBreakfast = ({
       <FlatList
         style={styles.Flat}
         data={item.dish}
-        renderItem={({item}) => {
-          const photos = item.photo;
-          const urlArr = photos.map((item: any) => item.photo_url);
+        renderItem={({item}: {item: IMenuItem}) => {
+          const urlArr = item.photos.map((item: any) => item.photo_url);
           return (
             <Dish
-              id={item.id}
+              id={item.title}
               title={item.title}
               photos={urlArr}
-              descr={item.ingredient}
+              descr={item.ingredients}
               price={item.price}
               cal={item.calories}
               weight={item.weight}

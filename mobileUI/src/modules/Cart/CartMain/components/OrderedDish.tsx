@@ -1,18 +1,12 @@
 import React from 'react';
+import {useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useDispatch} from 'react-redux';
-import {
-  delFromCard,
-  decreaseCartQuant,
-  addToCard,
-} from '../../../../store/StoreCard';
-import {useEffect} from 'react';
-import {getTotals} from '../../../../store/StoreCard';
 import {useNavigation} from '@react-navigation/native';
 import ScreenNames from '../../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../../hooks/hooks';
-import styles from './OrderedDishStyles';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/hooks';
+import styles from './styles';
+import {cartActions} from '../../store/cartStore';
 
 type RootStackParamList = {
   OrderIngredients: undefined;
@@ -21,26 +15,24 @@ type RootStackParamList = {
 
 const OrderedDish = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const card = useAppSelector(state => state.dishes);
-  const dispatch = useDispatch();
+  const cart = useAppSelector(state => state.cart);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(getTotals());
-  }, [card, dispatch]);
+    dispatch(cartActions.getTotals());
+  }, [cart, dispatch]);
 
   const handleDecreaseCartQuant = (item: any) => {
-    dispatch(decreaseCartQuant(item));
+    dispatch(cartActions.decreaseCartQuant(item));
   };
   const handleIncreaseCartQuant = (item: any) => {
-    dispatch(addToCard(item));
+    dispatch(cartActions.addToCart(item));
   };
 
-  // const handleDelFromCard = (item: any) => {
-  //   dispatch(delFromCard(item));
-  // };
   return (
     <View style={styles.GreatCont}>
       <ScrollView style={styles.ScrollStyle}>
-        {card.dishes.map((item: any) => {
+        {cart.dishes.map((item: any) => {
           let newTitle;
           if (item.title.length > 7) {
             let name = item.title.substr(0, 13);

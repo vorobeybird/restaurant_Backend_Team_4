@@ -12,9 +12,7 @@ type RootStackParamList = {
 };
 const UserInfo = () => {
   const navigation = useNavigation<RootStackParamList>();
-  const cart = useAppSelector(state => state.dishes);
-  console.log(cart);
-  const user = useAppSelector(state => state.dishes.userInfo.attributes);
+  const user = useAppSelector(state => state.auth.userInfo.attributes);
   let email;
   let name;
   let familyName;

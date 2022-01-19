@@ -2,14 +2,13 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {delAdress} from '../../../store/StoreCard';
 import ScreenNames from '../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {authActions} from '../../Auth/store/authStore';
 
 type RootStackParamList = {
-  AddAdress: undefined;
+  ProfileAddress: undefined;
   navigate: any;
 };
 
@@ -21,10 +20,11 @@ const ProfileAddress = ({
   route: any;
 }) => {
   const navigation = useNavigation<RootStackParamList>();
-  const dispatch = useDispatch();
-  const cart = useAppSelector(state => state.dishes);
-  const handleDelAdress = (item: string) => {
-    dispatch(delAdress(item));
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.auth);
+
+  const handleDelAddress = (item: string) => {
+    dispatch(authActions.delAddress(item));
   };
 
   return (
@@ -38,7 +38,7 @@ const ProfileAddress = ({
         </TouchableOpacity>
         <Text style={styles.TitleText}>Адрес доставки</Text>
       </View>
-      {cart.adress.length === 0 ? (
+      {user.address.length === 0 ? (
         <View style={styles.EmptyTextWrapper}>
           <Text style={styles.EmptyText}>
             Похоже, вы пока не добавили адрес
@@ -46,14 +46,14 @@ const ProfileAddress = ({
         </View>
       ) : (
         <View>
-          {cart.adress.map((item: any) => {
+          {user.address.map((item: any) => {
             console.log(item);
             return (
               <View key={item.id} style={styles.FullWrapper}>
                 <Text style={styles.Text}>
                   ул. {item.str}, д. {item.house}, кв. {item.kv}
                 </Text>
-                <TouchableOpacity onPress={() => handleDelAdress(item)}>
+                <TouchableOpacity onPress={() => handleDelAddress(item)}>
                   <Image
                     source={require('../../../../img/bin.png')}
                     style={styles.Pict}
@@ -64,10 +64,10 @@ const ProfileAddress = ({
           })}
         </View>
       )}
-      {cart.adress.length === 0 ? (
+      {user.address.length === 0 ? (
         <TouchableOpacity
           style={styles.Button}
-          onPress={() => navigation.navigate(ScreenNames.AddAdress)}>
+          onPress={() => navigation.navigate(ScreenNames.ProfileAddress)}>
           <Text style={styles.ButText}> Добавить адрес</Text>
         </TouchableOpacity>
       ) : (

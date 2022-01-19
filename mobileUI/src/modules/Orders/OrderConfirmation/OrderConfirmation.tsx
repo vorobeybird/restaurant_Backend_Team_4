@@ -1,22 +1,22 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {useState} from 'react';
-import {addDate} from '../../../store/StoreCard';
-import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
 import ScreenNames from '../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {ordersActions} from '../store/ordersStore';
+
 type RootStackParamList = {
   OrderConfirmation: undefined;
   navigate: any;
 };
 
 const OrderConfirmation = ({navigation: {goBack}}: {navigation: any}) => {
-  const cart = useAppSelector(state => state.dishes);
-  const dispatch = useDispatch();
+  const orders = useAppSelector(state => state.orders);
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackParamList>();
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState();
@@ -46,7 +46,7 @@ const OrderConfirmation = ({navigation: {goBack}}: {navigation: any}) => {
   };
 
   const handleAddDate = (item: any) => {
-    dispatch(addDate(item));
+    dispatch(ordersActions.addDate(item));
   };
 
   return (
@@ -58,7 +58,7 @@ const OrderConfirmation = ({navigation: {goBack}}: {navigation: any}) => {
             source={require('../../../../img/arrowLeft.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.TitleText}> {cart.orderType}</Text>
+        <Text style={styles.TitleText}> {orders.orderType}</Text>
       </View>
       <View>
         <TouchableOpacity
@@ -97,9 +97,9 @@ const OrderConfirmation = ({navigation: {goBack}}: {navigation: any}) => {
         onPress={() => {
           console.log(date);
           handleAddDate(date.toString());
-          if (cart.orderType == 'Самовывоз') {
+          if (orders.orderType == 'Самовывоз') {
             navigation.navigate(ScreenNames.OrderPayment);
-          } else if (cart.orderType == 'Доставка') {
+          } else if (orders.orderType == 'Доставка') {
             navigation.navigate(ScreenNames.OrderAddress);
           }
         }}>

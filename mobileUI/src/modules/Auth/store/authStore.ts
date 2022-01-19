@@ -1,12 +1,26 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-interface AuthStateI {
-  email: string;
-  password: string;
-  isSignedIn: string;
-  address: AddressI[];
-  card: CardI[];
-  userInfo: [];
+export interface ICardError {
+  sixTeen: string;
+  Cvv: string;
+  Date: string;
+}
+
+export interface ICard {
+  num: string;
+  live: string;
+  cvv: string;
+  name: string;
+  id: number;
+  type: string;
+}
+
+export interface IAddressDetails {
+  str: string;
+  house: string;
+  corp: string;
+  kv: string;
+  id: number;
 }
 
 interface AddressI {
@@ -14,13 +28,13 @@ interface AddressI {
   id: string;
 }
 
-interface CardI {
-  num: number;
-  live: number;
-  cvv: number;
-  name: number;
-  id: number;
-  type: string;
+interface AuthStateI {
+  email: string;
+  password: string;
+  isSignedIn: string;
+  address: AddressI[];
+  card: ICard[];
+  userInfo: [];
 }
 
 export const initialAuthState: AuthStateI = {

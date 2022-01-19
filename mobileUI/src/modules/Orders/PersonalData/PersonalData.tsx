@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {useNavigation} from '@react-navigation/native';
-import {addUserInfo} from '../../../store/StoreCard';
 import {useDispatch} from 'react-redux';
 import ScreenNames from '../../../navigation/ScreenNames';
 import {useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {authActions} from '../../Auth/store/authStore';
 
 type RootStackParamList = {
   navigate: any;
@@ -20,7 +20,7 @@ const PersonalData = ({
   navigation: any;
   route: any;
 }) => {
-  const user = useAppSelector(state => state.dishes.userInfo.attributes);
+  const user = useAppSelector(state => state.auth.userInfo.attributes);
   const [state, setState] = useState({
     name: '',
     surName: '',
@@ -56,7 +56,7 @@ const PersonalData = ({
   });
 
   const handleAddUserInfo = (item: any) => {
-    dispatch(addUserInfo(item));
+    dispatch(authActions.addUserInfo(item));
   };
   const required = () => {
     let nameErr, surNameErr, phoneErr;

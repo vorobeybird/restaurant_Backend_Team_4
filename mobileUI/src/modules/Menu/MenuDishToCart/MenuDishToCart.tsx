@@ -7,24 +7,25 @@ import {
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
-import {addToCard} from '../../../store/StoreCard';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../../hooks/hooks';
+import {cartActions} from '../../Cart/store/cartStore';
 import styles from './styles';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  MenuDishToCartScreenNavigationProp,
+  MenuDishToCartScreenRouteProp,
+} from '../../../navigation/routes/auxillaryNavigators/MenuNavigator';
 
-const MenuDishToCart = ({
-  navigation: {goBack},
-  route,
-}: {
-  navigation: any;
-  route: any;
-}) => {
+const MenuDishToCart = () => {
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation<MenuDishToCartScreenNavigationProp>();
+  const route = useRoute<MenuDishToCartScreenRouteProp>();
+
   const {id, title, photos, descr, price, cal} = route.params;
-  console.log(route.params);
   const item = {id, title, photos, price, descr};
-  const dispatch = useDispatch();
 
   const handleAddToCard = (item: any) => {
-    dispatch(addToCard(item));
+    dispatch(cartActions.addToCart(item));
   };
   const showToast = () => {
     ToastAndroid.showWithGravity(
@@ -44,7 +45,7 @@ const MenuDishToCart = ({
   return (
     <View key={id} style={styles.Wrapper}>
       <View style={styles.Title}>
-        <TouchableOpacity onPress={() => goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             style={styles.Arrow}
             source={require('../../../../img/arrowLeft.png')}

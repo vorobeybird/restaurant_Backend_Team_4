@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image, Switch} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {addExcludedIngredients} from '../../../store/StoreCard';
 import ScreenNames from '../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch} from '../../../hooks/hooks';
 import styles from './styles';
+import {cartActions} from '../../Cart/store/cartStore';
 
 type RootStackParamList = {
   OrderIngredients: undefined;
@@ -20,7 +19,7 @@ const OrderIngredients = ({
   route: any;
 }) => {
   const {item} = route.params;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const initialOptionalIngred = {} as any;
 
@@ -42,12 +41,6 @@ const OrderIngredients = ({
     });
   };
 
-  console.log(optionalIngred, ' state');
-
-  const cart = useAppSelector(state => state.dishes);
-
-  console.log(cart, ' cart');
-
   const findExcludedIngredients = () => {
     let excludedIngredients = item.descr.filter((ingredient: any) => {
       return !ingredient.DishIngredient.is_default;
@@ -63,7 +56,7 @@ const OrderIngredients = ({
   };
 
   const handleAddExcludedIngredients = () => {
-    dispatch(addExcludedIngredients(findExcludedIngredients()));
+    dispatch(cartActions.addExcludedIngredients(findExcludedIngredients()));
     navigation.navigate(ScreenNames.CartMain);
   };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState} from 'react';
 import {
   View,
   Text,
@@ -7,20 +8,9 @@ import {
   TextInput,
   ToastAndroid,
 } from 'react-native';
-
-import {useState} from 'react';
-
-import {useDispatch} from 'react-redux';
-import {addAddress} from '../../../store/StoreCard';
+import {authActions, IAddressDetails} from '../../Auth/store/authStore';
+import {useAppDispatch} from '../../../hooks/hooks';
 import styles from './styles';
-
-interface IAddress {
-  str: string;
-  house: string;
-  corp: string;
-  kv: string;
-  id: number;
-}
 
 const ProfileAddAddress = ({
   navigation: {goBack},
@@ -29,16 +19,17 @@ const ProfileAddAddress = ({
   navigation: any;
   route: any;
 }) => {
-  const [adress, setAdress] = useState<IAddress>({
+  const [address, setAddress] = useState<IAddressDetails>({
     str: '',
     house: '',
     corp: '',
     kv: '',
     id: 1,
   });
-  const dispatch = useDispatch();
-  const handleProfileAddAddress = (address: IAddress) => {
-    dispatch(addAddress(address));
+  const dispatch = useAppDispatch();
+
+  const handleProfileAddAddress = (address: IAddressDetails) => {
+    dispatch(authActions.addAddress(address));
   };
   const nameRegEx = new RegExp('^([а-яА-Я]{2,30})');
   const [error, setError] = useState({
@@ -47,14 +38,14 @@ const ProfileAddAddress = ({
   });
   const required = () => {
     let streetErr, homeErr;
-    if (!adress.str) {
+    if (!address.str) {
       streetErr = 'Введите название улицы';
-    } else if (nameRegEx.test(adress.str) === false) {
+    } else if (nameRegEx.test(address.str) === false) {
       streetErr = 'Введите название улицы';
     } else {
       streetErr = '';
     }
-    if (!adress.house) {
+    if (!address.house) {
       homeErr = 'Введите номер дома';
     } else {
       homeErr = '';
@@ -87,25 +78,25 @@ const ProfileAddAddress = ({
         <TextInput
           style={styles.street}
           placeholder="*Улица"
-          onChangeText={val => setAdress({...adress, str: val})}
+          onChangeText={val => setAddress({...address, str: val})}
         />
         <Text style={styles.errorStreet}>{error.street}</Text>
         <View style={styles.container}>
           <TextInput
             style={styles.home}
             placeholder="*Дом"
-            onChangeText={val => setAdress({...adress, house: val})}
+            onChangeText={val => setAddress({...address, house: val})}
           />
 
           <TextInput
             style={styles.home}
             placeholder="Корпус"
-            onChangeText={val => setAdress({...adress, corp: val})}
+            onChangeText={val => setAddress({...address, corp: val})}
           />
           <TextInput
             style={styles.home}
             placeholder="Квартира"
-            onChangeText={val => setAdress({...adress, kv: val})}
+            onChangeText={val => setAddress({...address, kv: val})}
           />
         </View>
         <Text style={styles.errorHome}>{error.home}</Text>
@@ -115,11 +106,11 @@ const ProfileAddAddress = ({
         style={styles.Button}
         onPress={() => {
           if (
-            adress.str != '' &&
-            adress.house != '' &&
-            nameRegEx.test(adress.str) === true
+            address.str != '' &&
+            address.house != '' &&
+            nameRegEx.test(address.str) === true
           ) {
-            handleProfileAddAddress(adress);
+            handleProfileAddAddress(address);
             goBack();
             showToast();
           } else {

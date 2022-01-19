@@ -2,11 +2,10 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {delCard} from '../../../store/StoreCard';
 import ScreenNames from '../../../navigation/ScreenNames';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../hooks/hooks';
 import styles from './styles';
+import {authActions} from '../../Auth/store/authStore';
 
 type RootStackParamList = {
   AddCard: undefined;
@@ -21,12 +20,12 @@ const ProfileCards = ({
   route: any;
 }) => {
   const navigation = useNavigation<RootStackParamList>();
-  const dispatch = useDispatch();
-  const cart = useAppSelector(state => state.dishes);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(state => state.auth);
+
   const handleDelCard = (item: string) => {
-    dispatch(delCard(item));
+    dispatch(authActions.delCard(item));
   };
-  console.log(cart.card);
   return (
     <View style={styles.Wrapper}>
       <View style={styles.Title}>
@@ -38,7 +37,7 @@ const ProfileCards = ({
         </TouchableOpacity>
         <Text style={styles.TitleText}>Мои карты</Text>
       </View>
-      {cart.card.length === 0 ? (
+      {user.card.length === 0 ? (
         <View style={styles.EmptyTextWrapper}>
           <Text style={styles.EmptyText}>
             Похоже, вы пока не добавили карту
@@ -46,7 +45,7 @@ const ProfileCards = ({
         </View>
       ) : (
         <View>
-          {cart.card.map((item: any) => {
+          {user.card.map((item: any) => {
             console.log(item);
             return (
               <View key={item.id} style={styles.FullWrapper}>
@@ -80,7 +79,7 @@ const ProfileCards = ({
       <TouchableOpacity
         style={styles.Button}
         onPress={() => {
-          navigation.navigate(ScreenNames.AddCard);
+          navigation.navigate(ScreenNames.ProfileAddCard);
         }}>
         <Text style={styles.ButText}> Добавить карту</Text>
       </TouchableOpacity>

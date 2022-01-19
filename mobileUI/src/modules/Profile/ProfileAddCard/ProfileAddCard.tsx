@@ -8,10 +8,13 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {useState} from 'react';
-
-import {useDispatch} from 'react-redux';
-import {addCard} from '../../../store/StoreCard';
+import {useAppDispatch} from '../../../hooks/hooks';
+import {authActions, ICard, ICardError} from '../../Auth/store/authStore';
 import styles from './styles';
+
+const regexSixteen = new RegExp('^[0-9]{16}$');
+const regexCvv = new RegExp('^[0-9]{3}$');
+const regexDate = new RegExp('^(0[1-9]|1[0-2])/[0-9]{2}');
 
 const ProfileAddCard = ({
   navigation: {goBack},
@@ -20,7 +23,8 @@ const ProfileAddCard = ({
   navigation: any;
   route: any;
 }) => {
-  const [card, setCard] = useState({
+  const dispatch = useAppDispatch();
+  const [card, setCard] = useState<ICard>({
     num: '',
     live: '',
     cvv: '',
@@ -28,18 +32,17 @@ const ProfileAddCard = ({
     id: 1,
     type: '',
   });
-  const dispatch = useDispatch();
-  const handleProfileAddCard = (item: any) => {
-    dispatch(addCard(item));
-  };
-  const regexSixteen = new RegExp('^[0-9]{16}$');
-  const regexCvv = new RegExp('^[0-9]{3}$');
-  const regexDate = new RegExp('^(0[1-9]|1[0-2])/[0-9]{2}');
-  const [error, setError] = useState({
+
+  const [error, setError] = useState<ICardError>({
     sixTeen: '',
     Cvv: '',
     Date: '',
   });
+
+  const handleProfileAddCard = (item: any) => {
+    dispatch(authActions.addCard(item));
+  };
+
   const required = () => {
     let sixTeenErr, CvvErr, DateErr;
     if (!card.num) {

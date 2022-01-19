@@ -9,15 +9,14 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {useState, useEffect} from 'react';
-import {addDate, getNumOfPersons} from '../../../store/StoreCard';
-import {useDispatch} from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import {useAppSelector} from '../../../hooks/hooks';
+import {useAppDispatch} from '../../../hooks/hooks';
 import ScreenNames from '../../../navigation/ScreenNames';
 import styles from './styles';
+import {ordersActions} from '../store/ordersStore';
 
 type RootStackParamList = {
   OrderConfirmationTeble: undefined;
@@ -38,25 +37,15 @@ const OrderTableConfirm = ({
   navigation: any;
   route: any;
 }) => {
-  const cart = useAppSelector(state => state.dishes);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootStackParamList>();
+
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState();
   const [show, setShow] = useState(false);
   const [reservedTable, setTable] = useState<table[]>([]);
   const [tablePool, setTablePool] = useState<table[]>([]);
   const [availableTables, setavailableTables] = useState([]);
-  const [allTables, setallTables] = useState([]);
-
-  let devState: any[] = [];
-  const showToast = () => {
-    ToastAndroid.showWithGravity(
-      'Стол занят',
-      ToastAndroid.SHORT,
-      ToastAndroid.TOP,
-    );
-  };
 
   const showToastSuccs = () => {
     ToastAndroid.showWithGravity(
@@ -133,7 +122,6 @@ const OrderTableConfirm = ({
     });
     setavailableTables(tempAvailable);
     tempAllTables.sort((a: any, b: any) => a - b);
-    setallTables(tempAllTables);
   };
 
   const tables = (currentDate: any) => {
@@ -163,7 +151,7 @@ const OrderTableConfirm = ({
     setShow(false);
   };
   const handleGetNumOfPersons = (item: any) => {
-    dispatch(getNumOfPersons(item));
+    dispatch(ordersActions.getNumOfPersons(item));
   };
   const checkNum = () => {
     if (chooseTable === 'На двоих') {
@@ -184,7 +172,7 @@ const OrderTableConfirm = ({
     }
   };
   const handleAddDate = (item: any) => {
-    dispatch(addDate(item));
+    dispatch(ordersActions.addDate(item));
   };
 
   const [chooseTable, setChooseTable] = useState('Выберите стол');
