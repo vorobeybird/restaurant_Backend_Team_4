@@ -20,7 +20,7 @@ import { useSnackbar } from 'notistack';
 
 Amplify.configure(awsconfig);
 
-function App() {
+function Index() {
   const [authState, setAuthState] = useState<AuthState>();
   const [user, setUser] = useState<any>();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -49,7 +49,7 @@ function App() {
     })
 
     socket.on('order-added', (newOrders) => {
-       enqueueSnackbar('Новый заказ!',{ 
+       enqueueSnackbar('Новый заказ!',{
         variant: 'info',
     });
       console.log("We were updated");

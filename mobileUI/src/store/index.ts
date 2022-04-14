@@ -1,25 +1,32 @@
-import { configureStore, combineReducers, getDefaultMiddleware } from '@reduxjs/toolkit'
-import dishReducer from './StoreCard'
-import { persistReducer } from 'redux-persist'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {configureStore, combineReducers} from '@reduxjs/toolkit';
+import {persistReducer} from 'redux-persist';
 
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {authReducer} from '../modules/Auth/store/authStore';
+import {cartReducer} from '../modules/Cart/store/cartStore';
+import {ordersReducer} from '../modules/Orders/store/ordersStore';
 
 const persistConfig = {
-    key: "root",
-    version: 1,
-    storage: AsyncStorage,
-}
+  key: 'root',
+  version: 1,
+  storage: AsyncStorage,
+};
 
 const rootReducer = combineReducers({
-    dishes: dishReducer
-})
+  auth: authReducer,
+  cart: cartReducer,
+  orders: ordersReducer,
+});
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export default  configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-        serializableCheck: false
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
     }),
-  })
+});
+
+export type RootStateType = ReturnType<typeof store.getState>;
+export type AppDispatchType = typeof store.dispatch;

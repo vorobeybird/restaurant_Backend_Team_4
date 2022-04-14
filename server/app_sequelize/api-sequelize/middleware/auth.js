@@ -23,7 +23,7 @@ const isAuth = async (req, res, next) => {
     } catch (error) {
         console.log(error, " Error")
         return res.status(401).json({
-            message: 'Auth failed'
+            message: 'AuthenticationScreen failed'
         });
     }
 }

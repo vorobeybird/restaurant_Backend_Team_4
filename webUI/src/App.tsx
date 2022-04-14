@@ -9,7 +9,7 @@ import Navigation from "./components/navigation/Navigation";
 import Contacts from "./components/contacts/Contacts";
 import Footer from "./components/footer/Footer";
 import DishPage from "./components/dishPage/dishPage";
-import Profile from "./pages/profile/Profile";
+import UserInfo from "./pages/profile/Profile";
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./store";
@@ -22,6 +22,7 @@ import { Search } from "./components/search/search";
 import { BookTableWithoutDish } from "./components/bookTableWithoutDish/BookTableWithoutDish";
 import { FaRegIdBadge } from "react-icons/fa";
 import { persistor } from './store';
+import React from 'react';
 
 Amplify.configure(awsconfig);
 
@@ -47,7 +48,7 @@ const App = () => {
                     console.log("user sign in failed");
                     break;
                 case "configured":
-                    console.log("the Auth module is configured");
+                    console.log("the AuthenticationScreen module is configured");
             }
         });
     }
@@ -75,7 +76,7 @@ const App = () => {
                             padding: "16px",
                             color: "#FFFFFF",
                             backgroundColor: "rgba(239, 117, 43, 0.7)",
-                            
+
                         },
                     }}
                 />
@@ -86,7 +87,7 @@ const App = () => {
                     <Route exact path="/cart" component={Cart}/>
                     <Route path="/dishPage" component={DishPage}/>
                     <Route path="/profile">
-                        <Profile></Profile>
+                        <UserInfo></UserInfo>
                         <Redirect to={"/profile/orders"}/>
                     </Route>
                     <Route path="/search" component={Search}/>
