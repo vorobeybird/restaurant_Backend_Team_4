@@ -14,30 +14,32 @@ type RootStackParamList = {
 const Dish = ({
   id,
   title,
-  photos,
-  descr,
+  photo,
+  ingredient,
   price,
   cal,
   weight,
 }: {
   id: any;
   title: any;
-  photos: any;
-  descr: any;
+  photo: any;
+  ingredient: any;
   price: any;
   cal: any;
   weight: any;
 }) => {
   const navigation = useNavigation<RootStackParamList>();
 
+  console.log('keine Agnst', ingredient);
+  
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate(ScreenNames.MenuDishToCart, {
           id,
           title,
-          photos,
-          descr,
+          photo,
+          ingredient,
           price,
           cal,
           weight,
@@ -45,7 +47,7 @@ const Dish = ({
       }>
       <View key={id} style={styles.Wrapper}>
         <ScrollView pagingEnabled horizontal style={styles.Pict}>
-          {photos.map((image: any, index: any) => {
+          {photo.map((image: any, index: any) => {
             return (
               <Image key={index} style={styles.Pict} source={{uri: image}} />
             );

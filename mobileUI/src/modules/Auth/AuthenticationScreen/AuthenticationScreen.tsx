@@ -12,6 +12,7 @@ import {useAppDispatch} from '../../../hooks/hooks';
 import {authActions} from '../store/authStore';
 
 import awsconfig from '../../../../aws-exports';
+
 Amplify.configure({
   ...awsconfig,
   Analytics: {

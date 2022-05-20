@@ -3,10 +3,10 @@ import {createSlice} from '@reduxjs/toolkit';
 interface IDish {
   id: string;
   title: string;
-  photos: any[];
+  photo: any[];
   price: number;
   cardQuantity: number;
-  descr: [];
+  ingredient: [];
   excluded_ingredients: string[];
 }
 

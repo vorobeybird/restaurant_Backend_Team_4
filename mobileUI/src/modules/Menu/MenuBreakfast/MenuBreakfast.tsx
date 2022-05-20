@@ -41,13 +41,17 @@ const MenuBreakfast = () => {
         style={styles.Flat}
         data={item.dish}
         renderItem={({item}: {item: IMenuItem}) => {
-          const urlArr = item.photos.map((item: any) => item.photo_url);
+          const urlArr = item.photo.map((item: any) => {
+            console.log(23432145134523452345, item);
+            
+           return item.photo_url
+          });
           return (
             <Dish
               id={item.title}
               title={item.title}
-              photos={urlArr}
-              descr={item.ingredients}
+              photo={urlArr}
+              ingredient={item.ingredient}
               price={item.price}
               cal={item.calories}
               weight={item.weight}

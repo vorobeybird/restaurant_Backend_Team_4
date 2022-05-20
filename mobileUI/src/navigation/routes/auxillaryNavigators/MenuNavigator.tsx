@@ -10,8 +10,8 @@ import {RouteProp} from '@react-navigation/native';
 export interface INewDish {
   id: number;
   title: string;
-  photos: string[];
-  descr: string;
+  photo: string[];
+  ingredient: string;
   price: number;
   cal: number;
   weight: number;
@@ -25,7 +25,7 @@ export interface IMenuItem {
   weight: number;
   categories: number[];
   calories: number;
-  photos: string[];
+  photo: string[];
   data: any;
 }
 

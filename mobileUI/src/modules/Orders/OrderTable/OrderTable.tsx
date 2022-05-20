@@ -92,9 +92,12 @@ const OrderTable = ({
       .catch(err => console.log(err));
   };
 
+
+  const PATH = process.env.REACT_APP_GET_DISHES
+
   const getItems = async () => {
     const response = await Api.get<category[]>(
-      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/tables',
+      `${PATH}/api/tables`,
     );
     const res = response.data;
     return res;

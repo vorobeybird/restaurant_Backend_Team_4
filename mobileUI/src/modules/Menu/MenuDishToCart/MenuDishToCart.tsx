@@ -21,8 +21,10 @@ const MenuDishToCart = () => {
   const navigation = useNavigation<MenuDishToCartScreenNavigationProp>();
   const route = useRoute<MenuDishToCartScreenRouteProp>();
 
-  const {id, title, photos, descr, price, cal} = route.params;
-  const item = {id, title, photos, price, descr};
+  const {id, title, photo, ingredient, price, cal} = route.params;
+  console.log('loggggggggggggggggg', id, ingredient);
+  
+  const item = {id, title, photo, price, ingredient};
 
   const handleAddToCard = (item: any) => {
     dispatch(cartActions.addToCart(item));
@@ -56,7 +58,7 @@ const MenuDishToCart = () => {
         </Text>
       </View>
       <ScrollView pagingEnabled horizontal style={styles.Pict}>
-        {photos.map((image: any, index: any) => {
+        {photo.map((image: any, index: any) => {
           return (
             <Image key={index} style={styles.Pict} source={{uri: image}} />
           );
@@ -64,8 +66,8 @@ const MenuDishToCart = () => {
       </ScrollView>
       <View style={styles.BotText}>
         <Text style={styles.Sostav}>Состав:</Text>
-
-        {descr.map((item: any, index: any) => {
+        {console.log(323435234532453245, ingredient)}
+        {ingredient.map((item: any, index: any) => {
           return (
             <View key={index} style={styles.list}>
               <Image

@@ -15,11 +15,11 @@ const ShowContent = () => {
 
   return (
     <>
-      {authState.isSignedIn === 'signedIn' ? (
+      {/* {authState.isSignedIn === 'signedIn' ? ( */}
         <AppNavigator />
-      ) : (
+      {/* ) : (
         <AuthenticationScreen />
-      )}
+      )} */}
     </>
   );
 };

@@ -25,7 +25,7 @@ const OrderIngredients = ({
 
   initialOptionalIngred.dish_title = item.title;
 
-  item.descr
+  item.ingredient
     .filter((ingredient: any) => {
       return !ingredient.DishIngredient.is_default;
     })
@@ -42,7 +42,7 @@ const OrderIngredients = ({
   };
 
   const findExcludedIngredients = () => {
-    let excludedIngredients = item.descr.filter((ingredient: any) => {
+    let excludedIngredients = item.ingredient.filter((ingredient: any) => {
       return !ingredient.DishIngredient.is_default;
     });
     excludedIngredients = excludedIngredients.filter((ingredient: any) => {
@@ -74,7 +74,7 @@ const OrderIngredients = ({
       </View>
       <Text style={styles.DishTitle}>{item.title}</Text>
       <View style={styles.Ingredients}>
-        {item.descr.map((ingredient: any) => {
+        {item.ingredient.map((ingredient: any) => {
           return ingredient.DishIngredient.is_default ? (
             <Text
               style={[styles.IngredientTitle, styles.IngredientTitleMargin]}

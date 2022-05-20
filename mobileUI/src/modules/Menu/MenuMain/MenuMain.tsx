@@ -12,6 +12,9 @@ import {
   INewDish,
   MenuMainScreenNavigationProp,
 } from '../../../navigation/routes/auxillaryNavigators/MenuNavigator';
+// require('dotenv').config()
+
+const PATH = process.env.REACT_APP_GET_DISHES
 
 const MenuMain = () => {
   const navigation = useNavigation<MenuMainScreenNavigationProp>();
@@ -19,14 +22,19 @@ const MenuMain = () => {
   const [date, setDate] = useState<ICategory[]>([]);
 
   const getItems = async () => {
+    
     const response = await Api.get<ICategory[]>(
-      'http://ec2-18-198-161-12.eu-central-1.compute.amazonaws.com:5000/api/ICategory',
+      `http://3.70.133.63:5000/api/category/`,
     );
+    console.log(response.data)
     const res = response.data;
     return res;
   };
   const fetchMenuItems = async () => {
+    
     const items = await getItems();
+    console.log(items);
+    
     const arr = [] as ICategory[];
     items.map(item => {
       if (item.show_in_menu) {
@@ -93,14 +101,16 @@ const MenuMain = () => {
           .startsWith(searchInputValue.toUpperCase());
       })
       .map((dish: any) => {
-        const photos = dish.photo;
-        const urlArr = photos.map((item: any) => item.photo_url);
+        console.log('agnst', dish.ingredient);
+        
+        const photo = dish.photo;
+        const urlArr = photo.map((item: any) => item.photo_url);
 
         const newDish: INewDish = {
           id: dish.id,
           title: dish.title,
-          photos: urlArr,
-          descr: dish.ingredient,
+          photo: urlArr,
+          ingredient: dish.ingredient,
           price: dish.price,
           cal: dish.calories,
           weight: dish.weight,
